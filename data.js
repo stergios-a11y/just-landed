@@ -118,7 +118,8 @@ function ensureTimePicker(){
       <div class="time-panel-head"><span>WHEN?</span><strong id="when-label">ASAP</strong></div>
       <div class="time-actions">
         <button type="button" class="time-btn on" id="time-now">ASAP</button>
-        <button type="button" class="time-custom" id="time-custom-btn"><span>SET TIME</span></button><input id="time-picker" class="time-picker-native" type="datetime-local" aria-label="Set a fixed start date and time">
+        <button type="button" class="time-custom" id="time-custom-btn" aria-label="Choose a fixed date and time"><span id="time-custom-label">SET TIME</span><span class="time-custom-arrow">→</span></button>
+        <input id="time-picker" class="time-picker-native" type="datetime-local" aria-label="Set a fixed start date and time">
       </div>
       <div class="time-help">See the next departures and fastest option from this time.</div>
     </section>`);
@@ -137,9 +138,18 @@ function ensureTimePicker(){
 function updateTimePicker(){
   const nowBtn=document.getElementById("time-now"), input=document.getElementById("time-picker"), label=document.getElementById("when-label");
   if(!nowBtn||!input||!label) return;
-  const d=getViewTime(); label.textContent=selectedLabel(d);
+  const d=getViewTime();
+  const selected=selectedLabel(d);
+  label.textContent=selected;
   nowBtn.classList.toggle("on",VIEW_TIME_MODE==="now");
   input.value=VIEW_TIME_MODE==="custom"?localDateInputValue(d):"";
+  const customBtn=document.getElementById("time-custom-btn");
+  const customLabel=document.getElementById("time-custom-label");
+  if(customBtn && customLabel){
+    customLabel.textContent=VIEW_TIME_MODE==="custom"?selected:"SET TIME";
+    customBtn.classList.toggle("selected",VIEW_TIME_MODE==="custom");
+    customBtn.setAttribute("aria-label",VIEW_TIME_MODE==="custom"?`Change fixed time: ${selected}`:"Choose a fixed date and time");
+  }
 }
 
 function modeIcon(m){ return `<svg class="micon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${MODES[m]||""}</svg>`; }
