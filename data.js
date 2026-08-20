@@ -93,24 +93,109 @@ const MODES = {
   rail:'<path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-3.58-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zM11 10H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>',
   taxi:'<path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5H15V3H9v2H6.5c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>'
 };
+let VIEW_TIME_MODE="now";
+let VIEW_TIME_CUSTOM=null;
+function getViewTime(){
+  if(VIEW_TIME_MODE==="now") return new Date();
+  return VIEW_TIME_CUSTOM ? new Date(VIEW_TIME_CUSTOM) : new Date();
+}
+function setViewTime(d, mode="custom"){
+  VIEW_TIME_MODE=mode;
+  VIEW_TIME_CUSTOM=mode==="custom" ? new Date(d) : null;
+  updateTimePicker();
+  const code=typeof CODE!=="undefined"?CODE:null;
+  if(code){
+    const ap=AIRPORTS[code];
+    (ap&&ap.destinations?renderDest:renderAirport)(code);
+  }
+}
+function ensureTimePicker(){
+  if(document.getElementById("time-picker")) return;
+  const intro=document.querySelector(".intro");
+  if(!intro) return;
+  intro.insertAdjacentHTML("afterend",`
+    <section class="time-panel" aria-label="Choose departure time">
+      <div class="time-panel-head"><span>WHEN?</span><strong id="when-label">NOW</strong></div>
+      <div class="time-actions">
+        <button type="button" class="time-btn on" id="time-now">NOW</button>
+        <button type="button" class="time-btn" id="time-tomorrow">TOMORROW 18:00</button>
+        <label class="time-custom"><span>CHOOSE</span><input id="time-picker" type="datetime-local" aria-label="Choose date and time"></label>
+      </div>
+      <div class="time-help">See the next departures and fastest option from this time.</div>
+    </section>`);
+  const input=document.getElementById("time-picker");
+  const now=new Date();
+  input.min=localDateInputValue(now);
+  input.value="";
+  document.getElementById("time-now").onclick=()=>setViewTime(new Date(),"now");
+  document.getElementById("time-tomorrow").onclick=()=>{const d=dateOnly(new Date(),1);d.setHours(18,0,0,0);setViewTime(d,"custom");};
+  input.addEventListener("change",()=>{ if(!input.value)return; const d=new Date(input.value); if(!Number.isNaN(d.getTime())) setViewTime(d,"custom"); });
+  updateTimePicker();
+}
+function updateTimePicker(){
+  const nowBtn=document.getElementById("time-now"), tmBtn=document.getElementById("time-tomorrow"), input=document.getElementById("time-picker"), label=document.getElementById("when-label");
+  if(!nowBtn||!tmBtn||!input||!label) return;
+  const d=getViewTime(); label.textContent=selectedLabel(d);
+  nowBtn.classList.toggle("on",VIEW_TIME_MODE==="now");
+  const tomorrow18=dateOnly(new Date(),1);tomorrow18.setHours(18,0,0,0);
+  tmBtn.classList.toggle("on",VIEW_TIME_MODE==="custom" && Math.abs(d.getTime()-tomorrow18.getTime())<60000);
+  input.value=VIEW_TIME_MODE==="custom"?localDateInputValue(d):"";
+}
+
 function modeIcon(m){ return `<svg class="micon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${MODES[m]||""}</svg>`; }
 
 const toMin = t => { const [h,m]=t.split(":").map(Number); return h*60+m; };
 const fmt = m => { m=((m%1440)+1440)%1440; const h=Math.floor(m/60),mm=m%60; return String(h).padStart(2,"0")+":"+String(mm).padStart(2,"0"); };
-function departures(o){
+const pad2 = n => String(n).padStart(2,"0");
+function localDateInputValue(d){ return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}T${pad2(d.getHours())}:${pad2(d.getMinutes())}`; }
+function dateOnly(d, delta=0){ const x=new Date(d); x.setHours(12,0,0,0); x.setDate(x.getDate()+delta); return x; }
+function scheduleDates(o, baseDate){
   const s=o.sched; if(!s) return [];
-  if(s.kind==="range"){ let a=toMin(s.first),b=toMin(s.last); if(b<a)b+=1440; const out=[]; for(let t=a;t<=b;t+=s.every) out.push(((t%1440)+1440)%1440); return out.sort((x,y)=>x-y); }
-  if(s.kind==="windows"){ const set=new Set(); for(const w of s.windows){ let a=toMin(w.start),b=toMin(w.end); if(b<=a)b+=1440; for(let t=a;t<b;t+=w.every) set.add(((t%1440)+1440)%1440);} return [...set].sort((x,y)=>x-y); }
-  return [];
+  const out=[];
+  for(let day=-1;day<=2;day++){
+    const base=dateOnly(baseDate,day);
+    if(s.kind==="range"){
+      let a=toMin(s.first), b=toMin(s.last); if(b<a)b+=1440;
+      for(let t=a;t<=b;t+=s.every){ const d=new Date(base); d.setHours(0,0,0,0); d.setMinutes(t); out.push(d); }
+    } else if(s.kind==="windows"){
+      for(const w of s.windows){
+        let a=toMin(w.start), b=toMin(w.end); if(b<=a)b+=1440;
+        for(let t=a;t<b;t+=w.every){ const d=new Date(base); d.setHours(0,0,0,0); d.setMinutes(t); out.push(d); }
+      }
+    }
+  }
+  return out.sort((a,b)=>a-b);
 }
-const is24 = o => o.sched && o.sched.kind==="windows";
-function nextTwo(o, nowMin){
-  if(o.onDemand) return {onDemand:true, until:1000000};
-  if(o.route && LIVE[o.route] && LIVE[o.route].deps && LIVE[o.route].deps.length){ const d=LIVE[o.route].deps; return {dep1:d[0],dep2:d.length>1?d[1]:d[0],until:Math.max(0,d[0]-nowMin),closed:false,isLive:true}; }
-  const list=departures(o); if(!list.length) return {dep1:null,dep2:null,until:99999,closed:true};
-  let i=list.findIndex(t=>t>=nowMin), wrapped=false; if(i===-1){ i=0; wrapped=true; }
-  const dep1=list[i], dep2=list[(i+1)%list.length]; const until=wrapped?dep1+1440-nowMin:dep1-nowMin;
-  return {dep1,dep2,until,closed:wrapped && !is24(o),isLive:false};
+function nextTwo(o, atDate){
+  if(o.onDemand) return {onDemand:true, until:0, selected:atDate};
+  if(!(atDate instanceof Date)) atDate=new Date();
+  const useLive=Math.abs(atDate.getTime()-Date.now()) < 90000;
+  if(useLive && o.route && LIVE[o.route] && LIVE[o.route].deps && LIVE[o.route].deps.length){
+    const nowMin=atDate.getHours()*60+atDate.getMinutes();
+    const d=LIVE[o.route].deps;
+    return {dep1:d[0],dep2:d.length>1?d[1]:d[0],until:Math.max(0,d[0]-nowMin),closed:false,isLive:true,selected:atDate};
+  }
+  const list=scheduleDates(o,atDate), target=atDate.getTime();
+  const next=list.find(d=>d.getTime()>=target);
+  if(!next) return {dep1:null,dep2:null,until:99999,closed:true,isLive:false,selected:atDate};
+  const following=list.find(d=>d.getTime()>next.getTime());
+  const until=Math.max(0,Math.round((next-target)/60000));
+  return {dep1:next.getHours()*60+next.getMinutes(),dep2:following?following.getHours()*60+following.getMinutes():null,until,closed:false,isLive:false,selected:atDate,depDate:next};
+}
+function selectedLabel(d){
+  const now=new Date();
+  if(Math.abs(d.getTime()-now.getTime())<90000) return "NOW";
+  const today=new Date(); today.setHours(0,0,0,0);
+  const day=new Date(d); day.setHours(0,0,0,0);
+  const diff=Math.round((day-today)/86400000);
+  const dayLabel=diff===0?"TODAY":diff===1?"TOMORROW":new Intl.DateTimeFormat([], {weekday:"short",day:"numeric",month:"short"}).format(d).toUpperCase();
+  return `${dayLabel} · ${fmt(d.getHours()*60+d.getMinutes())}`;
+}
+function tripWaitText(r){
+  if(r.onDemand) return "on demand";
+  if(r.until<=0) return "departing now";
+  if(r.until<60) return `wait ${r.until} min`;
+  return `wait ${Math.floor(r.until/60)}h ${pad2(r.until%60)}m`;
 }
 
 function wayOf(o){
@@ -198,12 +283,8 @@ function optionCard(r, n){
       <div class="dep-r">${r.dep2!=null?`<div class="then">then ${est}${fmt(r.dep2)}</div>`:""}</div></div>${o.note?`<div class="note">⚠ ${o.note}</div>`:""}</div>`;
 }
 
-function connNext(c, nowMin){
-  if(c.route && LIVE[c.route] && LIVE[c.route].deps && LIVE[c.route].deps.length){ const d=LIVE[c.route].deps; return {dep:d[0],until:Math.max(0,d[0]-nowMin),isLive:true,closed:false}; }
-  const list=departures(c); if(!list.length) return null;
-  let i=list.findIndex(t=>t>=nowMin), wrapped=false; if(i===-1){ i=0; wrapped=true; }
-  const dep=list[i]; const until=wrapped?dep+1440-nowMin:dep-nowMin;
-  return {dep, until, isLive:false, closed: wrapped && !(c.sched&&c.sched.kind==="windows")};
+function connNext(c, atDate){
+  const r=nextTwo(c,atDate); if(r.dep1==null) return null; return {dep:r.dep1, until:r.until, isLive:r.isLive, closed:r.closed};
 }
 
 function destCard(o,e,r,isFastest=false){
@@ -236,12 +317,12 @@ function renderDest(code){
   const box=document.getElementById("destcards"); if(!box) return;
   if(!DESTSEL[code]) DESTSEL[code]=ap.destinations[0].id;
   const cur=ap.destinations.find(x=>x.id===DESTSEL[code])||ap.destinations[0];
-  const d=new Date(), nowMin=d.getHours()*60+d.getMinutes();
+  const at=getViewTime();
   const chips=document.getElementById("chips");
   if(chips){ chips.innerHTML=ap.destinations.map(x=>`<button class="chip ${x.id===cur.id?'on':''}" data-id="${x.id}">${x.label}</button>`).join("");
     chips.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{DESTSEL[code]=b.dataset.id;renderDest(code);}); }
   const dt=document.getElementById("desttitle"); if(dt) dt.textContent=cur.title;
-  const routeRows=cur.routes.map(e=>{const o=ap.routes[e.k]; if(!o) return null; const r=nextTwo(o,nowMin); r.total=totalTripMinutes(o,r); return {e,o,r};}).filter(Boolean);
+  const routeRows=cur.routes.map(e=>{const o=ap.routes[e.k]; if(!o) return null; const r=nextTwo(o,at); r.total=totalTripMinutes(o,r); return {e,o,r};}).filter(Boolean);
   const ranked=routeRows.sort((a,b)=>{
     const at=a.o.mode==="taxi", bt=b.o.mode==="taxi";
     if(at!==bt) return at?1:-1;
@@ -266,9 +347,9 @@ function totalTripMinutes(o, r){
 }
 function renderAirport(code){
   const ap=AIRPORTS[code]; if(!ap) return;
-  const d=new Date(), nowMin=d.getHours()*60+d.getMinutes();
+  const at=getViewTime();
   const rows=ap.options.map(o=>{
-    const r={o, ...nextTwo(o, nowMin)};
+    const r={o, ...nextTwo(o, at)};
     r.total=totalTripMinutes(o,r);
     return r;
   });
@@ -282,13 +363,13 @@ function renderAirport(code){
   document.getElementById("options").innerHTML=rows.map((r,i)=>optionCard(r,i+1)).join("");
   const cc=document.getElementById("conns");
   if(cc) cc.innerHTML=(ap.connections&&ap.connections.length)?`<div class="conns-h">Other connections from ${code}</div>`+ap.connections.map(c=>{
-    const r=connNext(c,nowMin); let t="";
+    const r=connNext(c,at); let t="";
     if(r){ const est=(c.est&&!r.isLive)?"~":""; const rel=r.closed?("first "+fmt(r.dep)):(r.until<=0?"now":(r.until<60?("in "+r.until+"m"):("in "+Math.floor(r.until/60)+"h"+String(r.until%60).padStart(2,"0"))));
       t=`<div class="conn-t"><div class="ct ${r.isLive?'live':''}">${est}${fmt(r.dep)}</div><div class="cs">${r.isLive?'live · ':''}${rel}</div></div>`; }
     return `<div class="conn"><div class="conn-ic">${modeIcon(c.icon)}</div><div class="conn-b"><b>${c.to}</b><span>${c.sub}</span></div>${t}</div>`;
   }).join(""):"";
   const sub=document.getElementById("sub");
-  if(sub){ const nn=ap.options.length; sub.innerHTML=`<b>${nn}</b> way${nn>1?"s":""} from <b>${ap.name}</b> · ${ap.city}`+(nn>1?` — soonest first`:``); }
+  if(sub){ const nn=ap.options.length; sub.innerHTML=`<b>${nn}</b> way${nn>1?"s":""} from <b>${ap.name}</b> · ${ap.city} · <b>${selectedLabel(at)}</b>`+(nn>1?` — fastest first`:``); }
 }
 async function loadLive(code){
   const ap=AIRPORTS[code]; if(!ap) return;
@@ -297,6 +378,6 @@ async function loadLive(code){
     for(const rc of ["2051","3028","5373","5675"]){ const mins=routes[rc]; if(Array.isArray(mins)&&mins.length) LIVE[rc]={deps:mins.map(m=>base+m),ts:Date.now()}; else delete LIVE[rc]; } }catch(e){}
   (ap.destinations?renderDest:renderAirport)(code);
 }
-function initAirport(code){ ensureWalkModal(); const ap=AIRPORTS[code]; const rf=(ap&&ap.destinations)?renderDest:renderAirport; rf(code); loadLive(code); setInterval(()=>rf(code),15000); setInterval(()=>loadLive(code),30000); }
+function initAirport(code){ ensureWalkModal(); ensureTimePicker(); const ap=AIRPORTS[code]; const rf=(ap&&ap.destinations)?renderDest:renderAirport; rf(code); loadLive(code); setInterval(()=>rf(code),15000); setInterval(()=>loadLive(code),30000); }
 function tickClock(){ const el=document.getElementById("clock"); if(!el) return; const d=new Date(); el.textContent="now "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")+":"+String(d.getSeconds()).padStart(2,"0"); }
 if (typeof document !== "undefined" && document.getElementById("clock")) { tickClock(); setInterval(tickClock,1000); }

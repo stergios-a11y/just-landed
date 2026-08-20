@@ -82,8 +82,8 @@ const tz=Intl.DateTimeFormat().resolvedOptions().timeZone;
 document.getElementById("tz").textContent=tz;
 function renderClock(){document.getElementById("clock").textContent=new Intl.DateTimeFormat([], {hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date());}
 function soonestAirport(code){
-  const ap=AIRPORTS[code], now=new Date(), nowMin=now.getHours()*60+now.getMinutes(); let best=null;
-  for(const o of ap.options||[]){if(o.onDemand)continue;const r=nextTwo(o,nowMin);if(r.closed&&!best)continue;if(!best||r.until<best.until)best={...r,o};}
+  const ap=AIRPORTS[code], now=new Date(); let best=null;
+  for(const o of ap.options||[]){if(o.onDemand)continue;const r=nextTwo(o,now);if(r.closed&&!best)continue;if(!best||r.until<best.until)best={...r,o};}
   return best;
 }
 function airportRow(code){
