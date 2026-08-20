@@ -13,16 +13,16 @@
 <div class="wrap">
   <header>
     <div class="logo"><a href="index.html" class="lk"><svg class="mk" viewBox="36 40 500 168" aria-hidden="true"><g fill="#FAFAF8"><path d="M132 48 L226 48 L291 101 L370 101 L408 138 L293 138 L226 92 L132 92 Z"/><path d="M42 171 H391 L420 138 H447 L410 197 H42 Z"/></g><path d="M392 139 H520" fill="none" stroke="#FFC107" stroke-width="26" stroke-linecap="square"/><path d="M500 115 L530 139 L500 163" fill="none" stroke="#FFC107" stroke-width="26" stroke-linecap="square" stroke-linejoin="miter"/></svg><span class="wm">JUST LANDED</span></a></div>
-    <div class="clock" id="clock">now –:–</div>
+    <div class="header-tools"><div class="lang-switch" id="lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><span>·</span><button type="button" data-lang="el">ΕΛ</button></div><div class="clock" id="clock">now –:–</div></div>
   </header>
-  <a class="backlink" href="index.html">&#8592; all airports</a>
-  <h1>Athens Airport &#8594; <em id="desttitle">city centre</em></h1>
+  <a class="backlink" id="backlink" href="index.html">&#8592; all airports</a>
+  <h1><span data-i18n="airportName">Athens Airport</span> &#8594; <em id="desttitle" data-i18n="cityCentre">city centre</em></h1>
   <p class="intro">Public transport from Athens Airport (ATH) into town &#8212; pick where you\u2019re headed. Live times where the buses are running.</p>
-  <div class="qh">Where are you headed?</div>
+  <div class="qh" data-i18n="whereHeaded">Where are you headed?</div>
   <div class="chips" id="chips"></div>
   <div id="destcards"></div>
   <div class="disclaimer" id="disc"></div>
-  <footer>Public transport first — taxi facts too, no booking upsell.<br>Prototype &#183; <span id="tz"></span></footer>
+  <footer><span data-i18n="footer">Public transport first — taxi facts too, no booking upsell.</span><br><span data-i18n="prototype">Prototype</span> &#183; <span id="tz"></span></footer>
 </div>
 <script src="data.js"></script>
 <script>
@@ -32,7 +32,10 @@
   disc.innerHTML = AIRPORTS[CODE].verified
     ? "Fares &amp; service hours verified Aug 2026. Metro/rail show exact clock-face times; the X95 shows live arrivals from OASA when buses are running, otherwise the timetable. Always confirm at the stop."
     : "Sample data — fares and times are illustrative and not yet verified. Departure times are estimated from the listed frequency. Confirm at the stop.";
+  disc.dataset.en=disc.textContent;
   initAirport(CODE);
+  if(typeof applyLanguage === "function") applyLanguage();
+
 </script>
 </body>
 </html>

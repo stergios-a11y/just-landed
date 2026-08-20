@@ -15,7 +15,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:"Chakra Petch",s
 a{color:inherit;text-decoration:none}
 .wrap{max-width:980px;margin:0 auto;padding:18px 18px 52px}
 header{height:34px;display:flex;align-items:center;justify-content:space-between;margin-bottom:42px}
-.logo{display:flex;align-items:center;gap:9px}.logo-mark{width:29px;height:18px;display:block}.logo-word{font:900 15px/1 "Inter",sans-serif;letter-spacing:-.02em}.clock{font:700 10px/1 "JetBrains Mono",monospace;letter-spacing:.08em;border:1px solid var(--line);border-radius:6px;padding:7px 9px;color:var(--ink)}
+.logo{display:flex;align-items:center;gap:9px}.logo-mark{width:29px;height:18px;display:block}.logo-word{font:900 15px/1 "Inter",sans-serif;letter-spacing:-.02em}.header-tools{display:flex;align-items:center;gap:8px}.lang-switch{display:flex;align-items:center;gap:4px;font:700 9px/1 "JetBrains Mono",monospace;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}.lang-switch button{appearance:none;border:0;background:transparent;color:var(--muted);font:700 9px/1 "JetBrains Mono",monospace;letter-spacing:.08em;padding:4px 3px;cursor:pointer}.lang-switch button.active{color:var(--amber)}.lang-switch button:hover,.lang-switch button:focus-visible{color:var(--ink);outline:none}.clock{font:700 10px/1 "JetBrains Mono",monospace;letter-spacing:.08em;border:1px solid var(--line);border-radius:6px;padding:7px 9px;color:var(--ink)}
 .hero{margin-bottom:34px}.kicker{font:700 10px/1.2 "JetBrains Mono",monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}.hero h1{font:900 clamp(44px,7vw,82px)/.9 "Inter",sans-serif;letter-spacing:-.06em;text-transform:uppercase;margin:0;max-width:780px}.hero h1 em{font-style:normal;color:var(--amber)}.hero-copy{color:var(--muted);font-size:14px;line-height:1.45;max-width:520px;margin:17px 0 0}.hero-copy strong{color:var(--ink)}
 .board{background:var(--card);border:1px solid var(--line);border-radius:15px;overflow:hidden}.board-head{display:flex;justify-content:space-between;align-items:center;padding:13px 15px;border-bottom:1px solid var(--line);font:700 10px/1 "JetBrains Mono",monospace;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}.live{display:inline-flex;align-items:center;gap:6px;color:var(--amber)}.live .dash{width:12px;height:4px;border-radius:2px;background:var(--amber);animation:pulse 1.2s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.22}}@media(prefers-reduced-motion:reduce){.live .dash{animation:none}}
 .airports{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}.airport{display:grid;grid-template-columns:58px minmax(0,1fr) auto;align-items:center;gap:12px;background:var(--tile);padding:16px 15px;min-height:86px;transition:background .12s}.airport:hover,.airport:focus-visible{background:#2a2a2f;outline:none}.code{font:700 16px/1 "JetBrains Mono",monospace;color:var(--amber)}.aname{display:block;font-weight:700;font-size:16px;line-height:1.05}.asub{display:block;font:500 9px/1.25 "JetBrains Mono",monospace;color:var(--muted);margin-top:5px;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.next{text-align:right;font:700 16px/1 "JetBrains Mono",monospace;white-space:nowrap}.next small{display:block;font:500 9px/1.2 "JetBrains Mono",monospace;color:var(--muted);margin-top:5px}.next.live-next{color:var(--amber)}.arrow{font:700 16px/1 "JetBrains Mono",monospace;color:var(--muted);margin-left:8px}
@@ -42,37 +42,37 @@ footer{margin-top:25px;text-align:center;color:var(--muted);font:500 9px/1.6 "Je
     </svg>
     <span class="logo-word">JUST LANDED</span>
   </a>
-  <div class="clock" id="clock">--:--</div>
+  <div class="header-tools"><div class="lang-switch" id="lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><span>·</span><button type="button" data-lang="el">ΕΛ</button></div><div class="clock" id="clock">--:--</div></div>
 </header>
 
 <section class="hero">
-  <div class="kicker">Greece · airport → city</div>
-  <h1>You made it.<br><em>Now get out.</em></h1>
-  <p class="hero-copy"><strong>Find your airport.</strong> Get the next useful option into town — with the fare, time and where to walk.</p>
+  <div class="kicker" data-i18n="kicker" data-i18n-original="Greece · airport → city">Greece · airport → city</div>
+  <h1><span data-i18n="hero1" data-i18n-original="You made it.">You made it.</span><br><em data-i18n="hero2" data-i18n-original="Now get out.">Now get out.</em></h1>
+  <p class="hero-copy"><strong data-i18n="findAirport" data-i18n-original="Find your airport.">Find your airport.</strong> <span data-i18n="heroCopy" data-i18n-original="Get the next useful option into town — with the fare, time and where to walk.">Get the next useful option into town — with the fare, time and where to walk.</span></p>
 </section>
 
 <section class="board" aria-labelledby="airport-heading">
   <div class="board-head">
-    <span id="airport-heading">Where did you land?</span>
-    <span class="live">LIVE WHERE AVAILABLE <i class="dash"></i></span>
+    <span id="airport-heading" data-i18n="whereLanded" data-i18n-original="Where did you land?">Where did you land?</span>
+    <span class="live"><span data-i18n="liveWhere" data-i18n-original="LIVE WHERE AVAILABLE">LIVE WHERE AVAILABLE</span> <i class="dash"></i></span>
   </div>
   <div class="airports" id="airports"></div>
 </section>
 
 <section class="below">
   <div class="panel">
-    <div class="panel-label">What happens next</div>
-    <div class="panel-title">Pick an airport.</div>
-    <p class="desktop-copy">The airport page puts the fastest option first, then gives you alternatives, fares, journey times and the exact walk from arrivals.</p>
-    <p class="mobile-copy">Fastest option first. Then alternatives, fares, journey times and where to walk from arrivals.</p>
+    <div class="panel-label" data-i18n="whatNext" data-i18n-original="What happens next">What happens next</div>
+    <div class="panel-title" data-i18n="pickAirport" data-i18n-original="Pick an airport.">Pick an airport.</div>
+    <p class="desktop-copy" data-i18n="nextDesktop" data-i18n-original="The airport page puts the fastest option first, then gives you alternatives, fares, journey times and the exact walk from arrivals.">The airport page puts the fastest option first, then gives you alternatives, fares, journey times and the exact walk from arrivals.</p>
+    <p class="mobile-copy" data-i18n="nextMobile" data-i18n-original="Fastest option first. Then alternatives, fares, journey times and where to walk from arrivals.">Fastest option first. Then alternatives, fares, journey times and where to walk from arrivals.</p>
   </div>
   <div class="panel">
-    <div class="panel-label">Data status</div>
-    <div class="trust"><i class="dash"></i><p><strong>LIVE</strong> means an actual departure feed. Timetable and estimated times are labelled separately.</p></div>
+    <div class="panel-label" data-i18n="dataStatus" data-i18n-original="Data status">Data status</div>
+    <div class="trust"><i class="dash"></i><p><strong>LIVE</strong> <span data-i18n="liveMeans" data-i18n-original="means an actual departure feed. Timetable and estimated times are labelled separately.">means an actual departure feed. Timetable and estimated times are labelled separately.</span></p></div>
   </div>
 </section>
 
-<footer>PUBLIC TRANSPORT FIRST · TAXI FACTS TOO · NO BOOKING UPSELL<br><span id="tz"></span></footer>
+<footer><span data-i18n="footer" data-i18n-original="PUBLIC TRANSPORT FIRST · TAXI FACTS TOO · NO BOOKING UPSELL">PUBLIC TRANSPORT FIRST · TAXI FACTS TOO · NO BOOKING UPSELL</span><br><span id="tz"></span></footer>
 </div>
 
 <script src="data.js"></script>
@@ -106,7 +106,7 @@ async function boardLive(){
     render();
   }catch(e){}
 }
-renderClock();render();setInterval(()=>{renderClock();render()},15000);boardLive();setInterval(boardLive,30000);
+if(typeof applyLanguage === "function") applyLanguage(); renderClock();render();setInterval(()=>{renderClock();render()},15000);boardLive();setInterval(boardLive,30000);
 </script>
 </body>
 </html>

@@ -13,16 +13,16 @@
 <div class="wrap">
   <header>
     <div class="logo"><a href="index.html" class="lk"><svg class="mk" viewBox="36 40 500 168" aria-hidden="true"><g fill="#FAFAF8"><path d="M132 48 L226 48 L291 101 L370 101 L408 138 L293 138 L226 92 L132 92 Z"/><path d="M42 171 H391 L420 138 H447 L410 197 H42 Z"/></g><path d="M392 139 H520" fill="none" stroke="#FFC107" stroke-width="26" stroke-linecap="square"/><path d="M500 115 L530 139 L500 163" fill="none" stroke="#FFC107" stroke-width="26" stroke-linecap="square" stroke-linejoin="miter"/></svg><span class="wm">JUST LANDED</span></a></div>
-    <div class="clock" id="clock">now –:–</div>
+    <div class="header-tools"><div class="lang-switch" id="lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><span>·</span><button type="button" data-lang="el">ΕΛ</button></div><div class="clock" id="clock">now –:–</div></div>
   </header>
-  <a class="backlink" href="index.html">&#8592; all airports</a>
-  <h1>Santorini Airport &#8594; Fira</h1>
-  <p class="intro">Getting from Santorini Airport (JTR) to Fira by public bus &#8212; fare, frequency and live departures, no taxi upsell.</p>
+  <a class="backlink" id="backlink" href="index.html">&#8592; all airports</a>
+  <h1 data-page-title="santorini" data-page-title-en="Santorini Airport → Fira" data-page-title-el="Αεροδρόμιο Σαντορίνης → Φηρά">Santorini Airport &#8594; Fira</h1>
+  <p class="intro" data-page-intro="santorini" data-page-intro-en="Getting from Santorini Airport (JTR) to Fira by public bus &#8212; fare, frequency and live departures, no taxi upsell." data-page-intro-el="Πώς θα πας από το αεροδρόμιο Σαντορίνης (JTR) στα Φηρά με το δημόσιο λεωφορείο — τιμή, συχνότητα και ζωντανές αναχωρήσεις, χωρίς προώθηση ταξί.">Getting from Santorini Airport (JTR) to Fira by public bus &#8212; fare, frequency and live departures, no taxi upsell.</p>
   <p class="tagline" id="sub"></p>
   <div id="options"></div>
   <div class="conns" id="conns"></div>
   <div class="disclaimer" id="disc"></div>
-  <footer>Public transport first — taxi facts too, no booking upsell.<br>Prototype &#183; <span id="tz"></span></footer>
+  <footer><span data-i18n="footer">Public transport first — taxi facts too, no booking upsell.</span><br><span data-i18n="prototype">Prototype</span> &#183; <span id="tz"></span></footer>
 </div>
 <script src="data.js"></script>
 <script>
@@ -32,7 +32,16 @@
   disc.innerHTML = AIRPORTS[CODE].verified
     ? "Fares &amp; service hours verified Aug 2026. Metro/rail show exact clock-face times; the X95 shows live arrivals from OASA when buses are running, otherwise the timetable. Always confirm at the stop."
     : "Sample data — fares and times are illustrative and not yet verified. Departure times are estimated from the listed frequency. Confirm at the stop.";
+  disc.dataset.en=disc.textContent;
   initAirport(CODE);
+  if(typeof applyLanguage === "function") applyLanguage();
+  if(JL_LANG==="el"){
+    const h=document.querySelector("h1");
+    const i=document.querySelector(".intro");
+    if(h) h.innerHTML='Αεροδρόμιο Σαντορίνης → Φηρά';
+    if(i) i.textContent='Πώς θα πας από το αεροδρόμιο Σαντορίνης (JTR) στα Φηρά με το δημόσιο λεωφορείο — τιμή, συχνότητα και ζωντανές αναχωρήσεις, χωρίς προώθηση ταξί.';
+  }
+
 </script>
 </body>
 </html>

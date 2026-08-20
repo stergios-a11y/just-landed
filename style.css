@@ -9,7 +9,7 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 .logo .mk{display:inline-flex;color:var(--ink)}
 .logo .mk svg{height:20px;width:auto;display:block}
 .logo .wm{font-family:"Inter",Arial,Helvetica,sans-serif;font-weight:900;font-size:15px;letter-spacing:-.01em;color:var(--ink);text-transform:uppercase}
-.clock{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;color:var(--ink);letter-spacing:.08em;border:1px solid var(--line);padding:5px 9px;border-radius:6px}
+.header-tools{display:flex;align-items:center;gap:8px}.lang-switch{display:flex;align-items:center;gap:4px;font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}.lang-switch button{appearance:none;border:0;background:transparent;color:var(--muted);font:700 9px/1 "JetBrains Mono",monospace;letter-spacing:.08em;padding:4px 3px;cursor:pointer}.lang-switch button.active{color:var(--amber)}.lang-switch button:hover,.lang-switch button:focus-visible{color:var(--ink);outline:none}.clock{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;color:var(--ink);letter-spacing:.08em;border:1px solid var(--line);padding:5px 9px;border-radius:6px}
 .backlink{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
 .backlink:hover{color:var(--amber)}
 h1{font-family:"Inter",sans-serif;font-weight:900;font-size:24px;letter-spacing:-.01em;margin:2px 0 8px;text-transform:uppercase;line-height:1.08}
@@ -30,8 +30,6 @@ h1{font-family:"Inter",sans-serif;font-weight:900;font-size:24px;letter-spacing:
 .time-custom.selected .time-custom-arrow{color:var(--amber)}
 .time-picker-native{position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0;margin:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;color-scheme:dark}
 .time-help{margin-top:8px;color:var(--muted);font:500 9.5px/1.35 "JetBrains Mono",monospace}
-.time-panel:has(.time-custom.selected) .time-help{font-size:0}
-.time-panel:has(.time-custom.selected) .time-help::after{content:" Fixed start time — departures are calculated from the selected moment.";color:var(--muted)}
 
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;margin-bottom:12px}
 .top{display:flex;align-items:flex-start;gap:11px}
@@ -133,3 +131,5 @@ h1 em{font-style:normal;color:var(--amber)}
 .taxi-card::after{content:"TAXI · DOOR TO DOOR";display:block;margin-top:12px;font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
 
 @media(max-width:600px){.time-actions{display:grid;grid-template-columns:1fr 1.65fr}.time-btn,.time-custom{padding:0 7px;font-size:9px}.time-help{font-size:8.5px}}
+
+html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}

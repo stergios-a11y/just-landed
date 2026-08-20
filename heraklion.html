@@ -13,16 +13,16 @@
 <div class="wrap">
   <header>
     <div class="logo"><a href="index.html" class="lk"><svg class="mk" viewBox="36 40 500 168" aria-hidden="true"><g fill="#FAFAF8"><path d="M132 48 L226 48 L291 101 L370 101 L408 138 L293 138 L226 92 L132 92 Z"/><path d="M42 171 H391 L420 138 H447 L410 197 H42 Z"/></g><path d="M392 139 H520" fill="none" stroke="#FFC107" stroke-width="26" stroke-linecap="square"/><path d="M500 115 L530 139 L500 163" fill="none" stroke="#FFC107" stroke-width="26" stroke-linecap="square" stroke-linejoin="miter"/></svg><span class="wm">JUST LANDED</span></a></div>
-    <div class="clock" id="clock">now –:–</div>
+    <div class="header-tools"><div class="lang-switch" id="lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><span>·</span><button type="button" data-lang="el">ΕΛ</button></div><div class="clock" id="clock">now –:–</div></div>
   </header>
-  <a class="backlink" href="index.html">&#8592; all airports</a>
-  <h1>Heraklion Airport &#8594; town</h1>
-  <p class="intro">The cheapest, simplest ways from Heraklion Airport (HER) into the city and to the ferry port &#8212; by public KTEL bus, with live departures and no taxi upsell.</p>
+  <a class="backlink" id="backlink" href="index.html">&#8592; all airports</a>
+  <h1 data-page-title="heraklion" data-page-title-en="Heraklion Airport → town" data-page-title-el="Αεροδρόμιο Ηρακλείου → πόλη">Heraklion Airport &#8594; town</h1>
+  <p class="intro" data-page-intro="heraklion" data-page-intro-en="The cheapest, simplest ways from Heraklion Airport (HER) into the city and to the ferry port &#8212; by public KTEL bus, with live departures and no taxi upsell." data-page-intro-el="Οι απλοί τρόποι από το αεροδρόμιο Ηρακλείου (HER) προς το κέντρο και το λιμάνι — με δημόσιο λεωφορείο ΚΤΕΛ, ζωντανές αναχωρήσεις και χωρίς προώθηση ταξί.">The cheapest, simplest ways from Heraklion Airport (HER) into the city and to the ferry port &#8212; by public KTEL bus, with live departures and no taxi upsell.</p>
   <p class="tagline" id="sub"></p>
   <div id="options"></div>
   <div class="conns" id="conns"></div>
   <div class="disclaimer" id="disc"></div>
-  <footer>Public transport first — taxi facts too, no booking upsell.<br>Prototype &#183; <span id="tz"></span></footer>
+  <footer><span data-i18n="footer">Public transport first — taxi facts too, no booking upsell.</span><br><span data-i18n="prototype">Prototype</span> &#183; <span id="tz"></span></footer>
 </div>
 <script src="data.js"></script>
 <script>
@@ -32,7 +32,16 @@
   disc.innerHTML = AIRPORTS[CODE].verified
     ? "Fares &amp; service hours verified Aug 2026. Metro/rail show exact clock-face times; the X95 shows live arrivals from OASA when buses are running, otherwise the timetable. Always confirm at the stop."
     : "Sample data — fares and times are illustrative and not yet verified. Departure times are estimated from the listed frequency. Confirm at the stop.";
+  disc.dataset.en=disc.textContent;
   initAirport(CODE);
+  if(typeof applyLanguage === "function") applyLanguage();
+  if(JL_LANG==="el"){
+    const h=document.querySelector("h1");
+    const i=document.querySelector(".intro");
+    if(h) h.innerHTML='Αεροδρόμιο Ηρακλείου → πόλη';
+    if(i) i.textContent='Οι απλοί τρόποι από το αεροδρόμιο Ηρακλείου (HER) προς το κέντρο και το λιμάνι — με δημόσιο λεωφορείο ΚΤΕΛ, ζωντανές αναχωρήσεις και χωρίς προώθηση ταξί.';
+  }
+
 </script>
 </body>
 </html>

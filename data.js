@@ -85,6 +85,125 @@ const AIRPORTS = {
 const ORDER = ["ATH","SKG","HER","CHQ","JTR"];
 const LIVE = {};
 
+const I18N = {
+  el: {
+    "Greece · airport → city":"Ελλάδα · αεροδρόμιο → πόλη",
+    "You made it.":"Έφτασες.", "Now get out.":"Τώρα φύγαμε.",
+    "Find your airport.":"Βρες το αεροδρόμιό σου.",
+    "Get the next useful option into town — with the fare, time and where to walk.":"Δες την επόμενη χρήσιμη επιλογή προς την πόλη — με τιμή, χρόνο και σημείο επιβίβασης.",
+    "Where did you land?":"Πού προσγειώθηκες;", "LIVE WHERE AVAILABLE":"ΖΩΝΤΑΝΑ ΟΠΟΥ ΥΠΑΡΧΟΥΝ",
+    "What happens next":"Τι ακολουθεί", "Pick an airport.":"Διάλεξε αεροδρόμιο.",
+    "The airport page puts the fastest option first, then gives you alternatives, fares, journey times and the exact walk from arrivals.":"Η σελίδα του αεροδρομίου βάζει πρώτη τη γρηγορότερη επιλογή και μετά δείχνει εναλλακτικές, τιμές, χρόνους και ακριβή διαδρομή με τα πόδια από τις αφίξεις.",
+    "Fastest option first. Then alternatives, fares, journey times and where to walk from arrivals.":"Πρώτα η γρηγορότερη επιλογή. Μετά εναλλακτικές, τιμές, χρόνοι και σημείο περπατήματος από τις αφίξεις.",
+    "Data status":"Κατάσταση δεδομένων", "means an actual departure feed.":"σημαίνει πραγματική ροή αναχωρήσεων.",
+    "Timetable and estimated times are labelled separately.":"Τα προγραμματισμένα και τα εκτιμώμενα δρομολόγια επισημαίνονται ξεχωριστά.",
+    "PUBLIC TRANSPORT FIRST · TAXI FACTS TOO · NO BOOKING UPSELL":"ΠΡΩΤΑ ΔΗΜΟΣΙΑ ΣΥΓΚΟΙΝΩΝΙΑ · ΚΑΙ ΠΛΗΡΟΦΟΡΙΕΣ ΤΑΞΙ · ΧΩΡΙΣ ΠΡΟΩΘΗΣΗ ΚΡΑΤΗΣΗΣ",
+    "Public transport first — taxi facts too, no booking upsell.":"Πρώτα δημόσια συγκοινωνία — και πληροφορίες ταξί, χωρίς προώθηση κράτησης.",
+    "Prototype":"Πρωτότυπο", "all airports":"όλα τα αεροδρόμια", "Where are you headed?":"Πού κατευθύνεσαι;",
+    "ASAP":"ΤΩΡΑ", "SET TIME":"ΟΡΙΣΕ ΩΡΑ", "WHEN?":"ΠΟΤΕ;",
+    "See the next departures and fastest option from this time.":"Δες τις επόμενες αναχωρήσεις και τη γρηγορότερη επιλογή από αυτή την ώρα.",
+    "Fixed start time — departures are calculated from the selected moment.":"Σταθερή ώρα έναρξης — οι αναχωρήσεις υπολογίζονται από την επιλεγμένη στιγμή.",
+    "FASTEST":"ΓΡΗΓΟΡΟΤΕΡΟ", "LIVE":"ΖΩΝΤΑΝΑ", "Departs":"Αναχωρεί", "Availability":"Διαθεσιμότητα",
+    "service closed now":"η υπηρεσία δεν λειτουργεί τώρα", "service closed":"η υπηρεσία δεν λειτουργεί", "departing now":"αναχωρεί τώρα", "now":"τώρα",
+    "on demand":"κατόπιν ζήτησης", "Now":"Τώρα", "then":"μετά", "24 hours":"24 ώρες", "24h":"24ωρο",
+    "No app needed — walk to the rank and take one.":"Δεν χρειάζεται εφαρμογή — πήγαινε στην πιάτσα και πάρε ένα.",
+    "Also on app:":"Επίσης στην εφαρμογή:", "TAXI · DOOR TO DOOR":"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ",
+    "WALK TO DEPARTURE":"ΠΕΡΠΑΤΗΣΕ ΩΣ ΤΗΝ ΑΝΑΧΩΡΗΣΗ", "Departure point":"Σημείο αναχώρησης", "Airport arrivals":"Αφίξεις αεροδρομίου",
+    "Follow airport signs to the departure point":"Ακολούθησε τις πινακίδες του αεροδρομίου προς το σημείο αναχώρησης",
+    "OPEN WALKING DIRECTIONS ↗":"ΑΝΟΙΓΜΑ ΟΔΗΓΙΩΝ ΠΕΖΗ ↗", "Show walking directions":"Εμφάνιση οδηγιών πεζή", "Close":"Κλείσιμο",
+    "LIVE WHERE AVAILABLE":"ΖΩΝΤΑΝΑ ΟΠΟΥ ΥΠΑΡΧΟΥΝ", "NO SERVICE":"ΧΩΡΙΣ ΔΡΟΜΟΛΟΓΙΟ",
+    "city centre":"κέντρο πόλης", "City centre":"Κέντρο πόλης", "Monastiráki":"Μοναστηράκι", "Monastiráki / Pláka":"Μοναστηράκι / Πλάκα",
+    "Acropolis":"Ακρόπολη", "Piraeus port":"Λιμάνι Πειραιά", "Rafina port":"Λιμάνι Ραφήνας", "Coaches":"ΚΤΕΛ", "Mainland coaches (KTEL)":"ΚΤΕΛ προς ηπειρωτική Ελλάδα",
+    "Syntagma / city centre":"Σύνταγμα / κέντρο πόλης", "Syntagma — direct":"Σύνταγμα — απευθείας", "Syntagma":"Σύνταγμα",
+    "Monastiraki — direct (M3)":"Μοναστηράκι — απευθείας (Μ3)", "Acropoli station":"Σταθμός Ακρόπολη", "Piraeus port — direct":"Λιμάνι Πειραιά — απευθείας", "Rafina port — direct":"Λιμάνι Ραφήνας — απευθείας", "Kifisós / Liossíon — direct":"Κηφισός / Λιοσίων — απευθείας",
+    "door to door":"πόρτα-πόρτα", "City centre (door to door)":"Κέντρο πόλης (πόρτα-πόρτα)", "Official flat fare":"Επίσημη σταθερή χρέωση",
+    "Metro M3":"Μετρό Μ3", "Bus X95":"Λεωφορείο X95", "Suburban Rail":"Προαστιακός", "Bus X96":"Λεωφορείο X96", "KTEL Rafina":"ΚΤΕΛ Ραφήνας", "Bus X93":"Λεωφορείο X93", "Taxi":"Ταξί",
+    "Metro Line 3 (blue) · direct from airport":"Γραμμή Μετρό 3 (μπλε) · απευθείας από το αεροδρόμιο", "Express bus X95 · runs 24 hours":"Express λεωφορείο X95 · 24ωρο", "Suburban Railway (Proastiakós)":"Προαστιακός Σιδηρόδρομος",
+    "Arrivals level, outside Exit 5":"Επίπεδο αφίξεων, έξω από την Έξοδο 5", "Arrivals level, outside Exit 3 (taxi rank)":"Επίπεδο αφίξεων, έξω από την Έξοδο 3 (πιάτσα ταξί)",
+    "Bus stop outside arrivals":"Στάση λεωφορείου έξω από τις αφίξεις", "Bus waiting area outside arrivals":"Χώρος αναμονής λεωφορείων έξω από τις αφίξεις", "Bus stop by the arrivals exit":"Στάση λεωφορείου δίπλα στην έξοδο αφίξεων",
+    "Main doors → turn right, follow the road":"Κύριες πόρτες → στρίψε δεξιά και ακολούθησε τον δρόμο", "Up to Departures level, across the walkway — follow ‘Trains’":"Ανέβα στο επίπεδο Αναχωρήσεων, από τη γέφυρα — ακολούθησε τις πινακίδες «Trains»",
+    "every ~10–15 min":"κάθε ~10–15 λεπτά", "sparse — ~8–10 buses/day":"αραιά — ~8–10 λεωφορεία/ημέρα", "hourly in summer · ~3h in winter":"ανά ώρα το καλοκαίρι · ~3 ώρες τον χειμώνα", "every ~25 min · 30 min overnight":"κάθε ~25 λεπτά · 30 λεπτά τη νύχτα", "every ~30 min":"περίπου κάθε 30 λεπτά", "roughly every 30 min":"περίπου κάθε 30 λεπτά", "every ~20 min · hourly overnight":"κάθε ~20 λεπτά · ανά ώρα τη νύχτα",
+    "~5 min walk":"~5 λεπτά με τα πόδια", "~3 min walk":"~3 λεπτά με τα πόδια", "~2 min walk":"~2 λεπτά με τα πόδια", "~6 min walk":"~6 λεπτά με τα πόδια",
+    "~20 min":"~20 λεπτά", "~30 min":"~30 λεπτά", "~40 min":"~40 λεπτά", "~45 min":"~45 λεπτά", "~50 min":"~50 λεπτά", "~40–50 min":"~40–50 λεπτά", "60–75 min":"60–75 λεπτά",
+    "City bus · centre & port":"Αστικό λεωφορείο · κέντρο & λιμάνι", "KTEL bus · to town":"ΚΤΕΛ · προς πόλη", "KTEL bus · to Fira":"ΚΤΕΛ · προς Φηρά", "Bus 01X · to the centre":"Λεωφορείο 01Χ · προς κέντρο", "City bus · look for ‘ΗΡΑΚΛΕΙΟ / IRAKLIO’ on the front":"Αστικό λεωφορείο · αναζήτησε «ΗΡΑΚΛΕΙΟ / IRAKLIO» στην μπροστινή πλευρά", "KTEL Chania bus · buy from the driver":"ΚΤΕΛ Χανίων · αγορά εισιτηρίου από τον οδηγό", "KTEL bus · buy from the driver":"ΚΤΕΛ · αγορά εισιτηρίου από τον οδηγό", "OASTH bus 01X · 01N overnight":"ΟΑΣΘ λεωφορείο 01Χ · 01Ν νυχτερινό",
+    "Heraklion centre & port (Bus Station A)":"Κέντρο Ηρακλείου & λιμάνι (Σταθμός Λεωφορείων Α)", "Chania town / KTEL station":"Πόλη Χανίων / σταθμός ΚΤΕΛ", "Fira (main town bus station)":"Φηρά (κεντρικός σταθμός λεωφορείων)", "City centre (Aristotelous · White Tower)":"Κέντρο πόλης (Αριστοτέλους · Λευκός Πύργος)",
+    "Piraeus port":"Λιμάνι Πειραιά", "Rafina port":"Λιμάνι Ραφήνας", "Mainland coaches":"ΚΤΕΛ προς ηπειρωτική Ελλάδα", "South Athens":"Νότια Αθήνα",
+    "X96 · €5.50 · Crete, Cyclades, Dodecanese":"X96 · €5,50 · Κρήτη, Κυκλάδες, Δωδεκάνησα", "KTEL · €3 · Andros, Tinos, Mykonos, Evia · Exits 2–3":"ΚΤΕΛ · €3 · Άνδρος, Τήνος, Μύκονος, Εύβοια · Έξοδοι 2–3", "X93 · €5.50 · Kifisós / Liossíon":"X93 · €5,50 · Κηφισός / Λιοσίων", "X97 · €5.50 · Elliniko / Dafni":"X97 · €5,50 · Ελληνικό / Δάφνη",
+    "Ferries to Crete, Cyclades, Dodecanese":"Πλοία για Κρήτη, Κυκλάδες, Δωδεκάνησα", "Ferries to Andros, Tinos, Mykonos, Evia · from Exits 2–3":"Πλοία για Άνδρο, Τήνο, Μύκονο, Εύβοια · από τις Εξόδους 2–3", "KTEL coaches to the rest of Greece":"ΚΤΕΛ προς την υπόλοιπη Ελλάδα",
+    "every ~30 min":"περίπου κάθε 30 λεπτά", "~6 min walk":"~6 λεπτά με τα πόδια", "~3 min walk":"~3 λεπτά με τα πόδια",
+    "Tap contactless at the gate":"Πλήρωσε ανέπαφα στην πύλη", "Tap contactless onboard":"Πλήρωσε ανέπαφα στο λεωφορείο", "Card accepted":"Δέχεται κάρτα",
+    "Fare & service hours verified Aug 2026.":"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026.",
+    "Fares & service hours verified Aug 2026. Metro/rail show exact clock-face times; the X95 shows live arrivals from OASA when buses are running, otherwise the timetable. Always confirm at the stop.":"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Μετρό/τρένο δείχνουν προγραμματισμένες ώρες, ενώ το X95 δείχνει ζωντανές αφίξεις από τον ΟΑΣΑ όταν τα λεωφορεία λειτουργούν, αλλιώς το πρόγραμμα. Έλεγξε πάντα στη στάση.",
+    "Sample data — fares and times are illustrative and not yet verified. Departure times are estimated from the listed frequency. Confirm at the stop.":"Ενδεικτικά δεδομένα — τιμές και ώρες δεν έχουν ακόμη επαληθευτεί. Οι αναχωρήσεις υπολογίζονται από τη δηλωμένη συχνότητα. Έλεγξε στη στάση.",
+    "Cheapest and never closes, but slow in traffic. Buy at the booth or just tap your card on the bus. Live times when buses are running, otherwise the timetable.":"Η φθηνότερη επιλογή και λειτουργεί όλο το 24ωρο, αλλά καθυστερεί στην κίνηση. Αγόρασε εισιτήριο στο εκδοτήριο ή πλήρωσε ανέπαφα στο λεωφορείο. Ζωντανές ώρες όταν λειτουργούν τα λεωφορεία, αλλιώς το πρόγραμμα.",
+    "Fewer trains than the metro — best if you're heading to the central rail station.":"Λιγότερα τρένα από το μετρό — καλύτερο αν κατευθύνεσαι στον κεντρικό σιδηροδρομικό σταθμό.",
+    "Flat fare €40 daytime (05:00–24:00) · €55 night (00:00–05:00) to the city centre.":"Σταθερή χρέωση €40 την ημέρα (05:00–24:00) · €55 τη νύχτα (00:00–05:00) προς το κέντρο.",
+    "€9 flat airport fare (not the standard €1.20 ticket). Return €16, valid 48h.":"€9 σταθερή τιμή αεροδρομίου (όχι το κανονικό εισιτήριο €1,20). Επιστροφή €16, ισχύει 48 ώρες.",
+    "Irregular KTEL timetable (not flight-timed) — the next time shown is an estimate; check the posted schedule at the stop. €2.50 from the driver, cash.":"Ακανόνιστο πρόγραμμα ΚΤΕΛ (δεν είναι συνδεδεμένο με τις πτήσεις) — η επόμενη ώρα είναι εκτίμηση· έλεγξε το αναρτημένο πρόγραμμα στη στάση. €2,50 από τον οδηγό, μετρητά.",
+    "Summer: about hourly. Winter: roughly every 3 hours — the time shown is an estimate, check the posted schedule. Overnight (00:00–05:00) barely runs; arrange backup for very early/late flights. All airport buses terminate at Fira bus station.":"Καλοκαίρι: περίπου ανά ώρα. Χειμώνας: περίπου κάθε 3 ώρες — η ώρα είναι εκτίμηση, έλεγξε το πρόγραμμα. Τη νύχτα (00:00–05:00) σχεδόν δεν εκτελείται· βρες εναλλακτική για πολύ πρωινές/βραδινές πτήσεις. Όλα τα λεωφορεία του αεροδρομίου τερματίζουν στον σταθμό Φηρών.",
+    "€2 airport fare (not the standard €0.90 ticket). Buy at the arrivals machines or onboard — no change given. 01X also stops at the railway station & KTEL Makedonia.":"€2 τιμή αεροδρομίου (όχι το κανονικό εισιτήριο €0,90). Αγόρασε από τα μηχανήματα στις αφίξεις ή μέσα στο λεωφορείο — δεν δίνονται ρέστα. Το 01Χ σταματά επίσης στον σιδηροδρομικό σταθμό και στο ΚΤΕΛ Μακεδονία.",
+    "€1.30 from the kiosk, €2.30 from the driver — cash. No service after midnight; validate on board.":"€1,30 από το περίπτερο, €2,30 από τον οδηγό — μετρητά. Δεν υπάρχει υπηρεσία μετά τα μεσάνυχτα· επικύρωσε το εισιτήριο μέσα στο λεωφορείο.",
+    "M3 to <b>Syntagma</b> → change to the <b>red line (M2)</b>, 1 stop":"Μ3 έως <b>Σύνταγμα</b> → αλλαγή στην <b>κόκκινη γραμμή (Μ2)</b>, 1 στάση",
+    "M3 <b>direct</b>, then walk up":"Μ3 <b>απευθείας</b>, μετά περπάτημα προς τα πάνω", "Syntagma, then ~8 min walk":"Σύνταγμα, μετά ~8 λεπτά με τα πόδια", "Monastiraki, then ~10 min walk":"Μοναστηράκι, μετά ~10 λεπτά με τα πόδια",
+    "M3 to <b>Monastiraki</b> → change to the <b>green line (M1)</b>":"Μ3 έως <b>Μοναστηράκι</b> → αλλαγή στην <b>πράσινη γραμμή (Μ1)</b>",
+    "next":"επόμενο", "first":"πρώτο", "live · ":"ζωντανά · ", "in ":"σε ", "m":"λ", "h":"ώ",
+  }
+};
+
+I18N.el.airportName="Αεροδρόμιο Αθηνών"; I18N.el.cityCentre="κέντρο πόλης"; I18N.el.whereHeaded="Πού κατευθύνεσαι;"; I18N.el["Athens Airport"]="Αεροδρόμιο Αθηνών"; I18N.el["Athens (ATH)"]="Αθήνα (ATH)"; I18N.el["Heraklion (HER)"]="Ηράκλειο (HER)"; I18N.el["Chania (CHQ)"]="Χανιά (CHQ)"; I18N.el["Santorini (JTR)"]="Σαντορίνη (JTR)"; I18N.el["Thessaloniki (SKG)"]="Θεσσαλονίκη (SKG)"; I18N.el["Attica"]="Αττική"; I18N.el["Crete"]="Κρήτη"; I18N.el["Cyclades"]="Κυκλάδες"; I18N.el["Macedonia"]="Μακεδονία"; I18N.el["Heraklion Airport to town"]="Αεροδρόμιο Ηρακλείου προς πόλη"; I18N.el["Chania Airport to town"]="Αεροδρόμιο Χανίων προς πόλη"; I18N.el["Santorini Airport to Fira"]="Αεροδρόμιο Σαντορίνης προς Φηρά"; I18N.el["Thessaloniki Airport to the city centre"]="Αεροδρόμιο Θεσσαλονίκης προς κέντρο"; I18N.el["Athens Airport to the city centre"]="Αεροδρόμιο Αθηνών προς κέντρο";I18N.el.kicker="Ελλάδα · αεροδρόμιο → πόλη"; I18N.el.hero1="Έφτασες."; I18N.el.hero2="Τώρα φύγαμε."; I18N.el.findAirport="Βρες το αεροδρόμιό σου."; I18N.el.heroCopy="Δες την επόμενη χρήσιμη επιλογή προς την πόλη — με τιμή, χρόνο και σημείο επιβίβασης."; I18N.el.whereLanded="Πού προσγειώθηκες;"; I18N.el.liveWhere="ΖΩΝΤΑΝΑ ΟΠΟΥ ΥΠΑΡΧΟΥΝ"; I18N.el.whatNext="Τι ακολουθεί"; I18N.el.pickAirport="Διάλεξε αεροδρόμιο."; I18N.el.nextDesktop="Η σελίδα του αεροδρομίου βάζει πρώτη τη γρηγορότερη επιλογή και μετά δείχνει εναλλακτικές, τιμές, χρόνους και ακριβή διαδρομή με τα πόδια από τις αφίξεις."; I18N.el.nextMobile="Πρώτα η γρηγορότερη επιλογή. Μετά εναλλακτικές, τιμές, χρόνοι και σημείο περπατήματος από τις αφίξεις."; I18N.el.dataStatus="Κατάσταση δεδομένων"; I18N.el.liveMeans="σημαίνει πραγματική ροή αναχωρήσεων. Τα προγραμματισμένα και τα εκτιμώμενα δρομολόγια επισημαίνονται ξεχωριστά."; I18N.el.footer="ΠΡΩΤΑ ΔΗΜΟΣΙΑ ΣΥΓΚΟΙΝΩΝΙΑ · ΚΑΙ ΠΛΗΡΟΦΟΡΙΕΣ ΤΑΞΙ · ΧΩΡΙΣ ΠΡΟΩΘΗΣΗ ΚΡΑΤΗΣΗΣ";
+let JL_LANG = localStorage.getItem("jl-lang") || ((navigator.language||"").toLowerCase().startsWith("el") ? "el" : "en");
+function tr(v){
+  if(JL_LANG!=="el" || v==null) return v;
+  const s=String(v);
+  if(I18N.el[s]) return I18N.el[s];
+  if(/^~?\d+(?:\.\d+)? min walk$/.test(s)) return s.replace(/(\d+(?:\.\d+)?)/,"$1") .replace(" min walk"," λεπτά με τα πόδια").replace("~","~");
+  if(/^every ~/.test(s) && / min/.test(s)) return s.replace(/ min/g," λεπτά");
+  if(/^in \d+ min$/.test(s)) return s.replace("in ","σε ").replace(" min"," λεπτά");
+  if(/^IN \d+M$/.test(s)) return s.replace("IN ","ΣΕ ").replace("M","Λ");
+  if(/^IN \d+H$/.test(s)) return s.replace("IN ","ΣΕ ").replace("H","ΩΡ");
+  return s;
+}
+function trHtml(v){ return tr(v); }
+function selectedLangLabel(){ return JL_LANG==="el" ? "ΕΛ" : "EN"; }
+function setLanguage(lang){
+  JL_LANG=lang==="el"?"el":"en"; localStorage.setItem("jl-lang",JL_LANG); applyLanguage();
+  const code=typeof CODE!=="undefined"?CODE:null;
+  if(code){ const ap=AIRPORTS[code]; (ap&&ap.destinations?renderDest:renderAirport)(code); }
+  if(typeof renderIndex === "function") renderIndex(); else if(typeof render === "function") render();
+}
+const DISC_I18N={ATH:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Μετρό/τρένο δείχνουν προγραμματισμένες ώρες, ενώ το X95 δείχνει ζωντανές αφίξεις από τον ΟΑΣΑ όταν τα λεωφορεία λειτουργούν, αλλιώς το πρόγραμμα. Έλεγξε πάντα στη στάση.",CHQ:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Τα δρομολόγια ΚΤΕΛ εμφανίζονται με βάση το διαθέσιμο πρόγραμμα. Έλεγξε πάντα στη στάση.",HER:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Οι ώρες βασίζονται στο διαθέσιμο πρόγραμμα και τη συχνότητα. Έλεγξε πάντα στη στάση.",JTR:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Τα δρομολόγια είναι εποχικά και ορισμένες ώρες είναι εκτιμήσεις. Έλεγξε πάντα στη στάση.",SKG:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Οι ώρες βασίζονται στο διαθέσιμο πρόγραμμα. Έλεγξε πάντα στη στάση."};
+function applyLanguage(){
+  document.documentElement.lang=JL_LANG;
+  document.querySelectorAll(".lang-switch button").forEach(b=>b.classList.toggle("active",b.dataset.lang===JL_LANG));
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ const key=el.dataset.i18n; el.textContent=JL_LANG==="el"?(I18N.el[key]||el.dataset.i18nOriginal||el.textContent):(el.dataset.i18nOriginal||el.textContent); });
+  const back=document.getElementById("backlink"); if(back) back.innerHTML=JL_LANG==="el"?"← όλα τα αεροδρόμια":"← all airports";
+  const proto=document.querySelector('[data-i18n="prototype"]'); if(proto) proto.textContent=JL_LANG==="el"?"Πρωτότυπο":"Prototype";
+  document.querySelectorAll("[data-page-title]").forEach(el=>{el.textContent=JL_LANG==="el"?el.dataset.pageTitleEl:el.dataset.pageTitleEn;});
+  document.querySelectorAll("[data-page-intro]").forEach(el=>{el.textContent=JL_LANG==="el"?el.dataset.pageIntroEl:el.dataset.pageIntroEn;});
+  if(typeof CODE!=="undefined" && CODE==="ATH"){ const h=document.querySelector("h1"); const i=document.querySelector(".intro"); const cur=(typeof DESTSEL!=="undefined"&&DESTSEL[CODE])?AIRPORTS[CODE].destinations.find(x=>x.id===DESTSEL[CODE]):AIRPORTS[CODE].destinations[0]; if(h) h.innerHTML=JL_LANG==="el"?"Αεροδρόμιο Αθηνών → <em id=\"desttitle\">"+tr(cur.title)+"</em>":"Athens Airport → <em id=\"desttitle\">"+cur.title+"</em>"; if(i) i.textContent=JL_LANG==="el"?"Δημόσιες συγκοινωνίες από το αεροδρόμιο Αθηνών (ATH) προς την πόλη — διάλεξε προορισμό. Ζωντανές ώρες όπου υπάρχουν.":"Public transport from Athens Airport (ATH) into town — pick where you’re headed. Live times where the buses are running."; }
+  const disc=document.getElementById("disc"); if(disc && typeof CODE!=="undefined"){ if(JL_LANG==="el" && DISC_I18N[CODE]) disc.textContent=DISC_I18N[CODE]; else if(disc.dataset.en) disc.textContent=disc.dataset.en; }
+  updatePageMeta();
+  updateTimePicker();
+}
+function bindLanguage(){
+  document.querySelectorAll(".lang-switch button").forEach(b=>b.onclick=()=>setLanguage(b.dataset.lang));
+  applyLanguage();
+}
+function updatePageMeta(){
+  const code=typeof CODE!=="undefined"?CODE:null;
+  const pages={
+    ATH:{enTitle:"Athens Airport → city centre",elTitle:"Αεροδρόμιο Αθηνών → κέντρο πόλης",enDesc:"Public transport from Athens Airport (ATH) into town — pick where you’re headed. Live times where the buses are running."},
+    CHQ:{enTitle:"Chania Airport → town",elTitle:"Αεροδρόμιο Χανίων → πόλη",enDesc:"How to get from Chania Airport (CHQ) into town by public KTEL bus — fare, timetable and live departures, no taxi upsell."},
+    HER:{enTitle:"Heraklion Airport → town",elTitle:"Αεροδρόμιο Ηρακλείου → πόλη",enDesc:"The simplest ways from Heraklion Airport (HER) into the city and port — by public KTEL bus, with live departures and no taxi upsell."},
+    JTR:{enTitle:"Santorini Airport → Fira",elTitle:"Αεροδρόμιο Σαντορίνης → Φηρά",enDesc:"Getting from Santorini Airport (JTR) to Fira by public bus — fare, frequency and live departures, no taxi upsell."},
+    SKG:{enTitle:"Thessaloniki Airport → town",elTitle:"Αεροδρόμιο Θεσσαλονίκης → πόλη",enDesc:"How to get from Thessaloniki Airport (SKG) into the city centre by public OASTH bus — fare, frequency and departures, no taxi upsell."}
+  };
+  if(code && pages[code]){ const x=pages[code]; document.title=(JL_LANG==="el"?x.elTitle:x.enTitle)+" · Just Landed"; const m=document.querySelector('meta[name="description"]'); if(m) m.content=JL_LANG==="el"?x.elDesc:m.content; }
+  else if(!code){ document.title=JL_LANG==="el"?"Just Landed · Αεροδρόμιο προς πόλη":"Just Landed · Airport to city"; }
+}
+if(typeof document!=="undefined") { if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",bindLanguage); else bindLanguage(); }
+
+
 /* transport mode icons — monochrome wayfinding glyphs */
 const MODES = {
   ferry:'<path d="M20 21c-1.39 0-2.78-.47-4-1.32-2.44 1.71-5.56 1.71-8 0-1.22.85-2.61 1.32-4 1.32H2v2h2c1.38 0 2.74-.35 4-.99 2.52 1.29 5.48 1.29 8 0 1.26.65 2.62.99 4 .99h2v-2h-2zM3.95 19H4c1.6 0 3.02-.88 4-2 .98 1.12 2.4 2 4 2s3.02-.88 4-2c.98 1.12 2.4 2 4 2h.05l1.89-6.68c.08-.26.06-.54-.06-.78s-.34-.42-.6-.5L20 10.62V6c0-1.1-.9-2-2-2h-3V1H9v3H6c-1.1 0-2 .9-2 2v4.62l-1.29.42c-.26.08-.48.26-.6.5s-.15.52-.06.78L3.95 19zM6 6h12v3.97L12 8 6 9.97V6z"/>',
@@ -115,13 +234,13 @@ function ensureTimePicker(){
   if(!intro) return;
   intro.insertAdjacentHTML("afterend",`
     <section class="time-panel" aria-label="Choose departure time">
-      <div class="time-panel-head"><span>WHEN?</span><strong id="when-label">ASAP</strong></div>
+      <div class="time-panel-head"><span data-i18n="WHEN?">WHEN?</span><strong id="when-label">ASAP</strong></div>
       <div class="time-actions">
         <button type="button" class="time-btn on" id="time-now">ASAP</button>
         <button type="button" class="time-custom" id="time-custom-btn" aria-label="Choose a fixed date and time"><span id="time-custom-label">SET TIME</span><span class="time-custom-arrow">→</span></button>
         <input id="time-picker" class="time-picker-native" type="datetime-local" aria-label="Set a fixed start date and time">
       </div>
-      <div class="time-help">See the next departures and fastest option from this time.</div>
+      <div class="time-help" id="time-help">See the next departures and fastest option from this time.</div>
     </section>`);
   const input=document.getElementById("time-picker");
   const now=new Date();
@@ -146,9 +265,10 @@ function updateTimePicker(){
   const customBtn=document.getElementById("time-custom-btn");
   const customLabel=document.getElementById("time-custom-label");
   if(customBtn && customLabel){
-    customLabel.textContent=VIEW_TIME_MODE==="custom"?selected:"SET TIME";
+    customLabel.textContent=VIEW_TIME_MODE==="custom"?selected:tr("SET TIME");
     customBtn.classList.toggle("selected",VIEW_TIME_MODE==="custom");
-    customBtn.setAttribute("aria-label",VIEW_TIME_MODE==="custom"?`Change fixed time: ${selected}`:"Choose a fixed date and time");
+    customBtn.setAttribute("aria-label",VIEW_TIME_MODE==="custom"?`${JL_LANG==="el"?"Αλλαγή σταθερής ώρας":"Change fixed time"}: ${selected}`:`${JL_LANG==="el"?"Ορισμός σταθερής ημερομηνίας και ώρας":"Choose a fixed date and time"}`);
+  const help=document.getElementById("time-help"); if(help) help.textContent=VIEW_TIME_MODE==="custom"?(JL_LANG==="el"?"Σταθερή ώρα έναρξης — οι αναχωρήσεις υπολογίζονται από την επιλεγμένη στιγμή.":"Fixed start time — departures are calculated from the selected moment."):(JL_LANG==="el"?"Δες τις επόμενες αναχωρήσεις και τη γρηγορότερη επιλογή από αυτή την ώρα.":"See the next departures and fastest option from this time.");
   }
 }
 
@@ -198,7 +318,7 @@ function selectedLabel(d){
   const today=new Date(); today.setHours(0,0,0,0);
   const day=new Date(d); day.setHours(0,0,0,0);
   const diff=Math.round((day-today)/86400000);
-  const dayLabel=diff===0?"TODAY":diff===1?"TOMORROW":new Intl.DateTimeFormat([], {weekday:"short",day:"numeric",month:"short"}).format(d).toUpperCase();
+  const dayLabel=JL_LANG==="el" ? (diff===0?"ΣΗΜΕΡΑ":diff===1?"ΑΥΡΙΟ":new Intl.DateTimeFormat("el-GR", {weekday:"short",day:"numeric",month:"short"}).format(d).toUpperCase()) : (diff===0?"TODAY":diff===1?"TOMORROW":new Intl.DateTimeFormat([], {weekday:"short",day:"numeric",month:"short"}).format(d).toUpperCase());
   return `${dayLabel} · ${fmt(d.getHours()*60+d.getMinutes())}`;
 }
 function tripWaitText(r){
@@ -211,11 +331,11 @@ function tripWaitText(r){
 function wayOf(o){
   if(!o.access && !o.walk) return "";
   const w=o.walk
-    ? `<button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.to||"")}" aria-label="Show walking directions">${"🚶 "+o.walk} <span class="walk-arrow">→</span></button>`
+    ? `<button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.to||"")}" aria-label="${JL_LANG==="el"?"Εμφάνιση οδηγιών πεζή":"Show walking directions"}">${"🚶 "+o.walk} <span class="walk-arrow">→</span></button>`
     : "";
   const sep=(o.walk && o.access)?" ":"";
   let loc="";
-  if(o.access){ loc=`<span class="access">${o.access}</span>`; }
+  if(o.access){ loc=`<span class="access">${tr(o.access)}</span>`; }
   return `<div class="way">${w}${sep}${loc}</div>`;
 }
 
@@ -225,13 +345,13 @@ function ensureWalkModal(){
     <div class="walk-modal" id="walk-modal" hidden>
       <div class="walk-backdrop" data-close-walk></div>
       <section class="walk-sheet" role="dialog" aria-modal="true" aria-labelledby="walk-title">
-        <button class="walk-close" type="button" data-close-walk aria-label="Close">×</button>
-        <div class="walk-kicker">WALK TO DEPARTURE</div>
-        <h2 id="walk-title">Departure point</h2>
+        <button class="walk-close" type="button" data-close-walk aria-label="${JL_LANG==="el"?"Κλείσιμο":"Close"}">×</button>
+        <div class="walk-kicker">${tr("WALK TO DEPARTURE")}</div>
+        <h2 id="walk-title">${tr("Departure point")}</h2>
         <div class="walk-route">
-          <div class="walk-point"><span class="walk-dot start"></span><div><b id="walk-start">Airport arrivals</b><small id="walk-start-detail"></small></div></div>
+          <div class="walk-point"><span class="walk-dot start"></span><div><b id="walk-start">${JL_LANG==="el"?"Αφίξεις αεροδρομίου":"Airport arrivals"}</b><small id="walk-start-detail"></small></div></div>
           <div class="walk-line"></div>
-          <div class="walk-point"><span class="walk-dot end"></span><div><b id="walk-end">Departure point</b><small id="walk-time"></small></div></div>
+          <div class="walk-point"><span class="walk-dot end"></span><div><b id="walk-end">${tr("Departure point")}</b><small id="walk-time"></small></div></div>
         </div>
         <a class="walk-map" id="walk-map" href="#" target="_blank" rel="noopener">OPEN WALKING DIRECTIONS ↗</a>
       </section>
@@ -247,13 +367,14 @@ function showWalk(btn){
   const to=decodeURIComponent(btn.dataset.to||"Departure point");
   const ap=(typeof AIRPORTS!=="undefined" && window.location.pathname.includes("/")) ? AIRPORTS[document.body.dataset.airport||""] : null;
   const airportName=(typeof CODE!=="undefined" && AIRPORTS[CODE]) ? AIRPORTS[CODE].name : "Airport";
-  document.getElementById("walk-title").textContent=to;
-  document.getElementById("walk-start").textContent=airportName+" arrivals";
-  document.getElementById("walk-start-detail").textContent=access||"Follow airport signs to the departure point";
-  document.getElementById("walk-end").textContent=to;
+  document.getElementById("walk-title").textContent=tr(to);
+  document.getElementById("walk-start").textContent=tr(airportName)+" "+(JL_LANG==="el"?"αφίξεις":"arrivals");
+  document.getElementById("walk-start-detail").textContent=tr(access||"Follow airport signs to the departure point");
+  document.getElementById("walk-end").textContent=tr(to);
   document.getElementById("walk-time").textContent=walk;
   const origin=encodeURIComponent(airportName+" arrivals");
   const dest=ll?encodeURIComponent(ll):encodeURIComponent(to);
+  document.getElementById("walk-map").textContent=JL_LANG==="el"?"ΑΝΟΙΓΜΑ ΟΔΗΓΙΩΝ ΠΕΖΗ ↗":"OPEN WALKING DIRECTIONS ↗";
   document.getElementById("walk-map").href=`https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&travelmode=walking`;
   m.hidden=false;
   document.body.classList.add("walk-open");
@@ -271,26 +392,26 @@ function optionCard(r, n){
   const fastest=!!r.fastest;
   const o=r.o;
   const meta=`<div class="meta"><b>${o.journey}</b> · ${o.freqLabel} · ${o.hours}</div>`;
-  const tags=o.tags?`<div class="tags">${o.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>`:"";
-  const head=`<div class="top"><div class="rank">${n}</div><div class="mode">${modeIcon(o.mode)}</div><div class="route"><div class="to">${o.to}</div><div class="op">${o.op}</div></div><div class="price">${o.price}</div></div>${wayOf(o)}${meta}${tags}`;
+  const tags=o.tags?`<div class="tags">${o.tags.map(t=>`<span class="tag">${tr(t)}</span>`).join("")}</div>`:"";
+  const head=`<div class="top"><div class="rank">${n}</div><div class="mode">${modeIcon(o.mode)}</div><div class="route"><div class="to">${tr(o.to)}</div><div class="op">${tr(o.op)}</div></div><div class="price">${o.price}</div></div>${wayOf(o)}${meta}${tags}`;
   if(r.onDemand){
-    const noapp=o.noapp?`<div class="noapp">${o.noapp}</div>`:"";
-    const apps=o.apps?`<div class="alsoapps">Also on app: ${o.apps.map(appBtn).join("")}</div>`:"";
-    return `<div class="card${fastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${fastest?'<div class="best-tag">★ FASTEST</div>':''}${head}${noapp}${apps}
-      <div class="dep"><div class="dep-l"><span class="lbl">Availability</span><div class="timerow"><span class="time">Now</span><span class="in soon">on demand</span></div></div><div class="dep-r"><div class="then">24 hours</div></div></div>
-      ${o.note?`<div class="note">⚠ ${o.note}</div>`:""}</div>`;
+    const noapp=o.noapp?`<div class="noapp">${tr(o.noapp)}</div>`:"";
+    const apps=o.apps?`<div class="alsoapps">${tr("Also on app:")} ${o.apps.map(appBtn).join("")}</div>`:"";
+    return `<div class="card${fastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${fastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}${head}${noapp}${apps}
+      <div class="dep"><div class="dep-l"><span class="lbl">${tr("Availability")}</span><div class="timerow"><span class="time">${tr("Now")}</span><span class="in soon">${tr("on demand")}</span></div></div><div class="dep-r"><div class="then">${tr("24 hours")}</div></div></div>
+      ${o.note?`<div class="note">⚠ ${tr(o.note)}</div>`:""}</div>`;
   }
   const est=(o.est && !r.isLive)?"~":"";
   let inTxt,cls;
-  if(r.closed){ inTxt="service closed now"; cls="closed"; }
-  else if(r.until<=0){ inTxt="departing now"; cls="soon"; }
-  else if(r.until<20){ inTxt="in "+r.until+" min"; cls="soon"; }
-  else if(r.until<60){ inTxt="in "+r.until+" min"; cls="wait"; }
-  else { inTxt="in "+Math.floor(r.until/60)+"h "+String(r.until%60).padStart(2,"0")+"m"; cls="wait"; }
-  const badge=r.isLive?`<span class="live">LIVE <span class="dash"></span></span>`:"";
-  return `<div class="card${fastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${fastest?'<div class="best-tag">★ FASTEST</div>':''}${head}
-    <div class="dep"><div class="dep-l"><span class="lbl">Departs${r.closed?" next":""}${badge}</span><div class="timerow"><span class="time ${r.closed?"closed":""}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span></div></div>
-      <div class="dep-r">${r.dep2!=null?`<div class="then">then ${est}${fmt(r.dep2)}</div>`:""}</div></div>${o.note?`<div class="note">⚠ ${o.note}</div>`:""}</div>`;
+  if(r.closed){ inTxt=tr("service closed now"); cls="closed"; }
+  else if(r.until<=0){ inTxt=tr("departing now"); cls="soon"; }
+  else if(r.until<20){ inTxt=JL_LANG==="el"?`σε ${r.until} λεπτά`:`in ${r.until} min`; cls="soon"; }
+  else if(r.until<60){ inTxt=JL_LANG==="el"?`σε ${r.until} λεπτά`:`in ${r.until} min`; cls="wait"; }
+  else { inTxt=JL_LANG==="el"?`σε ${Math.floor(r.until/60)}ω ${String(r.until%60).padStart(2,"0")}λ`:`in ${Math.floor(r.until/60)}h ${String(r.until%60).padStart(2,"0")}m`; cls="wait"; }
+  const badge=r.isLive?`<span class="live">${JL_LANG==="el"?"ΖΩΝΤΑΝΑ":"LIVE"} <span class="dash"></span></span>`:"";
+  return `<div class="card${fastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${fastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}${head}
+    <div class="dep"><div class="dep-l"><span class="lbl">${tr("Departs")}${r.closed?" "+tr("next"):""}${badge}</span><div class="timerow"><span class="time ${r.closed?"closed":""}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span></div></div>
+      <div class="dep-r">${r.dep2!=null?`<div class="then">${tr("then")} ${est}${fmt(r.dep2)}</div>`:""}</div></div>${o.note?`<div class="note">⚠ ${tr(o.note)}</div>`:""}</div>`;
 }
 
 function connNext(c, atDate){
@@ -302,23 +423,23 @@ function destCard(o,e,r,isFastest=false){
     ? AIRPORTS[CODE].options.find(x=>x.mode===o.mode && (x.route===o.route || (!x.route&&!o.route)))
     : null;
   o={...o, walk:o.walk||detail?.walk, access:o.access||detail?.access, ll:o.ll||detail?.ll};
-  const how=e.how?`<div class="how">↔ ${e.how}</div>`:"";
-  const walk=o.walk?`<div class="dest-walk"><button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.name||e.to||"Departure point")}" aria-label="Show walking directions">🚶 ${o.walk} <span class="walk-arrow">→</span></button></div>`:"";
-  const meta=`<div class="meta"><b>${o.journey}</b> · ${o.price}</div>${walk}`;
-  const note=e.note?`<div class="note-plain">${e.note}</div>`:"";
+  const how=e.how?`<div class="how">↔ ${tr(e.how)}</div>`:"";
+  const walk=o.walk?`<div class="dest-walk"><button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.name||e.to||"Departure point")}" aria-label="${JL_LANG==="el"?"Εμφάνιση οδηγιών πεζή":"Show walking directions"}">🚶 ${tr(o.walk)} <span class="walk-arrow">→</span></button></div>`:"";
+  const meta=`<div class="meta"><b>${tr(o.journey)}</b> · ${tr(o.price)}</div>${walk}`;
+  const note=e.note?`<div class="note-plain">${tr(e.note)}</div>`:"";
   let dep;
-  if(r.onDemand){ dep=`<div class="dep"><div class="dep-l"><span class="lbl">Availability</span><div class="timerow"><span class="time">Now</span><span class="in soon">on demand</span></div></div><div class="dep-r"><div class="then">24h</div></div></div>`; }
+  if(r.onDemand){ dep=`<div class="dep"><div class="dep-l"><span class="lbl">${tr("Availability")}</span><div class="timerow"><span class="time">${tr("Now")}</span><span class="in soon">${tr("on demand")}</span></div></div><div class="dep-r"><div class="then">24h</div></div></div>`; }
   else { const est=(o.est&&!r.isLive)?"~":""; let inTxt,cls;
     if(r.closed){inTxt="service closed";cls="closed";}
     else if(r.until<=0){inTxt="now";cls="soon";}
-    else if(r.until<20){inTxt="in "+r.until+" min";cls="soon";}
-    else if(r.until<60){inTxt="in "+r.until+" min";cls="wait";}
-    else {inTxt="in "+Math.floor(r.until/60)+"h "+String(r.until%60).padStart(2,"0")+"m";cls="wait";}
-    const badge=r.isLive?`<span class="live">LIVE <span class="dash"></span></span>`:"";
-    dep=`<div class="dep"><div class="dep-l"><span class="lbl">Departs${badge}</span><div class="timerow"><span class="time ${r.closed?'closed':''}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span></div></div><div class="dep-r">${r.dep2!=null?`<div class="then">then ${est}${fmt(r.dep2)}</div>`:""}</div></div>`;
+    else if(r.until<20){inTxt=JL_LANG==="el"?`σε ${r.until} λεπτά`:`in ${r.until} min`;cls="soon";}
+    else if(r.until<60){inTxt=JL_LANG==="el"?`σε ${r.until} λεπτά`:`in ${r.until} min`;cls="wait";}
+    else {inTxt=JL_LANG==="el"?`σε ${Math.floor(r.until/60)}ω ${String(r.until%60).padStart(2,"0")}λ`:`in ${Math.floor(r.until/60)}h ${String(r.until%60).padStart(2,"0")}m`;cls="wait";}
+    const badge=r.isLive?`<span class="live">${JL_LANG==="el"?"ΖΩΝΤΑΝΑ":"LIVE"} <span class="dash"></span></span>`:"";
+    dep=`<div class="dep"><div class="dep-l"><span class="lbl">Departs${badge}</span><div class="timerow"><span class="time ${r.closed?'closed':''}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span></div></div><div class="dep-r">${r.dep2!=null?`<div class="then">${tr("then")} ${est}${fmt(r.dep2)}</div>`:""}</div></div>`;
   }
-  return `<div class="card${isFastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${isFastest?'<div class="best-tag">★ FASTEST</div>':''}
-    <div class="top"><div class="mode">${modeIcon(o.mode)}</div><div class="route"><div class="to">${o.name}</div><div class="op">${e.to}</div></div><div class="price">${o.price}</div></div>
+  return `<div class="card${isFastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${isFastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}
+    <div class="top"><div class="mode">${modeIcon(o.mode)}</div><div class="route"><div class="to">${tr(o.name)}</div><div class="op">${tr(e.to)}</div></div><div class="price">${o.price}</div></div>
     ${how}${meta}${note}${dep}</div>`;
 }
 const DESTSEL={};
@@ -329,9 +450,9 @@ function renderDest(code){
   const cur=ap.destinations.find(x=>x.id===DESTSEL[code])||ap.destinations[0];
   const at=getViewTime();
   const chips=document.getElementById("chips");
-  if(chips){ chips.innerHTML=ap.destinations.map(x=>`<button class="chip ${x.id===cur.id?'on':''}" data-id="${x.id}">${x.label}</button>`).join("");
+  if(chips){ chips.innerHTML=ap.destinations.map(x=>`<button class="chip ${x.id===cur.id?'on':''}" data-id="${x.id}">${tr(x.label)}</button>`).join("");
     chips.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{DESTSEL[code]=b.dataset.id;renderDest(code);}); }
-  const dt=document.getElementById("desttitle"); if(dt) dt.textContent=cur.title;
+  const dt=document.getElementById("desttitle"); if(dt) dt.textContent=tr(cur.title);
   const routeRows=cur.routes.map(e=>{const o=ap.routes[e.k]; if(!o) return null; const r=nextTwo(o,at); r.total=totalTripMinutes(o,r); return {e,o,r};}).filter(Boolean);
   const ranked=routeRows.sort((a,b)=>{
     const at=a.o.mode==="taxi", bt=b.o.mode==="taxi";
@@ -372,14 +493,14 @@ function renderAirport(code){
   rows.forEach(r=>{r.fastest=!!fastest && r===fastest; r.relegated=r.o.mode==="taxi";});
   document.getElementById("options").innerHTML=rows.map((r,i)=>optionCard(r,i+1)).join("");
   const cc=document.getElementById("conns");
-  if(cc) cc.innerHTML=(ap.connections&&ap.connections.length)?`<div class="conns-h">Other connections from ${code}</div>`+ap.connections.map(c=>{
+  if(cc) cc.innerHTML=(ap.connections&&ap.connections.length)?`<div class="conns-h">${JL_LANG==="el"?"Άλλες συνδέσεις από":"Other connections from"} ${code}</div>`+ap.connections.map(c=>{
     const r=connNext(c,at); let t="";
     if(r){ const est=(c.est&&!r.isLive)?"~":""; const rel=r.closed?("first "+fmt(r.dep)):(r.until<=0?"now":(r.until<60?("in "+r.until+"m"):("in "+Math.floor(r.until/60)+"h"+String(r.until%60).padStart(2,"0"))));
       t=`<div class="conn-t"><div class="ct ${r.isLive?'live':''}">${est}${fmt(r.dep)}</div><div class="cs">${r.isLive?'live · ':''}${rel}</div></div>`; }
-    return `<div class="conn"><div class="conn-ic">${modeIcon(c.icon)}</div><div class="conn-b"><b>${c.to}</b><span>${c.sub}</span></div>${t}</div>`;
+    return `<div class="conn"><div class="conn-ic">${modeIcon(c.icon)}</div><div class="conn-b"><b>${tr(c.to)}</b><span>${tr(c.sub)}</span></div>${t}</div>`;
   }).join(""):"";
   const sub=document.getElementById("sub");
-  if(sub){ const nn=ap.options.length; sub.innerHTML=`<b>${nn}</b> way${nn>1?"s":""} from <b>${ap.name}</b> · ${ap.city} · <b>${selectedLabel(at)}</b>`+(nn>1?` — fastest first`:``); }
+  if(sub){ const nn=ap.options.length; sub.innerHTML=JL_LANG==="el"?`<b>${nn}</b> ${nn===1?"διαδρομή":"διαδρομές"} από <b>${tr(ap.name)}</b> · ${tr(ap.city)} · <b>${selectedLabel(at)}</b>`+(nn>1?` — ${tr("FASTEST").toLowerCase()} πρώτη`:``):`<b>${nn}</b> way${nn>1?"s":""} from <b>${ap.name}</b> · ${ap.city} · <b>${selectedLabel(at)}</b>`+(nn>1?` — fastest first`:``); }
 }
 async function loadLive(code){
   const ap=AIRPORTS[code]; if(!ap) return;
