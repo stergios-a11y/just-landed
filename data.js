@@ -45,7 +45,7 @@ const AIRPORTS = {
       x95:{mode:"bus",name:"Bus X95",price:"€5.50",journey:"~50 min",walk:"~3 min walk",route:"2051",est:true,sched:{kind:"windows",windows:[{start:"06:00",end:"22:00",every:20},{start:"22:00",end:"06:00",every:60}]}},
       rail:{mode:"rail",name:"Suburban Rail",price:"€9",journey:"~50 min",walk:"~6 min walk",sched:{kind:"range",first:"06:09",last:"22:09",every:30}},
       x96:{mode:"bus",name:"Bus X96",price:"€5.50",journey:"60–75 min",walk:"~3 min walk",route:"3028",est:true,sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}},
-      rafina:{mode:"bus",name:"KTEL Rafina",price:"€3",journey:"~40 min",walk:"~3 min walk",est:true,sched:{kind:"range",first:"05:00",last:"22:00",every:45}},
+      rafina:{mode:"bus",name:"KTEL Rafina",price:"€3",journey:"~40 min",walk:"~3 min walk",access:"Arrivals level, outside Exit 5",ll:"37.93728569247656,23.947505303800178",est:true,sched:{kind:"range",first:"05:00",last:"22:00",every:45}},
       x93:{mode:"bus",name:"Bus X93",price:"€5.50",journey:"~45 min",walk:"~3 min walk",route:"5675",est:true,sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}},
       taxi:{mode:"taxi",name:"Taxi",price:"€40–55",journey:"~40 min",walk:"~2 min walk",onDemand:true},
     },
@@ -118,7 +118,7 @@ function ensureTimePicker(){
       <div class="time-panel-head"><span>WHEN?</span><strong id="when-label">ASAP</strong></div>
       <div class="time-actions">
         <button type="button" class="time-btn on" id="time-now">ASAP</button>
-        <label class="time-custom"><span>SET TIME</span><input id="time-picker" type="datetime-local" aria-label="Set a fixed start date and time"></label>
+        <button type="button" class="time-custom" id="time-custom-btn"><span>SET TIME</span></button><input id="time-picker" class="time-picker-native" type="datetime-local" aria-label="Set a fixed start date and time">
       </div>
       <div class="time-help">See the next departures and fastest option from this time.</div>
     </section>`);
@@ -126,8 +126,12 @@ function ensureTimePicker(){
   const now=new Date();
   input.min=localDateInputValue(now);
   input.value="";
-  document.getElementById("time-now").onclick=()=>setViewTime(new Date(),"now");
   input.addEventListener("change",()=>{ if(!input.value)return; const d=new Date(input.value); if(!Number.isNaN(d.getTime())) setViewTime(d,"custom"); });
+  document.getElementById("time-now").onclick=()=>setViewTime(new Date(),"now");
+  document.getElementById("time-custom-btn").onclick=()=>{
+    if(typeof input.showPicker === "function"){ try{ input.showPicker(); return; }catch(e){} }
+    input.click();
+  };
   updateTimePicker();
 }
 function updateTimePicker(){
