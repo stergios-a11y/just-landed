@@ -133,3 +133,15 @@ h1 em{font-style:normal;color:var(--amber)}
 @media(max-width:600px){.time-actions{display:grid;grid-template-columns:1fr 1.65fr}.time-btn,.time-custom{padding:0 7px;font-size:9px}.time-help{font-size:8.5px}}
 
 html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
+
+/* v14 — upcoming departures */
+.future-deps{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.future-deps-head{display:flex;align-items:center;justify-content:space-between;font:800 10px/1 JetBrains Mono,monospace;letter-spacing:.08em;color:var(--muted)}
+.future-live{color:var(--amber)}
+.future-deps-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:7px}
+.future-dep{background:var(--tile);border:1px solid var(--line);padding:7px 4px;text-align:center}
+.future-dep b{display:block;font:900 14px/1 JetBrains Mono,monospace;color:var(--ink)}
+.future-dep span{display:block;margin-top:4px;font:700 9px/1.1 JetBrains Mono,monospace;color:var(--muted)}
+.future-dep.primary{border-color:var(--amber)}
+.future-dep.primary b{color:var(--amber)}
+@media(max-width:520px){.future-deps-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}

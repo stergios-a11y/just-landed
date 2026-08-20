@@ -388,6 +388,53 @@ const BOLT_SVG='<svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><pat
 const APP={ freenow:{cls:"freenow",label:"FREE NOW"}, uber:{cls:"uber",label:"Uber"}, bolt:{cls:"bolt",label:BOLT_SVG+"Bolt"} };
 const appBtn = k => { const a=APP[k]; return a?`<span class="appbtn ${a.cls}">${a.label}</span>`:""; };
 
+
+function futureDepartures(o, baseMin) {
+  if (o.onDemand) return [];
+  const base = baseMin ?? nowMinutes();
+  const out = [];
+  const n = nextTwo(o, base);
+  if (n && !n.closed) {
+    if (n.dep1 != null) out.push(n.dep1);
+    if (n.dep2 != null && n.dep2 !== n.dep1) out.push(n.dep2);
+  }
+  if (o.sched && out.length < 4) {
+    const all = departures(o);
+    for (const d of all) {
+      if (d >= base && !out.includes(d)) {
+        out.push(d);
+        if (out.length === 4) break;
+      }
+    }
+  }
+  return out.slice(0, 4);
+}
+function departureClock(min) {
+  const x = ((min % 1440) + 1440) % 1440;
+  return String(Math.floor(x/60)).padStart(2,"0") + ":" + String(x%60).padStart(2,"0");
+}
+function futureDepartureStrip(o, baseMin) {
+  const deps = futureDepartures(o, baseMin);
+  if (!deps.length) return "";
+  const base = baseMin ?? nowMinutes();
+  const live = !!(o.route && LIVE[o.route]);
+  return `<div class="future-deps">
+    <div class="future-deps-head">
+      <span>${I("DEPARTURES","ΑΝΑΧΩΡΗΣΕΙΣ")}</span>
+      ${live ? '<span class="future-live">LIVE</span>' : ''}
+    </div>
+    <div class="future-deps-grid">
+      ${deps.map((d,i) => {
+        const wait = Math.max(0, d-base);
+        return `<div class="future-dep${i===0 ? " primary":""}">
+          <b>${departureClock(d)}</b>
+          <span>${I("in","σε")} ${wait}${I(" min"," λ.")}</span>
+        </div>`;
+      }).join("")}
+    </div>
+  </div>`;
+}
+
 function optionCard(r, n){
   const fastest=!!r.fastest;
   const o=r.o;
@@ -399,7 +446,7 @@ function optionCard(r, n){
     const apps=o.apps?`<div class="alsoapps">${tr("Also on app:")} ${o.apps.map(appBtn).join("")}</div>`:"";
     return `<div class="card${fastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${fastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}${head}${noapp}${apps}
       <div class="dep"><div class="dep-l"><span class="lbl">${tr("Availability")}</span><div class="timerow"><span class="time">${tr("Now")}</span><span class="in soon">${tr("on demand")}</span></div></div><div class="dep-r"><div class="then">${tr("24 hours")}</div></div></div>
-      ${o.note?`<div class="note">⚠ ${tr(o.note)}</div>`:""}</div>`;
+      ${o.note?`<div class="note">⚠ ${tr(o.note)}</div>`:""}${futureDepartureStrip(o, SELECTED_TIME ?? nowMinutes())}</div>`;
   }
   const est=(o.est && !r.isLive)?"~":"";
   let inTxt,cls;
