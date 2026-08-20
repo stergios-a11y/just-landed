@@ -115,13 +115,59 @@ function nextTwo(o, nowMin){
 
 function wayOf(o){
   if(!o.access && !o.walk) return "";
-  const w=o.walk?`<span class="walk">🚶 ${o.walk}</span>`:"";
-  const sep=(o.walk && o.access)?" · ":"";
+  const w=o.walk
+    ? `<button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.to||"")}" aria-label="Show walking directions">${"🚶 "+o.walk} <span class="walk-arrow">→</span></button>`
+    : "";
+  const sep=(o.walk && o.access)?" ":"";
   let loc="";
-  if(o.ll){ const url="https://www.google.com/maps/search/?api=1&query="+o.ll; loc=`<a class="maplink" href="${url}" target="_blank" rel="noopener">${o.access} <span class="pin">↗ map</span></a>`; }
-  else if(o.access){ loc=`<span class="access">${o.access}</span>`; }
+  if(o.access){ loc=`<span class="access">${o.access}</span>`; }
   return `<div class="way">${w}${sep}${loc}</div>`;
 }
+
+function ensureWalkModal(){
+  if(document.getElementById("walk-modal")) return;
+  document.body.insertAdjacentHTML("beforeend",`
+    <div class="walk-modal" id="walk-modal" hidden>
+      <div class="walk-backdrop" data-close-walk></div>
+      <section class="walk-sheet" role="dialog" aria-modal="true" aria-labelledby="walk-title">
+        <button class="walk-close" type="button" data-close-walk aria-label="Close">×</button>
+        <div class="walk-kicker">WALK TO DEPARTURE</div>
+        <h2 id="walk-title">Departure point</h2>
+        <div class="walk-route">
+          <div class="walk-point"><span class="walk-dot start"></span><div><b id="walk-start">Airport arrivals</b><small id="walk-start-detail"></small></div></div>
+          <div class="walk-line"></div>
+          <div class="walk-point"><span class="walk-dot end"></span><div><b id="walk-end">Departure point</b><small id="walk-time"></small></div></div>
+        </div>
+        <a class="walk-map" id="walk-map" href="#" target="_blank" rel="noopener">OPEN WALKING DIRECTIONS ↗</a>
+      </section>
+    </div>`);
+  document.querySelectorAll("[data-close-walk]").forEach(el=>el.addEventListener("click",closeWalk));
+}
+function showWalk(btn){
+  ensureWalkModal();
+  const m=document.getElementById("walk-modal");
+  const walk=decodeURIComponent(btn.dataset.walk||"");
+  const access=decodeURIComponent(btn.dataset.access||"");
+  const ll=decodeURIComponent(btn.dataset.ll||"");
+  const to=decodeURIComponent(btn.dataset.to||"Departure point");
+  const ap=(typeof AIRPORTS!=="undefined" && window.location.pathname.includes("/")) ? AIRPORTS[document.body.dataset.airport||""] : null;
+  const airportName=(typeof CODE!=="undefined" && AIRPORTS[CODE]) ? AIRPORTS[CODE].name : "Airport";
+  document.getElementById("walk-title").textContent=to;
+  document.getElementById("walk-start").textContent=airportName+" arrivals";
+  document.getElementById("walk-start-detail").textContent=access||"Follow airport signs to the departure point";
+  document.getElementById("walk-end").textContent=to;
+  document.getElementById("walk-time").textContent=walk;
+  const origin=encodeURIComponent(airportName+" arrivals");
+  const dest=ll?encodeURIComponent(ll):encodeURIComponent(to);
+  document.getElementById("walk-map").href=`https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&travelmode=walking`;
+  m.hidden=false;
+  document.body.classList.add("walk-open");
+}
+function closeWalk(){
+  const m=document.getElementById("walk-modal");
+  if(m){m.hidden=true;document.body.classList.remove("walk-open");}
+}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeWalk();});
 const BOLT_SVG='<svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>';
 const APP={ freenow:{cls:"freenow",label:"FREE NOW"}, uber:{cls:"uber",label:"Uber"}, bolt:{cls:"bolt",label:BOLT_SVG+"Bolt"} };
 const appBtn = k => { const a=APP[k]; return a?`<span class="appbtn ${a.cls}">${a.label}</span>`:""; };
@@ -160,9 +206,13 @@ function connNext(c, nowMin){
 }
 
 function destCard(o,e,r){
+  const detail=(typeof AIRPORTS!=="undefined" && AIRPORTS[CODE] && AIRPORTS[CODE].options)
+    ? AIRPORTS[CODE].options.find(x=>x.mode===o.mode && (x.route===o.route || (!x.route&&!o.route)))
+    : null;
+  o={...o, walk:o.walk||detail?.walk, access:o.access||detail?.access, ll:o.ll||detail?.ll};
   const how=e.how?`<div class="how">↔ ${e.how}</div>`:"";
-  const walk=o.walk?` · 🚶 ${o.walk}`:"";
-  const meta=`<div class="meta"><b>${o.journey}</b> · ${o.price}${walk}</div>`;
+  const walk=o.walk?`<div class="dest-walk"><button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.name||e.to||"Departure point")}" aria-label="Show walking directions">🚶 ${o.walk} <span class="walk-arrow">→</span></button></div>`:"";
+  const meta=`<div class="meta"><b>${o.journey}</b> · ${o.price}</div>${walk}`;
   const note=e.note?`<div class="note-plain">${e.note}</div>`:"";
   let dep;
   if(r.onDemand){ dep=`<div class="dep"><div class="dep-l"><span class="lbl">Availability</span><div class="timerow"><span class="time">Now</span><span class="in soon">on demand</span></div></div><div class="dep-r"><div class="then">24h</div></div></div>`; }
@@ -193,11 +243,28 @@ function renderDest(code){
   box.innerHTML=cur.routes.map(e=>{const o=ap.routes[e.k]; if(!o) return ""; return destCard(o,e,nextTwo(o,nowMin));}).join("");
 }
 
+function durationMinutes(text){
+  if(!text) return 0;
+  const nums=(String(text).match(/\d+(?:\.\d+)?/g)||[]).map(Number);
+  if(!nums.length) return 0;
+  if(nums.length===1) return nums[0];
+  return nums.reduce((a,b)=>a+b,0)/nums.length;
+}
+function walkMinutes(text){ return durationMinutes(text); }
+function totalTripMinutes(o, r){
+  if(r.onDemand) return walkMinutes(o.walk) + durationMinutes(o.journey);
+  if(r.closed) return Infinity;
+  return walkMinutes(o.walk) + Math.max(0,r.until) + durationMinutes(o.journey);
+}
 function renderAirport(code){
   const ap=AIRPORTS[code]; if(!ap) return;
   const d=new Date(), nowMin=d.getHours()*60+d.getMinutes();
-  const rows=ap.options.map(o=>({o, ...nextTwo(o, nowMin)}));
-  rows.sort((a,b)=>a.until-b.until);
+  const rows=ap.options.map(o=>{
+    const r={o, ...nextTwo(o, nowMin)};
+    r.total=totalTripMinutes(o,r);
+    return r;
+  });
+  rows.sort((a,b)=>a.total-b.total);
   document.getElementById("options").innerHTML=rows.map((r,i)=>optionCard(r,i+1)).join("");
   const cc=document.getElementById("conns");
   if(cc) cc.innerHTML=(ap.connections&&ap.connections.length)?`<div class="conns-h">Other connections from ${code}</div>`+ap.connections.map(c=>{
@@ -216,6 +283,6 @@ async function loadLive(code){
     for(const rc of ["2051","3028","5373","5675"]){ const mins=routes[rc]; if(Array.isArray(mins)&&mins.length) LIVE[rc]={deps:mins.map(m=>base+m),ts:Date.now()}; else delete LIVE[rc]; } }catch(e){}
   (ap.destinations?renderDest:renderAirport)(code);
 }
-function initAirport(code){ const ap=AIRPORTS[code]; const rf=(ap&&ap.destinations)?renderDest:renderAirport; rf(code); loadLive(code); setInterval(()=>rf(code),15000); setInterval(()=>loadLive(code),30000); }
+function initAirport(code){ ensureWalkModal(); const ap=AIRPORTS[code]; const rf=(ap&&ap.destinations)?renderDest:renderAirport; rf(code); loadLive(code); setInterval(()=>rf(code),15000); setInterval(()=>loadLive(code),30000); }
 function tickClock(){ const el=document.getElementById("clock"); if(!el) return; const d=new Date(); el.textContent="now "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")+":"+String(d.getSeconds()).padStart(2,"0"); }
 if (typeof document !== "undefined" && document.getElementById("clock")) { tickClock(); setInterval(tickClock,1000); }
