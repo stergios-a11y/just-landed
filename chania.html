@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chania Airport to town — bus, cost &amp; live departures</title>
+<meta name="description" content="How to get from Chania Airport (CHQ) to Chania town by public KTEL bus: fare, journey time, frequency and live departures. No taxi upsell.">
+<link rel="icon" href="just-landed-favicon-yellow.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo"><a href="index.html" class="lk"><svg class="mk" viewBox="36 40 500 168" aria-hidden="true"><g fill="#FAFAF8"><path d="M132 48 L226 48 L291 101 L370 101 L408 138 L293 138 L226 92 L132 92 Z"/><path d="M42 171 H391 L420 138 H447 L410 197 H42 Z"/></g><path d="M392 139 H520" fill="none" stroke="#FFC107" stroke-width="26" stroke-linecap="square"/><path d="M500 115 L530 139 L500 163" fill="none" stroke="#FFC107" stroke-width="26" stroke-linecap="square" stroke-linejoin="miter"/></svg><span class="wm">JUST LANDED</span></a></div>
+    <div class="clock" id="clock">now –:–</div>
+  </header>
+  <a class="backlink" href="index.html">&#8592; all airports</a>
+  <h1>Chania Airport &#8594; town</h1>
+  <p class="intro">How to get from Chania Airport (CHQ) into town by public KTEL bus &#8212; fare, timetable and live departures, no taxi upsell.</p>
+  <p class="tagline" id="sub"></p>
+  <div id="options"></div>
+  <div class="conns" id="conns"></div>
+  <div class="disclaimer" id="disc"></div>
+  <footer>Public transport first — taxi facts too, no booking upsell.<br>Prototype &#183; <span id="tz"></span></footer>
+</div>
+<script src="data.js"></script>
+<script>
+  const CODE="CHQ";
+  const tzEl=document.getElementById("tz"); if(tzEl) tzEl.textContent=Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const disc=document.getElementById("disc");
+  disc.innerHTML = AIRPORTS[CODE].verified
+    ? "Fares &amp; service hours verified Aug 2026. Metro/rail show exact clock-face times; the X95 shows live arrivals from OASA when buses are running, otherwise the timetable. Always confirm at the stop."
+    : "Sample data — fares and times are illustrative and not yet verified. Departure times are estimated from the listed frequency. Confirm at the stop.";
+  initAirport(CODE);
+</script>
+</body>
+</html>

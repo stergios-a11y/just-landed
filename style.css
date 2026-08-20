@@ -1,0 +1,89 @@
+/* Just Landed — final brand (Jet Black / Airport Yellow), dark board UI */
+:root{--bg:#111111;--card:#1a1a1d;--tile:#242428;--ink:#FAFAF8;--muted:#8f8f86;--amber:#FFC107;--red:#ff5a52;--cyan:#5cc7dd;--line:#2c2c31;--tileborder:#33333a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Chakra Petch",system-ui,-apple-system,sans-serif;line-height:1.45;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:var(--cyan);text-decoration:none}
+.wrap{max-width:600px;margin:0 auto;padding:22px 16px 46px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.logo a{display:inline-flex;align-items:center;gap:9px;text-decoration:none}
+.logo .mk{display:inline-flex;color:var(--ink)}
+.logo .mk svg{height:20px;width:auto;display:block}
+.logo .wm{font-family:"Inter",Arial,Helvetica,sans-serif;font-weight:900;font-size:15px;letter-spacing:-.01em;color:var(--ink);text-transform:uppercase}
+.clock{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;color:var(--ink);letter-spacing:.08em;border:1px solid var(--line);padding:5px 9px;border-radius:6px}
+.backlink{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
+.backlink:hover{color:var(--amber)}
+h1{font-family:"Inter",sans-serif;font-weight:900;font-size:24px;letter-spacing:-.01em;margin:2px 0 8px;text-transform:uppercase;line-height:1.08}
+.intro{color:var(--muted);font-size:13.5px;margin:0 0 6px;line-height:1.5}
+.tagline{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin:0 0 18px}
+.tagline b{color:var(--ink)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;margin-bottom:12px}
+.top{display:flex;align-items:flex-start;gap:11px}
+.rank{flex:0 0 auto;width:30px;height:30px;border-radius:7px;background:var(--tile);border:1px solid var(--tileborder);color:var(--amber);font-family:"JetBrains Mono",monospace;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:4px}
+.mode{flex:0 0 auto;width:40px;height:40px;border-radius:10px;background:var(--tile);border:1px solid var(--tileborder);display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.mode svg{width:22px;height:22px;display:block}
+.route{flex:1 1 auto;min-width:0}
+.route .to{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.route .op{font-size:12px;color:var(--muted);margin-top:2px}
+.price{flex:0 0 auto;font-family:"JetBrains Mono",monospace;font-weight:700;font-size:15px;color:var(--amber);background:var(--tile);border:1px solid var(--tileborder);border-radius:8px;padding:5px 10px;white-space:nowrap}
+
+.way{font-size:12.5px;margin:12px 0 0;line-height:1.5}
+.maplink{color:var(--cyan);font-weight:600}.maplink:hover{text-decoration:underline}.maplink .pin{font-size:11px;opacity:.85}
+.access{color:var(--muted)}
+.meta{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--muted);margin:8px 0 0;letter-spacing:.02em}
+.meta b{color:var(--ink);font-weight:700}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tag{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:700;color:var(--ink);background:var(--tile);border:1px solid var(--tileborder);border-radius:6px;padding:2px 8px;letter-spacing:.03em}
+
+.noapp{font-size:12.5px;font-weight:600;color:var(--ink);background:var(--tile);border:1px solid var(--tileborder);border-radius:9px;padding:8px 11px;margin-top:11px}
+.alsoapps{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.appbtn{display:inline-flex;align-items:center;gap:5px;font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:12px;border-radius:7px;padding:4px 10px;color:#fff}
+.appbtn.freenow{background:#f5333f}.appbtn.uber{background:#2b2f36}.appbtn.bolt{background:#1fa971}.appbtn svg{display:block}
+
+.dep{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:14px;padding-top:13px;border-top:1px solid var(--line)}
+.dep-l{min-width:0}
+.dep .lbl{font-family:"JetBrains Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:700;display:inline-flex;align-items:center}
+.timerow{display:flex;align-items:baseline;gap:10px;margin-top:7px;flex-wrap:wrap}
+.timerow .time{font-family:"JetBrains Mono",monospace;font-size:30px;font-weight:700;letter-spacing:.02em;line-height:1;color:var(--amber)}
+.timerow .time.closed{color:var(--muted)}
+.timerow .in{font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700}
+.in.soon{color:var(--amber)}.in.wait{color:var(--muted)}.in.closed{color:var(--red)}
+.walkto{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--muted);margin-top:7px;letter-spacing:.03em}
+.dep-r{text-align:right;font-family:"JetBrains Mono",monospace}
+.dep-r .then{font-size:11.5px;color:var(--muted)}
+
+.live{display:inline-flex;align-items:center;gap:6px;font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.08em;margin-left:8px}
+.live .dash{display:inline-block;width:13px;height:5px;border-radius:3px;background:var(--amber);animation:liveDash 1.2s ease-in-out infinite}
+@keyframes liveDash{0%,100%{opacity:1}50%{opacity:.25}}
+@media(prefers-reduced-motion:reduce){.live .dash{animation:none}}
+
+.note{font-size:12px;color:var(--amber);margin-top:12px;background:#241c05;border:1px solid #4a3a0a;border-radius:9px;padding:8px 10px;line-height:1.45}
+.disclaimer{font-family:"JetBrains Mono",monospace;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:10.5px;color:var(--muted);margin-top:16px;line-height:1.6;letter-spacing:.02em}
+footer{font-family:"JetBrains Mono",monospace;color:var(--muted);font-size:10px;text-align:center;margin-top:22px;letter-spacing:.06em}
+.way .walk{font-weight:700;color:var(--ink)}
+/* other connections strip */
+.conns{margin-top:22px}
+.conns-h{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 4px 10px}
+.conn{display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:11px 13px;margin-bottom:8px}
+.conn-ic{flex:0 0 auto;width:32px;height:32px;border-radius:8px;background:var(--tile);border:1px solid var(--tileborder);display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.conn-ic svg{width:18px;height:18px}
+.conn-b{flex:1 1 auto;min-width:0}
+.conn-b b{font-size:14px;font-weight:700}
+.conn-b span{display:block;color:var(--muted);font-size:11.5px;margin-top:1px}
+.conn-d{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--amber);text-align:right;white-space:nowrap}
+.conn-t{text-align:right;font-family:"JetBrains Mono",monospace;min-width:66px}
+.conn-t .ct{font-size:16px;font-weight:700;color:var(--amber)}
+.conn-t .cs{font-size:10px;color:var(--muted);margin-top:2px}
+/* Athens destination selector */
+.qh{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:2px 2px 8px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:0 2px 8px;margin-bottom:6px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;background:var(--tile);border:1px solid var(--tileborder);border-radius:999px;padding:8px 14px;cursor:pointer;font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:13px;color:var(--ink);white-space:nowrap}
+.chip.on{background:var(--amber);border-color:var(--amber);color:#111}
+.card{position:relative}
+.card.best{border-color:var(--amber)}
+.best-tag{position:absolute;top:-9px;left:14px;background:var(--amber);color:#111;font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:700;letter-spacing:.08em;padding:3px 8px;border-radius:6px;text-transform:uppercase}
+.how{margin-top:11px;font-size:12.5px;color:var(--ink);background:var(--tile);border:1px solid var(--tileborder);border-radius:9px;padding:8px 10px;line-height:1.45}
+.how b{color:var(--amber)}
+.note-plain{font-size:11.5px;color:var(--muted);margin-top:9px}
+h1 em{font-style:normal;color:var(--amber)}

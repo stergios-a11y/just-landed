@@ -1,0 +1,7 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "airporttocity",
+  "compatibility_date": "2026-08-19",
+  "main": "worker.js",
+  "assets": { "directory": "./", "binding": "ASSETS" }
+}

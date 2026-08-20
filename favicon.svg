@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="t d">
+<title id="t">JUST LANDED</title><desc id="d">JUST LANDED favicon.</desc>
+<rect width="100%" height="100%" fill="#FFC107"/>
+<g transform="translate(7 128) scale(.90)" style="color:#111111">
+<g>
+  <path d="M132 48 L226 48 L291 101 L370 101 L408 138 L293 138 L226 92 L132 92 Z" fill="currentColor"/>
+  <path d="M42 171 H391 L420 138 H447 L410 197 H42 Z" fill="currentColor"/>
+  <path d="M392 139 H520" fill="none" stroke="#111111" stroke-width="26" stroke-linecap="square"/>
+  <path d="M500 115 L530 139 L500 163" fill="none" stroke="#111111" stroke-width="26" stroke-linecap="square"/>
+</g>
+</g>
+</svg>
