@@ -173,6 +173,7 @@ const APP={ freenow:{cls:"freenow",label:"FREE NOW"}, uber:{cls:"uber",label:"Ub
 const appBtn = k => { const a=APP[k]; return a?`<span class="appbtn ${a.cls}">${a.label}</span>`:""; };
 
 function optionCard(r, n){
+  const fastest=!!r.fastest;
   const o=r.o;
   const meta=`<div class="meta"><b>${o.journey}</b> · ${o.freqLabel} · ${o.hours}</div>`;
   const tags=o.tags?`<div class="tags">${o.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>`:"";
@@ -180,7 +181,7 @@ function optionCard(r, n){
   if(r.onDemand){
     const noapp=o.noapp?`<div class="noapp">${o.noapp}</div>`:"";
     const apps=o.apps?`<div class="alsoapps">Also on app: ${o.apps.map(appBtn).join("")}</div>`:"";
-    return `<div class="card">${head}${noapp}${apps}
+    return `<div class="card${fastest?' best':''}">${fastest?'<div class="best-tag">★ FASTEST</div>':''}${head}${noapp}${apps}
       <div class="dep"><div class="dep-l"><span class="lbl">Availability</span><div class="timerow"><span class="time">Now</span><span class="in soon">on demand</span></div></div><div class="dep-r"><div class="then">24 hours</div></div></div>
       ${o.note?`<div class="note">⚠ ${o.note}</div>`:""}</div>`;
   }
@@ -192,7 +193,7 @@ function optionCard(r, n){
   else if(r.until<60){ inTxt="in "+r.until+" min"; cls="wait"; }
   else { inTxt="in "+Math.floor(r.until/60)+"h "+String(r.until%60).padStart(2,"0")+"m"; cls="wait"; }
   const badge=r.isLive?`<span class="live">LIVE <span class="dash"></span></span>`:"";
-  return `<div class="card">${head}
+  return `<div class="card${fastest?' best':''}">${fastest?'<div class="best-tag">★ FASTEST</div>':''}${head}
     <div class="dep"><div class="dep-l"><span class="lbl">Departs${r.closed?" next":""}${badge}</span><div class="timerow"><span class="time ${r.closed?"closed":""}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span></div></div>
       <div class="dep-r">${r.dep2!=null?`<div class="then">then ${est}${fmt(r.dep2)}</div>`:""}</div></div>${o.note?`<div class="note">⚠ ${o.note}</div>`:""}</div>`;
 }
@@ -205,7 +206,7 @@ function connNext(c, nowMin){
   return {dep, until, isLive:false, closed: wrapped && !(c.sched&&c.sched.kind==="windows")};
 }
 
-function destCard(o,e,r){
+function destCard(o,e,r,isFastest=false){
   const detail=(typeof AIRPORTS!=="undefined" && AIRPORTS[CODE] && AIRPORTS[CODE].options)
     ? AIRPORTS[CODE].options.find(x=>x.mode===o.mode && (x.route===o.route || (!x.route&&!o.route)))
     : null;
@@ -225,7 +226,7 @@ function destCard(o,e,r){
     const badge=r.isLive?`<span class="live">LIVE <span class="dash"></span></span>`:"";
     dep=`<div class="dep"><div class="dep-l"><span class="lbl">Departs${badge}</span><div class="timerow"><span class="time ${r.closed?'closed':''}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span></div></div><div class="dep-r">${r.dep2!=null?`<div class="then">then ${est}${fmt(r.dep2)}</div>`:""}</div></div>`;
   }
-  return `<div class="card${e.best?' best':''}">${e.best?'<div class="best-tag">★ Best</div>':''}
+  return `<div class="card${isFastest?' best':''}">${isFastest?'<div class="best-tag">★ FASTEST</div>':''}
     <div class="top"><div class="mode">${modeIcon(o.mode)}</div><div class="route"><div class="to">${o.name}</div><div class="op">${e.to}</div></div><div class="price">${o.price}</div></div>
     ${how}${meta}${note}${dep}</div>`;
 }
@@ -240,7 +241,9 @@ function renderDest(code){
   if(chips){ chips.innerHTML=ap.destinations.map(x=>`<button class="chip ${x.id===cur.id?'on':''}" data-id="${x.id}">${x.label}</button>`).join("");
     chips.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{DESTSEL[code]=b.dataset.id;renderDest(code);}); }
   const dt=document.getElementById("desttitle"); if(dt) dt.textContent=cur.title;
-  box.innerHTML=cur.routes.map(e=>{const o=ap.routes[e.k]; if(!o) return ""; return destCard(o,e,nextTwo(o,nowMin));}).join("");
+  const routeRows=cur.routes.map(e=>{const o=ap.routes[e.k]; if(!o) return null; const r=nextTwo(o,nowMin); r.total=totalTripMinutes(o,r); return {e,o,r};}).filter(Boolean);
+  const fastest=routeRows.reduce((best,row)=>row.r.total < (best?.r.total ?? Infinity) ? row : best, null);
+  box.innerHTML=routeRows.map(row=>destCard(row.o,row.e,row.r,row===fastest)).join("");
 }
 
 function durationMinutes(text){
@@ -265,6 +268,8 @@ function renderAirport(code){
     return r;
   });
   rows.sort((a,b)=>a.total-b.total);
+  const fastest=rows.find(r=>Number.isFinite(r.total));
+  rows.forEach(r=>{r.fastest=!!fastest && r===fastest;});
   document.getElementById("options").innerHTML=rows.map((r,i)=>optionCard(r,i+1)).join("");
   const cc=document.getElementById("conns");
   if(cc) cc.innerHTML=(ap.connections&&ap.connections.length)?`<div class="conns-h">Other connections from ${code}</div>`+ap.connections.map(c=>{
