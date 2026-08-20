@@ -115,11 +115,10 @@ function ensureTimePicker(){
   if(!intro) return;
   intro.insertAdjacentHTML("afterend",`
     <section class="time-panel" aria-label="Choose departure time">
-      <div class="time-panel-head"><span>WHEN?</span><strong id="when-label">NOW</strong></div>
+      <div class="time-panel-head"><span>WHEN?</span><strong id="when-label">ASAP</strong></div>
       <div class="time-actions">
-        <button type="button" class="time-btn on" id="time-now">NOW</button>
-        <button type="button" class="time-btn" id="time-tomorrow">TOMORROW 18:00</button>
-        <label class="time-custom"><span>CHOOSE</span><input id="time-picker" type="datetime-local" aria-label="Choose date and time"></label>
+        <button type="button" class="time-btn on" id="time-now">ASAP</button>
+        <label class="time-custom"><span>SET TIME</span><input id="time-picker" type="datetime-local" aria-label="Set a fixed start date and time"></label>
       </div>
       <div class="time-help">See the next departures and fastest option from this time.</div>
     </section>`);
@@ -128,17 +127,14 @@ function ensureTimePicker(){
   input.min=localDateInputValue(now);
   input.value="";
   document.getElementById("time-now").onclick=()=>setViewTime(new Date(),"now");
-  document.getElementById("time-tomorrow").onclick=()=>{const d=dateOnly(new Date(),1);d.setHours(18,0,0,0);setViewTime(d,"custom");};
   input.addEventListener("change",()=>{ if(!input.value)return; const d=new Date(input.value); if(!Number.isNaN(d.getTime())) setViewTime(d,"custom"); });
   updateTimePicker();
 }
 function updateTimePicker(){
-  const nowBtn=document.getElementById("time-now"), tmBtn=document.getElementById("time-tomorrow"), input=document.getElementById("time-picker"), label=document.getElementById("when-label");
-  if(!nowBtn||!tmBtn||!input||!label) return;
+  const nowBtn=document.getElementById("time-now"), input=document.getElementById("time-picker"), label=document.getElementById("when-label");
+  if(!nowBtn||!input||!label) return;
   const d=getViewTime(); label.textContent=selectedLabel(d);
   nowBtn.classList.toggle("on",VIEW_TIME_MODE==="now");
-  const tomorrow18=dateOnly(new Date(),1);tomorrow18.setHours(18,0,0,0);
-  tmBtn.classList.toggle("on",VIEW_TIME_MODE==="custom" && Math.abs(d.getTime()-tomorrow18.getTime())<60000);
   input.value=VIEW_TIME_MODE==="custom"?localDateInputValue(d):"";
 }
 
@@ -184,7 +180,7 @@ function nextTwo(o, atDate){
 }
 function selectedLabel(d){
   const now=new Date();
-  if(Math.abs(d.getTime()-now.getTime())<90000) return "NOW";
+  if(Math.abs(d.getTime()-now.getTime())<90000) return "ASAP";
   const today=new Date(); today.setHours(0,0,0,0);
   const day=new Date(d); day.setHours(0,0,0,0);
   const diff=Math.round((day-today)/86400000);
