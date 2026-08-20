@@ -30,6 +30,29 @@ h1{font-family:"Inter",sans-serif;font-weight:900;font-size:24px;letter-spacing:
 .way{font-size:12.5px;margin:12px 0 0;line-height:1.5}
 .maplink{color:var(--cyan);font-weight:600}.maplink:hover{text-decoration:underline}.maplink .pin{font-size:11px;opacity:.85}
 .access{color:var(--muted)}
+
+.walk-btn{appearance:none;border:1px solid var(--tileborder);background:var(--tile);color:var(--ink);font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.02em;border-radius:7px;padding:7px 9px;cursor:pointer;transition:background .12s,border-color .12s}
+.walk-btn:hover,.walk-btn:focus-visible{background:#303036;border-color:var(--amber);outline:none}
+.walk-arrow{color:var(--amber);margin-left:3px}
+.dest-walk{margin-top:8px}
+.walk-modal[hidden]{display:none}
+.walk-modal{position:fixed;inset:0;z-index:1000}
+.walk-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
+.walk-sheet{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(600px,100%);background:var(--card);border:1px solid var(--line);border-bottom:0;border-radius:16px 16px 0 0;padding:22px 18px calc(20px + env(safe-area-inset-bottom));box-shadow:0 -12px 40px rgba(0,0,0,.35)}
+.walk-close{position:absolute;right:12px;top:10px;border:0;background:transparent;color:var(--muted);font:400 28px/1 Arial;cursor:pointer;padding:5px}
+.walk-kicker{font:700 9px/1 "JetBrains Mono",monospace;letter-spacing:.13em;color:var(--amber);margin-bottom:8px}
+.walk-sheet h2{font:900 22px/1.05 "Inter",sans-serif;letter-spacing:-.03em;margin:0 34px 18px 0}
+.walk-route{background:var(--tile);border:1px solid var(--tileborder);border-radius:10px;padding:14px 13px}
+.walk-point{display:flex;gap:11px;align-items:flex-start}
+.walk-point b{display:block;font-size:13px;line-height:1.15}
+.walk-point small{display:block;color:var(--muted);font-size:10.5px;line-height:1.35;margin-top:3px}
+.walk-dot{width:9px;height:9px;border-radius:50%;background:var(--amber);margin:3px 0 0 2px;flex:0 0 9px}
+.walk-dot.end{background:var(--ink)}
+.walk-line{height:18px;border-left:1px dashed var(--muted);margin:0 0 0 6px}
+.walk-map{display:block;text-align:center;background:var(--amber);color:#111;border-radius:8px;padding:13px 12px;margin-top:12px;font:800 11px/1 "JetBrains Mono",monospace;letter-spacing:.03em}
+.walk-map:hover{filter:brightness(1.05)}
+body.walk-open{overflow:hidden}
+
 .meta{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--muted);margin:8px 0 0;letter-spacing:.02em}
 .meta b{color:var(--ink);font-weight:700}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
@@ -87,3 +110,8 @@ footer{font-family:"JetBrains Mono",monospace;color:var(--muted);font-size:10px;
 .how b{color:var(--amber)}
 .note-plain{font-size:11.5px;color:var(--muted);margin-top:9px}
 h1 em{font-style:normal;color:var(--amber)}
+
+/* Taxi is an alternative, not a fastest recommendation. */
+.taxi-card{border-style:dashed;opacity:.88}
+.taxi-card .top{opacity:.92}
+.taxi-card::after{content:"TAXI · DOOR TO DOOR";display:block;margin-top:12px;font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
