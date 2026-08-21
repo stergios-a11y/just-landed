@@ -499,6 +499,46 @@ function connNext(c, atDate){
   const r=nextTwo(c,atDate); if(r.dep1==null) return null; return {dep:r.dep1, until:r.until, isLive:r.isLive, closed:r.closed};
 }
 
+function arrivalBreakdown(o,r,destinationId){
+  const walk=walkMinutes(o.walk);
+  const ride=durationMinutes(effectiveJourney(o,r.selected,destinationId));
+  const wait=Math.max(0,Number(r.until)||0);
+  return {walk,wait,ride,total:walk+wait+ride};
+}
+function arrivalClock(o,r,destinationId){
+  if(r.closed || r.dep1==null) return null;
+  const d=r.selected instanceof Date ? new Date(r.selected) : new Date();
+  const dep=new Date(d);
+  dep.setHours(0,0,0,0);
+  dep.setMinutes(Number(r.dep1));
+  if(dep < d && Number(r.until)>0) dep.setDate(dep.getDate()+1);
+  const ride=durationMinutes(effectiveJourney(o,r.selected,destinationId));
+  dep.setMinutes(dep.getMinutes()+ride);
+  return dep;
+}
+function arrivalLabel(o,r,destinationId){
+  const d=arrivalClock(o,r,destinationId);
+  if(!d) return r.closed ? (JL_LANG==='el'?'Κλειστό':'Closed') : '—';
+  return fmt(d.getHours()*60+d.getMinutes());
+}
+function breakdownHtml(o,r,destinationId){
+  const b=arrivalBreakdown(o,r,destinationId);
+  const labels=JL_LANG==='el'?['περπάτημα','αναμονή','διαδρομή']:['walk','wait','ride'];
+  return `<div class="journey-breakdown">
+    <div class="journey-step"><span class="step-icon">♟</span><b>${b.walk} min</b><small>${labels[0]}</small></div>
+    <span class="journey-arrow">›</span>
+    <div class="journey-step"><span class="step-icon">◷</span><b>${b.wait} min</b><small>${labels[1]}</small></div>
+    <span class="journey-arrow">›</span>
+    <div class="journey-step"><span class="step-icon">${o.mode==='bus'?'▣':'▣'}</span><b>${b.ride} min</b><small>${labels[2]}</small></div>
+  </div>`;
+}
+function taxiArrivalHtml(o,r){
+  const journey=durationMinutes(effectiveJourney(o,r.selected));
+  const low=Math.max(1,journey);
+  const high=Math.max(low,Math.round(low*1.6));
+  const price=o.price||'';
+  return `<div class="taxi-summary"><div><div class="arrival-label">${JL_LANG==='el'?'ΑΦΙΞΗ':'ARRIVAL'}</div><div class="arrival-time">${fmt((new Date()).getHours()*60+(new Date()).getMinutes()+low)} – ${fmt((new Date()).getHours()*60+(new Date()).getMinutes()+high)} <span>~${low}–${high} min total</span></div><div class="arrival-sub">${JL_LANG==='el'?'Πόρτα-πόρτα':'Door-to-door'}</div></div><div class="taxi-price">${price}</div></div>`;
+}
 function destCard(o,e,r,isFastest=false){
   const detail=(typeof AIRPORTS!=="undefined" && AIRPORTS[CODE] && AIRPORTS[CODE].options)
     ? AIRPORTS[CODE].options.find(x=>x.mode===o.mode && (x.route===o.route || (!x.route&&!o.route)))
@@ -506,22 +546,36 @@ function destCard(o,e,r,isFastest=false){
   o={...o, walk:o.walk||detail?.walk, access:o.access||detail?.access, ll:o.ll||detail?.ll};
   const how=e.how?`<div class="how">↔ ${tr(e.how)}</div>`:"";
   const walk=o.walk?`<div class="dest-walk"><button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.name||e.to||"Departure point")}" aria-label="${JL_LANG==="el"?"Εμφάνιση οδηγιών πεζή":"Show walking directions"}">🚶 ${tr(o.walk)} <span class="walk-arrow">→</span></button></div>`:"";
-  const meta=`<div class="meta"><b>${tr(effectiveJourney(o, r.selected, e && e.destinationId))}</b> · ${tr(o.price)}${o.journeyBands?` · ${JL_LANG==="el"?"εκτίμηση κίνησης":"traffic-adjusted estimate"}`:""}</div>${walk}`;
   const note=e.note?`<div class="note-plain">${tr(e.note)}</div>`:"";
   let dep;
-  if(r.onDemand){ dep=`<div class="dep"><div class="dep-l"><span class="lbl">${tr("Availability")}</span><div class="timerow"><span class="time">${tr("Now")}</span><span class="in soon">${tr("on demand")}</span></div></div><div class="dep-r"><div class="then">24h</div></div></div>`; }
-  else { const est=(o.est&&!r.isLive)?"~":""; let inTxt,cls;
-    if(r.closed){inTxt="service closed";cls="closed";}
-    else if(r.until<=0){inTxt="now";cls="soon";}
-    else if(r.until<20){inTxt=JL_LANG==="el"?`σε ${r.until} λεπτά`:`in ${r.until} min`;cls="soon";}
-    else if(r.until<60){inTxt=JL_LANG==="el"?`σε ${r.until} λεπτά`:`in ${r.until} min`;cls="wait";}
+  if(r.onDemand){
+    dep=`<div class="dep on-demand"><div class="dep-l"><span class="lbl">${tr("Availability")}</span><div class="timerow"><span class="time">${tr("Now")}</span><span class="in soon">${tr("on demand")}</span></div></div></div>`;
+  } else {
+    const est=(o.est&&!r.isLive)?"~":"";
+    let inTxt,cls;
+    if(r.closed){inTxt=JL_LANG==="el"?"υπηρεσία κλειστή":"service closed";cls="closed";}
+    else if(r.until<=0){inTxt=JL_LANG==="el"?"τώρα":"now";cls="soon";}
+    else if(r.until<60){inTxt=JL_LANG==="el"?`σε ${r.until} λεπτά`:`in ${r.until} min`;cls=r.until<20?"soon":"wait";}
     else {inTxt=JL_LANG==="el"?`σε ${Math.floor(r.until/60)}ω ${String(r.until%60).padStart(2,"0")}λ`:`in ${Math.floor(r.until/60)}h ${String(r.until%60).padStart(2,"0")}m`;cls="wait";}
     const badge=r.isLive?`<span class="live">${JL_LANG==="el"?"ΖΩΝΤΑΝΑ":"LIVE"} <span class="dash"></span></span>`:"";
-    dep=`<div class="dep"><div class="dep-l"><span class="lbl">Departs${badge}</span><div class="timerow"><span class="time ${r.closed?'closed':''}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span></div></div></div>`;
+    dep=`<div class="dep"><div class="dep-l"><span class="lbl">${JL_LANG==="el"?"ΑΝΑΧΩΡΗΣΗ":"DEPARTS"} ${badge}</span><div class="timerow"><span class="time ${r.closed?'closed':''}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span></div></div></div>`;
   }
-  return `<div class="card${isFastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${isFastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}
-    <div class="top"><div class="mode">${modeIcon(o.mode)}</div><div class="route"><div class="to">${tr(o.name)}</div><div class="op">${tr(e.to)}</div></div><div class="price">${o.price}</div></div>
-    ${how}${meta}${note}${dep}${futureDepartureStrip(o,r.selected)}</div>`;
+  const isTaxi=o.mode==="taxi" || r.onDemand;
+  let summary='';
+  if(isTaxi){ summary=taxiArrivalHtml(o,r); }
+  else {
+    const b=arrivalBreakdown(o,r,e.destinationId);
+    summary=`<div class="arrival-summary">
+      <div class="arrival-main"><div class="arrival-label">${JL_LANG==='el'?'ΑΦΙΞΗ':'ARRIVAL'}</div><div class="arrival-time">${arrivalLabel(o,r,e.destinationId)} <span>~${b.total} min total</span></div></div>
+      <div class="arrival-price">${o.price}</div>
+    </div>${breakdownHtml(o,r,e.destinationId)}`;
+  }
+  return `<div class="card result-card${isFastest?' best':''}${isTaxi?' taxi-card':''}">${isFastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}
+    <div class="result-grid">
+      <div class="result-left"><div class="top"><div class="mode">${modeIcon(o.mode)}</div><div class="route"><div class="to">${tr(o.name)}</div><div class="op">${tr(e.to)}</div></div></div>${how}<div class="status-line">${o.journeyBands?`<span class="estimate-dot">●</span> ${JL_LANG==='el'?'ΕΚΤΙΜΗΣΗ':'ESTIMATE'} · ${JL_LANG==='el'?'προσαρμοσμένο στην κίνηση':'traffic-adjusted'}`:`<span class="estimate-dot live-dot">●</span> ${r.isLive?(JL_LANG==='el'?'LIVE':'LIVE'):(JL_LANG==='el'?'ΩΡΟΛΟΓΙΟ':'TIMETABLE')}`}</div>${walk}</div>
+      <div class="result-arrival">${summary}</div>
+      <div class="result-departures">${futureDepartureStrip(o,r.selected)}</div>
+    </div>${note}${dep}</div>`;
 }
 const DESTSEL={};
 function renderDest(code){
