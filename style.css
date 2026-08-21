@@ -145,3 +145,24 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .future-dep.primary{border-color:var(--amber)}
 .future-dep.primary b{color:var(--amber)}
 @media(max-width:520px){.future-deps-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* v20 — compact time controls / slider */
+.time-panel{padding:14px 14px 12px;margin:14px 0 16px}
+.time-panel-head{margin-bottom:10px}
+.time-kicker{color:var(--muted)}
+.time-actions{display:grid;grid-template-columns:1fr 1fr 1fr 1.2fr;gap:7px}
+.time-btn,.time-custom{min-height:40px}
+.time-custom-icon{color:var(--amber);font-size:12px}
+.time-slider-wrap{position:relative;margin-top:14px;padding:12px 10px 8px;background:#151519;border:1px solid var(--line);border-radius:10px}
+.time-slider-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font:700 10px/1 "JetBrains Mono",monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--amber)}
+.time-slider-top b{font-size:16px;letter-spacing:0;color:var(--ink)}
+.time-slider{width:100%;margin:12px 0 0;appearance:none;height:4px;background:#3a3a40;border-radius:999px;outline:none;accent-color:var(--amber);cursor:pointer}
+.time-slider::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:var(--amber);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--amber);cursor:grab}
+.time-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--amber);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--amber);cursor:grab}
+.time-slider:disabled{opacity:.45;cursor:not-allowed}
+.time-slider-labels{display:grid;grid-template-columns:repeat(7,1fr);margin-top:7px;font:500 9px/1 "JetBrains Mono",monospace;color:var(--muted);text-align:center}
+.time-slider-labels span.active{color:var(--amber);font-weight:700}
+.tomorrow-btn{display:block;margin:10px 0 0 auto;border:0;background:transparent;color:var(--amber);font:700 10px/1 "JetBrains Mono",monospace;cursor:pointer;padding:3px 0;text-transform:none}
+.tomorrow-btn:hover{text-decoration:underline}
+.time-help{margin-top:9px}
+@media(max-width:600px){.time-actions{grid-template-columns:1fr 1fr}.time-custom{grid-column:span 2}.time-slider-labels{font-size:8px}.time-panel{padding:12px}}
