@@ -42,11 +42,11 @@ const AIRPORTS = {
     ],
     routes:{
       metro:{mode:"metro",name:"Metro M3",price:"€9",journey:"~40 min",walk:"~6 min walk",sched:{kind:"range",first:"06:32",last:"23:32",every:30}},
-      x95:{mode:"bus",name:"Bus X95",price:"€5.50",journey:"~50 min",walk:"~3 min walk",route:"2051",est:true,sched:{kind:"windows",windows:[{start:"06:00",end:"22:00",every:20},{start:"22:00",end:"06:00",every:60}]}},
+      x95:{mode:"bus",name:"Bus X95",price:"€5.50",journey:"~50 min",journeyDay:"~50 min",journeyNight:"~35 min",walk:"~3 min walk",route:"2051",est:true,sched:{kind:"windows",windows:[{start:"06:00",end:"22:00",every:20},{start:"22:00",end:"06:00",every:60}]}},
       rail:{mode:"rail",name:"Suburban Rail",price:"€9",journey:"~50 min",walk:"~6 min walk",sched:{kind:"range",first:"06:09",last:"22:09",every:30}},
-      x96:{mode:"bus",name:"Bus X96",price:"€5.50",journey:"60–75 min",walk:"~3 min walk",route:"3028",est:true,sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}},
-      rafina:{mode:"bus",name:"KTEL Rafina",price:"€3",journey:"~40 min",walk:"~3 min walk",access:"Arrivals level, outside Exit 5",ll:"37.93728569247656,23.947505303800178",est:true,sched:{kind:"range",first:"05:00",last:"22:00",every:45}},
-      x93:{mode:"bus",name:"Bus X93",price:"€5.50",journey:"~45 min",walk:"~3 min walk",route:"5675",est:true,sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}},
+      x96:{mode:"bus",name:"Bus X96",price:"€5.50",journey:"60–75 min",journeyDay:"60–75 min",journeyNight:"~50 min",walk:"~3 min walk",route:"3028",est:true,sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}},
+      rafina:{mode:"bus",name:"KTEL Rafina",price:"€3",journey:"~40 min",journeyDay:"~40 min",journeyNight:"~30 min",walk:"~3 min walk",access:"Arrivals level, outside Exit 5",ll:"37.93728569247656,23.947505303800178",est:true,sched:{kind:"range",first:"05:00",last:"22:00",every:45}},
+      x93:{mode:"bus",name:"Bus X93",price:"€5.50",journey:"~45 min",journeyDay:"~45 min",journeyNight:"~35 min",walk:"~3 min walk",route:"5675",est:true,sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}},
       taxi:{mode:"taxi",name:"Taxi",price:"€40–55",journey:"~40 min",walk:"~2 min walk",onDemand:true},
     },
     destinations:[
@@ -432,7 +432,7 @@ function futureDepartureStrip(o, atDate){
 function optionCard(r, n){
   const fastest=!!r.fastest;
   const o=r.o;
-  const meta=`<div class="meta"><b>${o.journey}</b> · ${o.freqLabel} · ${o.hours}</div>`;
+  const meta=`<div class="meta"><b>${effectiveJourney(o, r.selected)}</b> · ${o.freqLabel} · ${o.hours}</div>`;
   const tags=o.tags?`<div class="tags">${o.tags.map(t=>`<span class="tag">${tr(t)}</span>`).join("")}</div>`:"";
   const head=`<div class="top"><div class="rank">${n}</div><div class="mode">${modeIcon(o.mode)}</div><div class="route"><div class="to">${tr(o.to)}</div><div class="op">${tr(o.op)}</div></div><div class="price">${o.price}</div></div>${wayOf(o)}${meta}${tags}`;
   if(r.onDemand){
@@ -466,7 +466,7 @@ function destCard(o,e,r,isFastest=false){
   o={...o, walk:o.walk||detail?.walk, access:o.access||detail?.access, ll:o.ll||detail?.ll};
   const how=e.how?`<div class="how">↔ ${tr(e.how)}</div>`:"";
   const walk=o.walk?`<div class="dest-walk"><button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.name||e.to||"Departure point")}" aria-label="${JL_LANG==="el"?"Εμφάνιση οδηγιών πεζή":"Show walking directions"}">🚶 ${tr(o.walk)} <span class="walk-arrow">→</span></button></div>`:"";
-  const meta=`<div class="meta"><b>${tr(o.journey)}</b> · ${tr(o.price)}</div>${walk}`;
+  const meta=`<div class="meta"><b>${tr(effectiveJourney(o, r.selected))}</b> · ${tr(o.price)}</div>${walk}`;
   const note=e.note?`<div class="note-plain">${tr(e.note)}</div>`:"";
   let dep;
   if(r.onDemand){ dep=`<div class="dep"><div class="dep-l"><span class="lbl">${tr("Availability")}</span><div class="timerow"><span class="time">${tr("Now")}</span><span class="in soon">${tr("on demand")}</span></div></div><div class="dep-r"><div class="then">24h</div></div></div>`; }
@@ -504,6 +504,16 @@ function renderDest(code){
   box.innerHTML=ranked.map(row=>destCard(row.o,row.e,row.r,row===fastest)).join("");
 }
 
+function effectiveJourney(o, atDate){
+  if(!o) return "";
+  if(!o.journeyDay || !o.journeyNight) return o.journey || "";
+  const d=atDate instanceof Date ? atDate : new Date();
+  const mins=d.getHours()*60+d.getMinutes();
+  // Night traffic window: 23:00–06:00. Airport express buses benefit most from lighter road traffic.
+  const night=(mins>=23*60 || mins<6*60);
+  return night ? o.journeyNight : o.journeyDay;
+}
+
 function durationMinutes(text){
   if(!text) return 0;
   const nums=(String(text).match(/\d+(?:\.\d+)?/g)||[]).map(Number);
@@ -513,9 +523,9 @@ function durationMinutes(text){
 }
 function walkMinutes(text){ return durationMinutes(text); }
 function totalTripMinutes(o, r){
-  if(r.onDemand) return walkMinutes(o.walk) + durationMinutes(o.journey);
+  if(r.onDemand) return walkMinutes(o.walk) + durationMinutes(effectiveJourney(o, r.selected));
   if(r.closed) return Infinity;
-  return walkMinutes(o.walk) + Math.max(0,r.until) + durationMinutes(o.journey);
+  return walkMinutes(o.walk) + Math.max(0,r.until) + durationMinutes(effectiveJourney(o, r.selected));
 }
 function renderAirport(code){
   const ap=AIRPORTS[code]; if(!ap) return;
