@@ -43,24 +43,24 @@ const AIRPORTS = {
     routes:{
       metro:{mode:"metro",name:"Metro M3",price:"€9",journey:"~40 min",walk:"~6 min walk",
         journeyByDestination:{centre:40,mon:42,acro:52,pir:61},
-        sched:{kind:"range",first:"06:10",last:"23:34",every:36}},
+        sched:{kind:"range",first:"06:10",last:"23:34",every:36}, payment:"💳 Card accepted · tap at gate"},
       x95:{mode:"bus",name:"Bus X95",price:"€5.50",journey:"~60 min",walk:"~3 min walk",route:"2051",est:true,
         journeyBands:[{from:0,to:6,mins:40},{from:6,to:9.5,mins:65},{from:9.5,to:16,mins:55},{from:16,to:19.5,mins:70},{from:19.5,to:23,mins:50},{from:23,to:24,mins:40}],
         journeyByDestination:{centre:60,mon:68,acro:68},
-        sched:{kind:"windows",windows:[{start:"06:00",end:"22:00",every:20},{start:"22:00",end:"06:00",every:60}]}},
-      rail:{mode:"rail",name:"Suburban Rail",price:"€9",journey:"~50 min",walk:"~6 min walk",sched:{kind:"range",first:"06:09",last:"22:09",every:30}},
+        sched:{kind:"windows",windows:[{start:"06:00",end:"22:00",every:20},{start:"22:00",end:"06:00",every:60}]}, payment:"💳 Card accepted · tap onboard"},
+      rail:{mode:"rail",name:"Suburban Rail",price:"€9",journey:"~50 min",walk:"~6 min walk",sched:{kind:"range",first:"06:09",last:"22:09",every:30}, payment:"💳 Ticket/card · tap at gate"},
       x96:{mode:"bus",name:"Bus X96",price:"€5.50",journey:"~90 min",walk:"~3 min walk",route:"3028",est:true,
         journeyBands:[{from:0,to:6,mins:60},{from:6,to:9.5,mins:105},{from:9.5,to:16,mins:90},{from:16,to:19.5,mins:110},{from:19.5,to:23,mins:85},{from:23,to:24,mins:60}],
         journeyByDestination:{pir:90},
-        sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}},
+        sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}, payment:"💳 Card accepted · tap onboard"},
       rafina:{mode:"bus",name:"KTEL Rafina",price:"€3",journey:"~40 min",walk:"~3 min walk",access:"Arrivals level, between Exits 2–3",ll:"37.93728569247656,23.947505303800178",est:true,
         journeyBands:[{from:0,to:6,mins:30},{from:6,to:10,mins:45},{from:10,to:16,mins:40},{from:16,to:20,mins:50},{from:20,to:24,mins:35}],
-        sched:{kind:"range",first:"05:00",last:"22:00",every:45}},
+        sched:{kind:"range",first:"05:00",last:"22:00",every:45}, payment:"💳 Card accepted · tap onboard"},
       x93:{mode:"bus",name:"Bus X93",price:"€5.50",journey:"~65 min",walk:"~3 min walk",route:"5675",est:true,
         journeyBands:[{from:0,to:6,mins:45},{from:6,to:9.5,mins:75},{from:9.5,to:16,mins:65},{from:16,to:19.5,mins:80},{from:19.5,to:23,mins:60},{from:23,to:24,mins:45}],
         journeyByDestination:{ktel:65},
-        sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}},
-      taxi:{mode:"taxi",name:"Taxi",price:"€40–55",journey:"~40 min",walk:"~2 min walk",onDemand:true},
+        sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}, payment:"💳 Card accepted · tap onboard"},
+      taxi:{mode:"taxi",name:"Taxi",price:"€40–55",journey:"~40 min",walk:"~2 min walk",onDemand:true, payment:"💳 Card accepted", apps:["freenow","uber","bolt"]},
     },
     destinations:[
       {id:"centre",label:"City centre",title:"City centre",routes:[
@@ -81,7 +81,7 @@ const AIRPORTS = {
     options:[
       { mode:"metro", to:"Syntagma / city centre", op:"Metro Line 3 (blue) · direct from airport", price:"€9", journey:"~40 min", freqLabel:"every 36 min", hours:"06:10–23:34",
         walk:"~6 min walk", access:"Up to Departures level, across the walkway — follow ‘Trains’", ll:"37.936916659098664,23.94463092649655",
-        sched:{kind:"range",first:"06:32",last:"23:32",every:30}, tags:["💳 Tap contactless at the gate"], note:"€9 flat airport fare (not the standard €1.20 ticket). Airport trains run every 36 min, daily. Last airport departure is around 23:34." },
+        sched:{kind:"range",first:"06:32",last:"23:32",every:30}, payment:"💳 Card accepted · tap at gate", tags:["💳 Card accepted · tap at gate"], note:"€9 flat airport fare (not the standard €1.20 ticket). Airport trains run every 36 min, daily. Last airport departure is around 23:34." },
       { mode:"bus", to:"Syntagma", op:"Express bus X95 · runs 24 hours", route:"2051", price:"€5.50", journey:"~60 min", freqLabel:"every ~20 min · hourly overnight", hours:"24 hours",
         walk:"~3 min walk", access:"Arrivals level, outside Exit 5", ll:"37.93728569247656,23.947505303800178", tags:["💳 Tap contactless onboard"],
         sched:{kind:"windows",windows:[{start:"06:00",end:"22:00",every:20},{start:"22:00",end:"06:00",every:60}]},
@@ -120,7 +120,7 @@ const I18N = {
     "service closed now":"η υπηρεσία δεν λειτουργεί τώρα", "service closed":"η υπηρεσία δεν λειτουργεί", "departing now":"αναχωρεί τώρα", "now":"τώρα",
     "on demand":"κατόπιν ζήτησης", "Now":"Τώρα", "then":"μετά", "24 hours":"24 ώρες", "24h":"24ωρο",
     "No app needed — walk to the rank and take one.":"Δεν χρειάζεται εφαρμογή — πήγαινε στην πιάτσα και πάρε ένα.",
-    "Also on app:":"Επίσης στην εφαρμογή:", "TAXI · DOOR TO DOOR":"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ",
+    "Also on app:":"Επίσης στην εφαρμογή:", "Apps available:":"Διαθέσιμες εφαρμογές:", "Card accepted · tap onboard":"Δέχεται κάρτα · ανέπαφα μέσα στο λεωφορείο", "Card accepted · tap at gate":"Δέχεται κάρτα · ανέπαφα στην πύλη", "Ticket/card · tap at gate":"Εισιτήριο/κάρτα · ανέπαφα στην πύλη", "TAXI · DOOR TO DOOR":"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ",
     "WALK TO DEPARTURE":"ΠΕΡΠΑΤΗΣΕ ΩΣ ΤΗΝ ΑΝΑΧΩΡΗΣΗ", "Departure point":"Σημείο αναχώρησης", "Airport arrivals":"Αφίξεις αεροδρομίου",
     "Follow airport signs to the departure point":"Ακολούθησε τις πινακίδες του αεροδρομίου προς το σημείο αναχώρησης",
     "OPEN WALKING DIRECTIONS ↗":"ΑΝΟΙΓΜΑ ΟΔΗΓΙΩΝ ΠΕΖΗ ↗", "Show walking directions":"Εμφάνιση οδηγιών πεζή", "Close":"Κλείσιμο",
@@ -546,6 +546,7 @@ function destCard(o,e,r,isFastest=false){
   o={...o, walk:o.walk||detail?.walk, access:o.access||detail?.access, ll:o.ll||detail?.ll};
   const how=e.how?`<div class="how">↔ ${tr(e.how)}</div>`:"";
   const walk=o.walk?`<div class="dest-walk"><button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.name||e.to||"Departure point")}" aria-label="${JL_LANG==="el"?"Εμφάνιση οδηγιών πεζή":"Show walking directions"}">🚶 ${tr(o.walk)} <span class="walk-arrow">→</span></button></div>`:"";
+  const payment=o.payment?`<div class="payment-row"><span class="payment-tag">${tr(o.payment)}</span></div>`:"";
   const note=e.note?`<div class="note-plain">${tr(e.note)}</div>`:"";
   const isTaxi=o.mode==="taxi" || r.onDemand;
   const badge=r.isLive?`<span class="live">${JL_LANG==="el"?"ΖΩΝΤΑΝΑ":"LIVE"} <span class="dash"></span></span>`:"";
@@ -581,6 +582,8 @@ function destCard(o,e,r,isFastest=false){
         </div>
         <div class="status-line">${status}</div>
         ${walk}
+        ${payment}
+        ${isTaxi && o.apps ? `<div class="alsoapps"><span>${tr("Apps available:")}</span> ${o.apps.map(appBtn).join("")}</div>` : ""}
       </div>
       <div class="result-main">
         ${depHtml}
