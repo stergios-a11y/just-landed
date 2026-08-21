@@ -227,6 +227,7 @@ const MODES = {
 };
 let VIEW_TIME_MODE="now";
 let VIEW_TIME_CUSTOM=null;
+let SLIDER_BASE_TIME=null;
 function getViewTime(){
   if(VIEW_TIME_MODE==="now") return new Date();
   return VIEW_TIME_CUSTOM ? new Date(VIEW_TIME_CUSTOM) : new Date();
@@ -234,6 +235,8 @@ function getViewTime(){
 function setViewTime(d, mode="custom"){
   VIEW_TIME_MODE=mode;
   VIEW_TIME_CUSTOM=mode==="custom" ? new Date(d) : null;
+  if(mode==="now") SLIDER_BASE_TIME=new Date();
+  else if(!SLIDER_BASE_TIME || Math.abs(new Date(d)-SLIDER_BASE_TIME)>6*60*60*1000) SLIDER_BASE_TIME=new Date(d);
   updateTimePicker();
   const code=typeof CODE!=="undefined"?CODE:null;
   if(code){
@@ -242,7 +245,7 @@ function setViewTime(d, mode="custom"){
   }
 }
 function ensureTimePicker(){
-  if(document.getElementById("time-picker")) return;
+  if(document.getElementById("time-slider")) return;
   const intro=document.querySelector(".intro");
   if(!intro) return;
   intro.insertAdjacentHTML("afterend",`
@@ -252,8 +255,6 @@ function ensureTimePicker(){
         <button type="button" class="time-btn on" id="time-now">NOW</button>
         <button type="button" class="time-btn" id="time-plus30">+30 MIN</button>
         <button type="button" class="time-btn" id="time-plus60">+1 HR</button>
-        <button type="button" class="time-custom" id="time-custom-btn" aria-label="Choose a fixed date and time"><span id="time-custom-label">SET TIME</span><span class="time-custom-icon">↗</span></button>
-        <input id="time-picker" class="time-picker-native" type="datetime-local" aria-label="Set a fixed start date and time">
       </div>
       <div class="time-slider-wrap">
         <div class="time-slider-top"><span id="time-slider-day">NOW</span><b id="time-slider-value">NOW</b></div>
@@ -263,27 +264,20 @@ function ensureTimePicker(){
       </div>
       <div class="time-help" id="time-help">Move the slider to see how the fastest option changes.</div>
     </section>`);
-  const input=document.getElementById("time-picker");
-  const now=new Date();
-  input.min=localDateInputValue(now);
-  input.value="";
-  input.addEventListener("change",()=>{ if(!input.value)return; const d=new Date(input.value); if(!Number.isNaN(d.getTime())) setViewTime(d,"custom"); });
-  document.getElementById("time-now").onclick=()=>setViewTime(new Date(),"now");
-  document.getElementById("time-plus30").onclick=()=>setViewTime(new Date(Date.now()+30*60000),"custom");
-  document.getElementById("time-plus60").onclick=()=>setViewTime(new Date(Date.now()+60*60000),"custom");
-  document.getElementById("time-tomorrow").onclick=()=>{ const d=getViewTime(); d.setDate(d.getDate()+1); setViewTime(d,"custom"); };
-  document.getElementById("time-slider").addEventListener("input",e=>{ const d=new Date(); d.setMinutes(d.getMinutes()+Number(e.target.value)*15); setViewTime(d,"custom"); });
-  document.getElementById("time-custom-btn").onclick=()=>{
-    const d=VIEW_TIME_MODE==="custom"?getViewTime():new Date();
-    input.value=localDateInputValue(d);
-    if(typeof input.showPicker === "function"){ try{ input.showPicker(); return; }catch(e){} }
-    input.click();
-  };
+  document.getElementById("time-now").onclick=()=>{ SLIDER_BASE_TIME=new Date(); setViewTime(new Date(),"now"); };
+  document.getElementById("time-plus30").onclick=()=>{ const d=new Date(Date.now()+30*60000); SLIDER_BASE_TIME=new Date(d); setViewTime(d,"custom"); };
+  document.getElementById("time-plus60").onclick=()=>{ const d=new Date(Date.now()+60*60000); SLIDER_BASE_TIME=new Date(d); setViewTime(d,"custom"); };
+  document.getElementById("time-tomorrow").onclick=()=>{ const d=getViewTime(); d.setDate(d.getDate()+1); SLIDER_BASE_TIME=new Date(d); setViewTime(d,"custom"); };
+  document.getElementById("time-slider").addEventListener("input",e=>{
+    const base=SLIDER_BASE_TIME?new Date(SLIDER_BASE_TIME):new Date();
+    const d=new Date(base); d.setMinutes(d.getMinutes()+Number(e.target.value)*15);
+    setViewTime(d,"custom");
+  });
   updateTimePicker();
 }
 function updateTimePicker(){
-  const nowBtn=document.getElementById("time-now"), plus30=document.getElementById("time-plus30"), plus60=document.getElementById("time-plus60"), input=document.getElementById("time-picker"), label=document.getElementById("when-label");
-  if(!nowBtn||!input||!label) return;
+  const nowBtn=document.getElementById("time-now"), plus30=document.getElementById("time-plus30"), plus60=document.getElementById("time-plus60"), label=document.getElementById("when-label");
+  if(!nowBtn||!label) return;
   const d=getViewTime();
   const selected=selectedLabel(d);
   const now=new Date();
@@ -293,26 +287,19 @@ function updateTimePicker(){
   nowBtn.classList.toggle("on",VIEW_TIME_MODE==="now");
   plus30.classList.toggle("on",VIEW_TIME_MODE==="custom" && Math.abs(minutesFromNow-30)<=2);
   plus60.classList.toggle("on",VIEW_TIME_MODE==="custom" && Math.abs(minutesFromNow-60)<=2);
-  input.value=VIEW_TIME_MODE==="custom"?localDateInputValue(d):"";
-
-  const customBtn=document.getElementById("time-custom-btn"), customLabel=document.getElementById("time-custom-label");
-  if(customBtn&&customLabel){
-    customLabel.textContent=VIEW_TIME_MODE==="custom"?selected:tr("SET TIME");
-    customBtn.classList.toggle("selected",VIEW_TIME_MODE==="custom");
-  }
-
   const slider=document.getElementById("time-slider"), sliderDay=document.getElementById("time-slider-day"), sliderValue=document.getElementById("time-slider-value"), labels=document.getElementById("time-slider-labels");
   if(slider&&sliderDay&&sliderValue&&labels){
-    let idx=0;
-    if(VIEW_TIME_MODE==="custom" && isToday){ idx=Math.max(0,Math.min(6,Math.round(minutesFromNow/15))); }
+    const base=SLIDER_BASE_TIME?new Date(SLIDER_BASE_TIME):new Date();
+    const minutesFromBase=Math.round((d-base)/60000);
+    const idx=Math.max(0,Math.min(12,Math.round(minutesFromBase/15)));
+    slider.max="12";
     slider.value=String(idx);
-    slider.disabled=!isToday;
-    const base=new Date();
-    const times=Array.from({length:7},(_,i)=>{const x=new Date(base);x.setMinutes(x.getMinutes()+i*15);return x;});
-    labels.innerHTML=times.map((x,i)=>`<span class="${i===idx?'active':''}">${fmt(x.getHours()*60+x.getMinutes())}</span>`).join("");
-    if(VIEW_TIME_MODE==="now") { sliderDay.textContent=JL_LANG==="el"?"ΣΗΜΕΡΑ":"TODAY"; sliderValue.textContent=JL_LANG==="el"?"ΤΩΡΑ":"NOW"; }
-    else if(isToday) { sliderDay.textContent=JL_LANG==="el"?"ΣΗΜΕΡΑ":"TODAY"; sliderValue.textContent=fmt(d.getHours()*60+d.getMinutes()); }
-    else { sliderDay.textContent=JL_LANG==="el"?"ΑΥΡΙΟ":"TOMORROW"; sliderValue.textContent=fmt(d.getHours()*60+d.getMinutes()); }
+    slider.disabled=false;
+    const times=Array.from({length:13},(_,i)=>{const x=new Date(base);x.setMinutes(x.getMinutes()+i*15);return x;});
+    labels.innerHTML=times.filter((_,i)=>i%2===0).map((x,i)=>{const real=i*2; return `<span class="${Math.abs(real-idx)<=1?'active':''}">${fmt(x.getHours()*60+x.getMinutes())}</span>`;}).join("");
+    const sameDay=d.toDateString()===new Date().toDateString();
+    sliderDay.textContent=sameDay?(JL_LANG==="el"?"ΣΗΜΕΡΑ":"TODAY"):(JL_LANG==="el"?"ΑΥΡΙΟ":"TOMORROW");
+    sliderValue.textContent=VIEW_TIME_MODE==="now"?(JL_LANG==="el"?"ΤΩΡΑ":"NOW"):fmt(d.getHours()*60+d.getMinutes());
   }
   const tomorrow=document.getElementById("time-tomorrow");
   if(tomorrow) tomorrow.innerHTML=JL_LANG==="el"?"Αύριο <span>→</span>":"Tomorrow <span>→</span>";
@@ -505,7 +492,7 @@ function optionCard(r, n){
   const badge=r.isLive?`<span class="live">${JL_LANG==="el"?"ΖΩΝΤΑΝΑ":"LIVE"} <span class="dash"></span></span>`:"";
   return `<div class="card${fastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${fastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}${head}
     <div class="dep"><div class="dep-l"><span class="lbl">${tr("Departs")}${r.closed?" "+tr("next"):""}${badge}</span><div class="timerow"><span class="time ${r.closed?"closed":""}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span></div></div>
-      <div class="dep-r">${r.dep2!=null?`<div class="then">${tr("then")} ${est}${fmt(r.dep2)}</div>`:""}</div></div>${o.note?`<div class="note">⚠ ${tr(o.note)}</div>`:""}${futureDepartureStrip(o, r.selected)}</div>`;
+      </div></div>${o.note?`<div class="note">⚠ ${tr(o.note)}</div>`:""}${futureDepartureStrip(o, r.selected)}</div>`;
 }
 
 function connNext(c, atDate){
@@ -530,7 +517,7 @@ function destCard(o,e,r,isFastest=false){
     else if(r.until<60){inTxt=JL_LANG==="el"?`σε ${r.until} λεπτά`:`in ${r.until} min`;cls="wait";}
     else {inTxt=JL_LANG==="el"?`σε ${Math.floor(r.until/60)}ω ${String(r.until%60).padStart(2,"0")}λ`:`in ${Math.floor(r.until/60)}h ${String(r.until%60).padStart(2,"0")}m`;cls="wait";}
     const badge=r.isLive?`<span class="live">${JL_LANG==="el"?"ΖΩΝΤΑΝΑ":"LIVE"} <span class="dash"></span></span>`:"";
-    dep=`<div class="dep"><div class="dep-l"><span class="lbl">Departs${badge}</span><div class="timerow"><span class="time ${r.closed?'closed':''}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span></div></div><div class="dep-r">${r.dep2!=null?`<div class="then">${tr("then")} ${est}${fmt(r.dep2)}</div>`:""}</div></div>`;
+    dep=`<div class="dep"><div class="dep-l"><span class="lbl">Departs${badge}</span><div class="timerow"><span class="time ${r.closed?'closed':''}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span></div></div></div>`;
   }
   return `<div class="card${isFastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${isFastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}
     <div class="top"><div class="mode">${modeIcon(o.mode)}</div><div class="route"><div class="to">${tr(o.name)}</div><div class="op">${tr(e.to)}</div></div><div class="price">${o.price}</div></div>

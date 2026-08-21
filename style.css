@@ -21,14 +21,13 @@ h1{font-family:"Inter",sans-serif;font-weight:900;font-size:24px;letter-spacing:
 .time-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
 .time-panel-head strong{color:var(--amber);font-size:10px;white-space:nowrap}
 .time-actions{display:flex;gap:7px;align-items:stretch}
-.time-btn,.time-custom{appearance:none;border:1px solid var(--tileborder);background:var(--tile);color:var(--ink);border-radius:8px;min-height:38px;padding:0 10px;font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;letter-spacing:.04em;cursor:pointer;display:flex;align-items:center;justify-content:center;white-space:nowrap}
+.time-btn{appearance:none;border:1px solid var(--tileborder);background:var(--tile);color:var(--ink);border-radius:8px;min-height:38px;padding:0 10px;font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;letter-spacing:.04em;cursor:pointer;display:flex;align-items:center;justify-content:center;white-space:nowrap}
 .time-btn.on{background:var(--amber);border-color:var(--amber);color:#111}
 .time-custom{position:relative;flex:1 1 auto;color:var(--muted);gap:8px;min-width:92px}
 .time-custom .time-custom-arrow{font-size:12px;color:var(--amber);transition:transform .12s}
 .time-custom:hover .time-custom-arrow,.time-custom:focus-visible .time-custom-arrow{transform:translateX(2px)}
 .time-custom.selected{color:var(--ink);border-color:var(--amber);background:#1f1f22}
 .time-custom.selected .time-custom-arrow{color:var(--amber)}
-.time-picker-native{position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0;margin:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;color-scheme:dark}
 .time-help{margin-top:8px;color:var(--muted);font:500 9.5px/1.35 "JetBrains Mono",monospace}
 
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;margin-bottom:12px}
@@ -150,9 +149,8 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .time-panel{padding:14px 14px 12px;margin:14px 0 16px}
 .time-panel-head{margin-bottom:10px}
 .time-kicker{color:var(--muted)}
-.time-actions{display:grid;grid-template-columns:1fr 1fr 1fr 1.2fr;gap:7px}
-.time-btn,.time-custom{min-height:40px}
-.time-custom-icon{color:var(--amber);font-size:12px}
+.time-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.time-btn{min-height:40px}
 .time-slider-wrap{position:relative;margin-top:14px;padding:12px 10px 8px;background:#151519;border:1px solid var(--line);border-radius:10px}
 .time-slider-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font:700 10px/1 "JetBrains Mono",monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--amber)}
 .time-slider-top b{font-size:16px;letter-spacing:0;color:var(--ink)}
@@ -165,4 +163,4 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .tomorrow-btn{display:block;margin:10px 0 0 auto;border:0;background:transparent;color:var(--amber);font:700 10px/1 "JetBrains Mono",monospace;cursor:pointer;padding:3px 0;text-transform:none}
 .tomorrow-btn:hover{text-decoration:underline}
 .time-help{margin-top:9px}
-@media(max-width:600px){.time-actions{grid-template-columns:1fr 1fr}.time-custom{grid-column:span 2}.time-slider-labels{font-size:8px}.time-panel{padding:12px}}
+@media(max-width:600px){.time-actions{grid-template-columns:1fr 1fr 1fr}.time-slider-labels{font-size:8px}.time-panel{padding:12px}}
