@@ -389,48 +389,42 @@ const APP={ freenow:{cls:"freenow",label:"FREE NOW"}, uber:{cls:"uber",label:"Ub
 const appBtn = k => { const a=APP[k]; return a?`<span class="appbtn ${a.cls}">${a.label}</span>`:""; };
 
 
-function futureDepartures(o, baseMin) {
-  if (o.onDemand) return [];
-  const base = baseMin ?? nowMinutes();
-  const out = [];
-  const n = nextTwo(o, base);
-  if (n && !n.closed) {
-    if (n.dep1 != null) out.push(n.dep1);
-    if (n.dep2 != null && n.dep2 !== n.dep1) out.push(n.dep2);
+function upcomingDepartures(o, atDate, count=4){
+  if(o.onDemand) return {dates:[], isLive:false};
+  if(!(atDate instanceof Date)) atDate=new Date();
+  const useLive=Math.abs(atDate.getTime()-Date.now()) < 90000;
+  if(useLive && o.route && LIVE[o.route]?.deps?.length){
+    const base=new Date(atDate); base.setHours(0,0,0,0);
+    const dates=LIVE[o.route].deps.map(m=>{
+      const d=new Date(base); d.setMinutes(m); return d;
+    }).filter(d=>d>=atDate).slice(0,count);
+    if(dates.length) return {dates,isLive:true};
   }
-  if (o.sched && out.length < 4) {
-    const all = departures(o);
-    for (const d of all) {
-      if (d >= base && !out.includes(d)) {
-        out.push(d);
-        if (out.length === 4) break;
-      }
-    }
-  }
-  return out.slice(0, 4);
+  const dates=scheduleDates(o,atDate).filter(d=>d>=atDate).slice(0,count);
+  return {dates,isLive:false};
 }
-function departureClock(min) {
-  const x = ((min % 1440) + 1440) % 1440;
-  return String(Math.floor(x/60)).padStart(2,"0") + ":" + String(x%60).padStart(2,"0");
+function waitLabel(from, to){
+  const mins=Math.max(0,Math.round((to-from)/60000));
+  if(mins<=0) return JL_LANG==="el" ? "τώρα" : "now";
+  if(mins<60) return JL_LANG==="el" ? `σε ${mins} λ.` : `in ${mins} min`;
+  return JL_LANG==="el" ? `σε ${Math.floor(mins/60)}ω ${String(mins%60).padStart(2,"0")}λ` : `in ${Math.floor(mins/60)}h ${String(mins%60).padStart(2,"0")}m`;
 }
-function futureDepartureStrip(o, baseMin) {
-  const deps = futureDepartures(o, baseMin);
-  if (!deps.length) return "";
-  const base = baseMin ?? nowMinutes();
-  const live = !!(o.route && LIVE[o.route]);
+function departureClockDate(d){
+  return fmt(d.getHours()*60+d.getMinutes());
+}
+function futureDepartureStrip(o, atDate){
+  const r=upcomingDepartures(o,atDate,4);
+  if(!r.dates.length) return "";
+  const base=atDate instanceof Date ? atDate : new Date();
   return `<div class="future-deps">
     <div class="future-deps-head">
-      <span>${I("DEPARTURES","ΑΝΑΧΩΡΗΣΕΙΣ")}</span>
-      ${live ? '<span class="future-live">LIVE</span>' : ''}
+      <span>${JL_LANG==="el"?"ΕΠΟΜΕΝΕΣ ΑΝΑΧΩΡΗΣΕΙΣ":"UPCOMING DEPARTURES"}</span>
+      ${r.isLive ? '<span class="future-live">LIVE</span>' : ''}
     </div>
     <div class="future-deps-grid">
-      ${deps.map((d,i) => {
-        const wait = Math.max(0, d-base);
-        return `<div class="future-dep${i===0 ? " primary":""}">
-          <b>${departureClock(d)}</b>
-          <span>${I("in","σε")} ${wait}${I(" min"," λ.")}</span>
-        </div>`;
-      }).join("")}
+      ${r.dates.map((d,i)=>`<div class="future-dep${i===0?" primary":""}">
+        <b>${departureClockDate(d)}</b><span>${waitLabel(base,d)}</span>
+      </div>`).join("")}
     </div>
   </div>`;
 }
@@ -446,7 +440,7 @@ function optionCard(r, n){
     const apps=o.apps?`<div class="alsoapps">${tr("Also on app:")} ${o.apps.map(appBtn).join("")}</div>`:"";
     return `<div class="card${fastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${fastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}${head}${noapp}${apps}
       <div class="dep"><div class="dep-l"><span class="lbl">${tr("Availability")}</span><div class="timerow"><span class="time">${tr("Now")}</span><span class="in soon">${tr("on demand")}</span></div></div><div class="dep-r"><div class="then">${tr("24 hours")}</div></div></div>
-      ${o.note?`<div class="note">⚠ ${tr(o.note)}</div>`:""}${futureDepartureStrip(o, SELECTED_TIME ?? nowMinutes())}</div>`;
+      ${o.note?`<div class="note">⚠ ${tr(o.note)}</div>`:""}</div>`;
   }
   const est=(o.est && !r.isLive)?"~":"";
   let inTxt,cls;
@@ -458,7 +452,7 @@ function optionCard(r, n){
   const badge=r.isLive?`<span class="live">${JL_LANG==="el"?"ΖΩΝΤΑΝΑ":"LIVE"} <span class="dash"></span></span>`:"";
   return `<div class="card${fastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${fastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}${head}
     <div class="dep"><div class="dep-l"><span class="lbl">${tr("Departs")}${r.closed?" "+tr("next"):""}${badge}</span><div class="timerow"><span class="time ${r.closed?"closed":""}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span></div></div>
-      <div class="dep-r">${r.dep2!=null?`<div class="then">${tr("then")} ${est}${fmt(r.dep2)}</div>`:""}</div></div>${o.note?`<div class="note">⚠ ${tr(o.note)}</div>`:""}</div>`;
+      <div class="dep-r">${r.dep2!=null?`<div class="then">${tr("then")} ${est}${fmt(r.dep2)}</div>`:""}</div></div>${o.note?`<div class="note">⚠ ${tr(o.note)}</div>`:""}${futureDepartureStrip(o, r.selected)}</div>`;
 }
 
 function connNext(c, atDate){
@@ -487,7 +481,7 @@ function destCard(o,e,r,isFastest=false){
   }
   return `<div class="card${isFastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${isFastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}
     <div class="top"><div class="mode">${modeIcon(o.mode)}</div><div class="route"><div class="to">${tr(o.name)}</div><div class="op">${tr(e.to)}</div></div><div class="price">${o.price}</div></div>
-    ${how}${meta}${note}${dep}</div>`;
+    ${how}${meta}${note}${dep}${futureDepartureStrip(o,r.selected)}</div>`;
 }
 const DESTSEL={};
 function renderDest(code){

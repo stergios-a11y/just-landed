@@ -1,14 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 230" role="img" aria-labelledby="t d">
-<title id="t">JUST LANDED — Airport to City</title>
-<desc id="d">JUST LANDED logo with an airport-to-city forward arrow.</desc>
-<g fill="#FAFAF8">
-  <path d="M88 32H176L236 91H330L358 120H230L176 72H88Z"/>
-  <path d="M28 146H318L344 120H370L342 174H28Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 430" role="img" aria-labelledby="t d">
+<title id="t">JUST LANDED — Airport to City</title><desc id="d">Dark JUST LANDED logo.</desc>
+<rect width="100%" height="100%" fill="#111111"/>
+<g transform="translate(92 48) scale(.72)" style="color:#FAFAF8">
+<g><path d="M132 48 L226 48 L291 101 L370 101 L408 138 L293 138 L226 92 L132 92 Z" fill="currentColor"/>
+<path d="M42 171 H391 L420 138 H447 L410 197 H42 Z" fill="currentColor"/>
+<path d="M392 139 H520" fill="none" stroke="#FFC107" stroke-width="26" stroke-linecap="square"/>
+<path d="M500 115 L530 139 L500 163" fill="none" stroke="#FFC107" stroke-width="26" stroke-linecap="square" stroke-linejoin="miter"/></g>
 </g>
-<path d="M338 121H454" fill="none" stroke="#FFC107" stroke-width="24" stroke-linecap="square"/>
-<path d="M434 99L458 121L434 143" fill="none" stroke="#FFC107" stroke-width="24" stroke-linecap="square" stroke-linejoin="miter"/>
-<line x1="500" y1="32" x2="500" y2="190" stroke="#333333" stroke-width="2"/>
-<text x="540" y="102" fill="#FAFAF8" font-family="Inter,Arial,Helvetica,sans-serif" font-size="64" font-weight="900" letter-spacing="-2">JUST LANDED</text>
-<text x="542" y="145" fill="#FAFAF8" font-family="Inter,Arial,Helvetica,sans-serif" font-size="22" font-weight="800" letter-spacing="9">AIRPORT <tspan fill="#FFC107">→</tspan> CITY</text>
-<text x="542" y="178" fill="#8E8E8E" font-family="Inter,Arial,Helvetica,sans-serif" font-size="13" font-weight="700" letter-spacing="3">PUBLIC TRANSPORT · NO TAXI UPSELL</text>
+<text x="560" y="214" font-family="Inter,Arial,Helvetica,sans-serif" font-size="122" font-weight="900" letter-spacing="-5" fill="#FAFAF8">JUST LANDED</text>
+<text x="566" y="300" font-family="Inter,Arial,Helvetica,sans-serif" font-size="36" font-weight="700" letter-spacing="15" fill="#FAFAF8">AIRPORT <tspan fill="#FFC107">→</tspan> CITY</text>
 </svg>
