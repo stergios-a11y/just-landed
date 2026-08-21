@@ -260,7 +260,7 @@ function ensureTimePicker(){
         <div class="time-slider-top"><span id="time-slider-day">NOW</span><b id="time-slider-value">NOW</b></div>
         <input id="time-slider" class="time-slider" type="range" min="0" max="6" step="1" value="0" aria-label="Move departure time in 15 minute steps">
         <div class="time-slider-labels" id="time-slider-labels"></div>
-        <button type="button" class="tomorrow-btn" id="time-tomorrow">Tomorrow <span>→</span></button>
+        <button type="button" class="tomorrow-btn" id="time-tomorrow">Next day <span>→</span></button>
       </div>
       <div class="time-help" id="time-help">Move the slider to see how the fastest option changes.</div>
     </section>`);
@@ -302,7 +302,7 @@ function updateTimePicker(){
     sliderValue.textContent=VIEW_TIME_MODE==="now"?(JL_LANG==="el"?"ΤΩΡΑ":"NOW"):fmt(d.getHours()*60+d.getMinutes());
   }
   const tomorrow=document.getElementById("time-tomorrow");
-  if(tomorrow) tomorrow.innerHTML=JL_LANG==="el"?"Αύριο <span>→</span>":"Tomorrow <span>→</span>";
+  if(tomorrow) tomorrow.innerHTML=JL_LANG==="el"?"Επόμενη μέρα <span>→</span>":"Next day <span>→</span>";
   const kicker=document.getElementById("time-kicker"); if(kicker) kicker.textContent=JL_LANG==="el"?"ΠΟΤΕ ΦΕΥΓΕΙΣ;":"WHEN ARE YOU LEAVING?";
   const help=document.getElementById("time-help"); if(help) help.textContent=VIEW_TIME_MODE==="custom"?(JL_LANG==="el"?"Μετακίνησε τη μπάρα για να δεις πώς αλλάζει η γρηγορότερη επιλογή.":"Move the slider to see how the fastest option changes."):(JL_LANG==="el"?"Οι χρόνοι υπολογίζονται από τώρα. Μετακίνησε τη μπάρα για να δεις πώς αλλάζει η γρηγορότερη επιλογή.":"Times are calculated from now. Move the slider to see how the fastest option changes.");
 }
