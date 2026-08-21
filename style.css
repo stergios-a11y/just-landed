@@ -142,7 +142,7 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .future-dep b{display:block;font:900 14px/1 JetBrains Mono,monospace;color:var(--ink)}
 .future-dep span{display:block;margin-top:4px;font:700 9px/1.1 JetBrains Mono,monospace;color:var(--muted)}
 .future-dep.primary{border-color:var(--amber)}
-.future-dep.primary b{color:var(--amber)}
+.future-dep.primary b{color:var(--ink)}
 @media(max-width:520px){.future-deps-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* v20 — compact time controls / slider */
@@ -164,41 +164,50 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .tomorrow-btn:hover{text-decoration:underline}
 .time-help{margin-top:9px}
 @media(max-width:600px){.time-actions{grid-template-columns:1fr 1fr 1fr}.time-slider-labels{font-size:8px}.time-panel{padding:12px}}
-/* v22/v24 — mobile-first arrival cards */
+/* v25 — departure-first mobile cards */
 .result-card{padding:16px 16px 14px}
 .result-grid{display:block}
-.result-left{min-width:0}
-.result-left .top{align-items:center}
-.result-left .mode{width:40px;height:40px}
+.result-head{min-width:0}
+.result-head .top{align-items:center}
+.result-head .mode{width:40px;height:40px}
+.result-head .route{min-width:0}
+.route-direction{text-transform:none}
 .status-line{margin-top:9px;font:700 9.5px/1.2 "JetBrains Mono",monospace;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
 .estimate-dot{color:#f39a23}.live-dot{color:#44c86a}
-.result-arrival{margin-top:14px}
-.arrival-summary,.taxi-summary{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
-.arrival-label{font:700 9px/1 "JetBrains Mono",monospace;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
-.arrival-time{font:900 29px/1 "JetBrains Mono",monospace;color:var(--amber);margin-top:5px;white-space:nowrap}
-.arrival-time span{font:500 11px/1 "JetBrains Mono",monospace;color:var(--muted);margin-left:5px}
-.arrival-price,.taxi-price{font:800 16px/1 "JetBrains Mono",monospace;color:var(--amber);white-space:nowrap}
-.arrival-sub{font:500 10px/1.3 "JetBrains Mono",monospace;color:var(--muted);margin-top:4px}
-.journey-breakdown{display:flex;align-items:center;gap:5px;margin-top:10px}
-.journey-step{display:grid;grid-template-columns:22px auto;grid-template-rows:auto auto;column-gap:5px;align-items:center;background:var(--tile);border:1px solid var(--tileborder);border-radius:8px;padding:6px 8px;min-width:70px}
+.result-head .dest-walk{margin-top:10px}
+.result-head .walk-btn{font-size:10px;padding:6px 8px}
+.result-main{margin-top:14px}
+.departure-block{border-top:1px solid var(--line);padding-top:12px}
+.departure-label{font:700 9px/1 "JetBrains Mono",monospace;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.departure-main{display:flex;align-items:baseline;gap:10px;margin-top:7px;flex-wrap:wrap}
+.departure-time{font:900 32px/1 "JetBrains Mono",monospace;color:var(--amber);letter-spacing:.02em}
+.departure-time.closed{color:var(--muted)}
+.departure-in{font:700 12px/1 "JetBrains Mono",monospace}
+.departure-in.soon{color:var(--amber)}
+.departure-in.wait{color:var(--muted)}
+.departure-in.closed{color:var(--red)}
+.muted-departure{font:900 24px/1 "JetBrains Mono",monospace;color:var(--ink)}
+.muted-departure span{font:600 11px/1 "JetBrains Mono",monospace;color:var(--muted);margin-left:4px}
+.journey-breakdown{display:flex;align-items:center;gap:5px;margin-top:11px}
+.journey-step{display:grid;grid-template-columns:22px auto;grid-template-rows:auto auto;column-gap:5px;align-items:center;background:var(--tile);border:1px solid var(--tileborder);border-radius:8px;padding:6px 8px;min-width:70px;flex:1}
 .step-icon{grid-row:1/3;color:var(--ink);font-size:14px;display:flex;align-items:center;justify-content:center}
 .journey-step b{font:800 11px/1 "JetBrains Mono",monospace;color:var(--ink)}
 .journey-step small{font:500 8px/1.2 "JetBrains Mono",monospace;color:var(--muted);margin-top:3px}
 .journey-arrow{color:var(--muted);font-size:18px;line-height:1}
+.total-time{margin-top:8px;font:600 10px/1.2 "JetBrains Mono",monospace;color:var(--muted)}
 .result-departures{margin-top:12px}
 .result-departures .future-deps{margin-top:0;padding-top:10px;border-top:1px solid var(--line)}
 .result-departures .future-deps-head{margin-bottom:6px}
-.result-departures .future-deps-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
-.result-card .dest-walk{margin-top:10px}
-.result-card .walk-btn{font-size:10px;padding:6px 8px}
-.taxi-card .result-arrival{margin-top:14px}
-.taxi-card .arrival-time{color:var(--ink);font-size:25px}
-.taxi-card .arrival-price{font-size:17px}
+.result-departures .future-deps-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.result-departures .future-dep.primary{border-color:var(--line)}
+.result-departures .future-dep.primary b{color:var(--ink)}
+.taxi-card{opacity:.82}
+.taxi-card .price{color:var(--muted)}
+.taxi-card .departure-block{border-top-color:var(--line)}
 @media(max-width:520px){
-  .future-deps-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .arrival-time{font-size:27px}
+  .departure-time{font-size:30px}
   .journey-breakdown{gap:3px}
-  .journey-step{min-width:0;flex:1;padding:6px 5px}
+  .journey-step{min-width:0;padding:6px 5px}
   .journey-step b{font-size:10px}
   .journey-arrow{display:none}
   .result-departures .future-deps-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
