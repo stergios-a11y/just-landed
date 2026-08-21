@@ -41,12 +41,25 @@ const AIRPORTS = {
         sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:40},{start:"23:00",end:"05:30",every:70}]}},
     ],
     routes:{
-      metro:{mode:"metro",name:"Metro M3",price:"€9",journey:"~40 min",walk:"~6 min walk",sched:{kind:"range",first:"06:32",last:"23:32",every:30}},
-      x95:{mode:"bus",name:"Bus X95",price:"€5.50",journey:"~50 min",journeyDay:"~50 min",journeyNight:"~35 min",walk:"~3 min walk",route:"2051",est:true,sched:{kind:"windows",windows:[{start:"06:00",end:"22:00",every:20},{start:"22:00",end:"06:00",every:60}]}},
+      metro:{mode:"metro",name:"Metro M3",price:"€9",journey:"~40 min",walk:"~6 min walk",
+        journeyByDestination:{centre:40,mon:42,acro:52,pir:61},
+        sched:{kind:"range",first:"06:10",last:"23:34",every:36}},
+      x95:{mode:"bus",name:"Bus X95",price:"€5.50",journey:"~60 min",walk:"~3 min walk",route:"2051",est:true,
+        journeyBands:[{from:0,to:6,mins:40},{from:6,to:9.5,mins:65},{from:9.5,to:16,mins:55},{from:16,to:19.5,mins:70},{from:19.5,to:23,mins:50},{from:23,to:24,mins:40}],
+        journeyByDestination:{centre:60,mon:68,acro:68},
+        sched:{kind:"windows",windows:[{start:"06:00",end:"22:00",every:20},{start:"22:00",end:"06:00",every:60}]}},
       rail:{mode:"rail",name:"Suburban Rail",price:"€9",journey:"~50 min",walk:"~6 min walk",sched:{kind:"range",first:"06:09",last:"22:09",every:30}},
-      x96:{mode:"bus",name:"Bus X96",price:"€5.50",journey:"60–75 min",journeyDay:"60–75 min",journeyNight:"~50 min",walk:"~3 min walk",route:"3028",est:true,sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}},
-      rafina:{mode:"bus",name:"KTEL Rafina",price:"€3",journey:"~40 min",journeyDay:"~40 min",journeyNight:"~30 min",walk:"~3 min walk",access:"Arrivals level, outside Exit 5",ll:"37.93728569247656,23.947505303800178",est:true,sched:{kind:"range",first:"05:00",last:"22:00",every:45}},
-      x93:{mode:"bus",name:"Bus X93",price:"€5.50",journey:"~45 min",journeyDay:"~45 min",journeyNight:"~35 min",walk:"~3 min walk",route:"5675",est:true,sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}},
+      x96:{mode:"bus",name:"Bus X96",price:"€5.50",journey:"~90 min",walk:"~3 min walk",route:"3028",est:true,
+        journeyBands:[{from:0,to:6,mins:60},{from:6,to:9.5,mins:105},{from:9.5,to:16,mins:90},{from:16,to:19.5,mins:110},{from:19.5,to:23,mins:85},{from:23,to:24,mins:60}],
+        journeyByDestination:{pir:90},
+        sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}},
+      rafina:{mode:"bus",name:"KTEL Rafina",price:"€3",journey:"~40 min",walk:"~3 min walk",access:"Arrivals level, between Exits 2–3",ll:"37.93728569247656,23.947505303800178",est:true,
+        journeyBands:[{from:0,to:6,mins:30},{from:6,to:10,mins:45},{from:10,to:16,mins:40},{from:16,to:20,mins:50},{from:20,to:24,mins:35}],
+        sched:{kind:"range",first:"05:00",last:"22:00",every:45}},
+      x93:{mode:"bus",name:"Bus X93",price:"€5.50",journey:"~65 min",walk:"~3 min walk",route:"5675",est:true,
+        journeyBands:[{from:0,to:6,mins:45},{from:6,to:9.5,mins:75},{from:9.5,to:16,mins:65},{from:16,to:19.5,mins:80},{from:19.5,to:23,mins:60},{from:23,to:24,mins:45}],
+        journeyByDestination:{ktel:65},
+        sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}},
       taxi:{mode:"taxi",name:"Taxi",price:"€40–55",journey:"~40 min",walk:"~2 min walk",onDemand:true},
     },
     destinations:[
@@ -66,10 +79,10 @@ const AIRPORTS = {
         {k:"x93",to:"Kifisós / Liossíon — direct",best:true,note:"KTEL coaches to the rest of Greece"},{k:"taxi",to:"door to door"}]},
     ],
     options:[
-      { mode:"metro", to:"Syntagma / city centre", op:"Metro Line 3 (blue) · direct from airport", price:"€9", journey:"~40 min", freqLabel:"every ~30 min", hours:"06:32–23:32",
+      { mode:"metro", to:"Syntagma / city centre", op:"Metro Line 3 (blue) · direct from airport", price:"€9", journey:"~40 min", freqLabel:"every 36 min", hours:"06:10–23:34",
         walk:"~6 min walk", access:"Up to Departures level, across the walkway — follow ‘Trains’", ll:"37.936916659098664,23.94463092649655",
-        sched:{kind:"range",first:"06:32",last:"23:32",every:30}, tags:["💳 Tap contactless at the gate"], note:"€9 flat airport fare (not the standard €1.20 ticket). Return €16, valid 48h." },
-      { mode:"bus", to:"Syntagma", op:"Express bus X95 · runs 24 hours", route:"2051", price:"€5.50", journey:"~40–50 min", freqLabel:"every ~20 min · hourly overnight", hours:"24 hours",
+        sched:{kind:"range",first:"06:32",last:"23:32",every:30}, tags:["💳 Tap contactless at the gate"], note:"€9 flat airport fare (not the standard €1.20 ticket). Airport trains run every 36 min, daily. Last airport departure is around 23:34." },
+      { mode:"bus", to:"Syntagma", op:"Express bus X95 · runs 24 hours", route:"2051", price:"€5.50", journey:"~60 min", freqLabel:"every ~20 min · hourly overnight", hours:"24 hours",
         walk:"~3 min walk", access:"Arrivals level, outside Exit 5", ll:"37.93728569247656,23.947505303800178", tags:["💳 Tap contactless onboard"],
         sched:{kind:"windows",windows:[{start:"06:00",end:"22:00",every:20},{start:"22:00",end:"06:00",every:60}]},
         note:"Cheapest and never closes, but slow in traffic. Buy at the booth or just tap your card on the bus. Live times when buses are running, otherwise the timetable." },
@@ -279,6 +292,10 @@ const fmt = m => { m=((m%1440)+1440)%1440; const h=Math.floor(m/60),mm=m%60; ret
 const pad2 = n => String(n).padStart(2,"0");
 function localDateInputValue(d){ return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}T${pad2(d.getHours())}:${pad2(d.getMinutes())}`; }
 function dateOnly(d, delta=0){ const x=new Date(d); x.setHours(12,0,0,0); x.setDate(x.getDate()+delta); return x; }
+function serviceAvailable(o, date){
+  if(!o || !o.serviceRule) return true;
+  return o.serviceRule(date);
+}
 function scheduleDates(o, baseDate){
   const s=o.sched; if(!s) return [];
   const out=[];
@@ -294,7 +311,8 @@ function scheduleDates(o, baseDate){
       }
     }
   }
-  return out.sort((a,b)=>a-b);
+  const filtered=out.filter(d=>serviceAvailable(o,d));
+  return filtered.sort((a,b)=>a-b);
 }
 function nextTwo(o, atDate){
   if(o.onDemand) return {onDemand:true, until:0, selected:atDate};
@@ -432,7 +450,7 @@ function futureDepartureStrip(o, atDate){
 function optionCard(r, n){
   const fastest=!!r.fastest;
   const o=r.o;
-  const meta=`<div class="meta"><b>${effectiveJourney(o, r.selected)}</b> · ${o.freqLabel} · ${o.hours}</div>`;
+  const meta=`<div class="meta"><b>${effectiveJourney(o, r.selected)}</b> · ${o.freqLabel} · ${o.hours}${o.journeyBands?` · ${JL_LANG==="el"?"εκτίμηση κίνησης":"traffic-adjusted estimate"}`:""}</div>`;
   const tags=o.tags?`<div class="tags">${o.tags.map(t=>`<span class="tag">${tr(t)}</span>`).join("")}</div>`:"";
   const head=`<div class="top"><div class="rank">${n}</div><div class="mode">${modeIcon(o.mode)}</div><div class="route"><div class="to">${tr(o.to)}</div><div class="op">${tr(o.op)}</div></div><div class="price">${o.price}</div></div>${wayOf(o)}${meta}${tags}`;
   if(r.onDemand){
@@ -466,7 +484,7 @@ function destCard(o,e,r,isFastest=false){
   o={...o, walk:o.walk||detail?.walk, access:o.access||detail?.access, ll:o.ll||detail?.ll};
   const how=e.how?`<div class="how">↔ ${tr(e.how)}</div>`:"";
   const walk=o.walk?`<div class="dest-walk"><button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.name||e.to||"Departure point")}" aria-label="${JL_LANG==="el"?"Εμφάνιση οδηγιών πεζή":"Show walking directions"}">🚶 ${tr(o.walk)} <span class="walk-arrow">→</span></button></div>`:"";
-  const meta=`<div class="meta"><b>${tr(effectiveJourney(o, r.selected))}</b> · ${tr(o.price)}</div>${walk}`;
+  const meta=`<div class="meta"><b>${tr(effectiveJourney(o, r.selected, e && e.destinationId))}</b> · ${tr(o.price)}${o.journeyBands?` · ${JL_LANG==="el"?"εκτίμηση κίνησης":"traffic-adjusted estimate"}`:""}</div>${walk}`;
   const note=e.note?`<div class="note-plain">${tr(e.note)}</div>`:"";
   let dep;
   if(r.onDemand){ dep=`<div class="dep"><div class="dep-l"><span class="lbl">${tr("Availability")}</span><div class="timerow"><span class="time">${tr("Now")}</span><span class="in soon">${tr("on demand")}</span></div></div><div class="dep-r"><div class="then">24h</div></div></div>`; }
@@ -494,7 +512,7 @@ function renderDest(code){
   if(chips){ chips.innerHTML=ap.destinations.map(x=>`<button class="chip ${x.id===cur.id?'on':''}" data-id="${x.id}">${tr(x.label)}</button>`).join("");
     chips.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{DESTSEL[code]=b.dataset.id;renderDest(code);}); }
   const dt=document.getElementById("desttitle"); if(dt) dt.textContent=tr(cur.title);
-  const routeRows=cur.routes.map(e=>{const o=ap.routes[e.k]; if(!o) return null; const r=nextTwo(o,at); r.total=totalTripMinutes(o,r); return {e,o,r};}).filter(Boolean);
+  const routeRows=cur.routes.map(e=>{const o=ap.routes[e.k]; if(!o) return null; e={...e,destinationId:cur.id}; const r=nextTwo(o,at); r.total=totalTripMinutes(o,r,cur.id); return {e,o,r};}).filter(Boolean);
   const ranked=routeRows.sort((a,b)=>{
     const at=a.o.mode==="taxi", bt=b.o.mode==="taxi";
     if(at!==bt) return at?1:-1;
@@ -504,14 +522,18 @@ function renderDest(code){
   box.innerHTML=ranked.map(row=>destCard(row.o,row.e,row.r,row===fastest)).join("");
 }
 
-function effectiveJourney(o, atDate){
+function effectiveJourney(o, atDate, destinationId){
   if(!o) return "";
-  if(!o.journeyDay || !o.journeyNight) return o.journey || "";
   const d=atDate instanceof Date ? atDate : new Date();
-  const mins=d.getHours()*60+d.getMinutes();
-  // Night traffic window: 23:00–06:00. Airport express buses benefit most from lighter road traffic.
-  const night=(mins>=23*60 || mins<6*60);
-  return night ? o.journeyNight : o.journeyDay;
+  if(destinationId && o.journeyByDestination && o.journeyByDestination[destinationId]!=null){
+    return "~"+o.journeyByDestination[destinationId]+" min";
+  }
+  if(Array.isArray(o.journeyBands)){
+    const h=d.getHours()+d.getMinutes()/60;
+    const band=o.journeyBands.find(b=>h>=b.from && h<b.to);
+    if(band) return "~"+band.mins+" min";
+  }
+  return o.journey || "";
 }
 
 function durationMinutes(text){
@@ -522,10 +544,10 @@ function durationMinutes(text){
   return nums.reduce((a,b)=>a+b,0)/nums.length;
 }
 function walkMinutes(text){ return durationMinutes(text); }
-function totalTripMinutes(o, r){
-  if(r.onDemand) return walkMinutes(o.walk) + durationMinutes(effectiveJourney(o, r.selected));
+function totalTripMinutes(o, r, destinationId){
+  if(r.onDemand) return walkMinutes(o.walk) + durationMinutes(effectiveJourney(o, r.selected, destinationId));
   if(r.closed) return Infinity;
-  return walkMinutes(o.walk) + Math.max(0,r.until) + durationMinutes(effectiveJourney(o, r.selected));
+  return walkMinutes(o.walk) + Math.max(0,r.until) + durationMinutes(effectiveJourney(o, r.selected, destinationId));
 }
 function renderAirport(code){
   const ap=AIRPORTS[code]; if(!ap) return;
