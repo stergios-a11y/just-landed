@@ -578,12 +578,10 @@ function destCard(o,e,r,isFastest=false){
         <div class="top">
           <div class="mode">${modeIcon(o.mode)}</div>
           <div class="route"><div class="to">${tr(o.name)}</div><div class="op route-direction">${routeSubtitle}</div></div>
-          <div class="price">${o.price}</div>
+          <div class="price-block"><div class="price">${o.price}</div>${payment}${isTaxi && o.apps ? `<div class="alsoapps"><span>${tr("Apps available:")}</span> ${o.apps.map(appBtn).join("")}</div>` : ""}</div>
         </div>
         <div class="status-line">${status}</div>
         ${walk}
-        ${payment}
-        ${isTaxi && o.apps ? `<div class="alsoapps"><span>${tr("Apps available:")}</span> ${o.apps.map(appBtn).join("")}</div>` : ""}
       </div>
       <div class="result-main">
         ${depHtml}
