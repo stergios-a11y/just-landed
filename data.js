@@ -123,7 +123,7 @@ const I18N = {
     "Also on app:":"Επίσης στην εφαρμογή:", "Apps available:":"Διαθέσιμες εφαρμογές:", "Card accepted · tap onboard":"Δέχεται κάρτα · ανέπαφα μέσα στο λεωφορείο", "Card accepted · tap at gate":"Δέχεται κάρτα · ανέπαφα στην πύλη", "Ticket/card · tap at gate":"Εισιτήριο/κάρτα · ανέπαφα στην πύλη", "TAXI · DOOR TO DOOR":"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ",
     "WALK TO DEPARTURE":"ΠΕΡΠΑΤΗΣΕ ΩΣ ΤΗΝ ΑΝΑΧΩΡΗΣΗ", "Departure point":"Σημείο αναχώρησης", "Airport arrivals":"Αφίξεις αεροδρομίου",
     "Follow airport signs to the departure point":"Ακολούθησε τις πινακίδες του αεροδρομίου προς το σημείο αναχώρησης",
-    "OPEN WALKING DIRECTIONS ↗":"ΑΝΟΙΓΜΑ ΟΔΗΓΙΩΝ ΠΕΖΗ ↗", "Show walking directions":"Εμφάνιση οδηγιών πεζή", "Close":"Κλείσιμο",
+    "OPEN WALKING DIRECTIONS ↗":"ΑΝΟΙΓΜΑ ΟΔΗΓΙΩΝ ΠΕΖΗ ↗", "Show walking directions":"Εμφάνιση οδηγιών πεζή", "Close":"Κλείσιμο", "DIRECTIONS":"ΟΔΗΓΙΕΣ", "VIEW TIMETABLE →":"ΠΡΟΓΡΑΜΜΑ →",
     "LIVE WHERE AVAILABLE":"ΖΩΝΤΑΝΑ ΟΠΟΥ ΥΠΑΡΧΟΥΝ", "NO SERVICE":"ΧΩΡΙΣ ΔΡΟΜΟΛΟΓΙΟ",
     "city centre":"κέντρο πόλης", "City centre":"Κέντρο πόλης", "Monastiráki":"Μοναστηράκι", "Monastiráki / Pláka":"Μοναστηράκι / Πλάκα",
     "Acropolis":"Ακρόπολη", "Piraeus port":"Λιμάνι Πειραιά", "Rafina port":"Λιμάνι Ραφήνας", "Coaches":"ΚΤΕΛ", "Mainland coaches (KTEL)":"ΚΤΕΛ προς ηπειρωτική Ελλάδα",
@@ -371,7 +371,7 @@ function tripWaitText(r){
 function wayOf(o){
   if(!o.access && !o.walk) return "";
   const w=o.walk
-    ? `<button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.to||"")}" aria-label="${JL_LANG==="el"?"Εμφάνιση οδηγιών πεζή":"Show walking directions"}">${"🚶 "+o.walk} <span class="walk-arrow">→</span></button>`
+    ? `<button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.to||"")}" aria-label="${JL_LANG==="el"?"Εμφάνιση οδηγιών πεζή":"Show walking directions"}">${"🚶 "+o.walk} <span class="walk-action">${JL_LANG==="el"?"ΟΔΗΓΙΕΣ":"DIRECTIONS"} →</span></button>`
     : "";
   const sep=(o.walk && o.access)?" ":"";
   let loc="";
@@ -565,14 +565,14 @@ function destCard(o,e,r,isFastest=false){
   }
 
   const b=isTaxi?null:arrivalBreakdown(o,r,e.destinationId);
-  const totalLabel=b?`<div class="total-time">~${b.total} min total</div>`:"";
+  const totalLabel=b?`<div class="total-time"><b>~${b.total} min total</b>${isFastest?`<span class="fastest-math"> = ${b.walk} walk + ${b.wait} wait + ${b.ride} ride</span>`:""}</div>`:"";
   const destinationText=tr(e.to).replace(/\s+—\s+direct$/i,"");
   const routeSubtitle=isTaxi?tr(e.to):`${JL_LANG==='el'?'προς':'to'} ${destinationText}`;
   const status=o.journeyBands
     ? `<span class="estimate-dot">●</span> ${JL_LANG==='el'?'ΕΚΤΙΜΗΣΗ':'ESTIMATE'} · ${JL_LANG==='el'?'προσαρμοσμένο στην κίνηση':'traffic-adjusted'}`
     : `<span class="estimate-dot live-dot">●</span> ${r.isLive?'LIVE':(JL_LANG==='el'?'ΩΡΟΛΟΓΙΟ':'TIMETABLE')}`;
 
-  return `<div class="card result-card${isFastest?' best':''}${isTaxi?' taxi-card':''}">${isFastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}
+  return `<div class="card result-card${isFastest?' best':''}${isTaxi?' taxi-card':''}">${isFastest?`<div class="best-tag">★ ${tr("FASTEST")}</div><div class="fastest-explain">${JL_LANG==='el'?'Γρηγορότερο = περπάτημα + αναμονή + διαδρομή':'Fastest = walk + wait + ride'}</div>`:''}
     <div class="result-grid">
       <div class="result-head">
         <div class="top">
