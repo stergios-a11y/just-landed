@@ -7,6 +7,7 @@ const AIRPORTS = {
         walk:"~5 min walk", access:"Main doors → turn right, follow the road",
         sched:{kind:"range",first:"06:00",last:"23:45",every:12},
         note:"€1.30 from the kiosk, €2.30 from the driver — cash. No service after midnight; validate on board." },
+      { mode:"taxi", to:"Heraklion centre (door to door)", op:"Taxi rank outside arrivals", onDemand:true, price:"€20", journey:"~15 min", walk:"~1 min walk", access:"Outside the terminal arrivals exit", payment:"💳 Card accepted", apps:[], noapp:"No app needed — use the taxi rank outside arrivals.", note:"Indicative airport-to-centre fare; confirm the fare before departure." },
     ] },
   CHQ: { slug:"chania", name:"Chania (CHQ)", city:"Crete", verified:true, title:"Chania Airport to town", board:"KTEL bus · to town",
     options:[
@@ -14,6 +15,7 @@ const AIRPORTS = {
         walk:"~3 min walk", access:"Bus waiting area outside arrivals",
         sched:{kind:"range",first:"05:30",last:"23:50",every:90},
         note:"Irregular KTEL timetable (not flight-timed) — the next time shown is an estimate; check the posted schedule at the stop. €2.50 from the driver, cash." },
+      { mode:"taxi", to:"Chania town (door to door)", op:"Taxi rank outside arrivals", onDemand:true, price:"€25–30", journey:"~25 min", walk:"~1 min walk", access:"Taxi rank outside arrivals", payment:"💳 Card accepted", apps:[], noapp:"No app needed — use the taxi rank outside arrivals.", note:"Indicative airport-to-town fare; confirm the fare before departure." },
     ] },
   JTR: { slug:"santorini", name:"Santorini (JTR)", city:"Cyclades", verified:true, title:"Santorini Airport to Fira", board:"KTEL bus · to Fira",
     options:[
@@ -21,6 +23,7 @@ const AIRPORTS = {
         walk:"~2 min walk", access:"Bus stop by the arrivals exit",
         sched:{kind:"range",first:"06:40",last:"21:40",every:60},
         note:"Summer: about hourly. Winter: roughly every 3 hours — the time shown is an estimate, check the posted schedule. Overnight (00:00–05:00) barely runs; arrange backup for very early/late flights. All airport buses terminate at Fira bus station." },
+      { mode:"taxi", to:"Fira (door to door)", op:"Taxi rank outside arrivals", onDemand:true, price:"€20–35", journey:"~15 min", walk:"~1 min walk", access:"Taxi rank outside the terminal", payment:"💶 Cash recommended", apps:[], noapp:"No app needed — use the taxi rank outside arrivals.", note:"Indicative fare to Fira; taxi availability can be limited after busy arrivals." },
     ] },
   SKG: { slug:"thessaloniki", name:"Thessaloniki (SKG)", city:"Macedonia", verified:true, title:"Thessaloniki Airport to the city centre", board:"Bus 01X · to the centre",
     options:[
@@ -28,6 +31,7 @@ const AIRPORTS = {
         walk:"~2 min walk", access:"Bus stop outside arrivals",
         sched:{kind:"windows",windows:[{start:"06:10",end:"22:40",every:25},{start:"23:10",end:"05:55",every:30}]},
         note:"€2 airport fare (not the standard €0.90 ticket). Buy at the arrivals machines or onboard — no change given. 01X also stops at the railway station & KTEL Makedonia." },
+      { mode:"taxi", to:"Thessaloniki city centre (door to door)", op:"Taxi rank outside arrivals", onDemand:true, price:"€25 day · €35 night", journey:"~30 min", walk:"~1 min walk", access:"Taxi stand between Exits 3 and 4", payment:"💳 Card accepted", apps:["freenow","uber"], noapp:"No app needed — use the taxi rank outside arrivals.", note:"Flat airport-to-city-centre fare: €25 daytime (05:00–24:00), €35 overnight (00:00–05:00)." },
     ] },
   ATH: { slug:"athens", name:"Athens (ATH)", city:"Attica", verified:true, title:"Athens Airport to the city centre", board:"Metro · X95 · Rail · Taxi",
     connections:[
@@ -524,8 +528,10 @@ function arrivalLabel(o,r,destinationId){
 function breakdownHtml(o,r,destinationId){
   const b=arrivalBreakdown(o,r,destinationId);
   const labels=JL_LANG==='el'?['περπάτημα','αναμονή','διαδρομή']:['walk','wait','ride'];
+  const walkAction=JL_LANG==='el'?'ΟΔΗΓΙΕΣ':'DIRECTIONS';
+  const walkStep=`<button class="journey-step journey-walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||'')}" data-access="${encodeURIComponent(o.access||'')}" data-ll="${encodeURIComponent(o.ll||'')}" data-to="${encodeURIComponent(o.name||'Departure point')}" aria-label="${JL_LANG==='el'?'Εμφάνιση οδηγιών πεζή':'Show walking directions'}"><span class="step-icon">♟</span><b>${b.walk} min</b><small>${labels[0]} · ${walkAction} →</small></button>`;
   return `<div class="journey-breakdown">
-    <div class="journey-step"><span class="step-icon">♟</span><b>${b.walk} min</b><small>${labels[0]}</small></div>
+    ${walkStep}
     <span class="journey-arrow">›</span>
     <div class="journey-step"><span class="step-icon">◷</span><b>${b.wait} min</b><small>${labels[1]}</small></div>
     <span class="journey-arrow">›</span>
@@ -545,7 +551,7 @@ function destCard(o,e,r,isFastest=false){
     : null;
   o={...o, walk:o.walk||detail?.walk, access:o.access||detail?.access, ll:o.ll||detail?.ll};
   const how=e.how?`<div class="how">↔ ${tr(e.how)}</div>`:"";
-  const walk=o.walk?`<div class="dest-walk"><button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.name||e.to||"Departure point")}" aria-label="${JL_LANG==="el"?"Εμφάνιση οδηγιών πεζή":"Show walking directions"}">🚶 ${tr(o.walk)} <span class="walk-arrow">→</span></button></div>`:"";
+  const walk="";
   const payment=o.payment?`<div class="payment-row"><span class="payment-tag">${tr(o.payment)}</span></div>`:"";
   const note=e.note?`<div class="note-plain">${tr(e.note)}</div>`:"";
   const isTaxi=o.mode==="taxi" || r.onDemand;
@@ -581,7 +587,6 @@ function destCard(o,e,r,isFastest=false){
           <div class="price-block"><div class="price">${o.price}</div>${payment}${isTaxi && o.apps ? `<div class="alsoapps"><span>${tr("Apps available:")}</span> ${o.apps.map(appBtn).join("")}</div>` : ""}</div>
         </div>
         <div class="status-line">${status}</div>
-        ${walk}
       </div>
       <div class="result-main">
         ${depHtml}
