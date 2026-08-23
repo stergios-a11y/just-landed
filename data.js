@@ -7,7 +7,6 @@ const AIRPORTS = {
         walk:"~5 min walk", access:"Main doors → turn right, follow the road",
         sched:{kind:"range",first:"06:00",last:"23:45",every:12},
         note:"€1.30 from the kiosk, €2.30 from the driver — cash. No service after midnight; validate on board." },
-      { mode:"taxi", to:"Heraklion centre (door to door)", op:"Taxi rank outside arrivals", onDemand:true, price:"€20", journey:"~15 min", walk:"~1 min walk", access:"Outside the terminal arrivals exit", payment:"💳 Card accepted", apps:[], noapp:"No app needed — use the taxi rank outside arrivals.", note:"Indicative airport-to-centre fare; confirm the fare before departure." },
     ] },
   CHQ: { slug:"chania", name:"Chania (CHQ)", city:"Crete", verified:true, title:"Chania Airport to town", board:"KTEL bus · to town",
     options:[
@@ -15,7 +14,6 @@ const AIRPORTS = {
         walk:"~3 min walk", access:"Bus waiting area outside arrivals",
         sched:{kind:"range",first:"05:30",last:"23:50",every:90},
         note:"Irregular KTEL timetable (not flight-timed) — the next time shown is an estimate; check the posted schedule at the stop. €2.50 from the driver, cash." },
-      { mode:"taxi", to:"Chania town (door to door)", op:"Taxi rank outside arrivals", onDemand:true, price:"€25–30", journey:"~25 min", walk:"~1 min walk", access:"Taxi rank outside arrivals", payment:"💳 Card accepted", apps:[], noapp:"No app needed — use the taxi rank outside arrivals.", note:"Indicative airport-to-town fare; confirm the fare before departure." },
     ] },
   JTR: { slug:"santorini", name:"Santorini (JTR)", city:"Cyclades", verified:true, title:"Santorini Airport to Fira", board:"KTEL bus · to Fira",
     options:[
@@ -23,7 +21,6 @@ const AIRPORTS = {
         walk:"~2 min walk", access:"Bus stop by the arrivals exit",
         sched:{kind:"range",first:"06:40",last:"21:40",every:60},
         note:"Summer: about hourly. Winter: roughly every 3 hours — the time shown is an estimate, check the posted schedule. Overnight (00:00–05:00) barely runs; arrange backup for very early/late flights. All airport buses terminate at Fira bus station." },
-      { mode:"taxi", to:"Fira (door to door)", op:"Taxi rank outside arrivals", onDemand:true, price:"€20–35", journey:"~15 min", walk:"~1 min walk", access:"Taxi rank outside the terminal", payment:"💶 Cash recommended", apps:[], noapp:"No app needed — use the taxi rank outside arrivals.", note:"Indicative fare to Fira; taxi availability can be limited after busy arrivals." },
     ] },
   SKG: { slug:"thessaloniki", name:"Thessaloniki (SKG)", city:"Macedonia", verified:true, title:"Thessaloniki Airport to the city centre", board:"Bus 01X · to the centre",
     options:[
@@ -31,7 +28,6 @@ const AIRPORTS = {
         walk:"~2 min walk", access:"Bus stop outside arrivals",
         sched:{kind:"windows",windows:[{start:"06:10",end:"22:40",every:25},{start:"23:10",end:"05:55",every:30}]},
         note:"€2 airport fare (not the standard €0.90 ticket). Buy at the arrivals machines or onboard — no change given. 01X also stops at the railway station & KTEL Makedonia." },
-      { mode:"taxi", to:"Thessaloniki city centre (door to door)", op:"Taxi rank outside arrivals", onDemand:true, price:"€25 day · €35 night", journey:"~30 min", walk:"~1 min walk", access:"Taxi stand between Exits 3 and 4", payment:"💳 Card accepted", apps:["freenow","uber"], noapp:"No app needed — use the taxi rank outside arrivals.", note:"Flat airport-to-city-centre fare: €25 daytime (05:00–24:00), €35 overnight (00:00–05:00)." },
     ] },
   ATH: { slug:"athens", name:"Athens (ATH)", city:"Attica", verified:true, title:"Athens Airport to the city centre", board:"Metro · X95 · Rail · Taxi",
     connections:[
@@ -46,25 +42,25 @@ const AIRPORTS = {
     ],
     routes:{
       metro:{mode:"metro",name:"Metro M3",price:"€9",journey:"~40 min",walk:"~6 min walk",
-        journeyByDestination:{centre:40,mon:42,acro:52,pir:61},
+        journeyByDestination:{centre:40,mon:42,acro:52,pir:61}, accessShort:"Trains",
         sched:{kind:"range",first:"06:10",last:"23:34",every:36}, payment:"💳 Card accepted · tap at gate"},
-      x95:{mode:"bus",name:"Bus X95",price:"€5.50",journey:"~60 min",walk:"~3 min walk",route:"2051",est:true,
+      x95:{mode:"bus",name:"Bus X95",price:"€5.50",journey:"~60 min",walk:"~3 min walk",accessShort:"Exit 5",route:"2051",est:true,
         journeyBands:[{from:0,to:6,mins:40},{from:6,to:9.5,mins:65},{from:9.5,to:16,mins:55},{from:16,to:19.5,mins:70},{from:19.5,to:23,mins:50},{from:23,to:24,mins:40}],
         journeyByDestination:{centre:60,mon:68,acro:68},
         sched:{kind:"windows",windows:[{start:"06:00",end:"22:00",every:20},{start:"22:00",end:"06:00",every:60}]}, payment:"💳 Card accepted · tap onboard"},
-      rail:{mode:"rail",name:"Suburban Rail",price:"€9",journey:"~50 min",walk:"~6 min walk",sched:{kind:"range",first:"06:09",last:"22:09",every:30}, payment:"💳 Ticket/card · tap at gate"},
-      x96:{mode:"bus",name:"Bus X96",price:"€5.50",journey:"~90 min",walk:"~3 min walk",route:"3028",est:true,
+      rail:{mode:"rail",name:"Suburban Rail",price:"€9",journey:"~50 min",walk:"~6 min walk",accessShort:"Trains",sched:{kind:"range",first:"06:09",last:"22:09",every:30}, payment:"💳 Ticket/card · tap at gate"},
+      x96:{mode:"bus",name:"Bus X96",price:"€5.50",journey:"~90 min",walk:"~3 min walk",accessShort:"Exit 2–3",route:"3028",est:true,
         journeyBands:[{from:0,to:6,mins:60},{from:6,to:9.5,mins:105},{from:9.5,to:16,mins:90},{from:16,to:19.5,mins:110},{from:19.5,to:23,mins:85},{from:23,to:24,mins:60}],
         journeyByDestination:{pir:90},
         sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}, payment:"💳 Card accepted · tap onboard"},
-      rafina:{mode:"bus",name:"KTEL Rafina",price:"€3",journey:"~40 min",walk:"~3 min walk",access:"Arrivals level, between Exits 2–3",ll:"37.93728569247656,23.947505303800178",est:true,
+      rafina:{mode:"bus",name:"KTEL Rafina",price:"€3",journey:"~40 min",walk:"~3 min walk",access:"Arrivals level, between Exits 2–3, outer lane opposite Sofitel",accessShort:"Exits 2–3",ll:"37.93728569247656,23.947505303800178",est:true,
         journeyBands:[{from:0,to:6,mins:30},{from:6,to:10,mins:45},{from:10,to:16,mins:40},{from:16,to:20,mins:50},{from:20,to:24,mins:35}],
         sched:{kind:"range",first:"05:00",last:"22:00",every:45}, payment:"💳 Card accepted · tap onboard"},
-      x93:{mode:"bus",name:"Bus X93",price:"€5.50",journey:"~65 min",walk:"~3 min walk",route:"5675",est:true,
+      x93:{mode:"bus",name:"Bus X93",price:"€5.50",journey:"~65 min",walk:"~3 min walk",accessShort:"Exit 2–3",route:"5675",est:true,
         journeyBands:[{from:0,to:6,mins:45},{from:6,to:9.5,mins:75},{from:9.5,to:16,mins:65},{from:16,to:19.5,mins:80},{from:19.5,to:23,mins:60},{from:23,to:24,mins:45}],
         journeyByDestination:{ktel:65},
         sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}, payment:"💳 Card accepted · tap onboard"},
-      taxi:{mode:"taxi",name:"Taxi",price:"€40–55",journey:"~40 min",walk:"~2 min walk",onDemand:true, payment:"💳 Card accepted", apps:["freenow","uber","bolt"]},
+      taxi:{mode:"taxi",name:"Taxi",price:"€40–55",journey:"~40 min",walk:"~2 min walk",accessShort:"Exit 3",onDemand:true, payment:"💳 Card accepted", apps:["freenow","uber","bolt"]},
     },
     destinations:[
       {id:"centre",label:"City centre",title:"City centre",routes:[
@@ -102,6 +98,7 @@ const AIRPORTS = {
 const ORDER = ["ATH","SKG","HER","CHQ","JTR"];
 const LIVE = {};
 
+const ACCESS_TRANSLATIONS = {"Trains":"Τρένα","Exit 5":"Έξοδος 5","Exits 2–3":"Έξοδοι 2–3","Exit 2–3":"Έξοδοι 2–3","Exit 3":"Έξοδος 3"};
 const I18N = {
   el: {
     "Greece · airport → city":"Ελλάδα · αεροδρόμιο → πόλη",
@@ -529,7 +526,9 @@ function breakdownHtml(o,r,destinationId){
   const b=arrivalBreakdown(o,r,destinationId);
   const labels=JL_LANG==='el'?['περπάτημα','αναμονή','διαδρομή']:['walk','wait','ride'];
   const walkAction=JL_LANG==='el'?'ΟΔΗΓΙΕΣ':'DIRECTIONS';
-  const walkStep=`<button class="journey-step journey-walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||'')}" data-access="${encodeURIComponent(o.access||'')}" data-ll="${encodeURIComponent(o.ll||'')}" data-to="${encodeURIComponent(o.name||'Departure point')}" aria-label="${JL_LANG==='el'?'Εμφάνιση οδηγιών πεζή':'Show walking directions'}"><span class="step-icon">♟</span><b>${b.walk} min</b><small>${labels[0]} · ${walkAction} →</small></button>`;
+  const shortAccess=o.accessShort ? tr(o.accessShort) : "";
+  const walkMeta=[labels[0],shortAccess,walkAction].filter(Boolean).join(" · ");
+  const walkStep=`<button class="journey-step journey-walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||'')}" data-access="${encodeURIComponent(o.access||'')}" data-ll="${encodeURIComponent(o.ll||'')}" data-to="${encodeURIComponent(o.name||'Departure point')}" aria-label="${JL_LANG==='el'?'Εμφάνιση οδηγιών πεζή':'Show walking directions'}"><span class="step-icon">♟</span><b>${b.walk} min</b><small>${walkMeta} →</small></button>`;
   return `<div class="journey-breakdown">
     ${walkStep}
     <span class="journey-arrow">›</span>
