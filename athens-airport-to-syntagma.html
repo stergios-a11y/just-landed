@@ -3,12 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Athens Airport to the city centre — metro, bus, cost &amp; live departures</title>
-<meta name="description" content="How to get from Athens Airport (ATH) to the city centre by public transport: Metro Line 3 (&#8364;9), the 24-hour X95 bus (&#8364;5.50) and suburban rail (&#8364;9). Live departures, sorted by soonest. No taxi upsell.">
+<title>Athens Airport to Syntagma — Metro, X95, rail &amp; live departures | JUST LANDED</title>
+<meta name="description" content="Get from Athens Airport (ATH) to Syntagma by Metro Line 3, X95 bus, suburban rail or taxi. Compare fares, departure times, walking instructions and the fastest option.">
+<link rel="canonical" href="https://airporttocity.stergiosgousios.workers.dev/athens-airport-to-syntagma.html">
+<meta property="og:title" content="Athens Airport to Syntagma — Metro, X95, rail &amp; live departures | JUST LANDED">
+<meta property="og:description" content="Get from Athens Airport (ATH) to Syntagma by Metro Line 3, X95 bus, suburban rail or taxi. Compare fares, departure times, walking instructions and the fastest option.">
+<meta property="og:type" content="website">
 <link rel="icon" type="image/svg+xml" href="favicon-v16.svg">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="seo.css">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Athens Airport to Syntagma — Metro, X95, rail & live departures | JUST LANDED","url":"https://airporttocity.stergiosgousios.workers.dev/athens-airport-to-syntagma.html","description":"Get from Athens Airport (ATH) to Syntagma by Metro Line 3, X95 bus, suburban rail or taxi. Compare fares, departure times, walking instructions and the fastest option.","isPartOf":{"@type":"WebSite","name":"JUST LANDED","url":"https://airporttocity.stergiosgousios.workers.dev/"}}
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -17,19 +25,12 @@
     <div class="header-tools"><div class="lang-switch" id="lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><span>·</span><button type="button" data-lang="el">ΕΛ</button></div><div class="clock" id="clock">now –:–</div></div>
   </header>
   <a class="backlink" id="backlink" href="index.html">&#8592; all airports</a>
-  <h1><span data-i18n="airportName">Athens Airport</span> &#8594; <em id="desttitle" data-i18n="cityCentre">city centre</em></h1>
-  <p class="intro">Public transport from Athens Airport (ATH) into town &#8212; pick where you\u2019re headed. Live times where the buses are running.</p>
+  <h1>Athens Airport &#8594; <em id="desttitle">Syntagma</em></h1>
+  <p class="intro">Public transport from Athens Airport (ATH) to Syntagma — compare fares, departures, walking time and the fastest option.</p>
   <div class="qh" data-i18n="whereHeaded">Where are you headed?</div>
   <div class="chips" id="chips"></div>
   <div id="destcards"></div>
-<div class="seo-dest-links" aria-label="Athens destination guides">
-<a href="athens-airport-to-syntagma.html">Athens Airport to Syntagma</a>
-<a href="athens-airport-to-monastiraki.html">Athens Airport to Monastiraki</a>
-<a href="athens-airport-to-acropolis.html">Athens Airport to Acropolis</a>
-<a href="athens-airport-to-piraeus.html">Athens Airport to Piraeus</a>
-<a href="athens-airport-to-rafina.html">Athens Airport to Rafina</a>
-<a href="athens-airport-to-kifisos-bus-station.html">Athens Airport to Kifisos Bus Station</a>
-</div>
+  <div class="seo-dest-links" aria-label="Athens destination guides"><a href="athens-airport-to-syntagma.html">Athens Airport → Syntagma</a><a href="athens-airport-to-monastiraki.html">Athens Airport → Monastiraki</a><a href="athens-airport-to-acropolis.html">Athens Airport → Acropolis</a><a href="athens-airport-to-piraeus.html">Athens Airport → Piraeus Port</a><a href="athens-airport-to-rafina.html">Athens Airport → Rafina Port</a><a href="athens-airport-to-kifisos-bus-station.html">Athens Airport → Kifisos / Liosion Bus Stations</a></div>
   <div class="disclaimer" id="disc"></div>
   <footer><span data-i18n="footer">Public transport first — taxi facts too, no booking upsell.</span><br><span data-i18n="prototype">Prototype</span> &#183; <span id="tz"></span></footer>
 </div>
@@ -42,6 +43,7 @@
     ? "Fares &amp; service hours verified Aug 2026. Metro/rail show exact clock-face times; the X95 shows live arrivals from OASA when buses are running, otherwise the timetable. Always confirm at the stop."
     : "Sample data — fares and times are illustrative and not yet verified. Departure times are estimated from the listed frequency. Confirm at the stop.";
   disc.dataset.en=disc.textContent;
+  DESTSEL[CODE]="centre";
   initAirport(CODE);
   if(typeof applyLanguage === "function") applyLanguage();
 

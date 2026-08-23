@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://airporttocity.stergiosgousios.workers.dev/sitemap.xml

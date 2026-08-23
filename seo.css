@@ -1,0 +1,4 @@
+
+.seo-dest-links{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
+.seo-dest-links a{display:inline-block;font:600 11px/1.2 "JetBrains Mono",monospace;letter-spacing:.03em;color:var(--muted);text-decoration:none;border:1px solid var(--line);padding:8px 10px;border-radius:10px}
+.seo-dest-links a:hover{color:var(--ink);border-color:var(--amber)}
