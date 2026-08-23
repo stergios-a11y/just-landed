@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 230" role="img" aria-labelledby="t d"><title id="t">JUST LANDED</title><desc id="d">JUST LANDED airport to city</desc><g fill="#FAFAF8"><path d="M88 32H176L236 91H330L358 120H230L176 72H88Z"/><path d="M28 146H318L344 120H370L342 174H28Z"/></g><path d="M338 121H454" fill="none" stroke="#FFC107" stroke-width="24" stroke-linecap="square"/><path d="M434 99L458 121L434 143" fill="none" stroke="#FFC107" stroke-width="24" stroke-linecap="square" stroke-linejoin="miter"/><line x1="500" y1="32" x2="500" y2="190" stroke="#333333" stroke-width="2"/><text x="540" y="102" fill="#FAFAF8" font-family="Inter,Arial,Helvetica,sans-serif" font-size="64" font-weight="900" letter-spacing="-2">JUST LANDED</text><text x="542" y="145" fill="#FAFAF8" font-family="Inter,Arial,Helvetica,sans-serif" font-size="22" font-weight="800" letter-spacing="9">AIRPORT <tspan fill="#FFC107">→</tspan> CITY</text><text x="542" y="178" fill="#8E8E8E" font-family="Inter,Arial,Helvetica,sans-serif" font-size="13" font-weight="700" letter-spacing="3">PUBLIC TRANSPORT · NO TAXI UPSELL</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 210" role="img" aria-labelledby="t d">
+<title id="t">JUST LANDED</title><desc id="d">Airport to city</desc>
+<g transform="translate(22 18)">
+<path d="M38 18H150L226 88H318L352 122H224L150 58H38Z" fill="#FAFAF8"/>
+<path d="M0 136H316L348 104H380L344 164H0Z" fill="#FAFAF8"/>
+<path d="M350 105H470" fill="none" stroke="#FFC107" stroke-width="26" stroke-linecap="square"/>
+<path d="M450 80L478 105L450 130" fill="none" stroke="#FFC107" stroke-width="26" stroke-linecap="square" stroke-linejoin="miter"/>
+</g>
+<text x="430" y="105" fill="#FAFAF8" font-family="Inter,Arial,Helvetica,sans-serif" font-size="62" font-weight="900" letter-spacing="-2">JUST LANDED</text>
+<text x="433" y="153" fill="#FAFAF8" font-family="Inter,Arial,Helvetica,sans-serif" font-size="21" font-weight="800" letter-spacing="7">AIRPORT <tspan fill="#FFC107">→</tspan> CITY</text>
+</svg>

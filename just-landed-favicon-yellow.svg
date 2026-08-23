@@ -1,9 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="t d">
-<title id="t">JUST LANDED</title><desc id="d">JUST LANDED favicon.</desc>
-<rect width="100%" height="100%" fill="#FFC107"/>
-<g transform="translate(7 128) scale(.90)" style="color:#111111">
-<path d="M132 48 L226 48 L291 101 L370 101 L408 138 L293 138 L226 92 L132 92 Z" fill="currentColor"/>
-<path d="M42 171 H391 L420 138 H447 L410 197 H42 Z" fill="currentColor"/>
-<path d="M392 139 H520" fill="none" stroke="#111111" stroke-width="26" stroke-linecap="square"/>
-<path d="M500 115 L530 139 L500 163" fill="none" stroke="#111111" stroke-width="26" stroke-linecap="square" stroke-linejoin="miter"/>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><rect width="128" height="128" rx="22" fill="#FFC107"/><path d="M24 25H62L88 50H108L118 60H86L62 39H24Z" fill="#111111"/><path d="M10 72H86L99 59H112L95 87H10Z" fill="#111111"/><path d="M94 60H122" stroke="#111111" stroke-width="10"/><path d="M116 50L126 60L116 70" fill="none" stroke="#111111" stroke-width="10"/></svg>

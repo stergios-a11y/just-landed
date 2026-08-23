@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 420" role="img" aria-labelledby="t d">
-<title id="t">JUST LANDED — Airport to City</title><desc id="d">Dark version.</desc>
-<rect width="1400" height="420" fill="#0B0B0D"/>
-<g transform="translate(350 18) scale(.82)" style="color:#FAF9F6">
-<g fill="currentColor"><path d="M188 38 L270 38 L332 92 L405 92 L438 126 L332 126 L270 82 L188 82 Z"/><path d="M74 154 H420 L448 126 H470 L438 178 H74 Z"/></g>
-<path d="M414 128 H540" fill="none" stroke="#F5B800" stroke-width="28" stroke-linecap="square"/>
-<path d="M520 104 L550 128 L520 152" fill="none" stroke="#F5B800" stroke-width="28" stroke-linecap="square" stroke-linejoin="miter"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 700" role="img" aria-labelledby="t d">
+<title id="t">JUST LANDED — Airport to City</title><desc id="d">Just Landed airport to city logo</desc>
+<g transform="translate(150 35)">
+<path d="M70 35H300L455 178H645L715 248H450L300 118H70Z" fill="#FAFAF8"/>
+<path d="M0 275H645L715 205H785L700 345H0Z" fill="#FAFAF8"/>
+<path d="M700 207H930" fill="none" stroke="#FFC107" stroke-width="58" stroke-linecap="square"/>
+<path d="M890 150L950 207L890 264" fill="none" stroke="#FFC107" stroke-width="58" stroke-linecap="square" stroke-linejoin="miter"/>
 </g>
-<text x="700" y="270" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="112" font-weight="900" letter-spacing="-5" fill="#FAF9F6">JUST LANDED</text>
-<text x="700" y="345" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700" letter-spacing="16" fill="#FAF9F6">AIRPORT <tspan fill="#F5B800">→</tspan> CITY</text>
+<text x="380" y="490" text-anchor="middle" fill="#FAFAF8" font-family="Inter,Arial,Helvetica,sans-serif" font-size="112" font-weight="900" letter-spacing="-5">JUST LANDED</text>
+<text x="380" y="565" text-anchor="middle" fill="#FAFAF8" font-family="Inter,Arial,Helvetica,sans-serif" font-size="34" font-weight="800" letter-spacing="14">AIRPORT <tspan fill="#FFC107">→</tspan> CITY</text>
 </svg>
