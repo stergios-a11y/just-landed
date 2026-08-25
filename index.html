@@ -17,108 +17,24 @@
 html{background:var(--bg)}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Chakra Petch",system-ui,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
-.wrap{max-width:1180px;margin:0 auto;padding:20px 28px 42px}
-header{height:58px;display:flex;align-items:center;justify-content:space-between;margin-bottom:62px}
-.header-logo{display:block;width:170px;height:auto;max-height:58px;object-fit:contain}
+ .wrap{max-width:1180px;margin:0 auto;padding:24px 28px 44px}
+header{height:62px;display:flex;align-items:center;justify-content:space-between;margin-bottom:54px;border-bottom:1px solid var(--line);padding-bottom:18px}
+.header-logo{display:block;width:290px;height:auto;max-height:58px;object-fit:contain}
 .header-tools{display:flex;align-items:center;gap:18px}
 .lang-switch{display:flex;align-items:center;gap:6px;font:700 10px/1 "JetBrains Mono",monospace;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
-.lang-switch button{appearance:none;border:0;background:transparent;color:var(--muted);font:700 10px/1 "JetBrains Mono",monospace;padding:4px 2px;cursor:pointer}
-.lang-switch button.active{color:var(--amber)}
-.clock{font:700 10px/1 "JetBrains Mono",monospace;letter-spacing:.08em;border:1px solid var(--line);border-radius:7px;padding:9px 11px}
-.menu{width:26px;height:20px;display:none;flex-direction:column;justify-content:space-between}
-.menu i{height:2px;background:var(--ink);display:block;border-radius:2px}
-
-.hero{text-align:center;margin-bottom:30px}
-.eyebrow{font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.08em;color:var(--amber);text-transform:uppercase;margin-bottom:14px}
-.hero h1{font:900 clamp(38px,4.4vw,60px)/.95 "Inter",sans-serif;letter-spacing:-.055em;margin:0}
-.hero p{margin:12px auto 0;color:var(--muted);font-size:15px;line-height:1.4;max-width:640px}
-
-.airports{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:26px}
-.airport{
-  position:relative;background:linear-gradient(180deg,#19191c,#161619);
-  border:1px solid var(--line);border-radius:12px;padding:18px 15px 17px;
-  min-height:194px;display:flex;flex-direction:column;align-items:center;text-align:center;
-  transition:border-color .14s,transform .14s,background .14s;
-}
-.airport:hover,.airport:focus-visible{border-color:var(--amber);transform:translateY(-2px);background:#1d1d20;outline:none}
-.airport.selected{border-color:var(--amber)}
-.landmark{height:64px;width:82px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;color:var(--ink)}
-.landmark svg{width:72px;height:58px;display:block}
-.airport-name{font:800 18px/1 "Inter",sans-serif;text-transform:uppercase;letter-spacing:-.025em}
-.airport-route{font:700 14px/1 "Chakra Petch",sans-serif;margin-top:8px}
-.airport-next{font:700 13px/1 "JetBrains Mono",monospace;color:var(--green);margin-top:10px}
-.airport-arrow{font:700 24px/1 "JetBrains Mono",monospace;color:var(--amber);margin-top:auto;padding-top:11px}
-
-.value-strip{display:grid;grid-template-columns:repeat(4,1fr);margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.value{display:grid;grid-template-columns:34px 1fr;gap:10px;padding:18px 17px;border-right:1px solid var(--line)}
-.value:last-child{border-right:0}
-.value-icon{font:700 21px/1 "JetBrains Mono",monospace;color:var(--amber);text-align:center}
-.value:nth-child(2) .value-icon{color:#7fd8f0}
-.value:nth-child(3) .value-icon{color:#72e06a}
-.value:nth-child(4) .value-icon{color:var(--violet)}
-.value strong{display:block;font:800 15px/1 "Inter",sans-serif}
-.value span{display:block;color:var(--muted);font-size:12px;line-height:1.35;margin-top:7px}
-
-.how{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;display:grid;grid-template-columns:1fr 1.05fr;gap:25px;min-height:154px}
-.how h2{font:800 19px/1 "Inter",sans-serif;margin:0 0 14px}
-.steps{display:grid;gap:10px}
-.step{display:grid;grid-template-columns:25px 1fr;gap:10px;align-items:start;font-size:13px}
-.step-num{width:21px;height:21px;border-radius:50%;background:var(--amber);color:#111;display:flex;align-items:center;justify-content:center;font:800 11px/1 "Inter",sans-serif}
-.step strong{display:block;font-weight:700}
-.step span{display:block;color:var(--muted);font-size:11px;margin-top:2px}
-.illustration{display:flex;align-items:center;justify-content:center;min-height:110px;overflow:hidden}
-.illustration svg{width:100%;max-width:430px;height:125px;display:block}
-
-.footer-row{display:flex;justify-content:space-between;align-items:center;margin-top:16px;color:var(--muted);font:500 9px/1.5 "JetBrains Mono",monospace;letter-spacing:.035em}
-.footer-copy{padding-left:3px}
-.status{border:1px solid var(--line);border-radius:20px;padding:8px 12px;white-space:nowrap}
-.status-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#72e06a;margin-right:6px}
-
-.return-note{display:none}
-
-@media(max-width:900px){
-  .wrap{padding:18px 18px 34px}
-  header{margin-bottom:45px}
-  .airports{grid-template-columns:repeat(3,1fr)}
-  .airport:nth-child(n+4){min-height:180px}
-  .value-strip{grid-template-columns:repeat(2,1fr)}
-  .value:nth-child(2){border-right:0}
-  .value:nth-child(-n+2){border-bottom:1px solid var(--line)}
-  .how{grid-template-columns:1fr}
-  .illustration{display:none}
-}
-@media(max-width:620px){
-  .wrap{padding:14px 13px 28px}
-  header{height:48px;margin-bottom:42px}
-  .header-logo{width:142px;max-height:48px}
-  .clock{display:none}
-  .menu{display:flex}
-  .lang-switch{gap:3px}
-  .hero{margin-bottom:20px}
-  .eyebrow{font-size:9px;margin-bottom:11px}
-  .hero h1{font-size:36px}
-  .hero p{font-size:12px;margin-top:10px}
-  .airports{grid-template-columns:repeat(2,1fr);gap:8px;margin-top:20px}
-  .airport{min-height:174px;padding:14px 10px}
-  .airport:last-child{grid-column:1/-1;min-height:158px}
-  .landmark{height:50px;margin-bottom:7px}
-  .landmark svg{width:61px;height:48px}
-  .airport-name{font-size:15px}
-  .airport-route{font-size:12px;margin-top:6px}
-  .airport-next{font-size:11px;margin-top:8px}
-  .airport-arrow{font-size:20px;padding-top:9px}
-  .value-strip{display:block;margin-top:10px}
-  .value{border-right:0!important;border-bottom:1px solid var(--line)!important;padding:14px}
-  .value:last-child{border-bottom:0!important}
-  .value strong{font-size:14px}
-  .value span{font-size:11px}
-  .how{margin-top:10px;padding:16px}
-  .how h2{font-size:17px}
-  .step{font-size:12px}
-  .footer-row{display:block;text-align:center;margin-top:14px}
-  .status{display:inline-block;margin-top:10px}
-}
-
+.lang-switch button{appearance:none;border:0;background:transparent;color:var(--muted);font:700 10px/1 "JetBrains Mono",monospace;padding:4px 2px;cursor:pointer}.lang-switch button.active{color:var(--amber)}
+.clock{font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.05em;border:1px solid var(--line);border-radius:22px;padding:10px 14px}
+.menu{display:none}
+.hero{text-align:left;margin-bottom:34px}.eyebrow{font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.07em;color:var(--amber);text-transform:uppercase;margin-bottom:17px}
+.hero h1{font:900 clamp(54px,5.5vw,86px)/.92 "Inter",sans-serif;letter-spacing:-.06em;margin:0;max-width:720px;text-transform:uppercase}.hero p{margin:19px 0 0;color:var(--ink);font-size:17px;line-height:1.45;max-width:660px}
+.airports{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:34px}.airport{position:relative;background:linear-gradient(180deg,#17191b,#111315);border:1px solid var(--line);border-radius:16px;padding:18px 14px 20px;min-height:365px;display:flex;flex-direction:column;align-items:center;text-align:center;transition:border-color .14s,transform .14s,background .14s}
+.airport:hover,.airport:focus-visible{border-color:var(--amber);transform:translateY(-2px);background:#191b1d;outline:none}.airport.selected{border-color:var(--amber)}
+.landmark{width:100%;height:190px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}.landmark img{width:176px;height:176px;display:block;object-fit:contain}
+.airport-name{font:800 23px/1 "Inter",sans-serif;text-transform:uppercase;letter-spacing:-.035em}.airport-route{font:600 17px/1 "Chakra Petch",sans-serif;margin-top:11px;color:#d8d8d5}.airport-next{display:none}.airport-arrow{font:700 31px/1 "JetBrains Mono",monospace;color:var(--amber);margin-top:auto;padding-top:20px}
+.return-button{display:flex;align-items:center;justify-content:center;gap:22px;width:min(410px,100%);height:64px;margin:14px auto 0;background:linear-gradient(180deg,#191b1d,#141618);border:1px solid var(--line);border-radius:14px;font:700 18px/1 "Inter",sans-serif;letter-spacing:.01em}.return-button:hover,.return-button:focus-visible{border-color:var(--amber);outline:none}.return-icon{color:var(--amber);font:700 28px/1 "JetBrains Mono",monospace}.return-chevron{font-size:28px;color:#bdbdb8}
+.value-strip,.how,.footer-row{display:none}
+@media(max-width:900px){.wrap{padding:18px 18px 34px}header{margin-bottom:42px}.header-logo{width:220px}.hero h1{font-size:56px}.hero p{font-size:15px}.airports{grid-template-columns:repeat(3,1fr);gap:10px}.airport{min-height:320px}.landmark{height:165px}.landmark img{width:150px;height:150px}.airport-name{font-size:19px}.airport-route{font-size:15px}}
+@media(max-width:620px){.wrap{padding:14px 13px 28px}header{height:50px;margin-bottom:38px;padding-bottom:12px}.header-logo{width:180px;max-height:42px}.clock{display:none}.menu{display:flex}.hero{margin-bottom:20px}.eyebrow{font-size:9px;margin-bottom:11px}.hero h1{font-size:42px}.hero p{font-size:12px;margin-top:12px}.airports{grid-template-columns:repeat(2,1fr);gap:8px;margin-top:22px}.airport{min-height:270px;padding:13px 9px 16px;border-radius:13px}.landmark{height:135px;margin-bottom:10px}.landmark img{width:122px;height:122px}.airport-name{font-size:15px}.airport-route{font-size:12px;margin-top:7px}.airport-arrow{font-size:24px;padding-top:14px}.airport:last-child{grid-column:1/-1}.return-button{height:56px;font-size:15px;margin-top:10px}.return-icon,.return-chevron{font-size:23px}}
 /* Keep the approved raster lockup untouched. No SVG logo recreation. */
 </style>
 </head>
@@ -146,54 +62,12 @@ header{height:58px;display:flex;align-items:center;justify-content:space-between
 
 <section class="airports" id="airports" aria-label="Airports"></section>
 
-<section class="value-strip" aria-label="Just Landed features">
-  <div class="value"><div class="value-icon">◉</div><div><strong>Live departures</strong><span>Real-time when available</span></div></div>
-  <div class="value"><div class="value-icon">◷</div><div><strong>All options</strong><span>Buses, trains, ferries &amp; taxi</span></div></div>
-  <div class="value"><div class="value-icon">♟</div><div><strong>Walk with confidence</strong><span>Exact pickup points &amp; walking directions</span></div></div>
-  <div class="value"><div class="value-icon">▣</div><div><strong>Transparent</strong><span>Fares, times and no upsell</span></div></div>
-</section>
-
-<section class="how">
-  <div>
-    <h2>How it works</h2>
-    <div class="steps">
-      <div class="step"><div class="step-num">1</div><div><strong>Choose your airport</strong><span>Start with where you landed.</span></div></div>
-      <div class="step"><div class="step-num">2</div><div><strong>Pick when you want to travel</strong><span>Now or a later departure.</span></div></div>
-      <div class="step"><div class="step-num">3</div><div><strong>We show you the fastest option first</strong><span>Then all the alternatives, fares and walking details.</span></div></div>
-    </div>
-  </div>
-  <div class="illustration" aria-hidden="true">
-    <svg viewBox="0 0 480 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M16 122H463" stroke="#33333A" stroke-width="2"/>
-      <path d="M48 122V62H98V122M60 62V46H86V62M55 76H91M55 91H91M55 106H91" stroke="#8F8F86" stroke-width="3"/>
-      <path d="M119 122V39H190V122M133 55H176M133 70H176M133 85H176M133 100H176" stroke="#FAFAF8" stroke-width="3"/>
-      <path d="M210 122V73H244V122M218 73V60H236V73M217 87H237M217 101H237" stroke="#8F8F86" stroke-width="3"/>
-      <path d="M276 122V52H380V122M291 66H365M291 82H365M291 98H365" stroke="#FAFAF8" stroke-width="3"/>
-      <path d="M403 122V77H441V122M411 77V67H433V77M410 91H434M410 105H434" stroke="#8F8F86" stroke-width="3"/>
-      <path d="M319 120C319 104 331 94 347 94C363 94 375 104 375 120" stroke="#FFC107" stroke-width="3"/>
-      <path d="M311 120H383V129H311V120Z" fill="#242428" stroke="#33333A"/>
-      <circle cx="326" cy="130" r="5" fill="#111"/>
-      <circle cx="368" cy="130" r="5" fill="#111"/>
-      <path d="M423 22L438 31L423 40L428 31L423 22Z" fill="#8F8F86"/>
-    </svg>
-  </div>
-</section>
-
-<div class="footer-row">
-  <div class="footer-copy">PUBLIC TRANSPORT FIRST · TAXI FACTS TOO · NO BOOKING UPSELL<br><span id="tz"></span></div>
-  <div class="status"><span class="status-dot"></span>DATA STATUS&nbsp; <strong>LIVE</strong></div>
-</div>
-</div>
+<a class="return-button" href="#" onclick="return false" aria-label="Plan a return trip">
+  <span class="return-icon">⇄</span><span>PLAN A RETURN TRIP</span><span class="return-chevron">›</span>
+</a>
 
 <script src="data.js"></script>
 <script>
-const AIRPORT_ICONS = {
-  ATH:`<svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 66H110" stroke="#8F8F86" stroke-width="3"/><path d="M18 62L24 40H96L102 62H18Z" fill="#FAFAF8"/><path d="M26 40L34 27H86L94 40H26Z" fill="#FAFAF8"/><path d="M31 27L38 15H82L89 27H31Z" fill="#FAFAF8"/><path d="M37 15L42 8H78L83 15H37Z" fill="#FAFAF8"/><path d="M31 40V62M45 40V62M60 40V62M75 40V62M89 40V62" stroke="#242428" stroke-width="4"/><path d="M22 40H98" stroke="#FFC107" stroke-width="3"/></svg>`,
-  SKG:`<svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 66H110" stroke="#8F8F86" stroke-width="3"/><path d="M35 66V24C35 17 41 12 48 12H72C79 12 85 17 85 24V66H35Z" fill="#FAFAF8"/><path d="M28 66H92" stroke="#FAFAF8" stroke-width="4"/><path d="M48 12V7H72V12" stroke="#FAFAF8" stroke-width="3"/><path d="M46 24H74M44 33H76M43 43H77M42 53H78" stroke="#242428" stroke-width="3"/><path d="M58 7H74" stroke="#FFC107" stroke-width="3"/><path d="M85 18L96 13V27L85 23" fill="#FFC107"/></svg>`,
-  HER:`<svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 66H112" stroke="#8F8F86" stroke-width="3"/><path d="M22 66V42L31 30H89L98 42V66H22Z" fill="#FAFAF8"/><path d="M31 30L38 20H82L89 30" stroke="#FAFAF8" stroke-width="3"/><path d="M42 20V14H78V20" stroke="#FAFAF8" stroke-width="3"/><path d="M22 42H98M34 42V66M50 42V66M66 42V66M82 42V66" stroke="#242428" stroke-width="4"/><path d="M31 30H89" stroke="#FFC107" stroke-width="3"/><path d="M45 53H75" stroke="#8F8F86" stroke-width="3"/></svg>`,
-  CHQ:`<svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 67H112" stroke="#8F8F86" stroke-width="3"/><path d="M53 67V22L60 14L67 22V67H53Z" fill="#FAFAF8"/><path d="M60 14V7M55 9H65" stroke="#FAFAF8" stroke-width="3"/><path d="M53 29H67M53 39H67M53 49H67" stroke="#242428" stroke-width="3"/><path d="M25 67C29 59 36 57 42 63C47 56 55 57 60 64C66 57 75 58 80 64C86 57 94 60 97 67" stroke="#FAFAF8" stroke-width="3"/><path d="M19 67H101" stroke="#FFC107" stroke-width="3"/></svg>`,
-  JTR:`<svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 67H112" stroke="#8F8F86" stroke-width="3"/><path d="M26 67V40C26 34 31 29 37 29H83C89 29 94 34 94 40V67H26Z" fill="#FAFAF8"/><path d="M36 29V20C36 14 41 9 47 9H73C79 9 84 14 84 20V29" fill="#FAFAF8"/><path d="M39 20C47 15 73 15 81 20" stroke="#242428" stroke-width="4"/><path d="M38 42H82M38 54H82" stroke="#242428" stroke-width="4"/><path d="M43 29C48 24 72 24 77 29" stroke="#FFC107" stroke-width="3"/><path d="M20 67H100" stroke="#FFC107" stroke-width="3"/></svg>`
-};
 function renderClock(){
   document.getElementById("clock").textContent =
     new Intl.DateTimeFormat([], {hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).format(new Date());
@@ -209,17 +83,11 @@ function soonestAirport(code){
   return best;
 }
 function airportCard(code){
-  const ap=AIRPORTS[code], r=soonestAirport(code), name=ap.name.split(" (")[0];
-  let next="No scheduled service";
-  if(r){
-    const rel=r.until<=0?"NOW":r.until<60?`IN ${r.until}M`:`IN ${Math.floor(r.until/60)}H`;
-    next=`${r.isLive?"LIVE · ":""}${r.est?"~":""}${fmt(r.dep1)} · ${rel}`;
-  }
+  const ap=AIRPORTS[code], name=ap.name.split(" (")[0];
   return `<a class="airport" href="${ap.slug}.html" onclick="localStorage.setItem('jl-airport','${code}')">
-    <div class="landmark">${AIRPORT_ICONS[code]||""}</div>
+    <div class="landmark"><img src="/${({ATH:"athens-landmark.png",SKG:"thessaloniki-landmark.png",HER:"heraklion-landmark.png",CHQ:"chania-landmark.png",JTR:"santorini-landmark.png"})[code]}" alt="${name} landmark" loading="eager"></div>
     <div class="airport-name">${name}</div>
     <div class="airport-route">${code} → City</div>
-    <div class="airport-next">${next}</div>
     <div class="airport-arrow">→</div>
   </a>`;
 }
