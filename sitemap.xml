@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://justlanded.gr/</loc></url>
+  <url><loc>https://justlanded.gr/en/</loc></url>
+  <url><loc>https://justlanded.gr/athens.html</loc></url>
+  <url><loc>https://justlanded.gr/en/athens.html</loc></url>
+  <url><loc>https://justlanded.gr/thessaloniki.html</loc></url>
+  <url><loc>https://justlanded.gr/en/thessaloniki.html</loc></url>
+  <url><loc>https://justlanded.gr/heraklion.html</loc></url>
+  <url><loc>https://justlanded.gr/en/heraklion.html</loc></url>
+  <url><loc>https://justlanded.gr/chania.html</loc></url>
+  <url><loc>https://justlanded.gr/en/chania.html</loc></url>
+  <url><loc>https://justlanded.gr/santorini.html</loc></url>
+  <url><loc>https://justlanded.gr/en/santorini.html</loc></url>
   <url><loc>https://justlanded.gr/athens-airport-to-syntagma.html</loc></url>
+  <url><loc>https://justlanded.gr/en/athens-airport-to-syntagma.html</loc></url>
   <url><loc>https://justlanded.gr/athens-airport-to-monastiraki.html</loc></url>
+  <url><loc>https://justlanded.gr/en/athens-airport-to-monastiraki.html</loc></url>
   <url><loc>https://justlanded.gr/athens-airport-to-acropolis.html</loc></url>
+  <url><loc>https://justlanded.gr/en/athens-airport-to-acropolis.html</loc></url>
   <url><loc>https://justlanded.gr/athens-airport-to-piraeus.html</loc></url>
+  <url><loc>https://justlanded.gr/en/athens-airport-to-piraeus.html</loc></url>
   <url><loc>https://justlanded.gr/athens-airport-to-rafina.html</loc></url>
+  <url><loc>https://justlanded.gr/en/athens-airport-to-rafina.html</loc></url>
   <url><loc>https://justlanded.gr/athens-airport-to-kifisos-bus-station.html</loc></url>
+  <url><loc>https://justlanded.gr/en/athens-airport-to-kifisos-bus-station.html</loc></url>
 </urlset>

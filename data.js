@@ -165,7 +165,8 @@ const I18N = {
 };
 
 I18N.el.airportName="Αεροδρόμιο Αθηνών"; I18N.el.cityCentre="κέντρο πόλης"; I18N.el.whereHeaded="Πού κατευθύνεσαι;"; I18N.el["Athens Airport"]="Αεροδρόμιο Αθηνών"; I18N.el["Athens (ATH)"]="Αθήνα (ATH)"; I18N.el["Heraklion (HER)"]="Ηράκλειο (HER)"; I18N.el["Chania (CHQ)"]="Χανιά (CHQ)"; I18N.el["Santorini (JTR)"]="Σαντορίνη (JTR)"; I18N.el["Thessaloniki (SKG)"]="Θεσσαλονίκη (SKG)"; I18N.el["Attica"]="Αττική"; I18N.el["Crete"]="Κρήτη"; I18N.el["Cyclades"]="Κυκλάδες"; I18N.el["Macedonia"]="Μακεδονία"; I18N.el["Heraklion Airport to town"]="Αεροδρόμιο Ηρακλείου προς πόλη"; I18N.el["Chania Airport to town"]="Αεροδρόμιο Χανίων προς πόλη"; I18N.el["Santorini Airport to Fira"]="Αεροδρόμιο Σαντορίνης προς Φηρά"; I18N.el["Thessaloniki Airport to the city centre"]="Αεροδρόμιο Θεσσαλονίκης προς κέντρο"; I18N.el["Athens Airport to the city centre"]="Αεροδρόμιο Αθηνών προς κέντρο";I18N.el.kicker="Ελλάδα · αεροδρόμιο → πόλη"; I18N.el.hero1="Έφτασες."; I18N.el.hero2="Τώρα φύγαμε."; I18N.el.findAirport="Βρες το αεροδρόμιό σου."; I18N.el.heroCopy="Δες την επόμενη χρήσιμη επιλογή προς την πόλη — με τιμή, χρόνο και σημείο επιβίβασης."; I18N.el.whereLanded="Πού προσγειώθηκες;"; I18N.el.liveWhere="ΖΩΝΤΑΝΑ ΟΠΟΥ ΥΠΑΡΧΟΥΝ"; I18N.el.whatNext="Τι ακολουθεί"; I18N.el.pickAirport="Διάλεξε αεροδρόμιο."; I18N.el.nextDesktop="Η σελίδα του αεροδρομίου βάζει πρώτη τη γρηγορότερη επιλογή και μετά δείχνει εναλλακτικές, τιμές, χρόνους και ακριβή διαδρομή με τα πόδια από τις αφίξεις."; I18N.el.nextMobile="Πρώτα η γρηγορότερη επιλογή. Μετά εναλλακτικές, τιμές, χρόνοι και σημείο περπατήματος από τις αφίξεις."; I18N.el.dataStatus="Κατάσταση δεδομένων"; I18N.el.liveMeans="σημαίνει πραγματική ροή αναχωρήσεων. Τα προγραμματισμένα και τα εκτιμώμενα δρομολόγια επισημαίνονται ξεχωριστά."; I18N.el.footer="ΠΡΩΤΑ ΔΗΜΟΣΙΑ ΣΥΓΚΟΙΝΩΝΙΑ · ΚΑΙ ΠΛΗΡΟΦΟΡΙΕΣ ΤΑΞΙ · ΧΩΡΙΣ ΠΡΟΩΘΗΣΗ ΚΡΑΤΗΣΗΣ";
-let JL_LANG = localStorage.getItem("jl-lang") || ((navigator.language||"").toLowerCase().startsWith("el") ? "el" : "en");
+// Language is determined by the indexable page URL, never by browser state.
+let JL_LANG = document.documentElement.lang === "el" ? "el" : "en";
 function tr(v){
   if(JL_LANG!=="el" || v==null) return v;
   const s=String(v);
@@ -179,16 +180,10 @@ function tr(v){
 }
 function trHtml(v){ return tr(v); }
 function selectedLangLabel(){ return JL_LANG==="el" ? "ΕΛ" : "EN"; }
-function setLanguage(lang){
-  JL_LANG=lang==="el"?"el":"en"; localStorage.setItem("jl-lang",JL_LANG); applyLanguage();
-  const code=typeof CODE!=="undefined"?CODE:null;
-  if(code){ const ap=AIRPORTS[code]; (ap&&ap.destinations?renderDest:renderAirport)(code); }
-  if(typeof renderIndex === "function") renderIndex(); else if(typeof render === "function") render();
-}
 const DISC_I18N={ATH:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Μετρό/τρένο δείχνουν προγραμματισμένες ώρες, ενώ το X95 δείχνει ζωντανές αφίξεις από τον ΟΑΣΑ όταν τα λεωφορεία λειτουργούν, αλλιώς το πρόγραμμα. Έλεγξε πάντα στη στάση.",CHQ:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Τα δρομολόγια ΚΤΕΛ εμφανίζονται με βάση το διαθέσιμο πρόγραμμα. Έλεγξε πάντα στη στάση.",HER:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Οι ώρες βασίζονται στο διαθέσιμο πρόγραμμα και τη συχνότητα. Έλεγξε πάντα στη στάση.",JTR:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Τα δρομολόγια είναι εποχικά και ορισμένες ώρες είναι εκτιμήσεις. Έλεγξε πάντα στη στάση.",SKG:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Οι ώρες βασίζονται στο διαθέσιμο πρόγραμμα. Έλεγξε πάντα στη στάση."};
 function applyLanguage(){
   document.documentElement.lang=JL_LANG;
-  document.querySelectorAll(".lang-switch button").forEach(b=>b.classList.toggle("active",b.dataset.lang===JL_LANG));
+  document.querySelectorAll(".lang-switch a").forEach(b=>b.classList.toggle("active",b.dataset.lang===JL_LANG));
   document.querySelectorAll("[data-i18n]").forEach(el=>{ const key=el.dataset.i18n; el.textContent=JL_LANG==="el"?(I18N.el[key]||el.dataset.i18nOriginal||el.textContent):(el.dataset.i18nOriginal||el.textContent); });
   const back=document.getElementById("backlink"); if(back) back.innerHTML=JL_LANG==="el"?"← όλα τα αεροδρόμια":"← all airports";
   const proto=document.querySelector('[data-i18n="prototype"]'); if(proto) proto.textContent=JL_LANG==="el"?"Πρωτότυπο":"Prototype";
@@ -196,11 +191,9 @@ function applyLanguage(){
   document.querySelectorAll("[data-page-intro]").forEach(el=>{el.textContent=JL_LANG==="el"?el.dataset.pageIntroEl:el.dataset.pageIntroEn;});
   if(typeof CODE!=="undefined" && CODE==="ATH"){ const h=document.querySelector("h1"); const i=document.querySelector(".intro"); const cur=(typeof DESTSEL!=="undefined"&&DESTSEL[CODE])?AIRPORTS[CODE].destinations.find(x=>x.id===DESTSEL[CODE]):AIRPORTS[CODE].destinations[0]; if(h) h.innerHTML=JL_LANG==="el"?"Αεροδρόμιο Αθηνών → <em id=\"desttitle\">"+tr(cur.title)+"</em>":"Athens Airport → <em id=\"desttitle\">"+cur.title+"</em>"; if(i) i.textContent=JL_LANG==="el"?"Δημόσιες συγκοινωνίες από το αεροδρόμιο Αθηνών (ATH) προς την πόλη — διάλεξε προορισμό. Ζωντανές ώρες όπου υπάρχουν.":"Public transport from Athens Airport (ATH) into town — pick where you’re headed. Live times where the buses are running."; }
   const disc=document.getElementById("disc"); if(disc && typeof CODE!=="undefined"){ if(JL_LANG==="el" && DISC_I18N[CODE]) disc.textContent=DISC_I18N[CODE]; else if(disc.dataset.en) disc.textContent=disc.dataset.en; }
-  updatePageMeta();
   updateTimePicker();
 }
 function bindLanguage(){
-  document.querySelectorAll(".lang-switch button").forEach(b=>b.onclick=()=>setLanguage(b.dataset.lang));
   applyLanguage();
 }
 function updatePageMeta(){

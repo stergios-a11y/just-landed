@@ -14,7 +14,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Just Landed · Airport to city</title>
 <meta name="description" content="Just landed in Greece? Find the best ways to get to or from the airport — live departures, fares, journey times and walking directions.">
-<link rel="icon" type="image/svg+xml" href="favicon-v16.svg">
+<link rel="canonical" href="https://justlanded.gr/en/">
+<link rel="alternate" hreflang="en" href="https://justlanded.gr/en/">
+<link rel="alternate" hreflang="el" href="https://justlanded.gr/">
+<link rel="alternate" hreflang="x-default" href="https://justlanded.gr/">
+<link rel="icon" type="image/svg+xml" href="/favicon-v16.svg">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -49,13 +53,13 @@ header{height:62px;display:flex;align-items:center;justify-content:space-between
 <body>
 <div class="wrap">
 <header>
-  <a href="index.html" aria-label="Just Landed home">
-    <img class="header-logo" src="just-landed-approved-logo.png" alt="JUST LANDED — Airport to City">
+  <a href="/en/" aria-label="Just Landed home">
+    <img class="header-logo" src="/just-landed-approved-logo.png" alt="JUST LANDED — Airport to City">
   </a>
   <div class="header-tools">
     <div class="lang-switch" id="lang-switch" aria-label="Language">
-      <button type="button" data-lang="en" class="active">EN</button><span>·</span>
-      <button type="button" data-lang="el">ΕΛ</button>
+      <a href="/en/" data-lang="en" class="active" aria-current="page">EN</a><span>·</span>
+      <a href="/" data-lang="el">ΕΛ</a>
     </div>
     <div class="clock" id="clock">--:--</div>
     <div class="menu" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -73,7 +77,7 @@ header{height:62px;display:flex;align-items:center;justify-content:space-between
 <div class="homepage-note" aria-live="polite">NEXT DEPARTURE is shown for each airport. Athens uses live OASA data when available; other airports use the published schedule or frequency estimate.</div>
 
 
-<script src="data.js"></script>
+<script src="/data.js"></script>
 <script>
 function renderClock(){
   document.getElementById("clock").textContent =
