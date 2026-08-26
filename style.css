@@ -192,6 +192,7 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .step-icon{grid-row:1/3;color:var(--ink);font-size:14px;display:flex;align-items:center;justify-content:center}
 .journey-step b{font:800 11px/1 "JetBrains Mono",monospace;color:var(--ink)}
 .journey-step small{font:500 8px/1.2 "JetBrains Mono",monospace;color:var(--muted);margin-top:3px}
+.journey-walk-btn{appearance:none;text-align:left;color:inherit;font:inherit;cursor:pointer;transition:background .12s,border-color .12s,transform .05s}.journey-walk-btn:hover,.journey-walk-btn:focus-visible{background:#303036;border-color:var(--amber);outline:none}.journey-walk-btn:active{transform:translateY(1px)}
 .journey-arrow{color:var(--muted);font-size:18px;line-height:1}
 .total-time{margin-top:8px;font:600 10px/1.2 "JetBrains Mono",monospace;color:var(--muted)}
 .result-departures{margin-top:12px}
