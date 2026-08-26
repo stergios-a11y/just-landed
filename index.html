@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 <head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DXL1DJZCBP"></script>
@@ -12,8 +12,8 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Just Landed · Airport to city</title>
-<meta name="description" content="Just landed in Greece? Find the best ways to get to or from the airport — live departures, fares, journey times and walking directions.">
+<title>Just Landed · Αεροδρόμιο προς πόλη</title>
+<meta name="description" content="Μόλις προσγειωθήκατε στην Ελλάδα; Βρείτε τους καλύτερους τρόπους μετακίνησης από και προς το αεροδρόμιο — ζωντανές αναχωρήσεις, τιμές, χρόνους διαδρομής και οδηγίες πεζής πρόσβασης.">
 <link rel="icon" type="image/svg+xml" href="favicon-v16.svg">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
@@ -49,13 +49,13 @@ header{height:62px;display:flex;align-items:center;justify-content:space-between
 <body>
 <div class="wrap">
 <header>
-  <a href="index.html" aria-label="Just Landed home">
-    <img class="header-logo" src="just-landed-approved-logo.png" alt="JUST LANDED — Airport to City">
+  <a href="index.html" id="home-link" aria-label="Αρχική σελίδα Just Landed">
+    <img class="header-logo" src="just-landed-approved-logo.png" alt="JUST LANDED — Από το αεροδρόμιο στην πόλη">
   </a>
   <div class="header-tools">
-    <div class="lang-switch" id="lang-switch" aria-label="Language">
-      <button type="button" data-lang="en" class="active">EN</button><span>·</span>
-      <button type="button" data-lang="el">ΕΛ</button>
+    <div class="lang-switch" id="lang-switch" aria-label="Επιλογή γλώσσας">
+      <button type="button" data-lang="en" aria-pressed="false">EN</button><span aria-hidden="true">·</span>
+      <button type="button" data-lang="el" class="active" aria-pressed="true">ΕΛ</button>
     </div>
     <div class="clock" id="clock">--:--</div>
     <div class="menu" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -63,18 +63,69 @@ header{height:62px;display:flex;align-items:center;justify-content:space-between
 </header>
 
 <section class="hero">
-  <div class="eyebrow">ΑΠΟ ΚΑΙ ΠΡΟΣ ΤΟ ΑΕΡΟΔΡΟΜΙΟ · GET TO OR FROM THE AIRPORT</div>
-  <h1>Πού προσγειωθήκατε;<br><span style="font-size:.52em;letter-spacing:-.02em">WHERE DID YOU LAND?</span></h1>
-  <p>Επιλέξτε αεροδρόμιο για να δείτε τους καλύτερους τρόπους μετακίνησης από και προς την πόλη.<br>Choose your airport to see the best ways to get to or from the city.</p>
+  <div class="eyebrow" id="eyebrow">ΑΠΟ ΚΑΙ ΠΡΟΣ ΤΟ ΑΕΡΟΔΡΟΜΙΟ</div>
+  <h1 id="hero-heading">ΠΟΥ ΠΡΟΣΓΕΙΩΘΗΚΑΤΕ;</h1>
+  <p id="hero-description">Επιλέξτε αεροδρόμιο για να δείτε τους καλύτερους τρόπους μετακίνησης από και προς την πόλη.</p>
 </section>
 
-<section class="airports" id="airports" aria-label="Airports"></section>
+<section class="airports" id="airports" aria-label="Αεροδρόμια"></section>
 
-<div class="homepage-note" aria-live="polite">NEXT DEPARTURE is shown for each airport. Athens uses live OASA data when available; other airports use the published schedule or frequency estimate.</div>
+<div class="homepage-note" id="homepage-note" aria-live="polite">Η επόμενη αναχώρηση εμφανίζεται για κάθε αεροδρόμιο. Η Αθήνα χρησιμοποιεί ζωντανά δεδομένα ΟΑΣΑ όταν είναι διαθέσιμα· τα υπόλοιπα αεροδρόμια χρησιμοποιούν το δημοσιευμένο πρόγραμμα ή εκτίμηση συχνότητας.</div>
 
 
+<script>if(!localStorage.getItem("jl-lang"))localStorage.setItem("jl-lang","el");</script>
 <script src="data.js"></script>
 <script>
+const COPY={
+  el:{
+    title:"Just Landed · Αεροδρόμιο προς πόλη",
+    description:"Μόλις προσγειωθήκατε στην Ελλάδα; Βρείτε τους καλύτερους τρόπους μετακίνησης από και προς το αεροδρόμιο — ζωντανές αναχωρήσεις, τιμές, χρόνους διαδρομής και οδηγίες πεζής πρόσβασης.",
+    homeLabel:"Αρχική σελίδα Just Landed",logoAlt:"JUST LANDED — Από το αεροδρόμιο στην πόλη",languageLabel:"Επιλογή γλώσσας",
+    eyebrow:"ΑΠΟ ΚΑΙ ΠΡΟΣ ΤΟ ΑΕΡΟΔΡΟΜΙΟ",heading:"ΠΟΥ ΠΡΟΣΓΕΙΩΘΗΚΑΤΕ;",hero:"Επιλέξτε αεροδρόμιο για να δείτε τους καλύτερους τρόπους μετακίνησης από και προς την πόλη.",
+    airports:"Αεροδρόμια",note:"Η επόμενη αναχώρηση εμφανίζεται για κάθε αεροδρόμιο. Η Αθήνα χρησιμοποιεί ζωντανά δεδομένα ΟΑΣΑ όταν είναι διαθέσιμα· τα υπόλοιπα αεροδρόμια χρησιμοποιούν το δημοσιευμένο πρόγραμμα ή εκτίμηση συχνότητας.",
+    city:"Πόλη",next:"ΕΠΟΜΕΝΟ",live:"ΖΩΝΤΑΝΑ",estimate:"ΕΚΤ.",now:"ΤΩΡΑ",min:"ΛΕΠ",noService:"ΧΩΡΙΣ ΔΡΟΜΟΛΟΓΙΑ",landmark:"ορόσημο",transport:"ΜΕΤΑΚΙΝΗΣΗ",
+    modes:{metro:"ΜΕΤΡΟ",bus:"ΛΕΩΦΟΡΕΙΟ",rail:"ΤΡΕΝΟ",ferry:"ΠΛΟΙΟ"},
+    airportsByCode:{ATH:"Αθήνα",SKG:"Θεσσαλονίκη",HER:"Ηράκλειο",CHQ:"Χανιά",JTR:"Σαντορίνη"}
+  },
+  en:{
+    title:"Just Landed · Airport to city",
+    description:"Just landed in Greece? Find the best ways to get to or from the airport — live departures, fares, journey times and walking directions.",
+    homeLabel:"Just Landed home",logoAlt:"JUST LANDED — Airport to City",languageLabel:"Language",
+    eyebrow:"GET TO OR FROM THE AIRPORT",heading:"WHERE DID YOU LAND?",hero:"Choose your airport to see the best ways to get to or from the city.",
+    airports:"Airports",note:"NEXT DEPARTURE is shown for each airport. Athens uses live OASA data when available; other airports use the published schedule or frequency estimate.",
+    city:"City",next:"NEXT",live:"LIVE",estimate:"EST",now:"NOW",min:"MIN",noService:"NO SERVICE",landmark:"landmark",transport:"TRANSPORT",
+    modes:{metro:"METRO",bus:"BUS",rail:"RAIL",ferry:"FERRY"},
+    airportsByCode:{ATH:"Athens",SKG:"Thessaloniki",HER:"Heraklion",CHQ:"Chania",JTR:"Santorini"}
+  }
+};
+let language=localStorage.getItem("jl-lang")==="en"?"en":"el";
+function homepageText(){return COPY[language];}
+function setHomepageLanguage(nextLanguage){
+  language=nextLanguage==="en"?"en":"el";
+  localStorage.setItem("jl-lang",language);
+  const t=homepageText();
+  document.documentElement.lang=language;
+  document.title=t.title;
+  document.querySelector('meta[name="description"]').content=t.description;
+  document.getElementById("home-link").setAttribute("aria-label",t.homeLabel);
+  document.querySelector(".header-logo").alt=t.logoAlt;
+  document.getElementById("lang-switch").setAttribute("aria-label",t.languageLabel);
+  document.getElementById("eyebrow").textContent=t.eyebrow;
+  document.getElementById("hero-heading").textContent=t.heading;
+  document.getElementById("hero-description").textContent=t.hero;
+  document.getElementById("airports").setAttribute("aria-label",t.airports);
+  document.getElementById("homepage-note").textContent=t.note;
+  document.querySelectorAll("[data-lang]").forEach(button=>{
+    const active=button.dataset.lang===language;
+    button.classList.toggle("active",active);
+    button.setAttribute("aria-pressed",String(active));
+  });
+  render();
+}
+document.querySelectorAll("[data-lang]").forEach(button=>{
+  button.onclick=null;
+  button.addEventListener("click",()=>setHomepageLanguage(button.dataset.lang));
+});
 function renderClock(){
   document.getElementById("clock").textContent =
     new Intl.DateTimeFormat([], {hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).format(new Date());
@@ -90,23 +141,24 @@ function soonestAirport(code){
   return best;
 }
 function modeLabel(mode){
-  return ({metro:"METRO",bus:"BUS",rail:"RAIL",ferry:"FERRY"}[mode]||String(mode||"TRANSPORT").toUpperCase());
+  return homepageText().modes[mode]||homepageText().transport;
 }
 function nextLabel(code){
   const r=soonestAirport(code);
-  if(!r||r.closed) return `<span class="estimate">NO SERVICE</span>`;
+  const t=homepageText();
+  if(!r||r.closed) return `<span class="estimate">${t.noService}</span>`;
   const mins=Math.max(0,Math.round(r.until));
-  const prefix=r.isLive?`<span class="live">LIVE · </span>`:(r.o&&r.o.est?`<span class="estimate">EST · </span>`:"");
-  const when=mins<=0?"NOW":`${mins} MIN`;
-  return `${prefix}NEXT ${modeLabel(r.o&&r.o.mode)} · ${when}`;
+  const prefix=r.isLive?`<span class="live">${t.live} · </span>`:(r.o&&r.o.est?`<span class="estimate">${t.estimate} · </span>`:"");
+  const when=mins<=0?t.now:`${mins} ${t.min}`;
+  return `${prefix}${t.next} ${modeLabel(r.o&&r.o.mode)} · ${when}`;
 }
 function airportCard(code){
-  const ap=AIRPORTS[code], name=ap.name.split(" (")[0];
+  const ap=AIRPORTS[code], t=homepageText(), name=t.airportsByCode[code]||ap.name.split(" (")[0];
   const landmarks={ATH:"athens-landmark.png",SKG:"thessaloniki-landmark.png",HER:"heraklion-landmark.png",CHQ:"chania-landmark.png",JTR:"santorini-landmark.png"};
-  return `<a class="airport" href="${ap.slug}.html" onclick="localStorage.setItem('jl-airport','${code}')">
-    <div class="landmark"><img src="/${landmarks[code]}" alt="${name} landmark" loading="eager"></div>
+  return `<a class="airport" href="${ap.slug}.html" aria-label="${name} — ${code} → ${t.city}" onclick="localStorage.setItem('jl-airport','${code}')">
+    <div class="landmark"><img src="/${landmarks[code]}" alt="${name} ${t.landmark}" loading="eager"></div>
     <div class="airport-name">${name}</div>
-    <div class="airport-route">${code} → Πόλη · City</div>
+    <div class="airport-route">${code} → ${t.city}</div>
     <div class="airport-next" id="next-${code}">${nextLabel(code)}</div>
     <div class="airport-arrow">→</div>
   </a>`;
@@ -124,7 +176,7 @@ async function boardLive(){
     render();
   }catch(e){}
 }
-renderClock();render();
+setHomepageLanguage(language);renderClock();
 setInterval(()=>{renderClock();render()},15000);
 boardLive();setInterval(boardLive,30000);
 </script>
