@@ -529,13 +529,13 @@ function breakdownHtml(o,r,destinationId){
   const walkAction=JL_LANG==='el'?'ΟΔΗΓΙΕΣ':'DIRECTIONS';
   const shortAccess=o.accessShort ? tr(o.accessShort) : "";
   const walkMeta=[labels[0],shortAccess,walkAction].filter(Boolean).join(" · ");
-  const walkStep=`<button class="journey-step journey-walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||'')}" data-access="${encodeURIComponent(o.access||'')}" data-ll="${encodeURIComponent(o.ll||'')}" data-to="${encodeURIComponent(o.name||'Departure point')}" aria-label="${JL_LANG==='el'?'Εμφάνιση οδηγιών πεζή':'Show walking directions'}"><span class="step-icon">♟</span><b>${b.walk} min</b><small>${walkMeta} →</small></button>`;
+  const walkStep=`<button class="journey-step journey-walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||'')}" data-access="${encodeURIComponent(o.access||'')}" data-ll="${encodeURIComponent(o.ll||'')}" data-to="${encodeURIComponent(o.name||'Departure point')}" aria-label="${JL_LANG==='el'?'Εμφάνιση οδηγιών πεζή':'Show walking directions'}"><span class="step-icon">♟</span><b>${b.walk} ${JL_LANG==="el"?"λεπτά":"min"}</b><small>${walkMeta} →</small></button>`;
   return `<div class="journey-breakdown">
     ${walkStep}
     <span class="journey-arrow">›</span>
-    <div class="journey-step"><span class="step-icon">◷</span><b>${b.wait} min</b><small>${labels[1]}</small></div>
+    <div class="journey-step"><span class="step-icon">◷</span><b>${b.wait} ${JL_LANG==="el"?"λεπτά":"min"}</b><small>${labels[1]}</small></div>
     <span class="journey-arrow">›</span>
-    <div class="journey-step"><span class="step-icon">${o.mode==='bus'?'▣':'▣'}</span><b>${b.ride} min</b><small>${labels[2]}</small></div>
+    <div class="journey-step"><span class="step-icon">${o.mode==='bus'?'▣':'▣'}</span><b>${b.ride} ${JL_LANG==="el"?"λεπτά":"min"}</b><small>${labels[2]}</small></div>
   </div>`;
 }
 function taxiArrivalHtml(o,r){
@@ -571,7 +571,7 @@ function destCard(o,e,r,isFastest=false){
   }
 
   const b=isTaxi?null:arrivalBreakdown(o,r,e.destinationId);
-  const totalLabel=b?`<div class="total-time"><b>~${b.total} min total</b>${isFastest?`<span class="fastest-math"> = ${b.walk} walk + ${b.wait} wait + ${b.ride} ride</span>`:""}</div>`:"";
+  const totalLabel=b?`<div class="total-time"><b>~${b.total} ${JL_LANG==="el"?"λεπτά συνολικά":"min total"}</b>${isFastest?`<span class="fastest-math"> = ${b.walk} ${JL_LANG==="el"?"περπάτημα":"walk"} + ${b.wait} ${JL_LANG==="el"?"αναμονή":"wait"} + ${b.ride} ${JL_LANG==="el"?"διαδρομή":"ride"}</span>`:""}</div>`:"";
   const destinationText=tr(e.to).replace(/\s+—\s+direct$/i,"");
   const routeSubtitle=isTaxi?tr(e.to):`${JL_LANG==='el'?'προς':'to'} ${destinationText}`;
   const status=o.journeyBands
