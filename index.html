@@ -139,7 +139,7 @@ function transportIcon(mode){
     rail:'<path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-3.58-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5 1.5S8.33 17 7.5 17z"/>',
     ferry:'<path d="M3.95 19H4c1.6 0 3.02-.88 4-2 .98 1.12 2.4 2 4 2s3.02-.88 4-2c.98 1.12 2.4 2 4 2h.05l1.89-6.68a1 1 0 0 0-.66-1.28L20 10.62V6c0-1.1-.9-2-2-2h-3V1H9v3H6c-1.1 0-2 .9-2 2v4.62l-1.29.42a1 1 0 0 0-.66 1.28L3.95 19zM6 6h12v3.97L12 8 6 9.97V6z"/>'
   };
-  return `<svg class="transport-icon" viewBox="0 0 24 24" aria-hidden="true">${paths[mode]||paths.bus}</svg>`;
+  return `<svg class="transport-icon" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" aria-hidden="true">${paths[mode]||paths.bus}</svg>`;
 }
 
 function nextLabel(code){
@@ -155,7 +155,7 @@ function nextLabel(code){
   else if(mins>60){
     const h=Math.floor(mins/60), m=mins%60;
     when=language==="el"
-      ? `σε ${h}ώ${m?` ${m} λεπτά`:""}`
+      ? `σε ${h}ώ${m?` ${m}λ`:""}`
       : `in ${h}h${m?` ${m}min`:""}`;
   } else {
     when=language==="el"?`σε ${mins} λεπτά`:`in ${mins} min`;
