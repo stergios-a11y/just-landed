@@ -63,9 +63,9 @@ header{height:62px;display:flex;align-items:center;justify-content:space-between
 </header>
 
 <section class="hero">
-  <div class="eyebrow">GET TO OR FROM THE AIRPORT</div>
-  <h1>Where did you land?</h1>
-  <p>Choose your airport to see the best ways to get to or from the city.</p>
+  <div class="eyebrow">ΑΠΟ ΚΑΙ ΠΡΟΣ ΤΟ ΑΕΡΟΔΡΟΜΙΟ · GET TO OR FROM THE AIRPORT</div>
+  <h1>Πού προσγειωθήκατε;<br><span style="font-size:.52em;letter-spacing:-.02em">WHERE DID YOU LAND?</span></h1>
+  <p>Επιλέξτε αεροδρόμιο για να δείτε τους καλύτερους τρόπους μετακίνησης από και προς την πόλη.<br>Choose your airport to see the best ways to get to or from the city.</p>
 </section>
 
 <section class="airports" id="airports" aria-label="Airports"></section>
@@ -106,7 +106,7 @@ function airportCard(code){
   return `<a class="airport" href="${ap.slug}.html" onclick="localStorage.setItem('jl-airport','${code}')">
     <div class="landmark"><img src="/${landmarks[code]}" alt="${name} landmark" loading="eager"></div>
     <div class="airport-name">${name}</div>
-    <div class="airport-route">${code} → City</div>
+    <div class="airport-route">${code} → Πόλη · City</div>
     <div class="airport-next" id="next-${code}">${nextLabel(code)}</div>
     <div class="airport-arrow">→</div>
   </a>`;
