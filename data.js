@@ -22,6 +22,14 @@ const AIRPORTS = {
         sched:{kind:"range",first:"06:40",last:"21:40",every:60},
         note:"Summer: about hourly. Winter: roughly every 3 hours — the time shown is an estimate, check the posted schedule. Overnight (00:00–05:00) barely runs; arrange backup for very early/late flights. All airport buses terminate at Fira bus station." },
     ] },
+
+  RHO: { slug:"rhodes", name:"Rhodes (RHO)", city:"Dodecanese", verified:true, title:"Rhodes Airport to Rhodes Town", board:"RODA bus · to Rhodes Town",
+    options:[
+      { mode:"bus", to:"Rhodes Town", op:"RODA bus · Airport → Rhodes", journey:"~30 min", freqLabel:"frequent · see timetable", hours:"05:45–23:45",
+        walk:"~2 min walk", access:"Bus stop between the old and new terminals",
+        sched:{kind:"range",first:"05:45",last:"23:45",every:60},
+        note:"Direct RODA service to Rhodes Town. The airport bus stop is between the old and new terminals. Published timetables vary by season and day; check the current schedule before travelling." },
+    ] },
   SKG: { slug:"thessaloniki", name:"Thessaloniki (SKG)", city:"Macedonia", verified:true, title:"Thessaloniki Airport to the city centre", board:"Bus 01X · to the centre",
     options:[
       { mode:"bus", to:"City centre (Aristotelous · White Tower)", op:"OASTH bus 01X · 01N overnight", price:"€2", journey:"~40 min", freqLabel:"every ~25 min · 30 min overnight", hours:"24 hours",
@@ -95,7 +103,7 @@ const AIRPORTS = {
         note:"Flat fare €40 daytime (05:00–24:00) · €55 night (00:00–05:00) to the city centre." },
     ] },
 };
-const ORDER = ["ATH","SKG","HER","CHQ","JTR"];
+const ORDER = ["ATH","SKG","HER","CHQ","JTR","RHO"];
 const LIVE = {};
 
 const ACCESS_TRANSLATIONS = {"Trains":"Τρένα","Exit 5":"Έξοδος 5","Exits 2–3":"Έξοδοι 2–3","Exit 2–3":"Έξοδοι 2–3","Exit 3":"Έξοδος 3"};
