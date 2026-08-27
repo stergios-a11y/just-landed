@@ -1,0 +1,20 @@
+/* Single source of truth for the Just Landed color palette.
+   Change colors HERE only — every page links this file. */
+:root{
+  /* base */
+  --bg:#111111; --ink:#fafaf8; --muted:#8f8f86;
+  /* accents */
+  --amber:#ffc107; --amber-2:#f39a23;
+  --green:#72e06a; --green-2:#44c86a; --green-strong:#1fa971;
+  --red:#ff5a52; --red-strong:#f5333f;
+  --cyan:#5cc7dd; --violet:#c77dff;
+  /* surfaces */
+  --card:#1a1a1d; --tile:#242428; --tile-2:#1f1f22; --surface-2:#2b2f36; --panel:#151519;
+  --card-grad-1:#17191b; --card-grad-2:#111315; --card-hover:#191b1d; --hover:#303036;
+  /* lines */
+  --line:#2c2c31; --tileborder:#33333a; --border-2:#3a3a40;
+  /* text-on-accent + misc */
+  --on-accent:#111; --white:#fff; --route-ink:#d8d8d5;
+  /* amber note callout */
+  --note-bg:#241c05; --note-border:#4a3a0a;
+}

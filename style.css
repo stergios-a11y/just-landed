@@ -1,5 +1,4 @@
 /* Just Landed — final brand (Jet Black / Airport Yellow), dark board UI */
-:root{--bg:#111111;--card:#1a1a1d;--tile:#242428;--ink:#FAFAF8;--muted:#8f8f86;--amber:#FFC107;--red:#ff5a52;--cyan:#5cc7dd;--line:#2c2c31;--tileborder:#33333a}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Chakra Petch",system-ui,-apple-system,sans-serif;line-height:1.45;min-height:100vh;-webkit-font-smoothing:antialiased}
 a{color:var(--cyan);text-decoration:none}
@@ -24,11 +23,11 @@ h1{font-family:"Inter",sans-serif;font-weight:900;font-size:24px;letter-spacing:
 .time-panel-head strong{color:var(--amber);font-size:11px;white-space:nowrap}
 .time-actions{display:flex;gap:7px;align-items:stretch}
 .time-btn{appearance:none;border:1px solid var(--tileborder);background:var(--tile);color:var(--ink);border-radius:8px;min-height:38px;padding:0 10px;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.04em;cursor:pointer;display:flex;align-items:center;justify-content:center;white-space:nowrap}
-.time-btn.on{background:var(--amber);border-color:var(--amber);color:#111}
+.time-btn.on{background:var(--amber);border-color:var(--amber);color:var(--on-accent)}
 .time-custom{position:relative;flex:1 1 auto;color:var(--muted);gap:8px;min-width:92px}
 .time-custom .time-custom-arrow{font-size:12px;color:var(--amber);transition:transform .12s}
 .time-custom:hover .time-custom-arrow,.time-custom:focus-visible .time-custom-arrow{transform:translateX(2px)}
-.time-custom.selected{color:var(--ink);border-color:var(--amber);background:#1f1f22}
+.time-custom.selected{color:var(--ink);border-color:var(--amber);background:var(--tile-2)}
 .time-custom.selected .time-custom-arrow{color:var(--amber)}
 .time-help{margin-top:8px;color:var(--muted);font:500 11px/1.35 "JetBrains Mono",monospace}
 
@@ -47,7 +46,7 @@ h1{font-family:"Inter",sans-serif;font-weight:900;font-size:24px;letter-spacing:
 .access{color:var(--muted)}
 
 .walk-btn{appearance:none;border:1px solid var(--tileborder);background:var(--tile);color:var(--ink);font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.02em;border-radius:7px;padding:7px 9px;cursor:pointer;transition:background .12s,border-color .12s}
-.walk-btn:hover,.walk-btn:focus-visible{background:#303036;border-color:var(--amber);outline:none}
+.walk-btn:hover,.walk-btn:focus-visible{background:var(--hover);border-color:var(--amber);outline:none}
 .walk-arrow{color:var(--amber);margin-left:3px}
 .dest-walk{margin-top:8px}
 .walk-modal[hidden]{display:none}
@@ -64,7 +63,7 @@ h1{font-family:"Inter",sans-serif;font-weight:900;font-size:24px;letter-spacing:
 .walk-dot{width:9px;height:9px;border-radius:50%;background:var(--amber);margin:3px 0 0 2px;flex:0 0 9px}
 .walk-dot.end{background:var(--ink)}
 .walk-line{height:18px;border-left:1px dashed var(--muted);margin:0 0 0 6px}
-.walk-map{display:block;text-align:center;background:var(--amber);color:#111;border-radius:8px;padding:13px 12px;margin-top:12px;font:800 11px/1 "JetBrains Mono",monospace;letter-spacing:.03em}
+.walk-map{display:block;text-align:center;background:var(--amber);color:var(--on-accent);border-radius:8px;padding:13px 12px;margin-top:12px;font:800 11px/1 "JetBrains Mono",monospace;letter-spacing:.03em}
 .walk-map:hover{filter:brightness(1.05)}
 body.walk-open{overflow:hidden}
 
@@ -75,8 +74,8 @@ body.walk-open{overflow:hidden}
 
 .noapp{font-size:12.5px;font-weight:600;color:var(--ink);background:var(--tile);border:1px solid var(--tileborder);border-radius:9px;padding:8px 11px;margin-top:11px}
 .alsoapps{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.appbtn{display:inline-flex;align-items:center;gap:5px;font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:12px;border-radius:7px;padding:4px 10px;color:#fff}
-.appbtn.freenow{background:#f5333f}.appbtn.uber{background:#2b2f36}.appbtn.bolt{background:#1fa971}.appbtn svg{display:block}
+.appbtn{display:inline-flex;align-items:center;gap:5px;font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:12px;border-radius:7px;padding:4px 10px;color:var(--white)}
+.appbtn.freenow{background:var(--red-strong)}.appbtn.uber{background:var(--surface-2)}.appbtn.bolt{background:var(--green-strong)}.appbtn svg{display:block}
 
 .dep{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:14px;padding-top:13px;border-top:1px solid var(--line)}
 .dep-l{min-width:0}
@@ -95,7 +94,7 @@ body.walk-open{overflow:hidden}
 @keyframes liveDash{0%,100%{opacity:1}50%{opacity:.25}}
 @media(prefers-reduced-motion:reduce){.live .dash{animation:none}}
 
-.note{font-size:12px;color:var(--amber);margin-top:12px;background:#241c05;border:1px solid #4a3a0a;border-radius:9px;padding:8px 10px;line-height:1.45}
+.note{font-size:12px;color:var(--amber);margin-top:12px;background:var(--note-bg);border:1px solid var(--note-border);border-radius:9px;padding:8px 10px;line-height:1.45}
 .disclaimer{font-family:"JetBrains Mono",monospace;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:11px;color:var(--muted);margin-top:16px;line-height:1.6;letter-spacing:.02em}
 footer{font-family:"JetBrains Mono",monospace;color:var(--muted);font-size:11px;text-align:center;margin-top:22px;letter-spacing:.06em}
 .way .walk{font-weight:700;color:var(--ink)}
@@ -116,10 +115,10 @@ footer{font-family:"JetBrains Mono",monospace;color:var(--muted);font-size:11px;
 .qh{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:2px 2px 8px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 2px 8px;margin-bottom:6px;min-width:0}
 .chip{flex:0 0 auto;background:var(--tile);border:1px solid var(--tileborder);border-radius:999px;padding:8px 14px;cursor:pointer;font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:13px;color:var(--ink);white-space:nowrap}
-.chip.on{background:var(--amber);border-color:var(--amber);color:#111}
+.chip.on{background:var(--amber);border-color:var(--amber);color:var(--on-accent)}
 .card{position:relative}
 .card.best{border-color:var(--amber)}
-.best-tag{position:absolute;top:-9px;left:14px;background:var(--amber);color:#111;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.08em;padding:3px 8px;border-radius:6px;text-transform:uppercase}
+.best-tag{position:absolute;top:-9px;left:14px;background:var(--amber);color:var(--on-accent);font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.08em;padding:3px 8px;border-radius:6px;text-transform:uppercase}
 .how{margin-top:11px;font-size:12.5px;color:var(--ink);background:var(--tile);border:1px solid var(--tileborder);border-radius:9px;padding:8px 10px;line-height:1.45}
 .how b{color:var(--amber)}
 .note-plain{font-size:11.5px;color:var(--muted);margin-top:9px}
@@ -152,10 +151,10 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .time-kicker{color:var(--muted)}
 .time-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
 .time-btn{min-height:40px}
-.time-slider-wrap{position:relative;margin-top:14px;padding:12px 10px 8px;background:#151519;border:1px solid var(--line);border-radius:10px}
+.time-slider-wrap{position:relative;margin-top:14px;padding:12px 10px 8px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
 .time-slider-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--amber)}
 .time-slider-top b{font-size:16px;letter-spacing:0;color:var(--ink)}
-.time-slider{width:100%;margin:12px 0 0;appearance:none;height:4px;background:#3a3a40;border-radius:999px;outline:none;accent-color:var(--amber);cursor:pointer}
+.time-slider{width:100%;margin:12px 0 0;appearance:none;height:4px;background:var(--border-2);border-radius:999px;outline:none;accent-color:var(--amber);cursor:pointer}
 .time-slider::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:var(--amber);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--amber);cursor:grab}
 .time-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--amber);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--amber);cursor:grab}
 .time-slider:disabled{opacity:.45;cursor:not-allowed}
@@ -174,7 +173,7 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .result-head .route{min-width:0}
 .route-direction{text-transform:none}
 .status-line{margin-top:9px;font:700 11px/1.2 "JetBrains Mono",monospace;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
-.estimate-dot{color:#f39a23}.live-dot{color:#44c86a}
+.estimate-dot{color:var(--amber-2)}.live-dot{color:var(--green-2)}
 .result-head .dest-walk{margin-top:10px}
 .result-head .walk-btn{font-size:11px;padding:6px 8px}
 .result-main{margin-top:14px}
@@ -194,7 +193,7 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .step-icon{grid-row:1/3;color:var(--ink);font-size:14px;display:flex;align-items:center;justify-content:center}
 .journey-step b{font:800 11px/1 "JetBrains Mono",monospace;color:var(--ink)}
 .journey-step small{font:500 11px/1.2 "JetBrains Mono",monospace;color:var(--muted);margin-top:3px}
-.journey-walk-btn{appearance:none;text-align:left;color:inherit;font:inherit;cursor:pointer;transition:background .12s,border-color .12s,transform .05s}.journey-walk-btn:hover,.journey-walk-btn:focus-visible{background:#303036;border-color:var(--amber);outline:none}.journey-walk-btn:active{transform:translateY(1px)}
+.journey-walk-btn{appearance:none;text-align:left;color:inherit;font:inherit;cursor:pointer;transition:background .12s,border-color .12s,transform .05s}.journey-walk-btn:hover,.journey-walk-btn:focus-visible{background:var(--hover);border-color:var(--amber);outline:none}.journey-walk-btn:active{transform:translateY(1px)}
 .journey-arrow{color:var(--muted);font-size:18px;line-height:1}
 .total-time{margin-top:8px;font:600 11px/1.2 "JetBrains Mono",monospace;color:var(--muted)}
 .result-departures{margin-top:12px}

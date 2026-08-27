@@ -421,7 +421,7 @@ function closeWalk(){
   if(m){m.hidden=true;document.body.classList.remove("walk-open");}
 }
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeWalk();});
-const BOLT_SVG='<svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>';
+const BOLT_SVG='<svg width="11" height="11" viewBox="0 0 24 24" fill="var(--white)"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>';
 const APP={ freenow:{cls:"freenow",label:"FREE NOW"}, uber:{cls:"uber",label:"Uber"}, bolt:{cls:"bolt",label:BOLT_SVG+"Bolt"} };
 const appBtn = k => { const a=APP[k]; return a?`<span class="appbtn ${a.cls}">${a.label}</span>`:""; };
 
