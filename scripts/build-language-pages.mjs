@@ -44,6 +44,14 @@ function seo(html, path, lang, title, description) {
   return html.replace(/(<link rel="icon")/, `${tags}\n$1`);
 }
 
+function stripStrayAttr(html) {
+  // Root-cause guard: remove orphan attribute-only lines such as
+  //   href="/favicon-v16.svg">
+  // left behind by malformed <link>/<img> tags. These render as visible
+  // text in the page and were the cause of the favicon-v16 artifact.
+  return html.replace(/^[ \t]*(?:href|src)=["'][^\n>]*>[ \t]*\r?\n/gm, "");
+}
+
 function common(html, path, lang) {
   const isEn = lang === "en";
   const enHref = `/en/${path}`;
@@ -55,7 +63,9 @@ function common(html, path, lang) {
   html = html.replace(/<button type="button" data-lang="en"([^>]*)>EN<\/button>/g, `<a href="${enHref}" data-lang="en"${isEn ? " class=\"active\" aria-current=\"page\"" : ""}>EN</a>`).replace(/<button type="button" data-lang="el"([^>]*)>ΕΛ<\/button>/g, `<a href="${elHref}" data-lang="el"${isEn ? "" : " class=\"active\" aria-current=\"page\""}>ΕΛ</a>`);
   html = html.replace(/\.lang-switch button/g, ".lang-switch a");
   html = html.replace(/(<img\b[^>]*?)\shref=/g, "$1 src=").replace(/(<link\b[^>]*?)\ssrc=/g, "$1 href=");
-  return html;
+  // NOTE: the attribute-swap regex above is fragile; stripStrayAttr() below is a
+  // safety net so a malformed tag can never ship as visible text again.
+  return stripStrayAttr(html);
 }
 
 let englishHome = await readFile("index-backup.html", "utf8");
