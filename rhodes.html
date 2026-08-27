@@ -63,17 +63,11 @@
   const tzEl=document.getElementById("tz"); if(tzEl) tzEl.textContent=Intl.DateTimeFormat().resolvedOptions().timeZone;
   const disc=document.getElementById("disc");
   disc.innerHTML = AIRPORTS[CODE].verified
-    ? "Fares &amp; service hours verified Aug 2026. Metro/rail show exact clock-face times; the X95 shows live arrivals from OASA when buses are running, otherwise the timetable. Always confirm at the stop."
+    ? "Fares &amp; service hours verified Aug 2026. The RODA bus runs direct to Rhodes Town; published timetables vary by season, so always confirm at the stop."
     : "Sample data — fares and times are illustrative and not yet verified. Departure times are estimated from the listed frequency. Confirm at the stop.";
   disc.dataset.en=disc.textContent;
   initAirport(CODE);
   if(typeof applyLanguage === "function") applyLanguage();
-  if(JL_LANG==="el"){
-    const h=document.querySelector("h1");
-    const i=document.querySelector(".intro");
-    if(h) h.innerHTML='Αεροδρόμιο Ρόδοςς → πόλη της Ρόδου';
-    if(i) i.textContent='Πώς θα πας από το αεροδρόμιο Ρόδοςς (RHO) στα πόλη της Ρόδου με το δημόσιο λεωφορείο — τιμή, συχνότητα και ζωντανές αναχωρήσεις, χωρίς προώθηση ταξί.';
-  }
 
 </script>
 </body>

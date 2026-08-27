@@ -25,9 +25,9 @@ const AIRPORTS = {
 
   RHO: { slug:"rhodes", name:"Rhodes (RHO)", city:"Dodecanese", verified:true, title:"Rhodes Airport to Rhodes Town", board:"RODA bus · to Rhodes Town",
     options:[
-      { mode:"bus", to:"Rhodes Town", op:"RODA bus · Airport → Rhodes", journey:"~30 min", freqLabel:"frequent · see timetable", hours:"05:45–23:45",
+      { mode:"bus", to:"Rhodes Town", op:"RODA bus · Airport → Rhodes", est:true, price:"€3", journey:"~30 min", freqLabel:"every ~30 min", hours:"05:45–23:45",
         walk:"~2 min walk", access:"Bus stop between the old and new terminals",
-        sched:{kind:"range",first:"05:45",last:"23:45",every:60},
+        sched:{kind:"range",first:"05:45",last:"23:45",every:30},
         note:"Direct RODA service to Rhodes Town. The airport bus stop is between the old and new terminals. Published timetables vary by season and day; check the current schedule before travelling." },
     ] },
   SKG: { slug:"thessaloniki", name:"Thessaloniki (SKG)", city:"Macedonia", verified:true, title:"Thessaloniki Airport to the city centre", board:"Bus 01X · to the centre",
@@ -173,13 +173,17 @@ const I18N = {
 };
 
 I18N.el.airportName="Αεροδρόμιο Αθηνών"; I18N.el.cityCentre="κέντρο πόλης"; I18N.el.whereHeaded="Πού κατευθύνεσαι;"; I18N.el["Athens Airport"]="Αεροδρόμιο Αθηνών"; I18N.el["Athens (ATH)"]="Αθήνα (ATH)"; I18N.el["Heraklion (HER)"]="Ηράκλειο (HER)"; I18N.el["Chania (CHQ)"]="Χανιά (CHQ)"; I18N.el["Santorini (JTR)"]="Σαντορίνη (JTR)"; I18N.el["Thessaloniki (SKG)"]="Θεσσαλονίκη (SKG)"; I18N.el["Attica"]="Αττική"; I18N.el["Crete"]="Κρήτη"; I18N.el["Cyclades"]="Κυκλάδες"; I18N.el["Macedonia"]="Μακεδονία"; I18N.el["Dodecanese"]="Δωδεκάνησα"; I18N.el["Heraklion Airport to town"]="Αεροδρόμιο Ηρακλείου προς πόλη"; I18N.el["Chania Airport to town"]="Αεροδρόμιο Χανίων προς πόλη"; I18N.el["Santorini Airport to Fira"]="Αεροδρόμιο Σαντορίνης προς Φηρά"; I18N.el["Rhodes Airport to Rhodes Town"]="Αεροδρόμιο Ρόδου προς πόλη Ρόδου"; I18N.el["Thessaloniki Airport to the city centre"]="Αεροδρόμιο Θεσσαλονίκης προς κέντρο"; I18N.el["Athens Airport to the city centre"]="Αεροδρόμιο Αθηνών προς κέντρο";I18N.el.kicker="Ελλάδα · αεροδρόμιο → πόλη"; I18N.el.hero1="Έφτασες."; I18N.el.hero2="Τώρα φύγαμε."; I18N.el.findAirport="Βρες το αεροδρόμιό σου."; I18N.el.heroCopy="Δες την επόμενη χρήσιμη επιλογή προς την πόλη — με τιμή, χρόνο και σημείο επιβίβασης."; I18N.el.whereLanded="Πού προσγειώθηκες;"; I18N.el.liveWhere="ΖΩΝΤΑΝΑ ΟΠΟΥ ΥΠΑΡΧΟΥΝ"; I18N.el.whatNext="Τι ακολουθεί"; I18N.el.pickAirport="Διάλεξε αεροδρόμιο."; I18N.el.nextDesktop="Η σελίδα του αεροδρομίου βάζει πρώτη τη γρηγορότερη επιλογή και μετά δείχνει εναλλακτικές, τιμές, χρόνους και ακριβή διαδρομή με τα πόδια από τις αφίξεις."; I18N.el.nextMobile="Πρώτα η γρηγορότερη επιλογή. Μετά εναλλακτικές, τιμές, χρόνοι και σημείο περπατήματος από τις αφίξεις."; I18N.el.dataStatus="Κατάσταση δεδομένων"; I18N.el.liveMeans="σημαίνει πραγματική ροή αναχωρήσεων. Τα προγραμματισμένα και τα εκτιμώμενα δρομολόγια επισημαίνονται ξεχωριστά."; I18N.el.footer="ΠΡΩΤΑ ΔΗΜΟΣΙΑ ΣΥΓΚΟΙΝΩΝΙΑ · ΚΑΙ ΠΛΗΡΟΦΟΡΙΕΣ ΤΑΞΙ · ΧΩΡΙΣ ΠΡΟΩΘΗΣΗ ΚΡΑΤΗΣΗΣ";
+I18N.el["Trains"]="Τρένα";I18N.el["Exit 5"]="Έξοδος 5";I18N.el["Exit 2–3"]="Έξοδοι 2–3";I18N.el["Exits 2–3"]="Έξοδοι 2–3";I18N.el["Exit 3"]="Έξοδος 3";I18N.el["Athens Central (Larissa)"]="Σταθμός Λαρίσης";I18N.el["Athens Central (Larissa Station)"]="Σταθμός Λαρίσης";I18N.el["Rhodes (RHO)"]="Ρόδος (RHO)";I18N.el["Rhodes Town"]="πόλη της Ρόδου";I18N.el["RODA bus · to Rhodes Town"]="Λεωφορείο RODA · προς πόλη Ρόδου";I18N.el["RODA bus · Airport → Rhodes"]="Λεωφορείο RODA · Αεροδρόμιο → Ρόδος";I18N.el["frequent · see timetable"]="συχνά · δες το πρόγραμμα";I18N.el["Bus stop between the old and new terminals"]="Στάση λεωφορείου ανάμεσα στο παλιό και το νέο τερματικό";I18N.el["Direct RODA service to Rhodes Town. The airport bus stop is between the old and new terminals. Published timetables vary by season and day; check the current schedule before travelling."]="Απευθείας δρομολόγιο RODA προς την πόλη της Ρόδου. Η στάση βρίσκεται ανάμεσα στο παλιό και το νέο τερματικό. Τα δημοσιευμένα δρομολόγια αλλάζουν ανά εποχή και ημέρα· έλεγξε το τρέχον πρόγραμμα πριν ταξιδέψεις.";
 // Language is determined by the indexable page URL, never by browser state.
 let JL_LANG = document.documentElement.lang === "el" ? "el" : "en";
 function tr(v){
   if(JL_LANG!=="el" || v==null) return v;
   const s=String(v);
   if(I18N.el[s]) return I18N.el[s];
+  const _em=s.match(/^([^\p{L}\p{N}]+\s*)(\p{L}[\s\S]*)$/u);
+  if(_em && I18N.el[_em[2]]) return _em[1]+I18N.el[_em[2]];
   if(/^~?\d+(?:\.\d+)? min walk$/.test(s)) return s.replace(/(\d+(?:\.\d+)?)/,"$1") .replace(" min walk"," λεπτά με τα πόδια").replace("~","~");
+  if(/^~?\d+(?:\.\d+)?\s*min$/.test(s)) return s.replace("min","λεπτά");
   if(/^every ~/.test(s) && / min/.test(s)) return s.replace(/ min/g," λεπτά");
   if(/^in \d+ min$/.test(s)) return s.replace("in ","σε ").replace(" min"," λεπτά");
   if(/^IN \d+M$/.test(s)) return s.replace("IN ","ΣΕ ").replace("M","Λ");
@@ -188,7 +192,7 @@ function tr(v){
 }
 function trHtml(v){ return tr(v); }
 function selectedLangLabel(){ return JL_LANG==="el" ? "ΕΛ" : "EN"; }
-const DISC_I18N={ATH:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Μετρό/τρένο δείχνουν προγραμματισμένες ώρες, ενώ το X95 δείχνει ζωντανές αφίξεις από τον ΟΑΣΑ όταν τα λεωφορεία λειτουργούν, αλλιώς το πρόγραμμα. Έλεγξε πάντα στη στάση.",CHQ:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Τα δρομολόγια ΚΤΕΛ εμφανίζονται με βάση το διαθέσιμο πρόγραμμα. Έλεγξε πάντα στη στάση.",HER:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Οι ώρες βασίζονται στο διαθέσιμο πρόγραμμα και τη συχνότητα. Έλεγξε πάντα στη στάση.",JTR:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Τα δρομολόγια είναι εποχικά και ορισμένες ώρες είναι εκτιμήσεις. Έλεγξε πάντα στη στάση.",SKG:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Οι ώρες βασίζονται στο διαθέσιμο πρόγραμμα. Έλεγξε πάντα στη στάση."};
+const DISC_I18N={ATH:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Μετρό/τρένο δείχνουν προγραμματισμένες ώρες, ενώ το X95 δείχνει ζωντανές αφίξεις από τον ΟΑΣΑ όταν τα λεωφορεία λειτουργούν, αλλιώς το πρόγραμμα. Έλεγξε πάντα στη στάση.",CHQ:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Τα δρομολόγια ΚΤΕΛ εμφανίζονται με βάση το διαθέσιμο πρόγραμμα. Έλεγξε πάντα στη στάση.",HER:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Οι ώρες βασίζονται στο διαθέσιμο πρόγραμμα και τη συχνότητα. Έλεγξε πάντα στη στάση.",JTR:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Τα δρομολόγια είναι εποχικά και ορισμένες ώρες είναι εκτιμήσεις. Έλεγξε πάντα στη στάση.",SKG:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Οι ώρες βασίζονται στο διαθέσιμο πρόγραμμα. Έλεγξε πάντα στη στάση.",RHO:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Το λεωφορείο RODA εκτελεί απευθείας δρομολόγια προς την πόλη της Ρόδου· τα δημοσιευμένα ωράρια αλλάζουν ανά εποχή. Έλεγξε πάντα στη στάση."};
 function applyLanguage(){
   document.documentElement.lang=JL_LANG;
   document.querySelectorAll(".lang-switch a").forEach(b=>b.classList.toggle("active",b.dataset.lang===JL_LANG));
@@ -289,6 +293,9 @@ function updateTimePicker(){
   nowBtn.classList.toggle("on",VIEW_TIME_MODE==="now");
   plus30.classList.toggle("on",VIEW_TIME_MODE==="custom" && Math.abs(minutesFromNow-30)<=2);
   plus60.classList.toggle("on",VIEW_TIME_MODE==="custom" && Math.abs(minutesFromNow-60)<=2);
+  nowBtn.textContent=JL_LANG==="el"?"ΤΩΡΑ":"NOW";
+  plus30.textContent=JL_LANG==="el"?"+30 ΛΕΠ":"+30 MIN";
+  plus60.textContent=JL_LANG==="el"?"+1 ΩΡΑ":"+1 HR";
   const slider=document.getElementById("time-slider"), sliderDay=document.getElementById("time-slider-day"), sliderValue=document.getElementById("time-slider-value"), labels=document.getElementById("time-slider-labels");
   if(slider&&sliderDay&&sliderValue&&labels){
     const base=SLIDER_BASE_TIME?new Date(SLIDER_BASE_TIME):new Date();
@@ -356,7 +363,7 @@ function nextTwo(o, atDate){
 }
 function selectedLabel(d){
   const now=new Date();
-  if(Math.abs(d.getTime()-now.getTime())<90000) return "ASAP";
+  if(Math.abs(d.getTime()-now.getTime())<90000) return JL_LANG==="el"?"ΤΩΡΑ":"ASAP";
   const today=new Date(); today.setHours(0,0,0,0);
   const day=new Date(d); day.setHours(0,0,0,0);
   const diff=Math.round((day-today)/86400000);
@@ -373,7 +380,7 @@ function tripWaitText(r){
 function wayOf(o){
   if(!o.access && !o.walk) return "";
   const w=o.walk
-    ? `<button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.to||"")}" aria-label="${JL_LANG==="el"?"Εμφάνιση οδηγιών πεζή":"Show walking directions"}">${"🚶 "+o.walk} <span class="walk-action">${JL_LANG==="el"?"ΟΔΗΓΙΕΣ":"DIRECTIONS"} →</span></button>`
+    ? `<button class="walk walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||"")}" data-access="${encodeURIComponent(o.access||"")}" data-ll="${encodeURIComponent(o.ll||"")}" data-to="${encodeURIComponent(o.to||"")}" aria-label="${JL_LANG==="el"?"Εμφάνιση οδηγιών πεζή":"Show walking directions"}">${"🚶 "+tr(o.walk)} <span class="walk-action">${JL_LANG==="el"?"ΟΔΗΓΙΕΣ":"DIRECTIONS"} →</span></button>`
     : "";
   const sep=(o.walk && o.access)?" ":"";
   let loc="";
@@ -474,9 +481,9 @@ function futureDepartureStrip(o, atDate){
 function optionCard(r, n){
   const fastest=!!r.fastest;
   const o=r.o;
-  const meta=`<div class="meta"><b>${effectiveJourney(o, r.selected)}</b> · ${o.freqLabel} · ${o.hours}${o.journeyBands?` · ${JL_LANG==="el"?"εκτίμηση κίνησης":"traffic-adjusted estimate"}`:""}</div>`;
+  const meta=`<div class="meta"><b>${tr(effectiveJourney(o, r.selected))}</b> · ${tr(o.freqLabel)} · ${tr(o.hours)}${o.journeyBands?` · ${JL_LANG==="el"?"εκτίμηση κίνησης":"traffic-adjusted estimate"}`:""}</div>`;
   const tags=o.tags?`<div class="tags">${o.tags.map(t=>`<span class="tag">${tr(t)}</span>`).join("")}</div>`:"";
-  const head=`<div class="top"><div class="rank">${n}</div><div class="mode">${modeIcon(o.mode)}</div><div class="route"><div class="to">${tr(o.to)}</div><div class="op">${tr(o.op)}</div></div><div class="price">${o.price}</div></div>${wayOf(o)}${meta}${tags}`;
+  const head=`<div class="top"><div class="rank">${n}</div><div class="mode">${modeIcon(o.mode)}</div><div class="route"><div class="to">${tr(o.to)}</div><div class="op">${tr(o.op)}</div></div><div class="price">${o.price||""}</div></div>${wayOf(o)}${meta}${tags}`;
   if(r.onDemand){
     const noapp=o.noapp?`<div class="noapp">${tr(o.noapp)}</div>`:"";
     const apps=o.apps?`<div class="alsoapps">${tr("Also on app:")} ${o.apps.map(appBtn).join("")}</div>`:"";
@@ -584,7 +591,7 @@ function destCard(o,e,r,isFastest=false){
         <div class="top">
           <div class="mode">${modeIcon(o.mode)}</div>
           <div class="route"><div class="to">${tr(o.name)}</div><div class="op route-direction">${routeSubtitle}</div></div>
-          <div class="price-block"><div class="price">${o.price}</div>${payment}${isTaxi && o.apps ? `<div class="alsoapps"><span>${tr("Apps available:")}</span> ${o.apps.map(appBtn).join("")}</div>` : ""}</div>
+          <div class="price-block"><div class="price">${o.price||""}</div>${payment}${isTaxi && o.apps ? `<div class="alsoapps"><span>${tr("Apps available:")}</span> ${o.apps.map(appBtn).join("")}</div>` : ""}</div>
         </div>
         <div class="status-line">${status}</div>
       </div>
@@ -677,5 +684,5 @@ async function loadLive(code){
   (ap.destinations?renderDest:renderAirport)(code);
 }
 function initAirport(code){ ensureWalkModal(); ensureTimePicker(); const ap=AIRPORTS[code]; const rf=(ap&&ap.destinations)?renderDest:renderAirport; rf(code); loadLive(code); setInterval(()=>rf(code),15000); setInterval(()=>loadLive(code),30000); }
-function tickClock(){ const el=document.getElementById("clock"); if(!el) return; const d=new Date(); el.textContent="now "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")+":"+String(d.getSeconds()).padStart(2,"0"); }
+function tickClock(){ const el=document.getElementById("clock"); if(!el) return; const d=new Date(); el.textContent=(JL_LANG==="el"?"τώρα ":"now ")+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")+":"+String(d.getSeconds()).padStart(2,"0"); }
 if (typeof document !== "undefined" && document.getElementById("clock")) { tickClock(); setInterval(tickClock,1000); }
