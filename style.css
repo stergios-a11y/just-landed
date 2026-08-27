@@ -274,3 +274,5 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .alt-detail .departure-time{font-size:26px}
 .card.cheap{border-color:var(--green)}
 .best-tag.cheap-tag{background:var(--green)}
+.result-head .payment-row{margin-top:10px}
+.result-head .payment-tag{white-space:normal;max-width:100%;line-height:1.35}
