@@ -568,12 +568,15 @@ function optionDetail(o,e,r){
   return `<div class="result-main">${depHtml}${totalLabel}</div><div class="result-departures">${futureDepartureStrip(o,r.selected)}</div>${note}`;
 }
 
-function destCard(o,e,r,isFastest=false){
+function destCard(o,e,r,opts={}){
+  const isFastest=!!opts.fastest, isCheapest=!!opts.cheapest, highlight=isFastest||isCheapest;
+  const tagWords=[]; if(isFastest) tagWords.push(tr("FASTEST")); if(isCheapest) tagWords.push(JL_LANG==="el"?"ΦΘΗΝΟΤΕΡΟ":"CHEAPEST");
+  const bestTag=highlight?`<div class="best-tag${(isCheapest&&!isFastest)?' cheap-tag':''}">${isFastest?"★ ":"€ "}${tagWords.join(" · ")}</div>`:"";
   const payment=o.payment?`<div class="payment-row"><span class="payment-tag">${tr(o.payment)}</span></div>`:"";
   const isTaxi=o.mode==="taxi" || r.onDemand;
   const destinationText=tr(e.to).replace(/\s+—\s+direct$/i,"");
   const routeSubtitle=isTaxi?tr(e.to):`${JL_LANG==='el'?'προς':'to'} ${destinationText}`;
-  return `<div class="card result-card${isFastest?' best':''}${isTaxi?' taxi-card':''}">${isFastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}
+  return `<div class="card result-card${isFastest?' best':''}${(isCheapest&&!isFastest)?' cheap':''}${isTaxi?' taxi-card':''}">${bestTag}
     <div class="result-grid">
       <div class="result-head">
         <div class="top">
@@ -586,6 +589,7 @@ function destCard(o,e,r,isFastest=false){
     </div></div>`;
 }
 const DESTSEL={};
+function priceNum(p){ if(p==null) return null; const m=String(p).replace(",",".").match(/\d+(?:\.\d+)?/); return m?parseFloat(m[0]):null; }
 let ALT_OPEN=false;
 const ALT_ROWS_OPEN=new Set();
 function altRow(row){
@@ -640,8 +644,13 @@ function renderDest(code){
   const fastest=ranked.find(row=>row.o.mode!=="taxi" && Number.isFinite(row.r.total));
   const lead=fastest||ranked[0];
   if(!lead){ box.innerHTML=""; return; }
-  const rest=ranked.filter(row=>row!==lead);
-  box.innerHTML=destCard(lead.o,lead.e,lead.r,lead===fastest)+altSection(rest);
+  const payable=ranked.filter(row=>row.o.mode!=="taxi" && Number.isFinite(row.r.total) && priceNum(row.o.price)!=null);
+  const cheapest=payable.slice().sort((a,b)=>(priceNum(a.o.price)-priceNum(b.o.price))||(a.r.total-b.r.total))[0];
+  const CHEAP_MAX_GAP=30;
+  const showCheap=fastest && cheapest && cheapest!==fastest && (cheapest.r.total-fastest.r.total)<CHEAP_MAX_GAP;
+  const leads=showCheap?[fastest,cheapest]:[lead];
+  const rest=ranked.filter(row=>!leads.includes(row));
+  box.innerHTML=leads.map(row=>destCard(row.o,row.e,row.r,{fastest:row===fastest,cheapest:row===cheapest})).join("")+altSection(rest);
   wireAltToggle();
 }
 

@@ -272,3 +272,5 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .alt-detail{border:1px solid var(--amber);border-top:0;border-radius:0 0 12px 12px;background:var(--card);padding:2px 14px 12px}
 .alt-detail .result-main{margin-top:10px}
 .alt-detail .departure-time{font-size:26px}
+.card.cheap{border-color:var(--green)}
+.best-tag.cheap-tag{background:var(--green)}
