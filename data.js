@@ -309,6 +309,11 @@ function updateTimePicker(){
   const help=document.getElementById("time-help"); if(help) help.textContent=VIEW_TIME_MODE==="custom"?(JL_LANG==="el"?"Μετακίνησε τη μπάρα για να δεις πώς αλλάζει η γρηγορότερη επιλογή.":"Move the slider to see how the fastest option changes."):(JL_LANG==="el"?"Οι χρόνοι υπολογίζονται από τώρα. Μετακίνησε τη μπάρα για να δεις πώς αλλάζει η γρηγορότερη επιλογή.":"Times are calculated from now. Move the slider to see how the fastest option changes.");
 }
 
+const STEP_SVG={
+  walk:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9 7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7z"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm.5-13H11v6l5.2 3.1.8-1.3-4.5-2.7z"/></svg>'
+};
+function stepIcon(kind,mode){ if(kind==="walk") return STEP_SVG.walk; if(kind==="wait") return STEP_SVG.clock; return `<svg viewBox="0 0 24 24" fill="currentColor">${MODES[mode]||MODES.bus}</svg>`; }
 function modeIcon(m){ return `<svg class="micon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${MODES[m]||""}</svg>`; }
 
 const toMin = t => { const [h,m]=t.split(":").map(Number); return h*60+m; };
@@ -456,19 +461,12 @@ function departureClockDate(d){
 }
 function futureDepartureStrip(o, atDate){
   const r=upcomingDepartures(o,atDate,4);
-  if(!r.dates.length) return "";
-  const base=atDate instanceof Date ? atDate : new Date();
-  return `<div class="future-deps">
-    <div class="future-deps-head">
-      <span>${JL_LANG==="el"?"ΕΠΟΜΕΝΕΣ ΑΝΑΧΩΡΗΣΕΙΣ":"UPCOMING DEPARTURES"}</span>
-      ${r.isLive ? '<span class="future-live">LIVE</span>' : ''}
-    </div>
-    <div class="future-deps-grid">
-      ${r.dates.map((d,i)=>`<div class="future-dep${i===0?" primary":""}">
-        <b>${departureClockDate(d)}</b><span>${waitLabel(base,d)}</span>
-      </div>`).join("")}
-    </div>
-  </div>`;
+  const rest=r.dates.slice(1,4);
+  if(!rest.length) return "";
+  const times=rest.map(d=>departureClockDate(d)).join("&nbsp; · &nbsp;");
+  const lbl=JL_LANG==="el"?"ΕΠΟΜΕΝΑ":"NEXT";
+  const live=r.isLive?`<span class="next-live">${JL_LANG==="el"?"ΖΩΝΤΑΝΑ":"LIVE"}</span>`:"";
+  return `<div class="next-line"><span class="lbl">${lbl}</span><b>${times}</b>${live}</div>`;
 }
 
 function optionCard(r, n){
@@ -529,13 +527,13 @@ function breakdownHtml(o,r,destinationId){
   const walkAction=JL_LANG==='el'?'ΟΔΗΓΙΕΣ':'DIRECTIONS';
   const shortAccess=o.accessShort ? tr(o.accessShort) : "";
   const walkMeta=[labels[0],shortAccess,walkAction].filter(Boolean).join(" · ");
-  const walkStep=`<button class="journey-step journey-walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||'')}" data-access="${encodeURIComponent(o.access||'')}" data-ll="${encodeURIComponent(o.ll||'')}" data-to="${encodeURIComponent(o.name||'Departure point')}" aria-label="${JL_LANG==='el'?'Εμφάνιση οδηγιών πεζή':'Show walking directions'}"><span class="step-icon">♟</span><b>${b.walk} ${JL_LANG==="el"?"λεπτά":"min"}</b><small>${walkMeta} →</small></button>`;
+  const walkStep=`<button class="journey-step journey-walk-btn" type="button" onclick="showWalk(this)" data-walk="${encodeURIComponent(o.walk||'')}" data-access="${encodeURIComponent(o.access||'')}" data-ll="${encodeURIComponent(o.ll||'')}" data-to="${encodeURIComponent(o.name||'Departure point')}" aria-label="${JL_LANG==='el'?'Εμφάνιση οδηγιών πεζή':'Show walking directions'}"><span class="step-icon">${stepIcon("walk")}</span><b>${b.walk} ${JL_LANG==="el"?"λεπτά":"min"}</b><small>${walkMeta} →</small></button>`;
   return `<div class="journey-breakdown">
     ${walkStep}
     <span class="journey-arrow">›</span>
-    <div class="journey-step"><span class="step-icon">◷</span><b>${b.wait} ${JL_LANG==="el"?"λεπτά":"min"}</b><small>${labels[1]}</small></div>
+    <div class="journey-step"><span class="step-icon">${stepIcon("wait")}</span><b>${b.wait} ${JL_LANG==="el"?"λεπτά":"min"}</b><small>${labels[1]}</small></div>
     <span class="journey-arrow">›</span>
-    <div class="journey-step"><span class="step-icon">${o.mode==='bus'?'▣':'▣'}</span><b>${b.ride} ${JL_LANG==="el"?"λεπτά":"min"}</b><small>${labels[2]}</small></div>
+    <div class="journey-step"><span class="step-icon">${stepIcon("ride",o.mode)}</span><b>${b.ride} ${JL_LANG==="el"?"λεπτά":"min"}</b><small>${labels[2]}</small></div>
   </div>`;
 }
 function taxiArrivalHtml(o,r){
@@ -571,14 +569,11 @@ function destCard(o,e,r,isFastest=false){
   }
 
   const b=isTaxi?null:arrivalBreakdown(o,r,e.destinationId);
-  const totalLabel=b?`<div class="total-time"><b>~${b.total} ${JL_LANG==="el"?"λεπτά συνολικά":"min total"}</b>${isFastest?`<span class="fastest-math"> = ${b.walk} ${JL_LANG==="el"?"περπάτημα":"walk"} + ${b.wait} ${JL_LANG==="el"?"αναμονή":"wait"} + ${b.ride} ${JL_LANG==="el"?"διαδρομή":"ride"}</span>`:""}</div>`:"";
+  const totalLabel=b?`<div class="total-time"><b>~${b.total} ${JL_LANG==="el"?"λεπτά συνολικά":"min total"}</b></div>`:"";
   const destinationText=tr(e.to).replace(/\s+—\s+direct$/i,"");
   const routeSubtitle=isTaxi?tr(e.to):`${JL_LANG==='el'?'προς':'to'} ${destinationText}`;
-  const status=o.journeyBands
-    ? `<span class="estimate-dot">●</span> ${JL_LANG==='el'?'ΕΚΤΙΜΗΣΗ':'ESTIMATE'} · ${JL_LANG==='el'?'προσαρμοσμένο στην κίνηση':'traffic-adjusted'}`
-    : `<span class="estimate-dot live-dot">●</span> ${r.isLive?'LIVE':(JL_LANG==='el'?'ΩΡΟΛΟΓΙΟ':'TIMETABLE')}`;
 
-  return `<div class="card result-card${isFastest?' best':''}${isTaxi?' taxi-card':''}">${isFastest?`<div class="best-tag">★ ${tr("FASTEST")}</div><div class="fastest-explain">${JL_LANG==='el'?'Γρηγορότερο = περπάτημα + αναμονή + διαδρομή':'Fastest = walk + wait + ride'}</div>`:''}
+  return `<div class="card result-card${isFastest?' best':''}${isTaxi?' taxi-card':''}">${isFastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}
     <div class="result-grid">
       <div class="result-head">
         <div class="top">
@@ -586,7 +581,6 @@ function destCard(o,e,r,isFastest=false){
           <div class="route"><div class="to">${tr(o.name)}</div><div class="op route-direction">${routeSubtitle}</div></div>
           <div class="price-block"><div class="price">${o.price||""}</div>${payment}${isTaxi && o.apps ? `<div class="alsoapps"><span>${tr("Apps available:")}</span> ${o.apps.map(appBtn).join("")}</div>` : ""}</div>
         </div>
-        <div class="status-line">${status}</div>
       </div>
       <div class="result-main">
         ${depHtml}
@@ -596,6 +590,29 @@ function destCard(o,e,r,isFastest=false){
     </div>${note}</div>`;
 }
 const DESTSEL={};
+let ALT_OPEN=false;
+function altRow(row){
+  const o=row.o, r=row.r;
+  let when;
+  if(r.onDemand) when=JL_LANG==="el"?"κατόπιν ζήτησης":"on demand";
+  else if(r.closed) when=JL_LANG==="el"?"δεν λειτουργεί":"closed";
+  else if(r.until<=0) when=JL_LANG==="el"?"τώρα":"now";
+  else if(r.until<60) when=JL_LANG==="el"?`σε ${r.until} λ`:`in ${r.until} min`;
+  else when=JL_LANG==="el"?`σε ${Math.floor(r.until/60)}ω ${String(r.until%60).padStart(2,"0")}λ`:`in ${Math.floor(r.until/60)}h ${String(r.until%60).padStart(2,"0")}m`;
+  const est=(o.est&&!r.isLive&&!r.onDemand&&!r.closed)?"~":"";
+  const time=(r.onDemand||r.closed)?"":`${est}${fmt(r.dep1)} · `;
+  const live=r.isLive?` · <span class="alt-live">${JL_LANG==="el"?"ζωντανά":"live"}</span>`:"";
+  return `<div class="alt-row"><div class="mode">${modeIcon(o.mode)}</div><div class="an"><b>${tr(o.name)}</b><span>${time}${when}${live}</span></div><div class="ap">${o.price||""}</div></div>`;
+}
+function altSection(rest){
+  if(!rest||!rest.length) return "";
+  const lbl=JL_LANG==="el"?"Άλλοι τρόποι":"Other ways";
+  return `<button class="alt-toggle${ALT_OPEN?' open':''}" id="alt-toggle" type="button" aria-expanded="${ALT_OPEN}"><span>${lbl} · ${rest.length}</span><span class="chev">▾</span></button><div class="alt-list" id="alt-list"${ALT_OPEN?"":" hidden"}>${rest.map(altRow).join("")}</div>`;
+}
+function wireAltToggle(){
+  const t=document.getElementById("alt-toggle"); if(!t) return;
+  t.onclick=function(){ ALT_OPEN=!ALT_OPEN; const l=document.getElementById("alt-list"); if(l) l.hidden=!ALT_OPEN; this.classList.toggle("open",ALT_OPEN); this.setAttribute("aria-expanded",String(ALT_OPEN)); };
+}
 function renderDest(code){
   const ap=AIRPORTS[code]; if(!ap||!ap.destinations) return;
   const box=document.getElementById("destcards"); if(!box) return;
@@ -613,7 +630,11 @@ function renderDest(code){
     return a.r.total-b.r.total;
   });
   const fastest=ranked.find(row=>row.o.mode!=="taxi" && Number.isFinite(row.r.total));
-  box.innerHTML=ranked.map(row=>destCard(row.o,row.e,row.r,row===fastest)).join("");
+  const lead=fastest||ranked[0];
+  if(!lead){ box.innerHTML=""; return; }
+  const rest=ranked.filter(row=>row!==lead);
+  box.innerHTML=destCard(lead.o,lead.e,lead.r,lead===fastest)+altSection(rest);
+  wireAltToggle();
 }
 
 function effectiveJourney(o, atDate, destinationId){

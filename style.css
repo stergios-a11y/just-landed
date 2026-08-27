@@ -238,3 +238,25 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .later-toggle .chev{color:var(--amber);transition:transform .15s}
 .later-toggle.open .chev{transform:rotate(180deg)}
 .later-panel[hidden]{display:none}
+
+/* lean card: one-line next + collapsible alternatives */
+.step-icon svg{width:14px;height:14px;display:block}
+.next-line{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font:700 12px/1 "JetBrains Mono",monospace;color:var(--muted);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.next-line .lbl{text-transform:uppercase;letter-spacing:.1em;font-size:11px}
+.next-line b{color:var(--ink);font-weight:900;font-size:13px;letter-spacing:.02em}
+.next-live{color:var(--amber);font-size:10px;letter-spacing:.08em}
+.alt-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;margin:2px 0 12px;padding:13px 16px;background:var(--card);border:1px solid var(--line);border-radius:14px;color:var(--ink);font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
+.alt-toggle:hover,.alt-toggle:focus-visible{border-color:var(--amber);outline:none}
+.alt-toggle .chev{color:var(--amber);transition:transform .15s}
+.alt-toggle.open{margin-bottom:8px}
+.alt-toggle.open .chev{transform:rotate(180deg)}
+.alt-list[hidden]{display:none}
+.alt-list{margin-bottom:12px}
+.alt-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:12px;margin-top:8px}
+.alt-row .mode{flex:0 0 auto;width:34px;height:34px;border-radius:9px;background:var(--tile);border:1px solid var(--tileborder);display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.alt-row .mode svg{width:18px;height:18px;fill:currentColor}
+.alt-row .an{flex:1;min-width:0}
+.alt-row .an b{font-size:14px;font-weight:700}
+.alt-row .an span{display:block;color:var(--muted);font:700 11px/1.3 "JetBrains Mono",monospace;margin-top:2px}
+.alt-row .ap{color:var(--amber);font:700 13px/1 "JetBrains Mono",monospace;white-space:nowrap}
+.alt-live{color:var(--green)}
