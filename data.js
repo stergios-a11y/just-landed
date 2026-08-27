@@ -543,18 +543,14 @@ function taxiArrivalHtml(o,r){
   const price=o.price||'';
   return `<div class="taxi-summary"><div><div class="arrival-label">${JL_LANG==='el'?'ΑΦΙΞΗ':'ARRIVAL'}</div><div class="arrival-time">${fmt((new Date()).getHours()*60+(new Date()).getMinutes()+low)} – ${fmt((new Date()).getHours()*60+(new Date()).getMinutes()+high)} <span>~${low}–${high} ${JL_LANG==="el"?"λεπτά συνολικά":"min total"}</span></div><div class="arrival-sub">${JL_LANG==='el'?'Πόρτα-πόρτα':'Door-to-door'}</div></div><div class="taxi-price">${price}</div></div>`;
 }
-function destCard(o,e,r,isFastest=false){
+function optionDetail(o,e,r){
   const detail=(typeof AIRPORTS!=="undefined" && AIRPORTS[CODE] && AIRPORTS[CODE].options)
     ? AIRPORTS[CODE].options.find(x=>x.mode===o.mode && (x.route===o.route || (!x.route&&!o.route)))
     : null;
   o={...o, walk:o.walk||detail?.walk, access:o.access||detail?.access, ll:o.ll||detail?.ll};
-  const how=e.how?`<div class="how">↔ ${tr(e.how)}</div>`:"";
-  const walk="";
-  const payment=o.payment?`<div class="payment-row"><span class="payment-tag">${tr(o.payment)}</span></div>`:"";
   const note=e.note?`<div class="note-plain">${tr(e.note)}</div>`:"";
   const isTaxi=o.mode==="taxi" || r.onDemand;
   const badge=r.isLive?`<span class="live">${JL_LANG==="el"?"ΖΩΝΤΑΝΑ":"LIVE"} <span class="dash"></span></span>`:"";
-
   let depHtml="";
   if(r.onDemand){
     depHtml=`<div class="departure-block on-demand"><div class="departure-label">${JL_LANG==='el'?'ΔΙΑΘΕΣΙΜΟΤΗΤΑ':'AVAILABILITY'}</div><div class="departure-main muted-departure">${JL_LANG==='el'?'ΤΩΡΑ':'NOW'} <span>${JL_LANG==='el'?'κατόπιν ζήτησης':'on demand'}</span></div></div>`;
@@ -567,12 +563,16 @@ function destCard(o,e,r,isFastest=false){
     else {inTxt=JL_LANG==="el"?`σε ${Math.floor(r.until/60)}ω ${String(r.until%60).padStart(2,"0")}λ`:`in ${Math.floor(r.until/60)}h ${String(r.until%60).padStart(2,"0")}m`;cls="wait";}
     depHtml=`<div class="departure-block"><div class="departure-label">${JL_LANG==='el'?'ΑΝΑΧΩΡΕΙ':'DEPARTS'} ${badge}</div><div class="departure-main"><span class="departure-time ${r.closed?'closed':''}">${est}${fmt(r.dep1)}</span><span class="departure-in ${cls}">${inTxt}</span></div>${breakdownHtml(o,r,e.destinationId)}</div>`;
   }
-
   const b=isTaxi?null:arrivalBreakdown(o,r,e.destinationId);
   const totalLabel=b?`<div class="total-time"><b>~${b.total} ${JL_LANG==="el"?"λεπτά συνολικά":"min total"}</b></div>`:"";
+  return `<div class="result-main">${depHtml}${totalLabel}</div><div class="result-departures">${futureDepartureStrip(o,r.selected)}</div>${note}`;
+}
+
+function destCard(o,e,r,isFastest=false){
+  const payment=o.payment?`<div class="payment-row"><span class="payment-tag">${tr(o.payment)}</span></div>`:"";
+  const isTaxi=o.mode==="taxi" || r.onDemand;
   const destinationText=tr(e.to).replace(/\s+—\s+direct$/i,"");
   const routeSubtitle=isTaxi?tr(e.to):`${JL_LANG==='el'?'προς':'to'} ${destinationText}`;
-
   return `<div class="card result-card${isFastest?' best':''}${isTaxi?' taxi-card':''}">${isFastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}
     <div class="result-grid">
       <div class="result-head">
@@ -582,17 +582,14 @@ function destCard(o,e,r,isFastest=false){
           <div class="price-block"><div class="price">${o.price||""}</div>${payment}${isTaxi && o.apps ? `<div class="alsoapps"><span>${tr("Apps available:")}</span> ${o.apps.map(appBtn).join("")}</div>` : ""}</div>
         </div>
       </div>
-      <div class="result-main">
-        ${depHtml}
-        ${totalLabel}
-      </div>
-      <div class="result-departures">${futureDepartureStrip(o,r.selected)}</div>
-    </div>${note}</div>`;
+      ${optionDetail(o,e,r)}
+    </div></div>`;
 }
 const DESTSEL={};
 let ALT_OPEN=false;
+const ALT_ROWS_OPEN=new Set();
 function altRow(row){
-  const o=row.o, r=row.r;
+  const o=row.o, e=row.e, r=row.r;
   let when;
   if(r.onDemand) when=JL_LANG==="el"?"κατόπιν ζήτησης":"on demand";
   else if(r.closed) when=JL_LANG==="el"?"δεν λειτουργεί":"closed";
@@ -602,7 +599,8 @@ function altRow(row){
   const est=(o.est&&!r.isLive&&!r.onDemand&&!r.closed)?"~":"";
   const time=(r.onDemand||r.closed)?"":`${est}${fmt(r.dep1)} · `;
   const live=r.isLive?` · <span class="alt-live">${JL_LANG==="el"?"ζωντανά":"live"}</span>`:"";
-  return `<div class="alt-row"><div class="mode">${modeIcon(o.mode)}</div><div class="an"><b>${tr(o.name)}</b><span>${time}${when}${live}</span></div><div class="ap">${o.price||""}</div></div>`;
+  const open=ALT_ROWS_OPEN.has(o.name);
+  return `<div class="alt-item${open?' open':''}"><button class="alt-row" type="button" data-alt="${encodeURIComponent(o.name||"")}" aria-expanded="${open}"><div class="mode">${modeIcon(o.mode)}</div><div class="an"><b>${tr(o.name)}</b><span>${time}${when}${live}</span></div><div class="ap">${o.price||""}</div><span class="alt-chev">▾</span></button><div class="alt-detail"${open?"":" hidden"}>${optionDetail(o,e,r)}</div></div>`;
 }
 function altSection(rest){
   if(!rest||!rest.length) return "";
@@ -610,8 +608,18 @@ function altSection(rest){
   return `<button class="alt-toggle${ALT_OPEN?' open':''}" id="alt-toggle" type="button" aria-expanded="${ALT_OPEN}"><span>${lbl} · ${rest.length}</span><span class="chev">▾</span></button><div class="alt-list" id="alt-list"${ALT_OPEN?"":" hidden"}>${rest.map(altRow).join("")}</div>`;
 }
 function wireAltToggle(){
-  const t=document.getElementById("alt-toggle"); if(!t) return;
-  t.onclick=function(){ ALT_OPEN=!ALT_OPEN; const l=document.getElementById("alt-list"); if(l) l.hidden=!ALT_OPEN; this.classList.toggle("open",ALT_OPEN); this.setAttribute("aria-expanded",String(ALT_OPEN)); };
+  const t=document.getElementById("alt-toggle");
+  if(t) t.onclick=function(){ ALT_OPEN=!ALT_OPEN; const l=document.getElementById("alt-list"); if(l) l.hidden=!ALT_OPEN; this.classList.toggle("open",ALT_OPEN); this.setAttribute("aria-expanded",String(ALT_OPEN)); };
+  document.querySelectorAll(".alt-row").forEach(function(btn){
+    btn.onclick=function(){
+      const name=decodeURIComponent(this.dataset.alt||"");
+      const item=this.closest(".alt-item"); if(!item) return;
+      const det=item.querySelector(".alt-detail");
+      const open=!item.classList.contains("open");
+      item.classList.toggle("open",open); if(det) det.hidden=!open; this.setAttribute("aria-expanded",String(open));
+      if(open) ALT_ROWS_OPEN.add(name); else ALT_ROWS_OPEN.delete(name);
+    };
+  });
 }
 function renderDest(code){
   const ap=AIRPORTS[code]; if(!ap||!ap.destinations) return;
