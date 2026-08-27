@@ -3,13 +3,15 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Chakra Petch",system-ui,-apple-system,sans-serif;line-height:1.45;min-height:100vh;-webkit-font-smoothing:antialiased}
 a{color:var(--cyan);text-decoration:none}
-.wrap{max-width:600px;margin:0 auto;padding:22px 16px 46px}
-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.wrap{max-width:1180px;margin:0 auto;padding:24px 28px 44px}
+.wrap>:not(header){max-width:720px}
+header{display:flex;align-items:center;justify-content:space-between;height:62px;margin-bottom:40px;border-bottom:1px solid var(--line);padding-bottom:18px}
+.header-logo{display:block;width:290px;height:auto;max-height:58px;object-fit:contain}
 .logo a{display:inline-flex;align-items:center;gap:9px;text-decoration:none}
 .logo .mk{display:inline-flex;color:var(--ink)}
 .logo .mk svg{height:20px;width:auto;display:block}
 .logo .wm{font-family:"Inter",Arial,Helvetica,sans-serif;font-weight:900;font-size:15px;letter-spacing:-.01em;color:var(--ink);text-transform:uppercase}
-.header-tools{display:flex;align-items:center;gap:8px}.lang-switch{display:flex;align-items:center;gap:4px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}.lang-switch button{appearance:none;border:0;background:transparent;color:var(--muted);font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.08em;padding:4px 3px;cursor:pointer}.lang-switch a.active{color:var(--amber)}.lang-switch button:hover,.lang-switch button:focus-visible{color:var(--ink);outline:none}.clock{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;color:var(--ink);letter-spacing:.08em;border:1px solid var(--line);padding:5px 9px;border-radius:6px}
+.header-tools{display:flex;align-items:center;gap:8px}.lang-switch{display:flex;align-items:center;gap:6px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}.lang-switch a{color:var(--muted);font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.08em;padding:4px 2px}.lang-switch a:hover{color:var(--ink)}.lang-switch button{appearance:none;border:0;background:transparent;color:var(--muted);font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.08em;padding:4px 3px;cursor:pointer}.lang-switch a.active{color:var(--amber)}.lang-switch button:hover,.lang-switch button:focus-visible{color:var(--ink);outline:none}.clock{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;font-weight:700;color:var(--ink);letter-spacing:.05em;border:1px solid var(--line);padding:10px 14px;border-radius:22px}
 .backlink{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
 .backlink:hover{color:var(--amber)}
 h1{font-family:"Inter",sans-serif;font-weight:900;font-size:24px;letter-spacing:-.01em;margin:2px 0 8px;text-transform:uppercase;line-height:1.08}
@@ -227,3 +229,7 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .total-time>b{color:var(--ink)}
 .fastest-math{font:600 11px/1.2 "JetBrains Mono",monospace;color:var(--muted)}
 @media(max-width:520px){.fastest-explain{font-size:11px}.fastest-math{font-size:11px}}
+
+/* unified responsive header */
+@media(max-width:900px){.wrap{padding:18px 18px 34px}.header-logo{width:220px}header{height:auto;margin-bottom:26px}}
+@media(max-width:620px){.wrap{padding:14px 13px 28px}header{margin-bottom:20px;padding-bottom:12px}.header-logo{width:170px;max-height:40px}.clock{display:none}.wrap>:not(header){max-width:100%}}
