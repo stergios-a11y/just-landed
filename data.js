@@ -208,18 +208,6 @@ function applyLanguage(){
 function bindLanguage(){
   applyLanguage();
 }
-function updatePageMeta(){
-  const code=typeof CODE!=="undefined"?CODE:null;
-  const pages={
-    ATH:{enTitle:"Athens Airport → city centre",elTitle:"Αεροδρόμιο Αθηνών → κέντρο πόλης",enDesc:"Public transport from Athens Airport (ATH) into town — pick where you’re headed. Live times where the buses are running."},
-    CHQ:{enTitle:"Chania Airport → town",elTitle:"Αεροδρόμιο Χανίων → πόλη",enDesc:"How to get from Chania Airport (CHQ) into town by public KTEL bus — fare, timetable and live departures, no taxi upsell."},
-    HER:{enTitle:"Heraklion Airport → town",elTitle:"Αεροδρόμιο Ηρακλείου → πόλη",enDesc:"The simplest ways from Heraklion Airport (HER) into the city and port — by public KTEL bus, with live departures and no taxi upsell."},
-    JTR:{enTitle:"Santorini Airport → Fira",elTitle:"Αεροδρόμιο Σαντορίνης → Φηρά",enDesc:"Getting from Santorini Airport (JTR) to Fira by public bus — fare, frequency and live departures, no taxi upsell."},
-    SKG:{enTitle:"Thessaloniki Airport → town",elTitle:"Αεροδρόμιο Θεσσαλονίκης → πόλη",enDesc:"How to get from Thessaloniki Airport (SKG) into the city centre by public OASTH bus — fare, frequency and departures, no taxi upsell."}
-  };
-  if(code && pages[code]){ const x=pages[code]; document.title=(JL_LANG==="el"?x.elTitle:x.enTitle)+" · Just Landed"; const m=document.querySelector('meta[name="description"]'); if(m) m.content=JL_LANG==="el"?x.elDesc:m.content; }
-  else if(!code){ document.title=JL_LANG==="el"?"Just Landed · Αεροδρόμιο προς πόλη":"Just Landed · Airport to city"; }
-}
 if(typeof document!=="undefined") { if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",bindLanguage); else bindLanguage(); }
 
 
