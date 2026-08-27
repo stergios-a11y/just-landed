@@ -232,3 +232,9 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 /* unified responsive header */
 @media(max-width:900px){.wrap{padding:18px 18px 34px}.header-logo{width:220px}header{height:auto;margin-bottom:26px}}
 @media(max-width:620px){.wrap{padding:14px 13px 28px}header{margin-bottom:20px;padding-bottom:12px}.header-logo{width:170px;max-height:40px}.clock{display:none}.wrap>:not(header){max-width:100%}}
+
+.later-toggle{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;margin-top:9px;padding:10px;background:transparent;border:1px dashed var(--tileborder);border-radius:8px;color:var(--muted);font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.later-toggle:hover,.later-toggle:focus-visible{color:var(--ink);border-color:var(--amber);outline:none}
+.later-toggle .chev{color:var(--amber);transition:transform .15s}
+.later-toggle.open .chev{transform:rotate(180deg)}
+.later-panel[hidden]{display:none}
