@@ -68,7 +68,7 @@ const AIRPORTS = {
         journeyBands:[{from:0,to:6,mins:45},{from:6,to:9.5,mins:75},{from:9.5,to:16,mins:65},{from:16,to:19.5,mins:80},{from:19.5,to:23,mins:60},{from:23,to:24,mins:45}],
         journeyByDestination:{ktel:65},
         sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}, payment:"💳 Card accepted · tap onboard"},
-      taxi:{mode:"taxi",name:"Taxi",price:"€40–55",journey:"~40 min",walk:"~2 min walk",accessShort:"Exit 3",onDemand:true, payment:"💳 Card accepted", apps:["freenow","uber","bolt"]},
+      taxi:{mode:"taxi",name:"Taxi",price:"€40–55",fareDay:"€40",fareNight:"€55",nightStart:0,nightEnd:5,journey:"~40 min",walk:"~2 min walk",accessShort:"Exit 3",onDemand:true, payment:"💳 Card accepted", apps:["freenow","uber","bolt"]},
     },
     destinations:[
       {id:"centre",label:"City centre",title:"City centre",routes:[
@@ -543,6 +543,13 @@ function taxiArrivalHtml(o,r){
   const price=o.price||'';
   return `<div class="taxi-summary"><div><div class="arrival-label">${JL_LANG==='el'?'ΑΦΙΞΗ':'ARRIVAL'}</div><div class="arrival-time">${fmt((new Date()).getHours()*60+(new Date()).getMinutes()+low)} – ${fmt((new Date()).getHours()*60+(new Date()).getMinutes()+high)} <span>~${low}–${high} ${JL_LANG==="el"?"λεπτά συνολικά":"min total"}</span></div><div class="arrival-sub">${JL_LANG==='el'?'Πόρτα-πόρτα':'Door-to-door'}</div></div><div class="taxi-price">${price}</div></div>`;
 }
+function taxiNow(o,d){
+  const dt=d instanceof Date ? d : new Date();
+  const h=dt.getHours();
+  const ns=(o.nightStart!=null)?o.nightStart:0, ne=(o.nightEnd!=null)?o.nightEnd:5;
+  const night = ns<ne ? (h>=ns && h<ne) : (h>=ns || h<ne);
+  return {fare: night?o.fareNight:o.fareDay, night};
+}
 function optionDetail(o,e,r){
   const detail=(typeof AIRPORTS!=="undefined" && AIRPORTS[CODE] && AIRPORTS[CODE].options)
     ? AIRPORTS[CODE].options.find(x=>x.mode===o.mode && (x.route===o.route || (!x.route&&!o.route)))
@@ -565,7 +572,13 @@ function optionDetail(o,e,r){
   }
   const b=isTaxi?null:arrivalBreakdown(o,r,e.destinationId);
   const totalLabel=b?`<div class="total-time"><b>~${b.total} ${JL_LANG==="el"?"λεπτά συνολικά":"min total"}</b></div>`:"";
-  return `<div class="result-main">${depHtml}${totalLabel}</div><div class="result-departures">${futureDepartureStrip(o,r.selected)}</div>${note}`;
+  let taxiInfo="";
+  if(o.mode==="taxi" && o.fareDay){
+    const tn=taxiNow(o,r.selected);
+    const fareLbl=tn.night?(JL_LANG==="el"?"νυχτερινή χρέωση":"night fare"):(JL_LANG==="el"?"ημερήσια χρέωση":"day fare");
+    taxiInfo=`<div class="taxi-fare"><div class="tf-now">${JL_LANG==="el"?"Τώρα":"Now"}: <b>${tn.fare}</b> <span>${fareLbl}</span></div><div class="tf-all">${o.fareDay} ${JL_LANG==="el"?"ημέρα":"day"} 05:00–24:00 · ${o.fareNight} ${JL_LANG==="el"?"νύχτα":"night"} 00:00–05:00</div></div>${o.apps?`<div class="alsoapps"><span>${tr("Apps available:")}</span> ${o.apps.map(appBtn).join("")}</div>`:""}`;
+  }
+  return `<div class="result-main">${depHtml}${totalLabel}</div>${taxiInfo}<div class="result-departures">${futureDepartureStrip(o,r.selected)}</div>${note}`;
 }
 
 function destCard(o,e,r,opts={}){
