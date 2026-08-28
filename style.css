@@ -18,7 +18,7 @@ h1{font-family:"Inter",sans-serif;font-weight:900;font-size:24px;letter-spacing:
 .tagline{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin:0 0 18px}
 .tagline b{color:var(--ink)}
 
-.time-panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0 16px}
+.time-panel{margin:0 0 18px}
 .time-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
 .time-panel-head strong{color:var(--amber);font-size:11px;white-space:nowrap}
 .time-actions{display:flex;gap:7px;align-items:stretch}
@@ -112,10 +112,12 @@ footer{font-family:"JetBrains Mono",monospace;color:var(--muted);font-size:11px;
 .conn-t .ct{font-size:16px;font-weight:700;color:var(--amber)}
 .conn-t .cs{font-size:11px;color:var(--muted);margin-top:2px}
 /* Athens destination selector */
-.qh{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:2px 2px 8px}
+.qh{font-family:"Inter",system-ui,sans-serif;font-size:13px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted);margin:2px 2px 9px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 2px 8px;margin-bottom:6px;min-width:0}
-.chip{flex:0 0 auto;background:var(--tile);border:1px solid var(--tileborder);border-radius:999px;padding:8px 14px;cursor:pointer;font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:13px;color:var(--ink);white-space:nowrap}
+.chip{flex:0 0 auto;background:transparent;border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;font-family:"Inter",system-ui,sans-serif;font-weight:600;font-size:13px;color:var(--muted);white-space:nowrap;transition:color .12s,border-color .12s}
+.chip:hover{color:var(--ink);border-color:var(--muted)}
 .chip.on{background:var(--amber);border-color:var(--amber);color:var(--on-accent)}
+.chip.on:hover{color:var(--on-accent)}
 .card{position:relative}
 .card.best{border-color:var(--amber)}
 .best-tag{position:absolute;top:-9px;left:14px;background:var(--amber);color:var(--on-accent);font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.08em;padding:3px 8px;border-radius:6px;text-transform:uppercase}
@@ -146,7 +148,7 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 @media(max-width:520px){.future-deps-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* v20 — compact time controls / slider */
-.time-panel{padding:14px 14px 12px;margin:14px 0 16px}
+.time-panel{margin:0 0 18px}
 .time-panel-head{margin-bottom:10px}
 .time-kicker{color:var(--muted)}
 .time-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
@@ -322,3 +324,13 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .alt-list .alt-row .mi{flex:0 0 auto;width:36px;height:36px;border-radius:10px;background:var(--tile);border:1px solid var(--tileborder);display:flex;align-items:center;justify-content:center;color:var(--muted)}
 .alt-list .alt-row .mi svg{width:19px;height:19px;fill:currentColor}
 .alt-detail{font-family:"Inter",system-ui,sans-serif;padding:8px 14px 14px}
+
+/* v30 — compact collapsible time summary (B style) */
+.time-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;background:transparent;border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 2px;cursor:pointer;font-family:"Inter",system-ui,sans-serif;font-size:15px;color:var(--muted);text-align:left}
+.time-summary .ts-lead b{color:var(--ink);font-weight:700}
+.ts-change{display:inline-flex;align-items:center;gap:7px;font:600 11px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.ts-change .chev{color:var(--amber);transition:transform .15s}
+.time-summary:hover .ts-change,.time-summary:focus-visible{color:var(--ink);outline:none}
+.time-summary.open .ts-change .chev{transform:rotate(180deg)}
+.time-expand{padding:14px 0 2px}
+.time-expand[hidden]{display:none}

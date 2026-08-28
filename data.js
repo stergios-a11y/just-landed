@@ -240,18 +240,20 @@ function setViewTime(d, mode="custom"){
 }
 function ensureTimePicker(){
   if(document.getElementById("time-slider")) return;
-  const intro=document.querySelector(".intro");
-  if(!intro) return;
-  intro.insertAdjacentHTML("afterend",`
+  const anchor=document.getElementById("destcards")||document.getElementById("options");
+  if(!anchor) return;
+  anchor.insertAdjacentHTML("beforebegin",`
     <section class="time-panel" aria-label="Choose departure time">
-      <div class="time-panel-head"><span class="time-kicker" id="time-kicker">WHEN ARE YOU LEAVING?</span><strong id="when-label">NOW</strong></div>
-      <div class="time-actions">
-        <button type="button" class="time-btn on" id="time-now">NOW</button>
-        <button type="button" class="time-btn" id="time-plus10">+10 MIN</button>
-        <button type="button" class="time-btn" id="time-plus20">+20 MIN</button>
-      </div>
-      <button type="button" class="later-toggle" id="time-later" aria-expanded="false">Pick a time <span class="chev">▾</span></button>
-      <div class="later-panel" id="later-panel" hidden>
+      <button type="button" class="time-summary" id="time-summary" aria-expanded="false">
+        <span class="ts-lead"><span id="ts-word">Leaving</span> <b id="when-label">now</b></span>
+        <span class="ts-change"><span id="ts-change-word">change time</span> <span class="chev">▾</span></span>
+      </button>
+      <div class="time-expand" id="time-expand" hidden>
+        <div class="time-actions">
+          <button type="button" class="time-btn on" id="time-now">NOW</button>
+          <button type="button" class="time-btn" id="time-plus10">+10 MIN</button>
+          <button type="button" class="time-btn" id="time-plus20">+20 MIN</button>
+        </div>
         <div class="time-slider-wrap">
           <div class="time-slider-top"><span id="time-slider-day">NOW</span><b id="time-slider-value">NOW</b></div>
           <input id="time-slider" class="time-slider" type="range" min="0" max="6" step="1" value="0" aria-label="Move departure time in 15 minute steps">
@@ -264,7 +266,7 @@ function ensureTimePicker(){
   document.getElementById("time-now").onclick=()=>{ SLIDER_BASE_TIME=new Date(); setViewTime(new Date(),"now"); };
   document.getElementById("time-plus10").onclick=()=>{ const d=new Date(Date.now()+10*60000); SLIDER_BASE_TIME=new Date(d); setViewTime(d,"custom"); };
   document.getElementById("time-plus20").onclick=()=>{ const d=new Date(Date.now()+20*60000); SLIDER_BASE_TIME=new Date(d); setViewTime(d,"custom"); };
-  document.getElementById("time-later").onclick=function(){ const panel=document.getElementById("later-panel"); panel.hidden=!panel.hidden; this.classList.toggle("open", !panel.hidden); this.setAttribute("aria-expanded", String(!panel.hidden)); updateTimePicker(); };
+  document.getElementById("time-summary").onclick=function(){ const panel=document.getElementById("time-expand"); panel.hidden=!panel.hidden; this.classList.toggle("open", !panel.hidden); this.setAttribute("aria-expanded", String(!panel.hidden)); updateTimePicker(); };
   document.getElementById("time-tomorrow").onclick=()=>{ const d=getViewTime(); d.setDate(d.getDate()+1); SLIDER_BASE_TIME=new Date(d); setViewTime(d,"custom"); };
   document.getElementById("time-slider").addEventListener("input",e=>{
     const base=SLIDER_BASE_TIME?new Date(SLIDER_BASE_TIME):new Date();
@@ -279,16 +281,16 @@ function updateTimePicker(){
   const d=getViewTime();
   const selected=selectedLabel(d);
   const now=new Date();
-  const isToday=d.toDateString()===now.toDateString();
   const minutesFromNow=Math.round((d-now)/60000);
-  label.textContent=VIEW_TIME_MODE==="now"?(JL_LANG==="el"?"ΤΩΡΑ":"NOW"):selected;
+  label.textContent=VIEW_TIME_MODE==="now"?(JL_LANG==="el"?"τώρα":"now"):selected;
   nowBtn.classList.toggle("on",VIEW_TIME_MODE==="now");
   plus10.classList.toggle("on",VIEW_TIME_MODE==="custom" && Math.abs(minutesFromNow-10)<=1);
   plus20.classList.toggle("on",VIEW_TIME_MODE==="custom" && Math.abs(minutesFromNow-20)<=1);
   nowBtn.textContent=JL_LANG==="el"?"ΤΩΡΑ":"NOW";
   plus10.textContent=JL_LANG==="el"?"+10 ΛΕΠ":"+10 MIN";
   plus20.textContent=JL_LANG==="el"?"+20 ΛΕΠ":"+20 MIN";
-  const later=document.getElementById("time-later"); if(later){ const lp=document.getElementById("later-panel"); const op=lp&&!lp.hidden; later.firstChild.textContent=op?(JL_LANG==="el"?"Απόκρυψη ":"Hide time picker "):(JL_LANG==="el"?"Διάλεξε ώρα ":"Pick a time "); }
+  const word=document.getElementById("ts-word"); if(word) word.textContent=JL_LANG==="el"?"Φεύγεις":"Leaving";
+  const cw=document.getElementById("ts-change-word"); if(cw) cw.textContent=JL_LANG==="el"?"αλλαγή ώρας":"change time";
   const slider=document.getElementById("time-slider"), sliderDay=document.getElementById("time-slider-day"), sliderValue=document.getElementById("time-slider-value"), labels=document.getElementById("time-slider-labels");
   if(slider&&sliderDay&&sliderValue&&labels){
     const base=SLIDER_BASE_TIME?new Date(SLIDER_BASE_TIME):new Date();
@@ -305,10 +307,8 @@ function updateTimePicker(){
   }
   const tomorrow=document.getElementById("time-tomorrow");
   if(tomorrow) tomorrow.innerHTML=JL_LANG==="el"?"Επόμενη μέρα <span>→</span>":"Next day <span>→</span>";
-  const kicker=document.getElementById("time-kicker"); if(kicker) kicker.textContent=JL_LANG==="el"?"ΠΟΤΕ ΦΕΥΓΕΙΣ;":"WHEN ARE YOU LEAVING?";
   const help=document.getElementById("time-help"); if(help) help.textContent=VIEW_TIME_MODE==="custom"?(JL_LANG==="el"?"Μετακίνησε τη μπάρα για να δεις πώς αλλάζει η γρηγορότερη επιλογή.":"Move the slider to see how the fastest option changes."):(JL_LANG==="el"?"Οι χρόνοι υπολογίζονται από τώρα. Μετακίνησε τη μπάρα για να δεις πώς αλλάζει η γρηγορότερη επιλογή.":"Times are calculated from now. Move the slider to see how the fastest option changes.");
 }
-
 const STEP_SVG={
   walk:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9 7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7z"/></svg>',
   clock:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm.5-13H11v6l5.2 3.1.8-1.3-4.5-2.7z"/></svg>'
@@ -467,32 +467,6 @@ function futureDepartureStrip(o, atDate){
   const lbl=JL_LANG==="el"?"ΕΠΟΜΕΝΑ":"NEXT";
   const live=r.isLive?`<span class="next-live">${JL_LANG==="el"?"ΖΩΝΤΑΝΑ":"LIVE"}</span>`:"";
   return `<div class="next-line"><span class="lbl">${lbl}</span><b>${times}</b>${live}</div>`;
-}
-
-function optionCard(r, n){
-  const fastest=!!r.fastest;
-  const o=r.o;
-  const meta=`<div class="meta"><b>${tr(effectiveJourney(o, r.selected))}</b> · ${tr(o.freqLabel)} · ${tr(o.hours)}${o.journeyBands?` · ${JL_LANG==="el"?"εκτίμηση κίνησης":"traffic-adjusted estimate"}`:""}</div>`;
-  const tags=o.tags?`<div class="tags">${o.tags.map(t=>`<span class="tag">${tr(t)}</span>`).join("")}</div>`:"";
-  const head=`<div class="top"><div class="rank">${n}</div><div class="mode">${modeIcon(o.mode)}</div><div class="route"><div class="to">${tr(o.to)}</div><div class="op">${tr(o.op)}</div></div><div class="price">${o.price||""}</div></div>${wayOf(o)}${meta}${tags}`;
-  if(r.onDemand){
-    const noapp=o.noapp?`<div class="noapp">${tr(o.noapp)}</div>`:"";
-    const apps=o.apps?`<div class="alsoapps">${tr("Also on app:")} ${o.apps.map(appBtn).join("")}</div>`:"";
-    return `<div class="card${fastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${fastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}${head}${noapp}${apps}
-      <div class="dep"><div class="dep-l"><span class="lbl">${tr("Availability")}</span><div class="timerow"><span class="time">${tr("Now")}</span><span class="in soon">${tr("on demand")}</span></div></div><div class="dep-r"><div class="then">${tr("24 hours")}</div></div></div>
-      ${o.note?`<div class="note">⚠ ${tr(o.note)}</div>`:""}</div>`;
-  }
-  const est=(o.est && !r.isLive)?"~":"";
-  let inTxt,cls;
-  if(r.closed){ inTxt=tr("service closed now"); cls="closed"; }
-  else if(r.until<=0){ inTxt=tr("departing now"); cls="soon"; }
-  else if(r.until<20){ inTxt=JL_LANG==="el"?`σε ${r.until} λεπτά`:`in ${r.until} min`; cls="soon"; }
-  else if(r.until<60){ inTxt=JL_LANG==="el"?`σε ${r.until} λεπτά`:`in ${r.until} min`; cls="wait"; }
-  else { inTxt=JL_LANG==="el"?`σε ${Math.floor(r.until/60)}ω ${String(r.until%60).padStart(2,"0")}λ`:`in ${Math.floor(r.until/60)}h ${String(r.until%60).padStart(2,"0")}m`; cls="wait"; }
-  const badge=r.isLive?`<span class="live">${JL_LANG==="el"?"ΖΩΝΤΑΝΑ":"LIVE"} <span class="dash"></span></span>`:"";
-  return `<div class="card${fastest?' best':''}${o.mode==="taxi"?' taxi-card':''}">${fastest?`<div class="best-tag">★ ${tr("FASTEST")}</div>`:''}${head}
-    <div class="dep"><div class="dep-l"><span class="lbl">${tr("Departs")}${r.closed?" "+tr("next"):""}${badge}</span><div class="timerow"><span class="time ${r.closed?"closed":""}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span></div></div>
-      </div></div>${o.note?`<div class="note">⚠ ${tr(o.note)}</div>`:""}${futureDepartureStrip(o, r.selected)}</div>`;
 }
 
 function connNext(c, atDate){
