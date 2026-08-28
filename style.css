@@ -282,3 +282,43 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .taxi-fare .tf-now span{color:var(--muted);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-left:5px}
 .taxi-fare .tf-all{margin-top:6px;color:var(--muted);font:500 11px/1.4 "JetBrains Mono",monospace}
 .alt-detail .alsoapps{margin-top:10px}
+
+/* ===== B redesign: airport option cards ===== */
+.b-card{font-family:"Inter",system-ui,sans-serif;border-left:2px solid var(--line);padding:2px 0 4px 16px;margin:0 0 22px}
+.b-card.fast{border-left-color:var(--amber)}
+.b-card .plabel{font:800 11px/1 "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.b-card .headline{display:flex;align-items:flex-start;gap:13px}
+.b-card .mi{flex:0 0 auto;width:40px;height:40px;border-radius:11px;background:var(--tile);border:1px solid var(--tileborder);display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.b-card .mi svg{width:23px;height:23px;fill:currentColor}
+.b-card .hmain{flex:1;min-width:0}
+.b-card .hmain h2{margin:0;font:800 20px/1.15 "Inter",sans-serif;letter-spacing:-.01em;color:var(--ink)}
+.b-card .arw,.alt-row .arw{color:var(--muted);font-weight:600}
+.b-card .fare{flex:0 0 auto;font:800 19px/1 "JetBrains Mono",monospace;color:var(--amber)}
+.leave{display:flex;align-items:baseline;gap:10px;margin:15px 0 0;flex-wrap:wrap}
+.leave .clock{display:inline-block;font:800 32px/1 "JetBrains Mono",monospace;color:var(--ink);letter-spacing:.01em;border:0;padding:0;border-radius:0}
+.leave .clock.closed{color:var(--muted)}
+.leave .in{font:700 12px/1 "JetBrains Mono",monospace;color:var(--amber)}
+.leave .in.wait{color:var(--muted)}
+.leave .in.closed{color:var(--red)}
+.arrive{margin-top:9px;font:400 13.5px/1.45 "Inter",sans-serif;color:var(--muted)}
+.arrive b{color:var(--ink);font-weight:700}
+.arrive .later{color:var(--ink);font-weight:700}
+.walk{display:flex;align-items:center;gap:11px;margin-top:14px;padding:12px 13px;border:1px solid var(--tileborder);border-radius:12px;background:var(--tile);text-decoration:none;color:var(--ink)}
+.walk:hover,.walk:focus-visible{border-color:var(--amber);outline:none}
+.walk .wic{flex:0 0 auto;width:25px;height:25px;color:var(--amber);display:flex;align-items:center;justify-content:center}
+.walk .wic svg{width:25px;height:25px;fill:currentColor}
+.walk .wtx{flex:1;min-width:0;font:400 13.5px/1.35 "Inter",sans-serif}
+.walk .wtx b{font-weight:700}
+.walk .wtx small{display:block;color:var(--muted);font-size:12px;margin-top:1px}
+.walk .go{flex:0 0 auto;font:700 11px/1 "JetBrains Mono",monospace;color:var(--amber);letter-spacing:.04em;white-space:nowrap}
+.ride{margin-top:11px;font:400 13px/1.45 "Inter",sans-serif;color:var(--muted)}
+.ride b{color:var(--ink);font-weight:600}
+.avail{margin-top:6px;font:400 14px/1.4 "Inter",sans-serif;color:var(--muted)}
+.avail b{color:var(--ink);font-weight:700}
+.b-card .next-line,.alt-detail .next-line{border-top:0;padding-top:0;margin-top:13px}
+.b-card .note-plain,.alt-detail .note-plain{margin-top:12px}
+/* alt list, B */
+.alt-list{font-family:"Inter",system-ui,sans-serif}
+.alt-list .alt-row .mi{flex:0 0 auto;width:36px;height:36px;border-radius:10px;background:var(--tile);border:1px solid var(--tileborder);display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.alt-list .alt-row .mi svg{width:19px;height:19px;fill:currentColor}
+.alt-detail{font-family:"Inter",system-ui,sans-serif;padding:8px 14px 14px}

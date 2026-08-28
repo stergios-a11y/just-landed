@@ -550,57 +550,77 @@ function taxiNow(o,d){
   const night = ns<ne ? (h>=ns && h<ne) : (h>=ns || h<ne);
   return {fare: night?o.fareNight:o.fareDay, night};
 }
-function optionDetail(o,e,r){
-  const detail=(typeof AIRPORTS!=="undefined" && AIRPORTS[CODE] && AIRPORTS[CODE].options)
-    ? AIRPORTS[CODE].options.find(x=>x.mode===o.mode && (x.route===o.route || (!x.route&&!o.route)))
-    : null;
-  o={...o, walk:o.walk||detail?.walk, access:o.access||detail?.access, ll:o.ll||detail?.ll};
+function optMatch(o){ return (typeof AIRPORTS!=="undefined" && AIRPORTS[CODE] && AIRPORTS[CODE].options) ? AIRPORTS[CODE].options.find(x=>x.mode===o.mode && (x.route===o.route || (!x.route&&!o.route))) : null; }
+function walkLink(o){
+  if(!o.walk) return "";
+  const T=(el,en)=>JL_LANG==="el"?el:en;
+  const airportName=(typeof AIRPORTS!=="undefined" && AIRPORTS[CODE])?AIRPORTS[CODE].name:"Airport";
+  const origin=encodeURIComponent(airportName+" arrivals");
+  const dest=o.ll?encodeURIComponent(o.ll):encodeURIComponent(o.to||o.name||"");
+  const href=`https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&travelmode=walking`;
+  const access=o.access?`<small>${tr(o.access)}</small>`:"";
+  return `<a class="walk" href="${href}" target="_blank" rel="noopener"><span class="wic">${STEP_SVG.walk}</span><span class="wtx"><b>${tr(o.walk)}</b>${access}</span><span class="go">${T("ΟΔΗΓΙΕΣ","DIRECTIONS")} ↗</span></a>`;
+}
+function optionBody(o,e,r,opts={}){
+  const dm=optMatch(o);
+  o={...o, walk:o.walk||dm?.walk, access:o.access||dm?.access, ll:o.ll||dm?.ll, payment:o.payment||dm?.payment, apps:o.apps||dm?.apps};
+  const T=(el,en)=>JL_LANG==="el"?el:en;
+  const minW=T("λεπτά","min");
   const note=e.note?`<div class="note-plain">${tr(e.note)}</div>`:"";
-  const isTaxi=o.mode==="taxi" || r.onDemand;
-  const badge=r.isLive?`<span class="live">${JL_LANG==="el"?"ΖΩΝΤΑΝΑ":"LIVE"} <span class="dash"></span></span>`:"";
-  let depHtml="";
-  if(r.onDemand){
-    depHtml=`<div class="departure-block on-demand"><div class="departure-label">${JL_LANG==='el'?'ΔΙΑΘΕΣΙΜΟΤΗΤΑ':'AVAILABILITY'}</div><div class="departure-main muted-departure">${JL_LANG==='el'?'ΤΩΡΑ':'NOW'} <span>${JL_LANG==='el'?'κατόπιν ζήτησης':'on demand'}</span></div></div>`;
-  } else {
-    const est=(o.est&&!r.isLive)?"~":"";
-    let inTxt,cls;
-    if(r.closed){inTxt=JL_LANG==="el"?"η υπηρεσία δεν λειτουργεί":"service closed";cls="closed";}
-    else if(r.until<=0){inTxt=JL_LANG==="el"?"τώρα":"now";cls="soon";}
-    else if(r.until<60){inTxt=JL_LANG==="el"?`σε ${r.until} λεπτά`:`in ${r.until} min`;cls=r.until<20?"soon":"wait";}
-    else {inTxt=JL_LANG==="el"?`σε ${Math.floor(r.until/60)}ω ${String(r.until%60).padStart(2,"0")}λ`:`in ${Math.floor(r.until/60)}h ${String(r.until%60).padStart(2,"0")}m`;cls="wait";}
-    depHtml=`<div class="departure-block"><div class="departure-label">${JL_LANG==='el'?'ΑΝΑΧΩΡΕΙ':'DEPARTS'} ${badge}</div><div class="departure-main"><span class="departure-time ${r.closed?'closed':''}">${est}${fmt(r.dep1)}</span><span class="departure-in ${cls}">${inTxt}</span></div>${breakdownHtml(o,r,e.destinationId)}</div>`;
+  if(r.onDemand || o.mode==="taxi"){
+    let taxiInfo="";
+    if(o.fareDay){
+      const tn=taxiNow(o,r.selected);
+      const fareLbl=tn.night?T("νυχτερινή χρέωση","night fare"):T("ημερήσια χρέωση","day fare");
+      taxiInfo=`<div class="taxi-fare"><div class="tf-now">${T("Τώρα","Now")}: <b>${tn.fare}</b> <span>${fareLbl}</span></div><div class="tf-all">${o.fareDay} ${T("ημέρα","day")} 05:00–24:00 · ${o.fareNight} ${T("νύχτα","night")} 00:00–05:00</div></div>`;
+    }
+    const apps=o.apps?`<div class="alsoapps"><span>${tr("Apps available:")}</span> ${o.apps.map(appBtn).join("")}</div>`:"";
+    const avail=`<div class="avail">${T("Διαθέσιμο","Available")} <b>${T("τώρα","now")}</b> · ${T("κατόπιν ζήτησης","on demand")}</div>`;
+    return `${avail}${taxiInfo}${apps}${note}`;
   }
-  const b=isTaxi?null:arrivalBreakdown(o,r,e.destinationId);
-  const totalLabel=b?`<div class="total-time"><b>~${b.total} ${JL_LANG==="el"?"λεπτά συνολικά":"min total"}</b></div>`:"";
-  let taxiInfo="";
-  if(o.mode==="taxi" && o.fareDay){
-    const tn=taxiNow(o,r.selected);
-    const fareLbl=tn.night?(JL_LANG==="el"?"νυχτερινή χρέωση":"night fare"):(JL_LANG==="el"?"ημερήσια χρέωση":"day fare");
-    taxiInfo=`<div class="taxi-fare"><div class="tf-now">${JL_LANG==="el"?"Τώρα":"Now"}: <b>${tn.fare}</b> <span>${fareLbl}</span></div><div class="tf-all">${o.fareDay} ${JL_LANG==="el"?"ημέρα":"day"} 05:00–24:00 · ${o.fareNight} ${JL_LANG==="el"?"νύχτα":"night"} 00:00–05:00</div></div>${o.apps?`<div class="alsoapps"><span>${tr("Apps available:")}</span> ${o.apps.map(appBtn).join("")}</div>`:""}`;
+  const est=(o.est&&!r.isLive)?"~":"";
+  let inTxt,cls;
+  if(r.closed){inTxt=T("δεν λειτουργεί τώρα","service closed");cls="closed";}
+  else if(r.until<=0){inTxt=T("τώρα","now");cls="soon";}
+  else if(r.until<60){inTxt=T(`σε ${r.until} λεπτά`,`in ${r.until} min`);cls=r.until<20?"soon":"wait";}
+  else {inTxt=T(`σε ${Math.floor(r.until/60)}ω ${String(r.until%60).padStart(2,"0")}λ`,`in ${Math.floor(r.until/60)}h ${String(r.until%60).padStart(2,"0")}m`);cls="wait";}
+  const badge=r.isLive?`<span class="live">${T("ΖΩΝΤΑΝΑ","LIVE")} <span class="dash"></span></span>`:"";
+  const leave=`<div class="leave"><span class="clock ${r.closed?'closed':''}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span>${badge}</div>`;
+  const bd=arrivalBreakdown(o,r,e.destinationId);
+  const arrD=arrivalClock(o,r,e.destinationId);
+  const destName=tr(e.to).replace(/\s+[—–-]\s+(direct|απευθείας)\s*$/i,"");
+  let arriveLine="";
+  if(arrD){
+    let cmp="";
+    if(opts.laterThan>0) cmp=` · <span class="later">${T(`${opts.laterThan} λεπτά αργότερα`,`${opts.laterThan} min later`)}</span>`;
+    const destIn=o.name?destName+" ":"";
+    arriveLine=`<div class="arrive">${T("Άφιξη","Arrive")} <b>${destIn}${fmt(arrD.getHours()*60+arrD.getMinutes())}</b> · ${bd.total} ${minW}${cmp}</div>`;
   }
-  return `<div class="result-main">${depHtml}${totalLabel}</div>${taxiInfo}<div class="result-departures">${futureDepartureStrip(o,r.selected)}</div>${note}`;
+  const wl=walkLink(o);
+  const payment=o.payment?tr(o.payment):"";
+  const rideLine=`<div class="ride">${T("Μετά","Then a")} <b>${bd.ride} ${minW}</b> ${T("διαδρομή","ride")}.${payment?` ${payment}`:""}</div>`;
+  const next=futureDepartureStrip(o,r.selected);
+  return `${leave}${arriveLine}${wl}${rideLine}${next}${note}`;
 }
 
 function destCard(o,e,r,opts={}){
-  const isFastest=!!opts.fastest, isCheapest=!!opts.cheapest, highlight=isFastest||isCheapest;
-  const tagWords=[]; if(isFastest) tagWords.push(tr("FASTEST")); if(isCheapest) tagWords.push(JL_LANG==="el"?"ΦΘΗΝΟΤΕΡΟ":"CHEAPEST");
-  const bestTag=highlight?`<div class="best-tag${(isCheapest&&!isFastest)?' cheap-tag':''}">${isFastest?"★ ":"€ "}${tagWords.join(" · ")}</div>`:"";
-  const payment=o.payment?`<div class="payment-row"><span class="payment-tag">${tr(o.payment)}</span></div>`:"";
-  const isTaxi=o.mode==="taxi" || r.onDemand;
-  const destinationText=tr(e.to).replace(/\s+—\s+direct$/i,"");
-  const routeSubtitle=isTaxi?tr(e.to):`${JL_LANG==='el'?'προς':'to'} ${destinationText}`;
-  return `<div class="card result-card${isFastest?' best':''}${(isCheapest&&!isFastest)?' cheap':''}${isTaxi?' taxi-card':''}">${bestTag}
-    <div class="result-grid">
-      <div class="result-head">
-        <div class="top">
-          <div class="mode">${modeIcon(o.mode)}</div>
-          <div class="route"><div class="to">${tr(o.name)}</div><div class="op route-direction">${routeSubtitle}</div></div>
-          <div class="price-block"><div class="price">${o.price||""}</div></div>
-        </div>
-        ${payment}${isTaxi && o.apps ? `<div class="alsoapps"><span>${tr("Apps available:")}</span> ${o.apps.map(appBtn).join("")}</div>` : ""}
-      </div>
-      ${optionDetail(o,e,r)}
-    </div></div>`;
+  const isFastest=!!opts.fastest, isCheapest=!!opts.cheapest;
+  const T=(el,en)=>JL_LANG==="el"?el:en;
+  let label="";
+  if(isFastest){ label=T("Γρηγορότερο","Fastest"); if(isCheapest) label+=" · "+T("Φθηνότερο","Cheapest"); }
+  else if(isCheapest){
+    const bits=[T("Φθηνότερο","Cheapest")];
+    if(opts.saves) bits.push(T(`€${opts.saves} λιγότερα`,`€${opts.saves} less`));
+    if(opts.laterThan>0) bits.push(T(`${opts.laterThan}′ αργότερα`,`${opts.laterThan} min later`));
+    label=bits.join(" · ");
+  }
+  const plabel=label?`<div class="plabel">${label}</div>`:"";
+  const isTaxi=o.mode==="taxi"||r.onDemand;
+  const destName=tr(e.to).replace(/\s+[—–-]\s+(direct|απευθείας)\s*$/i,"");
+  const svc=o.name?tr(o.name):null;
+  const nameHtml=isTaxi?(svc||destName):(svc?`${svc} <span class="arw">→</span> ${destName}`:destName);
+  const opHtml=(!svc && o.op)?`<div class="op">${tr(o.op)}</div>`:"";
+  return `<div class="card b-card${(isFastest||opts.solo)?' fast':''}${isTaxi?' taxi':''}">${plabel}<div class="headline"><div class="mi">${modeIcon(o.mode)}</div><div class="hmain"><h2>${nameHtml}</h2>${opHtml}</div><div class="fare">${o.price||""}</div></div>${optionBody(o,e,r,opts)}</div>`;
 }
 const DESTSEL={};
 function priceNum(p){ if(p==null) return null; const m=String(p).replace(",",".").match(/\d+(?:\.\d+)?/); return m?parseFloat(m[0]):null; }
@@ -608,17 +628,17 @@ let ALT_OPEN=false;
 const ALT_ROWS_OPEN=new Set();
 function altRow(row){
   const o=row.o, e=row.e, r=row.r;
-  let when;
-  if(r.onDemand) when=JL_LANG==="el"?"κατόπιν ζήτησης":"on demand";
-  else if(r.closed) when=JL_LANG==="el"?"δεν λειτουργεί":"closed";
-  else if(r.until<=0) when=JL_LANG==="el"?"τώρα":"now";
-  else if(r.until<60) when=JL_LANG==="el"?`σε ${r.until} λ`:`in ${r.until} min`;
-  else when=JL_LANG==="el"?`σε ${Math.floor(r.until/60)}ω ${String(r.until%60).padStart(2,"0")}λ`:`in ${Math.floor(r.until/60)}h ${String(r.until%60).padStart(2,"0")}m`;
-  const est=(o.est&&!r.isLive&&!r.onDemand&&!r.closed)?"~":"";
-  const time=(r.onDemand||r.closed)?"":`${est}${fmt(r.dep1)} · `;
-  const live=r.isLive?` · <span class="alt-live">${JL_LANG==="el"?"ζωντανά":"live"}</span>`:"";
+  const T=(el,en)=>JL_LANG==="el"?el:en;
+  const destName=tr(e.to).replace(/\s+[—–-]\s+(direct|απευθείας)\s*$/i,"");
+  const isTaxi=o.mode==="taxi"||r.onDemand;
+  const svc=o.name?tr(o.name):null;
+  const nameHtml=isTaxi?(svc||destName):(svc?`${svc} <span class="arw">→</span> ${destName}`:destName);
+  let summary;
+  if(isTaxi){ summary=o.fareDay?`${T("κατόπιν ζήτησης","on demand")} · ${o.fareDay}/${o.fareNight}`:(o.price||""); }
+  else if(r.closed){ summary=T("δεν λειτουργεί τώρα","not running now"); }
+  else { const arrD=arrivalClock(o,r,e.destinationId); const est=(o.est&&!r.isLive)?"~":""; const arr=arrD?` · ${T("άφιξη","arrive")} ~${fmt(arrD.getHours()*60+arrD.getMinutes())}`:""; summary=`${T("φεύγει","leaves")} ${est}${fmt(r.dep1)}${arr}`; }
   const open=ALT_ROWS_OPEN.has(o.name);
-  return `<div class="alt-item${open?' open':''}"><button class="alt-row" type="button" data-alt="${encodeURIComponent(o.name||"")}" aria-expanded="${open}"><div class="mode">${modeIcon(o.mode)}</div><div class="an"><b>${tr(o.name)}</b><span>${time}${when}${live}</span></div><div class="ap">${o.price||""}</div><span class="alt-chev">▾</span></button><div class="alt-detail"${open?"":" hidden"}>${optionDetail(o,e,r)}</div></div>`;
+  return `<div class="alt-item${open?' open':''}"><button class="alt-row" type="button" data-alt="${encodeURIComponent(o.name||"")}" aria-expanded="${open}"><div class="mi">${modeIcon(o.mode)}</div><div class="an"><b>${nameHtml}</b><span>${summary}</span></div><div class="ap">${o.price||""}</div><span class="alt-chev">▾</span></button><div class="alt-detail"${open?"":" hidden"}>${optionBody(o,e,r)}</div></div>`;
 }
 function altSection(rest){
   if(!rest||!rest.length) return "";
@@ -664,7 +684,17 @@ function renderDest(code){
   const showCheap=fastest && cheapest && cheapest!==fastest && (cheapest.r.total-fastest.r.total)<CHEAP_MAX_GAP;
   const leads=showCheap?[fastest,cheapest]:[lead];
   const rest=ranked.filter(row=>!leads.includes(row));
-  box.innerHTML=leads.map(row=>destCard(row.o,row.e,row.r,{fastest:row===fastest,cheapest:row===cheapest})).join("")+altSection(rest);
+  const fArr=fastest?arrivalClock(fastest.o,fastest.r,cur.id):null;
+  box.innerHTML=leads.map(row=>{
+    const opts={fastest:row===fastest,cheapest:row===cheapest};
+    if(row===cheapest && row!==fastest){
+      const pf=priceNum(fastest.o.price), pc=priceNum(row.o.price);
+      if(pf!=null && pc!=null) opts.saves=(pf-pc).toFixed(2).replace(/\.00$/,"");
+      const cArr=arrivalClock(row.o,row.r,cur.id);
+      opts.laterThan=(fArr&&cArr)?Math.max(0,Math.round((cArr-fArr)/60000)):0;
+    }
+    return destCard(row.o,row.e,row.r,opts);
+  }).join("")+altSection(rest);
   wireAltToggle();
 }
 
@@ -710,7 +740,7 @@ function renderAirport(code){
   });
   const fastest=rows.find(r=>r.o.mode!=="taxi" && Number.isFinite(r.total));
   rows.forEach(r=>{r.fastest=!!fastest && r===fastest; r.relegated=r.o.mode==="taxi";});
-  document.getElementById("options").innerHTML=rows.map((r,i)=>optionCard(r,i+1)).join("");
+  document.getElementById("options").innerHTML=rows.map((r)=>{const o=r.o; const e={to:o.to,note:o.note,destinationId:null}; const opts=rows.length>1?{fastest:r===fastest}:{solo:true}; return destCard(o,e,r,opts);}).join("");
   const cc=document.getElementById("conns");
   if(cc) cc.innerHTML=(ap.connections&&ap.connections.length)?`<div class="conns-h">${JL_LANG==="el"?"Άλλες συνδέσεις από":"Other connections from"} ${code}</div>`+ap.connections.map(c=>{
     const r=connNext(c,at); let t="";
