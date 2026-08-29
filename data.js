@@ -559,7 +559,7 @@ function optionBody(o,e,r,opts={}){
   else if(r.until<=0){inTxt=T("τώρα","now");cls="soon";}
   else if(r.until<60){inTxt=T(`σε ${r.until} λεπτά`,`in ${r.until} min`);cls=r.until<20?"soon":"wait";}
   else {inTxt=T(`σε ${Math.floor(r.until/60)}ω ${String(r.until%60).padStart(2,"0")}λ`,`in ${Math.floor(r.until/60)}h ${String(r.until%60).padStart(2,"0")}m`);cls="wait";}
-  const badge=r.isLive?`<span class="live">${T("ΖΩΝΤΑΝΑ","LIVE")} <span class="dash"></span></span>`:"";
+  const badge=r.isLive?`<span class="live"><span class="pulse"></span>${T("ΖΩΝΤΑΝΑ","LIVE")}</span>`:"";
   const leave=`<div class="leave"><span class="clock ${r.closed?'closed':''}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span>${badge}</div>`;
   const bd=arrivalBreakdown(o,r,e.destinationId);
   const arrD=arrivalClock(o,r,e.destinationId);
@@ -581,21 +581,20 @@ function optionBody(o,e,r,opts={}){
 function destCard(o,e,r,opts={}){
   const isFastest=!!opts.fastest, isCheapest=!!opts.cheapest;
   const T=(el,en)=>JL_LANG==="el"?el:en;
-  let label="";
-  if(isFastest){ label=T("Γρηγορότερο","Fastest"); if(isCheapest) label+=" · "+T("Φθηνότερο","Cheapest"); }
+  let tags=[];
+  if(isFastest){ tags.push(`<span class="rtag rtag-fast">${T("Γρηγορότερο","Fastest")}</span>`); if(isCheapest) tags.push(`<span class="rtag rtag-cheap">${T("Φθηνότερο","Cheapest")}</span>`); }
   else if(isCheapest){
-    const bits=[T("Φθηνότερο","Cheapest")];
-    if(opts.saves) bits.push(T(`€${opts.saves} λιγότερα`,`€${opts.saves} less`));
-    if(opts.laterThan>0) bits.push(T(`${opts.laterThan}′ αργότερα`,`${opts.laterThan} min later`));
-    label=bits.join(" · ");
+    tags.push(`<span class="rtag rtag-cheap">${T("Φθηνότερο","Cheapest")}</span>`);
+    if(opts.saves) tags.push(`<span class="rtag-meta">${T(`€${opts.saves} λιγότερα`,`€${opts.saves} less`)}</span>`);
+    if(opts.laterThan>0) tags.push(`<span class="rtag-meta">${T(`${opts.laterThan}′ αργότερα`,`${opts.laterThan} min later`)}</span>`);
   }
-  const plabel=label?`<div class="plabel">${label}</div>`:"";
+  const plabel=tags.length?`<div class="plabel">${tags.join("")}</div>`:"";
   const isTaxi=o.mode==="taxi"||r.onDemand;
   const destName=tr(e.to).replace(/\s+[—–-]\s+(direct|απευθείας)\s*$/i,"");
   const svc=o.name?tr(o.name):null;
-  const nameHtml=isTaxi?(svc||destName):(svc?`${svc} <span class="arw">→</span> ${destName}`:destName);
+  const nameHtml=isTaxi?(svc||destName):(svc?`${svc} <span class="dir"><span class="arw">→</span> ${destName}</span>`:destName);
   const opHtml=(!svc && o.op)?`<div class="op">${tr(o.op)}</div>`:"";
-  return `<div class="card b-card${(isFastest||opts.solo)?' fast':''}${isTaxi?' taxi':''}">${plabel}<div class="headline"><div class="mi">${modeIcon(o.mode)}</div><div class="hmain"><h2>${nameHtml}</h2>${opHtml}</div><div class="fare">${o.price||""}</div></div>${optionBody(o,e,r,opts)}</div>`;
+  return `<div class="card b-card${(isFastest||opts.solo)?' fast':''}${(isCheapest&&!isFastest)?' cheap':''}${isTaxi?' taxi':''}">${plabel}<div class="headline"><div class="mi">${modeIcon(o.mode)}</div><div class="hmain"><h2>${nameHtml}</h2>${opHtml}</div><div class="fare">${o.price||""}</div></div>${optionBody(o,e,r,opts)}</div>`;
 }
 const DESTSEL={};
 function priceNum(p){ if(p==null) return null; const m=String(p).replace(",",".").match(/\d+(?:\.\d+)?/); return m?parseFloat(m[0]):null; }
@@ -607,13 +606,13 @@ function altRow(row){
   const destName=tr(e.to).replace(/\s+[—–-]\s+(direct|απευθείας)\s*$/i,"");
   const isTaxi=o.mode==="taxi"||r.onDemand;
   const svc=o.name?tr(o.name):null;
-  const nameHtml=isTaxi?(svc||destName):(svc?`${svc} <span class="arw">→</span> ${destName}`:destName);
+  const nameHtml=isTaxi?(svc||destName):(svc?`${svc} <span class="dir"><span class="arw">→</span> ${destName}</span>`:destName);
   let summary;
   if(isTaxi){ summary=o.fareDay?`${T("κατόπιν ζήτησης","on demand")} · ${o.fareDay}/${o.fareNight}`:(o.price||""); }
   else if(r.closed){ summary=T("δεν λειτουργεί τώρα","not running now"); }
-  else { const arrD=arrivalClock(o,r,e.destinationId); const est=(o.est&&!r.isLive)?"~":""; const arr=arrD?` · ${T("άφιξη","arrive")} ~${fmt(arrD.getHours()*60+arrD.getMinutes())}`:""; summary=`${T("φεύγει","leaves")} ${est}${fmt(r.dep1)}${arr}`; }
+  else { const arrD=arrivalClock(o,r,e.destinationId); const est=(o.est&&!r.isLive)?"~":""; const arr=arrD?` · ${T("άφιξη","arrive")} ~${fmt(arrD.getHours()*60+arrD.getMinutes())}`:""; const rel=r.until<=0?T("τώρα","now"):(r.until<60?T(`σε ${r.until} λεπτά`,`in ${r.until} min`):T(`σε ${Math.floor(r.until/60)}ω${String(r.until%60).padStart(2,"0")}`,`in ${Math.floor(r.until/60)}h${String(r.until%60).padStart(2,"0")}`)); summary=`${T("φεύγει","leaves")} ${est}${fmt(r.dep1)} · ${rel}${arr}`; }
   const open=ALT_ROWS_OPEN.has(o.name);
-  return `<div class="alt-item${open?' open':''}"><button class="alt-row" type="button" data-alt="${encodeURIComponent(o.name||"")}" aria-expanded="${open}"><div class="mi">${modeIcon(o.mode)}</div><div class="an"><b>${nameHtml}</b><span>${summary}</span></div><div class="ap">${o.price||""}</div><span class="alt-chev">▾</span></button><div class="alt-detail"${open?"":" hidden"}>${optionBody(o,e,r)}</div></div>`;
+  return `<div class="alt-item${open?' open':''}"><button class="alt-row" type="button" data-alt="${encodeURIComponent(o.name||"")}" aria-expanded="${open}"><div class="mi">${modeIcon(o.mode)}</div><div class="an"><b>${nameHtml}</b><span>${(!isTaxi&&!r.closed&&r.isLive)?'<span class="pulse"></span>':''}${summary}</span></div><div class="ap">${o.price||""}</div><span class="alt-chev">▾</span></button><div class="alt-detail"${open?"":" hidden"}>${optionBody(o,e,r)}</div></div>`;
 }
 function altSection(rest){
   if(!rest||!rest.length) return "";
@@ -655,8 +654,8 @@ function renderDest(code){
   if(!lead){ box.innerHTML=""; return; }
   const payable=ranked.filter(row=>row.o.mode!=="taxi" && Number.isFinite(row.r.total) && priceNum(row.o.price)!=null);
   const cheapest=payable.slice().sort((a,b)=>(priceNum(a.o.price)-priceNum(b.o.price))||(a.r.total-b.r.total))[0];
-  const CHEAP_MAX_GAP=30;
-  const showCheap=fastest && cheapest && cheapest!==fastest && (cheapest.r.total-fastest.r.total)<CHEAP_MAX_GAP;
+  const CHEAP_MAX_GAP=45;
+  const showCheap=fastest && cheapest && cheapest!==fastest && (cheapest.r.total-fastest.r.total)<=CHEAP_MAX_GAP;
   const leads=showCheap?[fastest,cheapest]:[lead];
   const rest=ranked.filter(row=>!leads.includes(row));
   const fArr=fastest?arrivalClock(fastest.o,fastest.r,cur.id):null;

@@ -89,10 +89,10 @@ body.walk-open{overflow:hidden}
 .dep-r{text-align:right;font-family:"JetBrains Mono",monospace}
 .dep-r .then{font-size:11.5px;color:var(--muted)}
 
-.live{display:inline-flex;align-items:center;gap:6px;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.08em;margin-left:8px}
-.live .dash{display:inline-block;width:13px;height:5px;border-radius:3px;background:var(--amber);animation:liveDash 1.2s ease-in-out infinite}
-@keyframes liveDash{0%,100%{opacity:1}50%{opacity:.25}}
-@media(prefers-reduced-motion:reduce){.live .dash{animation:none}}
+.live{display:inline-flex;align-items:center;gap:6px;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.08em;margin-left:8px}
+.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);vertical-align:middle;animation:pulseLive 1.2s ease-in-out infinite}
+@keyframes pulseLive{0%{opacity:1;box-shadow:0 0 0 0 rgba(114,224,106,.55)}70%{opacity:.5;box-shadow:0 0 0 7px rgba(114,224,106,0)}100%{opacity:1;box-shadow:0 0 0 0 rgba(114,224,106,0)}}
+@media(prefers-reduced-motion:reduce){.pulse{animation:none}}
 
 .note{font-size:12px;color:var(--amber);margin-top:12px;background:var(--note-bg);border:1px solid var(--note-border);border-radius:9px;padding:8px 10px;line-height:1.45}
 .disclaimer{font-family:"JetBrains Mono",monospace;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:11px;color:var(--muted);margin-top:16px;line-height:1.6;letter-spacing:.02em}
@@ -259,7 +259,7 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .alt-row .mode svg{width:18px;height:18px;fill:currentColor}
 .alt-row .an{flex:1;min-width:0}
 .alt-row .an b{font-size:14px;font-weight:700}
-.alt-row .an span{display:block;color:var(--muted);font:700 11px/1.3 "JetBrains Mono",monospace;margin-top:2px}
+.alt-row .an>span{display:block;color:var(--muted);font:700 11px/1.3 "JetBrains Mono",monospace;margin-top:2px}
 .alt-row .ap{color:var(--amber);font:700 13px/1 "JetBrains Mono",monospace;white-space:nowrap}
 .alt-live{color:var(--green)}
 
@@ -334,3 +334,16 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .time-summary.open .ts-change .chev{transform:rotate(180deg)}
 .time-expand{padding:14px 0 2px}
 .time-expand[hidden]{display:none}
+
+
+/* v32 — visible fastest/cheapest tags, colored borders, arrow grouping */
+.b-card .plabel{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-bottom:14px}
+.rtag{font:800 11px/1 "JetBrains Mono",monospace;letter-spacing:.07em;text-transform:uppercase;padding:5px 9px;border-radius:7px}
+.rtag-fast{background:var(--amber);color:var(--on-accent)}
+.rtag-cheap{background:var(--green);color:var(--on-accent)}
+.rtag-meta{font:700 11px/1 "JetBrains Mono",monospace;color:var(--muted);letter-spacing:0}
+.card.fast{border-color:var(--amber)}
+.card.cheap{border-color:var(--green)}
+.b-card.cheap{border-left-color:var(--green)}
+.dir{display:inline;white-space:nowrap}
+.alt-row .an span .pulse{margin-right:5px}
