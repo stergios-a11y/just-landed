@@ -536,6 +536,21 @@ function walkLink(o){
   const access=o.access?`<small>${tr(o.access)}</small>`:"";
   return `<a class="walk" href="${href}" target="_blank" rel="noopener"><span class="wic">${STEP_SVG.walk}</span><span class="wtx"><b>${tr(o.walk)}</b>${access}</span><span class="go">${T("ΟΔΗΓΙΕΣ","DIRECTIONS")} ↗</span></a>`;
 }
+function boardingNoun(mode){
+  const T=(el,en)=>JL_LANG==="el"?el:en;
+  if(mode==="metro"||mode==="rail") return T("ως την αποβάθρα","to the platform");
+  if(mode==="bus") return T("ως τη στάση","to the stop");
+  return T("ως το σημείο επιβίβασης","to the boarding point");
+}
+function walkDir(o){
+  if(!o.walk) return "";
+  const T=(el,en)=>JL_LANG==="el"?el:en;
+  const airportName=(typeof AIRPORTS!=="undefined" && AIRPORTS[CODE])?AIRPORTS[CODE].name:"Airport";
+  const origin=encodeURIComponent(airportName+" arrivals");
+  const dest=o.ll?encodeURIComponent(o.ll):encodeURIComponent(o.to||o.name||"");
+  const href=`https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&travelmode=walking`;
+  return `<a class="stepdir" href="${href}" target="_blank" rel="noopener">${T("Οδηγίες","Directions")} ↗</a>`;
+}
 function optionBody(o,e,r,opts={}){
   const dm=optMatch(o);
   o={...o, walk:o.walk||dm?.walk, access:o.access||dm?.access, ll:o.ll||dm?.ll, payment:o.payment||dm?.payment, apps:o.apps||dm?.apps};
@@ -560,22 +575,25 @@ function optionBody(o,e,r,opts={}){
   else if(r.until<60){inTxt=T(`σε ${r.until} λεπτά`,`in ${r.until} min`);cls=r.until<20?"soon":"wait";}
   else {inTxt=T(`σε ${Math.floor(r.until/60)}ω ${String(r.until%60).padStart(2,"0")}λ`,`in ${Math.floor(r.until/60)}h ${String(r.until%60).padStart(2,"0")}m`);cls="wait";}
   const badge=r.isLive?`<span class="live"><span class="pulse"></span>${T("ΖΩΝΤΑΝΑ","LIVE")}</span>`:"";
-  const leave=`<div class="leave"><span class="clock ${r.closed?'closed':''}">${est}${fmt(r.dep1)}</span><span class="in ${cls}">${inTxt}</span>${badge}</div>`;
+  const fareBig=o.price?`<span class="hdiv"></span><span class="hfare">${o.price}</span>`:"";
+  const hero=`<div class="hero"><span class="clock ${r.closed?'closed':''}">${est}${fmt(r.dep1)}</span>${fareBig}</div><div class="meta"><span class="in ${cls}">${inTxt}</span>${badge}</div>`;
   const bd=arrivalBreakdown(o,r,e.destinationId);
   const arrD=arrivalClock(o,r,e.destinationId);
   const destName=tr(e.to).replace(/\s+[—–-]\s+(direct|απευθείας)\s*$/i,"");
   let arriveLine="";
   if(arrD){
     let cmp="";
-    if(opts.laterThan>0) cmp=` · <span class="later">${T(`${opts.laterThan} λεπτά αργότερα`,`${opts.laterThan} min later`)}</span>`;
+    if(opts.laterThan>0){ const ln=opts.laterName?T(` από ${opts.laterName}`,` than ${opts.laterName}`):""; cmp=` · <span class="vs">${T(`${opts.laterThan} λεπτά αργότερα${ln}`,`${opts.laterThan} min later${ln}`)}</span>`; }
     const destIn=o.name?destName+" ":"";
-    arriveLine=`<div class="arrive">${T("Άφιξη","Arrive")} <b>${destIn}${fmt(arrD.getHours()*60+arrD.getMinutes())}</b> · ${bd.total} ${minW}${cmp}</div>`;
+    arriveLine=`<div class="arrive">${T("Άφιξη","Arrive")} <b>${destIn}${fmt(arrD.getHours()*60+arrD.getMinutes())}</b> · <b>${bd.total} ${minW}</b> ${T("συνολικά","total journey")}${cmp}</div>`;
   }
-  const wl=walkLink(o);
+  const board=boardingNoun(o.mode);
+  const walkStep=o.walk?`<div class="step"><span class="sic">${STEP_SVG.walk}</span><div class="stx"><b>${tr(o.walk)} ${board}</b>${o.access?` · ${tr(o.access)}`:""}</div>${walkDir(o)}</div>`:"";
   const payment=o.payment?tr(o.payment):"";
-  const rideLine=`<div class="ride">${T("Μετά","Then a")} <b>${bd.ride} ${minW}</b> ${T("διαδρομή","ride")}.${payment?` ${payment}`:""}</div>`;
+  const rideStep=`<div class="step"><span class="sic">${modeIcon(o.mode)}</span><div class="stx"><b>${bd.ride} ${minW} ${T("διαδρομή","ride")}</b>${payment?` · ${payment}`:""}</div></div>`;
+  const steps=`<div class="steps">${walkStep}${rideStep}</div>`;
   const next=futureDepartureStrip(o,r.selected);
-  return `${leave}${arriveLine}${wl}${rideLine}${next}${note}`;
+  return `${hero}${arriveLine}${steps}${next}${note}`;
 }
 
 function destCard(o,e,r,opts={}){
@@ -586,15 +604,14 @@ function destCard(o,e,r,opts={}){
   else if(isCheapest){
     tags.push(`<span class="rtag rtag-cheap">${T("Φθηνότερο","Cheapest")}</span>`);
     if(opts.saves) tags.push(`<span class="rtag-meta">${T(`€${opts.saves} λιγότερα`,`€${opts.saves} less`)}</span>`);
-    if(opts.laterThan>0) tags.push(`<span class="rtag-meta">${T(`${opts.laterThan}′ αργότερα`,`${opts.laterThan} min later`)}</span>`);
   }
   const plabel=tags.length?`<div class="plabel">${tags.join("")}</div>`:"";
   const isTaxi=o.mode==="taxi"||r.onDemand;
   const destName=tr(e.to).replace(/\s+[—–-]\s+(direct|απευθείας)\s*$/i,"");
   const svc=o.name?tr(o.name):null;
   const nameHtml=isTaxi?(svc||destName):(svc?`${svc} <span class="dir"><span class="arw">→</span> ${destName}</span>`:destName);
-  const opHtml=(!svc && o.op)?`<div class="op">${tr(o.op)}</div>`:"";
-  return `<div class="card b-card${(isFastest||opts.solo)?' fast':''}${(isCheapest&&!isFastest)?' cheap':''}${isTaxi?' taxi':''}">${plabel}<div class="headline"><div class="mi">${modeIcon(o.mode)}</div><div class="hmain"><h2>${nameHtml}</h2>${opHtml}</div><div class="fare">${o.price||""}</div></div>${optionBody(o,e,r,opts)}</div>`;
+  const opHtml=(!isTaxi && o.op)?`<div class="op">${tr(o.op)}</div>`:"";
+  return `<div class="card b-card${(isFastest||opts.solo)?' fast':''}${(isCheapest&&!isFastest)?' cheap':''}${isTaxi?' taxi':''}">${plabel}<div class="headline"><div class="mi">${modeIcon(o.mode)}</div><div class="hmain"><h2>${nameHtml}</h2>${opHtml}</div></div>${optionBody(o,e,r,opts)}</div>`;
 }
 const DESTSEL={};
 function priceNum(p){ if(p==null) return null; const m=String(p).replace(",",".").match(/\d+(?:\.\d+)?/); return m?parseFloat(m[0]):null; }
@@ -666,6 +683,7 @@ function renderDest(code){
       if(pf!=null && pc!=null) opts.saves=(pf-pc).toFixed(2).replace(/\.00$/,"");
       const cArr=arrivalClock(row.o,row.r,cur.id);
       opts.laterThan=(fArr&&cArr)?Math.max(0,Math.round((cArr-fArr)/60000)):0;
+      opts.laterName=fastest.o.name?tr(fastest.o.name):(fastest.o.to?tr(fastest.o.to):"");
     }
     return destCard(row.o,row.e,row.r,opts);
   }).join("")+altSection(rest);

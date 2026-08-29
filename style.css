@@ -347,3 +347,24 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .b-card.cheap{border-left-color:var(--green)}
 .dir{display:inline;white-space:nowrap}
 .alt-row .an span .pulse{margin-right:5px}
+
+/* v33 — redesigned card body: hero price, journey steps */
+.b-card .op{font-size:12.5px;color:var(--muted);margin-top:3px}
+.hero{display:flex;align-items:baseline;gap:16px;margin-top:16px}
+.hero .clock{display:inline-block;font:800 32px/1 "JetBrains Mono",monospace;color:var(--ink);letter-spacing:.01em;border:0;padding:0;border-radius:0}
+.hero .clock.closed{color:var(--muted)}
+.hero .hdiv{align-self:center;width:1px;height:26px;background:var(--line)}
+.hero .hfare{font:800 27px/1 "JetBrains Mono",monospace;color:var(--amber);letter-spacing:.01em}
+.meta{display:flex;align-items:center;gap:11px;margin-top:8px}
+.meta .in{font:700 12px/1 "JetBrains Mono",monospace;color:var(--amber)}
+.meta .in.wait{color:var(--muted)}
+.meta .in.closed{color:var(--red)}
+.arrive .vs{color:var(--muted)}
+.steps{margin-top:15px;border-top:1px solid var(--line);padding-top:13px;display:flex;flex-direction:column;gap:11px}
+.step{display:flex;align-items:flex-start;gap:11px}
+.sic{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--tile);display:flex;align-items:center;justify-content:center;color:var(--amber);margin-top:1px}
+.sic svg{width:15px;height:15px;fill:currentColor}
+.stx{flex:1;min-width:0;font-size:13.5px;line-height:1.4;color:var(--muted);align-self:center}
+.stx b{color:var(--ink);font-weight:700}
+.stepdir{flex:0 0 auto;align-self:center;font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.05em;color:var(--amber);text-decoration:none;white-space:nowrap}
+.stepdir:hover,.stepdir:focus-visible{text-decoration:underline;outline:none}
