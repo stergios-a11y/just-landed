@@ -2,3 +2,33 @@
 .seo-dest-links{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
 .seo-dest-links a{display:inline-block;font:600 11px/1.2 "JetBrains Mono",monospace;letter-spacing:.03em;color:var(--muted);text-decoration:none;border:1px solid var(--line);padding:8px 10px;border-radius:10px}
 .seo-dest-links a:hover{color:var(--ink);border-color:var(--amber)}
+
+/* SEO content section (v31) */
+.seo{margin:34px 0 8px;font-family:"Inter",system-ui,sans-serif;color:var(--ink)}
+.seo h2{font:800 16px/1.25 "Inter",system-ui,sans-serif;letter-spacing:-.01em;margin:28px 0 11px}
+.seo h2:first-child{margin-top:0}
+.seo p{font-size:14px;line-height:1.6;color:var(--muted);margin:0 0 10px}
+.verdict{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:0 0 13px}
+.v-row{display:flex;gap:12px;align-items:baseline;padding:12px 14px}
+.v-row+.v-row{border-top:1px solid var(--line)}
+.v-fast{border-left:2px solid var(--amber)}
+.v-cheap{border-left:2px solid var(--green)}
+.v-k{flex:0 0 92px;font:700 11px/1.4 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.v-fast .v-k{color:var(--amber)}
+.v-cheap .v-k{color:var(--green)}
+.v-v{font-size:14px;font-weight:600;color:var(--ink)}
+.v-note{font-weight:400;color:var(--muted)}
+.v-advice{font-size:14px;line-height:1.6;color:var(--ink)}
+.seo-facts{margin:0}
+.seo-facts>div{display:flex;gap:14px;padding:10px 0;border-top:1px solid var(--line)}
+.seo-facts>div:first-child{border-top:0}
+.seo-facts dt{flex:0 0 116px;font-weight:700;font-size:14px;color:var(--ink);margin:0}
+.seo-facts dd{margin:0;font-size:13.5px;line-height:1.5;color:var(--muted)}
+.faq{margin-top:2px}
+.faq details{border-top:1px solid var(--line)}
+.faq summary{cursor:pointer;padding:13px 2px;font-weight:600;font-size:14px;color:var(--ink);list-style:none;display:flex;justify-content:space-between;gap:14px;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--amber);font-family:"JetBrains Mono",monospace;font-size:19px;line-height:1}
+.faq details[open] summary::after{content:"\2013"}
+.faq details>div{padding:0 2px 14px;font-size:14px;line-height:1.6;color:var(--muted)}
+@media(max-width:600px){.v-k{flex-basis:78px}.seo-facts dt{flex-basis:90px}.v-row{flex-wrap:wrap;gap:4px 12px}}
