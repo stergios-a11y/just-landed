@@ -3,3 +3,4 @@
 *.before-departure-ui
 node_modules/
 wrangler-account.json
+.logo_bak/

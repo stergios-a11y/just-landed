@@ -5,7 +5,7 @@ a{color:var(--cyan);text-decoration:none}
 .wrap{max-width:1180px;margin:0 auto;padding:24px 28px 44px}
 .wrap>:not(header){max-width:720px}
 header{display:flex;align-items:center;justify-content:space-between;height:62px;margin-bottom:40px;border-bottom:1px solid var(--line);padding-bottom:18px}
-.header-logo{display:block;width:290px;height:auto;max-height:58px;object-fit:contain}
+.header-logo{display:block;width:290px;height:auto;max-height:58px;object-fit:contain;color:var(--ink)}
 .logo a{display:inline-flex;align-items:center;gap:9px;text-decoration:none}
 .logo .mk{display:inline-flex;color:var(--ink)}
 .logo .mk svg{height:20px;width:auto;display:block}
