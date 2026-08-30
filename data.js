@@ -7,6 +7,7 @@ const AIRPORTS = {
         walk:"~5 min walk", access:"Main doors → turn right, follow the road",
         sched:{kind:"range",first:"06:00",last:"23:45",every:12},
         note:"€1.30 from the kiosk, €2.30 from the driver — cash. No service after midnight; validate on board." },
+      { mode:"taxi", to:"Heraklion centre / port — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€15–22", fareDay:"~€15", fareNight:"~€22", nightStart:0, nightEnd:5, journey:"~15 min", walk:"~1 min walk", access:"Taxi rank outside arrivals" },
     ] },
   CHQ: { slug:"chania", name:"Chania (CHQ)", city:"Crete", verified:true, title:"Chania Airport to town", board:"KTEL bus · to town",
     options:[
@@ -14,6 +15,7 @@ const AIRPORTS = {
         walk:"~3 min walk", access:"Bus waiting area outside arrivals",
         sched:{kind:"range",first:"05:30",last:"23:50",every:90},
         note:"Irregular KTEL timetable (not flight-timed) — the next time shown is an estimate; check the posted schedule at the stop. €2.50 from the driver, cash." },
+      { mode:"taxi", to:"Chania town — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€28–38", fareDay:"~€28", fareNight:"~€38", nightStart:0, nightEnd:5, journey:"~25 min", walk:"~1 min walk", access:"Taxi rank outside arrivals" },
     ] },
   JTR: { slug:"santorini", name:"Santorini (JTR)", city:"Cyclades", verified:true, title:"Santorini Airport to Fira", board:"KTEL bus · to Fira",
     options:[
@@ -21,6 +23,7 @@ const AIRPORTS = {
         walk:"~2 min walk", access:"Bus stop by the arrivals exit",
         sched:{kind:"range",first:"06:40",last:"21:40",every:60},
         note:"Summer: about hourly. Winter: roughly every 3 hours — the time shown is an estimate, check the posted schedule. Overnight (00:00–05:00) barely runs; arrange backup for very early/late flights. All airport buses terminate at Fira bus station." },
+      { mode:"taxi", to:"Fira — door to door", op:"Metered taxi · scarce in summer", onDemand:true, est:true, price:"~€25–35", fareDay:"~€25", fareNight:"~€35", nightStart:0, nightEnd:5, journey:"~20 min", walk:"~1 min walk", access:"Taxi rank outside arrivals — queues in summer" },
     ] },
 
   RHO: { slug:"rhodes", name:"Rhodes (RHO)", city:"Dodecanese", verified:true, title:"Rhodes Airport to Rhodes Town", board:"RODA bus · to Rhodes Town",
@@ -29,6 +32,7 @@ const AIRPORTS = {
         walk:"~2 min walk", access:"Bus stop between the old and new terminals",
         sched:{kind:"range",first:"05:45",last:"23:45",every:30},
         note:"Direct RODA service to Rhodes Town. The airport bus stop is between the old and new terminals. Published timetables vary by season and day; check the current schedule before travelling." },
+      { mode:"taxi", to:"Rhodes Town — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€25–35", fareDay:"~€25", fareNight:"~€35", nightStart:0, nightEnd:5, journey:"~25 min", walk:"~1 min walk", access:"Taxi rank outside arrivals" },
     ] },
   SKG: { slug:"thessaloniki", name:"Thessaloniki (SKG)", city:"Macedonia", verified:true, title:"Thessaloniki Airport to the city centre", board:"Bus 01X · to the centre",
     options:[
@@ -36,6 +40,7 @@ const AIRPORTS = {
         walk:"~2 min walk", access:"Bus stop outside arrivals",
         sched:{kind:"windows",windows:[{start:"06:10",end:"22:40",every:25},{start:"23:10",end:"05:55",every:30}]},
         note:"€2 airport fare (not the standard €0.90 ticket). Buy at the arrivals machines or onboard — no change given. 01X also stops at the railway station & KTEL Makedonia." },
+      { mode:"taxi", to:"City centre — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€30–40", fareDay:"~€30", fareNight:"~€40", nightStart:0, nightEnd:5, journey:"~35 min", walk:"~1 min walk", access:"Taxi rank outside arrivals", apps:["freenow","uber","bolt"] },
     ] },
   ATH: { slug:"athens", name:"Athens (ATH)", city:"Attica", verified:true, title:"Athens Airport to the city centre", board:"Metro · X95 · Rail · Taxi",
     connections:[
@@ -148,7 +153,7 @@ const I18N = {
     "~5 min walk":"~5 λεπτά με τα πόδια", "~3 min walk":"~3 λεπτά με τα πόδια", "~2 min walk":"~2 λεπτά με τα πόδια", "~6 min walk":"~6 λεπτά με τα πόδια",
     "~20 min":"~20 λεπτά", "~30 min":"~30 λεπτά", "~40 min":"~40 λεπτά", "~45 min":"~45 λεπτά", "~50 min":"~50 λεπτά", "~40–50 min":"~40–50 λεπτά", "60–75 min":"60–75 λεπτά",
     "City bus · centre & port":"Αστικό λεωφορείο · κέντρο & λιμάνι", "KTEL bus · to town":"ΚΤΕΛ · προς πόλη", "KTEL bus · to Fira":"ΚΤΕΛ · προς Φηρά", "Bus 01X · to the centre":"Λεωφορείο 01Χ · προς κέντρο", "City bus · look for ‘ΗΡΑΚΛΕΙΟ / IRAKLIO’ on the front":"Αστικό λεωφορείο · αναζήτησε «ΗΡΑΚΛΕΙΟ / IRAKLIO» στην μπροστινή πλευρά", "KTEL Chania bus · buy from the driver":"ΚΤΕΛ Χανίων · αγορά εισιτηρίου από τον οδηγό", "KTEL bus · buy from the driver":"ΚΤΕΛ · αγορά εισιτηρίου από τον οδηγό", "OASTH bus 01X · 01N overnight":"ΟΑΣΘ λεωφορείο 01Χ · 01Ν νυχτερινό",
-    "Heraklion centre & port (Bus Station A)":"Κέντρο Ηρακλείου & λιμάνι (Σταθμός Λεωφορείων Α)", "Chania town / KTEL station":"Πόλη Χανίων / σταθμός ΚΤΕΛ", "Fira (main town bus station)":"Φηρά (κεντρικός σταθμός λεωφορείων)", "City centre (Aristotelous · White Tower)":"Κέντρο πόλης (Αριστοτέλους · Λευκός Πύργος)",
+    "Heraklion centre & port (Bus Station A)":"Κέντρο Ηρακλείου & λιμάνι (Σταθμός Λεωφορείων Α)", "Chania town / KTEL station":"Πόλη Χανίων / σταθμός ΚΤΕΛ", "Fira (main town bus station)":"Φηρά (κεντρικός σταθμός λεωφορείων)", "City centre (Aristotelous · White Tower)":"Κέντρο πόλης (Αριστοτέλους · Λευκός Πύργος)", "Heraklion centre / port — door to door":"Κέντρο/λιμάνι Ηρακλείου — πόρτα-πόρτα", "Chania town — door to door":"Πόλη Χανίων — πόρτα-πόρτα", "Fira — door to door":"Φηρά — πόρτα-πόρτα", "Rhodes Town — door to door":"Πόλη Ρόδου — πόρτα-πόρτα", "City centre — door to door":"Κέντρο πόλης — πόρτα-πόρτα",
     "Piraeus port":"Λιμάνι Πειραιά", "Rafina port":"Λιμάνι Ραφήνας", "Mainland coaches":"ΚΤΕΛ προς ηπειρωτική Ελλάδα", "South Athens":"Νότια Αθήνα",
     "X96 · €5.50 · Crete, Cyclades, Dodecanese":"X96 · €5,50 · Κρήτη, Κυκλάδες, Δωδεκάνησα", "KTEL · €3 · Andros, Tinos, Mykonos, Evia · Exits 2–3":"ΚΤΕΛ · €3 · Άνδρος, Τήνος, Μύκονος, Εύβοια · Έξοδοι 2–3", "X93 · €5.50 · Kifisós / Liossíon":"X93 · €5,50 · Κηφισός / Λιοσίων", "X97 · €5.50 · Elliniko / Dafni":"X97 · €5,50 · Ελληνικό / Δάφνη",
     "Ferries to Crete, Cyclades, Dodecanese":"Πλοία για Κρήτη, Κυκλάδες, Δωδεκάνησα", "Ferries to Andros, Tinos, Mykonos, Evia · from Exits 2–3":"Πλοία για Άνδρο, Τήνο, Μύκονο, Εύβοια · από τις Εξόδους 2–3", "KTEL coaches to the rest of Greece":"ΚΤΕΛ προς την υπόλοιπη Ελλάδα",
@@ -581,9 +586,15 @@ function optionBody(o,e,r,opts={}){
   if(r.onDemand || o.mode==="taxi"){
     let taxiInfo="";
     if(o.fareDay){
-      const tn=taxiNow(o,r.selected);
+      const base=(r.selected instanceof Date)?r.selected:new Date();
+      const jmin=durationMinutes(o.journey)||40;
+      const arr=new Date(base.getTime()+jmin*60000);
+      const tn=taxiNow(o,arr);
+      const arrHM=fmt(arr.getHours()*60+arr.getMinutes());
       const fareLbl=tn.night?T("νυχτερινή χρέωση","night fare"):T("ημερήσια χρέωση","day fare");
-      taxiInfo=`<div class="taxi-fare"><div class="tf-now">${T("Τώρα","Now")}: <b>${tn.fare}</b> <span>${fareLbl}</span></div><div class="tf-all">${o.fareDay} ${T("ημέρα","day")} 05:00–24:00 · ${o.fareNight} ${T("νύχτα","night")} 00:00–05:00</div></div>`;
+      const approx=o.est?T("περίπου ","approx "):"";
+      const metered=o.est?T(" · με μετρητή","· metered"):"";
+      taxiInfo=`<div class="taxi-fare"><div class="tf-now">${T("Χρέωση","Fare")}: <b>${tn.fare}</b> <span>${fareLbl} · ${T("άφιξη","arrive")} ~${arrHM}</span></div><div class="tf-all">${approx}${o.fareDay} ${T("μέρα","day")} · ${o.fareNight} ${T("νύχτα","night")} 00:00–05:00 — ${T("με βάση την ώρα άφιξης","by arrival time")} ${metered}</div></div>`;
     }
     const apps=o.apps?`<div class="alsoapps"><span>${tr("Apps available:")}</span> ${o.apps.map(appBtn).join("")}</div>`:"";
     const avail=`<div class="avail">${T("Διαθέσιμο","Available")} <b>${T("τώρα","now")}</b> · ${T("κατόπιν ζήτησης","on demand")}</div>`;
@@ -753,7 +764,8 @@ function renderAirport(code){
   });
   const fastest=rows.find(r=>r.o.mode!=="taxi" && Number.isFinite(r.total));
   rows.forEach(r=>{r.fastest=!!fastest && r===fastest; r.relegated=r.o.mode==="taxi";});
-  document.getElementById("options").innerHTML=rows.map((r)=>{const o=r.o; const e={to:o.to,note:o.note,destinationId:null}; const opts=rows.length>1?{fastest:r===fastest}:{solo:true}; return destCard(o,e,r,opts);}).join("");
+  const pub=rows.filter(r=>r.o.mode!=="taxi").length;
+  document.getElementById("options").innerHTML=rows.map((r)=>{const o=r.o; const e={to:o.to,note:o.note,destinationId:null}; const opts=(pub>1)?{fastest:r===fastest}:{solo:r.o.mode!=="taxi"}; return destCard(o,e,r,opts);}).join("");
   const cc=document.getElementById("conns");
   if(cc) cc.innerHTML=(ap.connections&&ap.connections.length)?`<div class="conns-h">${JL_LANG==="el"?"Άλλες συνδέσεις από":"Other connections from"} ${code}</div>`+ap.connections.map(c=>{
     const r=connNext(c,at); let t="";
