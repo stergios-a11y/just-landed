@@ -384,3 +384,11 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 
 /* v36 — theme toggle */
 .theme-toggle:hover,.theme-toggle:focus-visible{color:var(--ink);border-color:var(--muted);outline:none}
+
+/* v37 — flag language switcher */
+.lang-switch{display:flex;align-items:center;gap:9px}
+.lang-switch a{display:block;line-height:0;opacity:.5;border-radius:3px;padding:0}
+.lang-switch a:hover,.lang-switch a:focus-visible{opacity:.85;outline:none}
+.lang-switch a.active{opacity:1}
+.flag{display:block;width:22px;height:auto;border-radius:3px;box-shadow:0 0 0 1px rgba(128,128,128,.4)}
+.lang-switch a.active .flag{box-shadow:0 0 0 2px var(--amber)}
