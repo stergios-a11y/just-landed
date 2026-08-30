@@ -4,7 +4,7 @@ const AIRPORTS = {
   HER: { slug:"heraklion", name:"Heraklion (HER)", city:"Crete", verified:true, title:"Heraklion Airport to town", board:"City bus · centre & port",
     options:[
       { mode:"bus", to:"Heraklion centre & port (Bus Station A)", op:"City bus · look for ‘ΗΡΑΚΛΕΙΟ / IRAKLIO’ on the front", price:"€1.30", journey:"~20 min", freqLabel:"every ~10–15 min", hours:"06:00–00:00",
-        walk:"~5 min walk", access:"Main doors → turn right, follow the road",
+        walk:"~5 min walk", access:"Main doors → turn right, follow the road", ll:"35.335857,25.173770", startPin:true,
         sched:{kind:"range",first:"06:00",last:"23:45",every:12},
         note:"€1.30 from the kiosk, €2.30 from the driver — cash. No service after midnight; validate on board." },
       { mode:"taxi", to:"Heraklion centre / port — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€15–22", fareDay:"~€15", fareNight:"~€22", nightStart:0, nightEnd:5, journey:"~15 min", walk:"~1 min walk", access:"Taxi rank outside arrivals" },
@@ -12,7 +12,7 @@ const AIRPORTS = {
   CHQ: { slug:"chania", name:"Chania (CHQ)", city:"Crete", verified:true, title:"Chania Airport to town", board:"KTEL bus · to town",
     options:[
       { mode:"bus", to:"Chania town / KTEL station", op:"KTEL Chania bus · buy from the driver", est:true, price:"€2.50", journey:"~30 min", freqLabel:"sparse — ~8–10 buses/day", hours:"05:30–23:50",
-        walk:"~3 min walk", access:"Bus waiting area outside arrivals",
+        walk:"~3 min walk", access:"Bus waiting area outside arrivals", ll:"35.539871,24.141803", startPin:true,
         sched:{kind:"range",first:"05:30",last:"23:50",every:90},
         note:"Irregular KTEL timetable (not flight-timed) — the next time shown is an estimate; check the posted schedule at the stop. €2.50 from the driver, cash." },
       { mode:"taxi", to:"Chania town — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€28–38", fareDay:"~€28", fareNight:"~€38", nightStart:0, nightEnd:5, journey:"~25 min", walk:"~1 min walk", access:"Taxi rank outside arrivals" },
@@ -20,7 +20,7 @@ const AIRPORTS = {
   JTR: { slug:"santorini", name:"Santorini (JTR)", city:"Cyclades", verified:true, title:"Santorini Airport to Fira", board:"KTEL bus · to Fira",
     options:[
       { mode:"bus", to:"Fira (main town bus station)", op:"KTEL bus · buy from the driver", est:true, price:"€2.20", journey:"~20 min", freqLabel:"hourly in summer · ~3h in winter", hours:"~06:40–21:40",
-        walk:"~2 min walk", access:"Bus stop by the arrivals exit",
+        walk:"~2 min walk", access:"Bus stop by the arrivals exit", ll:"36.402741,25.472833", startPin:true,
         sched:{kind:"range",first:"06:40",last:"21:40",every:60},
         note:"Summer: about hourly. Winter: roughly every 3 hours — the time shown is an estimate, check the posted schedule. Overnight (00:00–05:00) barely runs; arrange backup for very early/late flights. All airport buses terminate at Fira bus station." },
       { mode:"taxi", to:"Fira — door to door", op:"Metered taxi · scarce in summer", onDemand:true, est:true, price:"~€25–35", fareDay:"~€25", fareNight:"~€35", nightStart:0, nightEnd:5, journey:"~20 min", walk:"~1 min walk", access:"Taxi rank outside arrivals — queues in summer" },
@@ -29,7 +29,7 @@ const AIRPORTS = {
   RHO: { slug:"rhodes", name:"Rhodes (RHO)", city:"Dodecanese", verified:true, title:"Rhodes Airport to Rhodes Town", board:"RODA bus · to Rhodes Town",
     options:[
       { mode:"bus", to:"Rhodes Town", op:"RODA bus · Airport → Rhodes", est:true, price:"€3", journey:"~30 min", freqLabel:"every ~30 min", hours:"05:45–23:45",
-        walk:"~2 min walk", access:"Bus stop between the old and new terminals",
+        walk:"~2 min walk", access:"Bus stop between the old and new terminals", ll:"36.402210,28.091290", startPin:true,
         sched:{kind:"range",first:"05:45",last:"23:45",every:30},
         note:"Direct RODA service to Rhodes Town. The airport bus stop is between the old and new terminals. Published timetables vary by season and day; check the current schedule before travelling." },
       { mode:"taxi", to:"Rhodes Town — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€25–35", fareDay:"~€25", fareNight:"~€35", nightStart:0, nightEnd:5, journey:"~25 min", walk:"~1 min walk", access:"Taxi rank outside arrivals" },
@@ -37,7 +37,7 @@ const AIRPORTS = {
   SKG: { slug:"thessaloniki", name:"Thessaloniki (SKG)", city:"Macedonia", verified:true, title:"Thessaloniki Airport to the city centre", board:"Bus 01X · to the centre",
     options:[
       { mode:"bus", to:"City centre (Aristotelous · White Tower)", op:"OASTH bus 01X · 01N overnight", price:"€2", journey:"~40 min", freqLabel:"every ~25 min · 30 min overnight", hours:"24 hours",
-        walk:"~2 min walk", access:"Bus stop outside arrivals",
+        walk:"~2 min walk", access:"Bus stop outside arrivals", ll:"40.524062,22.976999", startPin:true,
         sched:{kind:"windows",windows:[{start:"06:10",end:"22:40",every:25},{start:"23:10",end:"05:55",every:30}]},
         note:"€2 airport fare (not the standard €0.90 ticket). Buy at the arrivals machines or onboard — no change given. 01X also stops at the railway station & KTEL Makedonia." },
       { mode:"taxi", to:"City centre — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€30–40", fareDay:"~€30", fareNight:"~€40", nightStart:0, nightEnd:5, journey:"~35 min", walk:"~1 min walk", access:"Taxi rank outside arrivals", apps:["freenow","uber","bolt"] },
@@ -577,6 +577,14 @@ function walkDir(o){
   const href=`https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&travelmode=walking`;
   return `<a class="stepdir" href="${href}" target="_blank" rel="noopener">${T("Οδηγίες","Directions")} ↗</a>`;
 }
+function stopLink(o){
+  if(o.startPin && o.ll){
+    const T=(el,en)=>JL_LANG==="el"?el:en;
+    const href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.ll)}`;
+    return `<a class="stepdir" href="${href}" target="_blank" rel="noopener">${T("Αφετηρία","Start point")} ↗</a>`;
+  }
+  return walkDir(o);
+}
 function optionBody(o,e,r,opts={}){
   const dm=optMatch(o);
   o={...o, walk:o.walk||dm?.walk, access:o.access||dm?.access, ll:o.ll||dm?.ll, payment:o.payment||dm?.payment, apps:o.apps||dm?.apps};
@@ -620,7 +628,7 @@ function optionBody(o,e,r,opts={}){
     arriveLine=`<div class="arrive">${T("Άφιξη","Arrive")} <b>${destIn}${fmt(arrD.getHours()*60+arrD.getMinutes())}</b> · <b>${bd.total} ${minW}</b> ${T("συνολικά","total journey")}${cmp}</div>`;
   }
   const board=boardingNoun(o.mode);
-  const walkStep=o.walk?`<div class="step"><span class="sic">${STEP_SVG.walk}</span><div class="stx"><b>${tr(o.walk)} ${board}</b>${o.access?` · ${tr(o.access)}`:""}</div>${walkDir(o)}</div>`:"";
+  const walkStep=o.walk?`<div class="step"><span class="sic">${STEP_SVG.walk}</span><div class="stx"><b>${tr(o.walk)} ${board}</b>${o.access?` · ${tr(o.access)}`:""}</div>${stopLink(o)}</div>`:"";
   const payment=o.payment?tr(o.payment):"";
   const rideStep=`<div class="step"><span class="sic">${modeIcon(o.mode)}</span><div class="stx"><b>${bd.ride} ${minW} ${T("διαδρομή","ride")}</b>${payment?` · ${payment}`:""}</div></div>`;
   const steps=`<div class="steps">${walkStep}${rideStep}</div>`;
