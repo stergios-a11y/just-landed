@@ -605,13 +605,13 @@ function destCard(o,e,r,opts={}){
     tags.push(`<span class="rtag rtag-cheap">${T("Φθηνότερο","Cheapest")}</span>`);
     if(opts.saves) tags.push(`<span class="rtag-meta">${T(`€${opts.saves} λιγότερα`,`€${opts.saves} less`)}</span>`);
   }
-  const plabel=tags.length?`<div class="plabel">${tags.join("")}</div>`:"";
+  const tagcol=tags.length?`<div class="tagcol">${tags.join("")}</div>`:"";
   const isTaxi=o.mode==="taxi"||r.onDemand;
   const destName=tr(e.to).replace(/\s+[—–-]\s+(direct|απευθείας)\s*$/i,"");
   const svc=o.name?tr(o.name):null;
   const nameHtml=isTaxi?(svc||destName):(svc?`${svc} <span class="dir"><span class="arw">→</span> ${destName}</span>`:destName);
   const opHtml=(!isTaxi && o.op)?`<div class="op">${tr(o.op)}</div>`:"";
-  return `<div class="card b-card${(isFastest||opts.solo)?' fast':''}${(isCheapest&&!isFastest)?' cheap':''}${isTaxi?' taxi':''}">${plabel}<div class="headline"><div class="mi">${modeIcon(o.mode)}</div><div class="hmain"><h2>${nameHtml}</h2>${opHtml}</div></div>${optionBody(o,e,r,opts)}</div>`;
+  return `<div class="card b-card${(isFastest||opts.solo)?' fast':''}${(isCheapest&&!isFastest)?' cheap':''}${isTaxi?' taxi':''}"><div class="headline"><div class="mi">${modeIcon(o.mode)}</div><div class="hmain"><h2>${nameHtml}</h2>${opHtml}</div>${tagcol}</div>${optionBody(o,e,r,opts)}</div>`;
 }
 const DESTSEL={};
 function priceNum(p){ if(p==null) return null; const m=String(p).replace(",",".").match(/\d+(?:\.\d+)?/); return m?parseFloat(m[0]):null; }
