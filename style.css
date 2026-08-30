@@ -11,18 +11,18 @@ header{display:flex;align-items:center;justify-content:space-between;height:62px
 .logo .mk svg{height:20px;width:auto;display:block}
 .logo .wm{font-family:"Inter",Arial,Helvetica,sans-serif;font-weight:900;font-size:15px;letter-spacing:-.01em;color:var(--ink);text-transform:uppercase}
 .header-tools{display:flex;align-items:center;gap:8px}.lang-switch{display:flex;align-items:center;gap:6px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}.lang-switch a{color:var(--muted);font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.08em;padding:4px 2px}.lang-switch a:hover{color:var(--ink)}.lang-switch button{appearance:none;border:0;background:transparent;color:var(--muted);font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.08em;padding:4px 3px;cursor:pointer}.lang-switch a.active{color:var(--amber)}.lang-switch button:hover,.lang-switch button:focus-visible{color:var(--ink);outline:none}.clock{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;font-weight:700;color:var(--ink);letter-spacing:.05em;border:1px solid var(--line);padding:10px 14px;border-radius:22px}
-.backlink{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
+.backlink{display:inline-block;font-family:"Inter",system-ui,sans-serif;font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
 .backlink:hover{color:var(--amber)}
 h1{font-family:"Inter",sans-serif;font-weight:900;font-size:24px;letter-spacing:-.01em;margin:2px 0 8px;text-transform:uppercase;line-height:1.08}
 .intro{color:var(--muted);font-size:13.5px;margin:0 0 6px;line-height:1.5}
-.tagline{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin:0 0 18px}
+.tagline{font-family:"Inter",system-ui,sans-serif;font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin:0 0 18px}
 .tagline b{color:var(--ink)}
 
 .time-panel{margin:0 0 18px}
 .time-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
 .time-panel-head strong{color:var(--amber);font-size:11px;white-space:nowrap}
 .time-actions{display:flex;gap:7px;align-items:stretch}
-.time-btn{appearance:none;border:1px solid var(--tileborder);background:var(--tile);color:var(--ink);border-radius:8px;min-height:38px;padding:0 10px;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.04em;cursor:pointer;display:flex;align-items:center;justify-content:center;white-space:nowrap}
+.time-btn{appearance:none;border:1px solid var(--tileborder);background:var(--tile);color:var(--ink);border-radius:8px;min-height:38px;padding:0 10px;font-family:"Inter",system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;cursor:pointer;display:flex;align-items:center;justify-content:center;white-space:nowrap}
 .time-btn.on{background:var(--amber);border-color:var(--amber);color:var(--on-accent)}
 .time-custom{position:relative;flex:1 1 auto;color:var(--muted);gap:8px;min-width:92px}
 .time-custom .time-custom-arrow{font-size:12px;color:var(--amber);transition:transform .12s}
@@ -95,8 +95,8 @@ body.walk-open{overflow:hidden}
 @media(prefers-reduced-motion:reduce){.pulse{animation:none}}
 
 .note{font-size:12px;color:var(--amber);margin-top:12px;background:var(--note-bg);border:1px solid var(--note-border);border-radius:9px;padding:8px 10px;line-height:1.45}
-.disclaimer{font-family:"JetBrains Mono",monospace;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:11px;color:var(--muted);margin-top:16px;line-height:1.6;letter-spacing:.02em}
-footer{font-family:"JetBrains Mono",monospace;color:var(--muted);font-size:11px;text-align:center;margin-top:22px;letter-spacing:.06em}
+.disclaimer{font-family:"Inter",system-ui,sans-serif;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:11px;color:var(--muted);margin-top:16px;line-height:1.6;letter-spacing:.02em}
+footer{font-family:"Inter",system-ui,sans-serif;color:var(--muted);font-size:11px;text-align:center;margin-top:22px;letter-spacing:.06em}
 .way .walk{font-weight:700;color:var(--ink)}
 /* other connections strip */
 .conns{margin-top:22px}
@@ -247,7 +247,7 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .next-line .lbl{text-transform:uppercase;letter-spacing:.1em;font-size:11px}
 .next-line b{color:var(--ink);font-weight:900;font-size:13px;letter-spacing:.02em}
 .next-live{color:var(--amber);font-size:10px;letter-spacing:.08em}
-.alt-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;margin:2px 0 12px;padding:13px 16px;background:var(--card);border:1px solid var(--line);border-radius:14px;color:var(--ink);font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
+.alt-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;margin:2px 0 12px;padding:13px 16px;background:var(--card);border:1px solid var(--line);border-radius:14px;color:var(--ink);font:700 12px/1 "Inter",system-ui,sans-serif;letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
 .alt-toggle:hover,.alt-toggle:focus-visible{border-color:var(--amber);outline:none}
 .alt-toggle .chev{color:var(--amber);transition:transform .15s}
 .alt-toggle.open{margin-bottom:8px}
@@ -328,7 +328,7 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 /* v30 — compact collapsible time summary (B style) */
 .time-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;background:transparent;border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 2px;cursor:pointer;font-family:"Inter",system-ui,sans-serif;font-size:15px;color:var(--muted);text-align:left}
 .time-summary .ts-lead b{color:var(--ink);font-weight:700}
-.ts-change{display:inline-flex;align-items:center;gap:7px;font:600 11px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.ts-change{display:inline-flex;align-items:center;gap:7px;font:600 11px/1 "Inter",system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
 .ts-change .chev{color:var(--amber);transition:transform .15s}
 .time-summary:hover .ts-change,.time-summary:focus-visible{color:var(--ink);outline:none}
 .time-summary.open .ts-change .chev{transform:rotate(180deg)}
@@ -338,10 +338,10 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 
 /* v32 — visible fastest/cheapest tags, colored borders, arrow grouping */
 .b-card .plabel{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-bottom:14px}
-.rtag{font:800 11px/1 "JetBrains Mono",monospace;letter-spacing:.07em;text-transform:uppercase;padding:5px 9px;border-radius:7px}
+.rtag{font:800 11px/1 "Inter",system-ui,sans-serif;letter-spacing:.03em;text-transform:uppercase;padding:5px 9px;border-radius:7px}
 .rtag-fast{background:var(--amber);color:var(--on-accent)}
 .rtag-cheap{background:var(--green);color:var(--on-accent)}
-.rtag-meta{font:700 11px/1 "JetBrains Mono",monospace;color:var(--muted);letter-spacing:0}
+.rtag-meta{font:700 11px/1 "Inter",system-ui,sans-serif;color:var(--muted);letter-spacing:0}
 .card.fast{border-color:var(--amber)}
 .card.cheap{border-color:var(--green)}
 .b-card.cheap{border-left-color:var(--green)}
@@ -366,7 +366,7 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .sic svg{width:15px;height:15px;fill:currentColor}
 .stx{flex:1;min-width:0;font-size:13.5px;line-height:1.4;color:var(--muted);align-self:center}
 .stx b{color:var(--ink);font-weight:700}
-.stepdir{flex:0 0 auto;align-self:center;font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.05em;color:var(--amber);text-decoration:none;white-space:nowrap}
+.stepdir{flex:0 0 auto;align-self:center;font:700 11px/1 "Inter",system-ui,sans-serif;letter-spacing:.05em;color:var(--amber);text-decoration:none;white-space:nowrap}
 .stepdir:hover,.stepdir:focus-visible{text-decoration:underline;outline:none}
 
 /* v34 — fastest/cheapest tag on the right of the route line */
@@ -377,7 +377,10 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 
 /* v35 — full-day slider + Today/Tomorrow toggle */
 .time-day-toggle{display:flex;gap:7px;margin-bottom:12px}
-.day-btn{flex:1;appearance:none;border:1px solid var(--tileborder);background:var(--tile);color:var(--muted);border-radius:8px;min-height:36px;font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.06em;cursor:pointer}
+.day-btn{flex:1;appearance:none;border:1px solid var(--tileborder);background:var(--tile);color:var(--muted);border-radius:8px;min-height:36px;font:700 11px/1 "Inter",system-ui,sans-serif;letter-spacing:.06em;cursor:pointer}
 .day-btn.on{background:var(--amber);border-color:var(--amber);color:var(--on-accent)}
 .day-btn:hover:not(.on){color:var(--ink);border-color:var(--muted)}
 .time-slider-top{justify-content:flex-start}
+
+/* v36 — theme toggle */
+.theme-toggle:hover,.theme-toggle:focus-visible{color:var(--ink);border-color:var(--muted);outline:none}
