@@ -239,6 +239,15 @@ function setViewTime(d, mode="custom"){
     (ap&&ap.destinations?renderDest:renderAirport)(code);
   }
 }
+function pickDay(off){
+  const now=new Date();
+  const target=new Date(); target.setHours(0,0,0,0); target.setDate(target.getDate()+off);
+  const cur=getViewTime();
+  const mins=VIEW_TIME_MODE==="now"?(now.getHours()*60+now.getMinutes()):(cur.getHours()*60+cur.getMinutes());
+  target.setMinutes(mins);
+  if(off===0 && target<=now){ setViewTime(new Date(),"now"); return; }
+  setViewTime(target,"custom");
+}
 function ensureTimePicker(){
   if(document.getElementById("time-slider")) return;
   const anchor=document.getElementById("destcards")||document.getElementById("options");
@@ -256,10 +265,13 @@ function ensureTimePicker(){
           <button type="button" class="time-btn" id="time-plus20">+20 MIN</button>
         </div>
         <div class="time-slider-wrap">
-          <div class="time-slider-top"><span id="time-slider-day">NOW</span><b id="time-slider-value">NOW</b></div>
-          <input id="time-slider" class="time-slider" type="range" min="0" max="6" step="1" value="0" aria-label="Move departure time in 15 minute steps">
+          <div class="time-day-toggle">
+            <button type="button" class="day-btn on" id="time-today">TODAY</button>
+            <button type="button" class="day-btn" id="time-tomorrow">TOMORROW</button>
+          </div>
+          <div class="time-slider-top"><b id="time-slider-value">NOW</b></div>
+          <input id="time-slider" class="time-slider" type="range" min="0" max="95" step="1" value="0" aria-label="Choose departure time">
           <div class="time-slider-labels" id="time-slider-labels"></div>
-          <button type="button" class="tomorrow-btn" id="time-tomorrow">Next day <span>→</span></button>
         </div>
         <div class="time-help" id="time-help">Move the slider to see how the fastest option changes.</div>
       </div>
@@ -268,11 +280,17 @@ function ensureTimePicker(){
   document.getElementById("time-plus10").onclick=()=>{ const d=new Date(Date.now()+10*60000); SLIDER_BASE_TIME=new Date(d); setViewTime(d,"custom"); };
   document.getElementById("time-plus20").onclick=()=>{ const d=new Date(Date.now()+20*60000); SLIDER_BASE_TIME=new Date(d); setViewTime(d,"custom"); };
   document.getElementById("time-summary").onclick=function(){ const panel=document.getElementById("time-expand"); panel.hidden=!panel.hidden; this.classList.toggle("open", !panel.hidden); this.setAttribute("aria-expanded", String(!panel.hidden)); updateTimePicker(); };
-  document.getElementById("time-tomorrow").onclick=()=>{ const d=getViewTime(); d.setDate(d.getDate()+1); SLIDER_BASE_TIME=new Date(d); setViewTime(d,"custom"); };
+  document.getElementById("time-today").onclick=()=>pickDay(0);
+  document.getElementById("time-tomorrow").onclick=()=>pickDay(1);
   document.getElementById("time-slider").addEventListener("input",e=>{
-    const base=SLIDER_BASE_TIME?new Date(SLIDER_BASE_TIME):new Date();
-    const d=new Date(base); d.setMinutes(d.getMinutes()+Number(e.target.value)*15);
-    setViewTime(d,"custom");
+    const idx=Number(e.target.value);
+    const today0=new Date(); today0.setHours(0,0,0,0);
+    const vd=new Date(getViewTime()); vd.setHours(0,0,0,0);
+    let off=Math.round((vd-today0)/86400000); if(off<0)off=0; if(off>1)off=1;
+    const target=new Date(); target.setHours(0,0,0,0); target.setDate(target.getDate()+off); target.setMinutes(idx*15);
+    const now=new Date();
+    if(off===0 && Math.abs(target-now)<90000){ setViewTime(new Date(),"now"); return; }
+    setViewTime(target,"custom");
   });
   updateTimePicker();
 }
@@ -292,22 +310,25 @@ function updateTimePicker(){
   plus20.textContent=JL_LANG==="el"?"+20 ΛΕΠ":"+20 MIN";
   const word=document.getElementById("ts-word"); if(word) word.textContent=JL_LANG==="el"?"Φεύγεις":"Leaving";
   const cw=document.getElementById("ts-change-word"); if(cw) cw.textContent=JL_LANG==="el"?"αλλαγή ώρας":"change time";
-  const slider=document.getElementById("time-slider"), sliderDay=document.getElementById("time-slider-day"), sliderValue=document.getElementById("time-slider-value"), labels=document.getElementById("time-slider-labels");
-  if(slider&&sliderDay&&sliderValue&&labels){
-    const base=SLIDER_BASE_TIME?new Date(SLIDER_BASE_TIME):new Date();
-    const minutesFromBase=Math.round((d-base)/60000);
-    const idx=Math.max(0,Math.min(12,Math.round(minutesFromBase/15)));
-    slider.max="12";
-    slider.value=String(idx);
-    slider.disabled=false;
-    const times=Array.from({length:13},(_,i)=>{const x=new Date(base);x.setMinutes(x.getMinutes()+i*15);return x;});
-    labels.innerHTML=times.filter((_,i)=>i%2===0).map((x,i)=>{const real=i*2; return `<span class="${Math.abs(real-idx)<=1?'active':''}">${fmt(x.getHours()*60+x.getMinutes())}</span>`;}).join("");
-    const sameDay=d.toDateString()===new Date().toDateString();
-    sliderDay.textContent=sameDay?(JL_LANG==="el"?"ΣΗΜΕΡΑ":"TODAY"):(JL_LANG==="el"?"ΑΥΡΙΟ":"TOMORROW");
-    sliderValue.textContent=VIEW_TIME_MODE==="now"?(JL_LANG==="el"?"ΤΩΡΑ":"NOW"):fmt(d.getHours()*60+d.getMinutes());
+  const slider=document.getElementById("time-slider"), sliderValue=document.getElementById("time-slider-value"), labels=document.getElementById("time-slider-labels");
+  if(slider&&sliderValue&&labels){
+    const today0=new Date(); today0.setHours(0,0,0,0);
+    const vd=new Date(d); vd.setHours(0,0,0,0);
+    let off=Math.round((vd-today0)/86400000); if(off<0)off=0; if(off>1)off=1;
+    const nowIdx=Math.ceil((now.getHours()*60+now.getMinutes())/15);
+    const minIdx=off===0?Math.min(95,nowIdx):0;
+    const curIdx=Math.max(minIdx,Math.min(95,Math.round((d.getHours()*60+d.getMinutes())/15)));
+    slider.min=String(minIdx); slider.max="95"; slider.step="1"; slider.disabled=false; slider.value=String(curIdx);
+    const span=Math.max(1,95-minIdx);
+    const ticks=[0,1,2,3,4].map(i=>minIdx+Math.round(span*i/4));
+    labels.innerHTML=ticks.map(t=>`<span class="${Math.abs(t-curIdx)<=2?'active':''}">${fmt(t*15)}</span>`).join("");
+    const todayBtn=document.getElementById("time-today"), tomBtn=document.getElementById("time-tomorrow");
+    if(todayBtn){ todayBtn.classList.toggle("on",off===0); todayBtn.textContent=JL_LANG==="el"?"ΣΗΜΕΡΑ":"TODAY"; }
+    if(tomBtn){ tomBtn.classList.toggle("on",off===1); tomBtn.textContent=JL_LANG==="el"?"ΑΥΡΙΟ":"TOMORROW"; }
+    const nowMin=now.getHours()*60+now.getMinutes(), dMin=d.getHours()*60+d.getMinutes();
+    const isNow=VIEW_TIME_MODE==="now"||(off===0&&Math.abs(dMin-nowMin)<8);
+    sliderValue.textContent=isNow?(JL_LANG==="el"?"ΤΩΡΑ":"NOW"):fmt(curIdx*15);
   }
-  const tomorrow=document.getElementById("time-tomorrow");
-  if(tomorrow) tomorrow.innerHTML=JL_LANG==="el"?"Επόμενη μέρα <span>→</span>":"Next day <span>→</span>";
   const help=document.getElementById("time-help"); if(help) help.textContent=VIEW_TIME_MODE==="custom"?(JL_LANG==="el"?"Μετακίνησε τη μπάρα για να δεις πώς αλλάζει η γρηγορότερη επιλογή.":"Move the slider to see how the fastest option changes."):(JL_LANG==="el"?"Οι χρόνοι υπολογίζονται από τώρα. Μετακίνησε τη μπάρα για να δεις πώς αλλάζει η γρηγορότερη επιλογή.":"Times are calculated from now. Move the slider to see how the fastest option changes.");
 }
 const STEP_SVG={

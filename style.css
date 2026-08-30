@@ -160,7 +160,7 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .time-slider::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:var(--amber);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--amber);cursor:grab}
 .time-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--amber);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--amber);cursor:grab}
 .time-slider:disabled{opacity:.45;cursor:not-allowed}
-.time-slider-labels{display:grid;grid-template-columns:repeat(7,1fr);margin-top:7px;font:500 11px/1 "JetBrains Mono",monospace;color:var(--muted);text-align:center}
+.time-slider-labels{display:flex;justify-content:space-between;margin-top:7px;font:500 11px/1 "JetBrains Mono",monospace;color:var(--muted)}
 .time-slider-labels span.active{color:var(--amber);font-weight:700}
 .tomorrow-btn{display:block;margin:10px 0 0 auto;border:0;background:transparent;color:var(--amber);font:700 11px/1 "JetBrains Mono",monospace;cursor:pointer;padding:3px 0;text-transform:none}
 .tomorrow-btn:hover{text-decoration:underline}
@@ -374,3 +374,10 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .b-card .tagcol{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:5px;padding-top:2px;margin-left:8px}
 .b-card .tagcol .rtag{white-space:nowrap}
 .b-card .tagcol .rtag-meta{white-space:nowrap;text-align:right}
+
+/* v35 — full-day slider + Today/Tomorrow toggle */
+.time-day-toggle{display:flex;gap:7px;margin-bottom:12px}
+.day-btn{flex:1;appearance:none;border:1px solid var(--tileborder);background:var(--tile);color:var(--muted);border-radius:8px;min-height:36px;font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.06em;cursor:pointer}
+.day-btn.on{background:var(--amber);border-color:var(--amber);color:var(--on-accent)}
+.day-btn:hover:not(.on){color:var(--ink);border-color:var(--muted)}
+.time-slider-top{justify-content:flex-start}
