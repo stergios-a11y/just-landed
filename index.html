@@ -185,7 +185,7 @@ function airportCard(code){
   const ap=AIRPORTS[code], t=homepageText(), name=t.airportsByCode[code]||ap.name.split(" (")[0];
   const landmarks={ATH:"athens-landmark.png",SKG:"thessaloniki-landmark.png",HER:"heraklion-landmark.png",CHQ:"chania-landmark.png",JTR:"santorini-landmark.png",RHO:"rhodes-landmark.png"};
   return `<a class="airport" href="/${ap.slug}.html" aria-label="${name} — ${code} → ${t.city}">
-    <div class="landmark"><img src="/${landmarks[code]}" alt="${name} ${t.landmark}" loading="eager"></div>
+    <div class="landmark"><picture><source type="image/webp" srcset="/${landmarks[code].replace('.png','.webp')}?v=2"><img src="/${landmarks[code]}?v=2" alt="${name} ${t.landmark}" loading="eager" width="352" height="352"></picture></div>
     <div class="airport-name">${name}</div>
     <div class="airport-route">${code} → ${t.city}</div>
     <div class="airport-next" id="next-${code}">${nextLabel(code)}</div>

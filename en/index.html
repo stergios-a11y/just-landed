@@ -147,7 +147,7 @@ function airportCard(code){
   const ap=AIRPORTS[code], name=ap.name.split(" (")[0];
   const landmarks={ATH:"athens-landmark.png",SKG:"thessaloniki-landmark.png",HER:"heraklion-landmark.png",CHQ:"chania-landmark.png",JTR:"santorini-landmark.png",RHO:"rhodes-landmark.png"};
   return `<a class="airport" href="/en/${ap.slug}.html">
-    <div class="landmark"><img src="/${landmarks[code]}" alt="${name} landmark" loading="eager"></div>
+    <div class="landmark"><picture><source type="image/webp" srcset="/${landmarks[code].replace('.png','.webp')}?v=2"><img src="/${landmarks[code]}?v=2" alt="${name} landmark" loading="eager" width="352" height="352"></picture></div>
     <div class="airport-name">${name}</div>
     <div class="airport-route">${code} → City</div>
     <div class="airport-next" id="next-${code}">${nextLabel(code)}</div>
