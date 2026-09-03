@@ -54,6 +54,11 @@ the push path.
 Adding a page = one entry in `PAGES` (both languages) + rebuild; the sitemap
 follows. `node scripts/build.mjs --touch` bumps every sitemap `lastmod`.
 
+**Prose <-> data lint:** the build fails if a page's intro/prose/facts/FAQ
+mention a `€` amount or `HH:MM` that doesn't exist in that airport's `data.js`
+entry (fare differences like "€3.50 less" are allowed). So a fare change in
+`data.js` forces you to fix the copy too.
+
 **Cache-bust:** assets referenced with `?v=N` (e.g. landmark images `?v=2`).
 Bump N when you replace an image, or the CDN/browser serves the stale one.
 
@@ -87,7 +92,7 @@ timetables, which is fine for layout work.
 - `worker.js`, `wrangler.jsonc`, `.github/workflows/deploy.yml`, `deploy.sh`.
 - Assets: `*-landmark.{png,webp}` (perfect-circle city graphics), favicons,
   `og-image.png` (1200x630 share image), inline-SVG logo (see below).
-- `robots.txt`; `sitemap.xml` + hreflang alternates are generated.
+- `robots.txt`; `sitemap.xml` + hreflang alternates are generated (`x-default` -> the EN page).
 - `package.json` — only npm scripts (`build`, `check`, `serve`); no dependencies.
 
 ### Stale files (cleanup candidates)
@@ -189,8 +194,9 @@ raster jaggies) + live Inter text — razor-sharp at any size.
 
 1. Island verification status (Sep 2026 research, sources in the commit
    message / per-option notes):
-   - HER **verified** — fares from Astiko KTEL price list, weekday times from the
-     official 01-08-2026 timetable (lines 6/12/10/11). Sat/Sun PDFs not encoded.
+   - HER **verified** — fares from Astiko KTEL price list; line 6 official
+     weekday (k6.pdf, 01-08-2026) + Saturday/Sunday (s6/kur6.pdf, 01-09-2026)
+     lists encoded via `byDay`. Line 12 adds more but isn't encoded.
    - JTR **verified** for summer (official KTEL Santorini routes page); winter
      (Nov–Mar) is a 6-bus estimate flagged `seasons[].est` until KTEL publishes.
    - RHO unverified — €3 + full summer (Mon–Fri/Sat/Sun) and winter lists are
@@ -205,8 +211,10 @@ raster jaggies) + live Inter text — razor-sharp at any size.
    data.js). If OASA ever exposes departures at the origin stop, switch the
    worker to outbound codes (listed in worker.js) and drop the turnaround note.
 3. Delete the `.before-departure-ui` snapshots (gitignored, local only).
-4. Decide EN-as-root (`/` English, `/el/` Greek, `x-default` → EN). The
-   generator's `pathFor()/fileFor()` are the only places that know the layout.
-5. Data in `data.js` and prose in `site/content.mjs` can still disagree (fares,
-   hours in the "At a glance" facts). Next step: derive the facts rows from
-   `AIRPORTS` at build time.
+4. Language layout stays EL-root by decision (Greek traffic expected to win);
+   `x-default` points to EN. `pathFor()/fileFor()` in the generator are the only
+   places that know the layout if that ever changes.
+5. Idea for a reverse-direction page ("I must be at ATH by HH:MM - when do I
+   leave Syntagma/Piraeus?"): fixed anchor at the airport, a few boarding
+   points, same slider run backwards. Needs reverse timetables in data.js.
+   Only if Search Console shows "προς αεροδρόμιο" demand.

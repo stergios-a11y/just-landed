@@ -12,6 +12,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import vm from "node:vm";
 import { SITE, HOME, FOOTER, BACK, LANG_LABEL, PAGES } from "../site/content.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -70,7 +71,7 @@ function metaBlock({ slug, lang, title, description, viewport }) {
 <link rel="canonical" href="${urlFor(slug, lang)}">
 <link rel="alternate" hreflang="el" href="${urlFor(slug, "el")}">
 <link rel="alternate" hreflang="en" href="${urlFor(slug, "en")}">
-<link rel="alternate" hreflang="x-default" href="${urlFor(slug, "el")}">
+<link rel="alternate" hreflang="x-default" href="${urlFor(slug, "en")}">
 <link rel="icon" type="image/svg+xml" href="/favicon-v16.svg">
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png?v=16">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png?v=16">
@@ -206,6 +207,35 @@ function sitemap() {
   }
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
 }
+
+/* ---- consistency lint: every € amount / HH:MM in a page's prose must exist in data.js for that airport ---- */
+function loadAirports() {
+  const src = read("data.js").replace(/if\(typeof document!=="undefined"\) \{ if\(document\.readyState[^\n]*\n/, "");
+  const ctx = { document: { documentElement: { lang: "en" }, addEventListener() {}, getElementById() { return null; }, querySelectorAll() { return []; }, querySelector() { return null; } }, window: {}, setInterval() {}, console };
+  vm.createContext(ctx);
+  vm.runInContext(src + ";this.__A=AIRPORTS;", ctx);
+  return ctx.__A;
+}
+function lintPage(page, lang, c, AIRPORTS) {
+  const ap = AIRPORTS[page.code]; if (!ap) return [];
+  const blob = JSON.stringify([ap.options, ap.routes, ap.connections]);
+  const norm = (v) => v.replace(",", ".").replace(/\.0+$/, "").replace(/(\.\d)0$/, "$1");
+  const dataPrices = new Set((blob.match(/€\s?\d+(?:[.,]\d+)?/g) || []).map((m) => norm(m.replace(/€\s?/, ""))));
+  // differences between two fares are legitimate prose ("€3.50 less")
+  for (const a of [...dataPrices]) for (const b of [...dataPrices]) { const d = Math.abs(a - b); if (d > 0) dataPrices.add(norm(d.toFixed(2))); }
+  const dataTimes = new Set(blob.match(/\b\d{2}:\d{2}\b/g) || []);
+  const prose = [c.intro, ...c.prose.map((p) => p.p), ...c.facts.map((f) => f.dd), ...c.faq.map((f) => f.a)].join(" ");
+  const problems = [];
+  for (const m of prose.match(/€\s?\d+(?:[.,]\d+)?/g) || []) {
+    const v = norm(m.replace(/€\s?/, ""));
+    if (!dataPrices.has(v)) problems.push(`price €${v} not in data.js`);
+  }
+  for (const t of prose.match(/\b\d{2}:\d{2}\b/g) || []) if (!dataTimes.has(t)) problems.push(`time ${t} not in data.js`);
+  return [...new Set(problems)].map((x) => `${fileFor(page.slug, lang)}: ${x}`);
+}
+const AIRPORTS = loadAirports();
+const lint = PAGES.flatMap((p) => ["el", "en"].flatMap((l) => lintPage(p, l, p[l], AIRPORTS)));
+if (lint.length) { console.error("Prose/data mismatches (fix site/content.mjs or data.js):\n  " + lint.join("\n  ")); process.exit(1); }
 
 /* ---- run ---- */
 const out = new Map();

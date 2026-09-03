@@ -117,18 +117,18 @@ export const PAGES = [
       intro:"Οι απλοί τρόποι από το αεροδρόμιο Ηρακλείου (HER) προς το κέντρο και το λιμάνι — με το αστικό λεωφορείο, επόμενες αναχωρήσεις και χωρίς προώθηση ταξί.",
       seoLabel:"Οδηγός διαδρομής",
       prose:[
-        { h2:"Πώς θα πας στην πόλη", p:"Το αστικό λεωφορείο είναι ο φθηνότερος τρόπος για το κέντρο και το λιμάνι — €1,30 από το περίπτερο ή την εφαρμογή (€2,30 από τον οδηγό), κάθε ~12–15 λεπτά τις καθημερινές, ~20 λεπτά διαδρομή. Αρκετές γραμμές (6, 12, 10, 11) ξεκινούν από το αεροδρόμιο· πάρε όποιο γράφει ΗΡΑΚΛΕΙΟ. Πρώτο 05:50, τελευταίο ~00:40, χωρίς νυχτερινό· μετρητά μέσα στο λεωφορείο. Ώρες από το επίσημο πρόγραμμα του Αστικού ΚΤΕΛ (από 1 Αυγ. 2026)." },
+        { h2:"Πώς θα πας στην πόλη", p:"Το αστικό λεωφορείο είναι ο φθηνότερος τρόπος για το κέντρο και το λιμάνι — €1,30 από το περίπτερο ή την εφαρμογή (€2,30 από τον οδηγό), κάθε ~15 λεπτά (και τα Σαββατοκύριακα), ~20 λεπτά διαδρομή. Αρκετές γραμμές (6, 12, 10, 11) ξεκινούν από το αεροδρόμιο· πάρε όποιο γράφει ΗΡΑΚΛΕΙΟ. Πρώτο 05:50, τελευταίο ~00:30, χωρίς νυχτερινό· μετρητά μέσα στο λεωφορείο. Ώρες από τα επίσημα προγράμματα του Αστικού ΚΤΕΛ (Σεπ. 2026)." },
       ],
       factsHeading:"Με μια ματιά",
       facts:[
-        { dt:"Αστικό λεωφορείο", dd:"€1,30 περίπτερο/εφαρμογή · €2,30 οδηγός · ~20 λεπτά · κάθε ~12–15 λεπτά · 05:50–00:40 καθημερινές · μετρητά στο λεωφορείο" },
+        { dt:"Αστικό λεωφορείο", dd:"€1,30 περίπτερο/εφαρμογή · €2,30 οδηγός · ~20 λεπτά · κάθε ~15 λεπτά · 05:50–00:30 κάθε μέρα · μετρητά στο λεωφορείο" },
         { dt:"Στάση", dd:"~5 λεπτά περπάτημα από την έξοδο · πηγαίνει σε κέντρο &amp; λιμάνι (Σταθμός Α)" },
       ],
       faqHeading:"Συχνές ερωτήσεις",
       faq:[
         { q:"Πώς πάω από το αεροδρόμιο Ηρακλείου στο κέντρο;", a:"Με το αστικό λεωφορείο, ~20 λεπτά για κέντρο και λιμάνι. €1,30 από το περίπτερο, €2,30 από τον οδηγό." },
         { q:"Ποιος είναι ο φθηνότερος τρόπος;", a:"Το αστικό λεωφορείο στα €1,30 (εισιτήριο από το περίπτερο) — η πιο οικονομική επιλογή." },
-        { q:"Υπάρχει βραδινό δρομολόγιο;", a:"Το τελευταίο λεωφορείο φεύγει γύρω στις 00:40 (καθημερινές). Μετά δεν υπάρχει, οπότε κανόνισε ταξί." },
+        { q:"Υπάρχει βραδινό δρομολόγιο;", a:"Το τελευταίο λεωφορείο φεύγει γύρω στις 00:30, κάθε μέρα. Μετά δεν υπάρχει, οπότε κανόνισε ταξί." },
       ],
     },
     en:{
@@ -138,18 +138,18 @@ export const PAGES = [
       intro:"The cheapest, simplest ways from Heraklion Airport (HER) into the city and to the ferry port — by public city bus, with next departures and no taxi upsell.",
       seoLabel:"Route guide",
       prose:[
-        { h2:"Getting into town", p:"The city bus is the cheapest way to the centre and the port — €1.30 from the kiosk or the app (€2.30 from the driver), every ~12–15 min on weekdays, about a 20-minute ride. Several lines (6, 12, 10, 11) start at the airport; take any bus showing ΗΡΑΚΛΕΙΟ. First bus 05:50, last around 00:40, no night service; cash on board. Times are from Astiko KTEL's official timetable (from 1 Aug 2026)." },
+        { h2:"Getting into town", p:"The city bus is the cheapest way to the centre and the port — €1.30 from the kiosk or the app (€2.30 from the driver), every ~15 min (weekends included), about a 20-minute ride. Several lines (6, 12, 10, 11) start at the airport; take any bus showing ΗΡΑΚΛΕΙΟ. First bus 05:50, last around 00:30, no night service; cash on board. Times are from Astiko KTEL's official timetables (Sep 2026)." },
       ],
       factsHeading:"At a glance",
       facts:[
-        { dt:"City bus", dd:"€1.30 kiosk/app · €2.30 driver · ~20 min · every ~12–15 min · 05:50–00:40 weekdays · cash on board" },
+        { dt:"City bus", dd:"€1.30 kiosk/app · €2.30 driver · ~20 min · every ~15 min · 05:50–00:30 daily · cash on board" },
         { dt:"Stop", dd:"~5 min walk from the exit · goes to the centre &amp; port (Bus Station A)" },
       ],
       faqHeading:"FAQ",
       faq:[
         { q:"How do I get from Heraklion Airport to the centre?", a:"Take the city bus, about 20 minutes to the centre and port. €1.30 from the kiosk, €2.30 from the driver." },
         { q:"What's the cheapest way?", a:"The city bus at €1.30 (ticket from the kiosk) — the most economical option." },
-        { q:"Is there a night service?", a:"The last bus leaves around 00:40 on weekdays. Nothing after that, so arrange a taxi." },
+        { q:"Is there a night service?", a:"The last bus leaves around 00:30, every day. Nothing after that, so arrange a taxi." },
       ],
     },
   },
@@ -161,7 +161,7 @@ export const PAGES = [
       intro:"Πώς θα πας από το αεροδρόμιο Χανίων (CHQ) στην πόλη με το δημόσιο λεωφορείο ΚΤΕΛ — τιμή, δρομολόγια και επόμενες αναχωρήσεις, χωρίς προώθηση ταξί.",
       seoLabel:"Οδηγός διαδρομής",
       prose:[
-        { h2:"Πώς θα πας στην πόλη", p:"Το λεωφορείο ΚΤΕΛ πάει απευθείας στον σταθμό ΚΤΕΛ Χανίων (~10 λεπτά με τα πόδια από την Παλιά Πόλη) για περίπου €2,70 σε ~30 λεπτά. Το καλοκαίρι περνάει περίπου κάθε 30 λεπτά από τις 08:00 ως τα μεσάνυχτα, με ένα πρωινό στις 05:00· τον χειμώνα αραιώνει. Το ΚΤΕΛ βγάζει νέο φύλλο κάθε μήνα, οπότε δες το αναρτημένο πρόγραμμα στη στάση. Μετρητά στον οδηγό ή στο εκδοτήριο." },
+        { h2:"Πώς θα πας στην πόλη", p:"Το λεωφορείο ΚΤΕΛ πάει απευθείας στον σταθμό ΚΤΕΛ Χανίων (~10 λεπτά με τα πόδια από την Παλιά Πόλη) για περίπου €2,70 σε ~30 λεπτά. Το καλοκαίρι περνάει περίπου κάθε 30 λεπτά από τις 07:40 ως τις 23:50, με ένα πρωινό στις 05:00· τον χειμώνα αραιώνει. Το ΚΤΕΛ βγάζει νέο φύλλο κάθε μήνα, οπότε δες το αναρτημένο πρόγραμμα στη στάση. Μετρητά στον οδηγό ή στο εκδοτήριο." },
       ],
       factsHeading:"Με μια ματιά",
       facts:[
@@ -171,7 +171,7 @@ export const PAGES = [
       faqHeading:"Συχνές ερωτήσεις",
       faq:[
         { q:"Πώς πάω από το αεροδρόμιο Χανίων στην πόλη;", a:"Με το λεωφορείο ΚΤΕΛ απευθείας στον σταθμό ΚΤΕΛ, ~€2,70 σε ~30 λεπτά. Δες το αναρτημένο πρόγραμμα στη στάση — αλλάζει κάθε μήνα." },
-        { q:"Πόσο συχνά περνάει το λεωφορείο;", a:"Καλοκαίρι περίπου κάθε 30 λεπτά (08:00–00:00, συν ένα στις 05:00)· χειμώνα πιο αραιά. Δεν συντονίζεται με τις πτήσεις." },
+        { q:"Πόσο συχνά περνάει το λεωφορείο;", a:"Καλοκαίρι περίπου κάθε 30 λεπτά (07:40–23:50, συν ένα στις 05:00)· χειμώνα πιο αραιά. Δεν συντονίζεται με τις πτήσεις." },
         { q:"Πόσο κοστίζει;", a:"Περίπου €2,70 (2026), μετρητά στον οδηγό ή στο εκδοτήριο του ΚΤΕΛ." },
       ],
     },
@@ -182,7 +182,7 @@ export const PAGES = [
       intro:"How to get from Chania Airport (CHQ) into town by public KTEL bus — fare, timetable and next departures, no taxi upsell.",
       seoLabel:"Route guide",
       prose:[
-        { h2:"Getting into town", p:"The KTEL bus runs direct to the Chania KTEL station (~10 min walk from the Old Town) for about €2.70 in around 30 minutes. In summer it runs roughly every 30 minutes from 08:00 to midnight, plus an early 05:00; winter is thinner. KTEL issues a new timetable sheet every month, so check the posted schedule at the stop. Cash to the driver or at the kiosk." },
+        { h2:"Getting into town", p:"The KTEL bus runs direct to the Chania KTEL station (~10 min walk from the Old Town) for about €2.70 in around 30 minutes. In summer it runs roughly every 30 minutes from 07:40 to 23:50, plus an early 05:00; winter is thinner. KTEL issues a new timetable sheet every month, so check the posted schedule at the stop. Cash to the driver or at the kiosk." },
       ],
       factsHeading:"At a glance",
       facts:[
@@ -192,7 +192,7 @@ export const PAGES = [
       faqHeading:"FAQ",
       faq:[
         { q:"How do I get from Chania Airport into town?", a:"Take the KTEL bus direct to the KTEL station, ~€2.70 in about 30 minutes. Check the posted schedule at the stop — it changes monthly." },
-        { q:"How often does the bus run?", a:"Roughly every 30 minutes in summer (08:00–midnight, plus a 05:00); thinner in winter. Not timed to flights." },
+        { q:"How often does the bus run?", a:"Roughly every 30 minutes in summer (07:40–23:50, plus a 05:00); thinner in winter. Not timed to flights." },
         { q:"How much does it cost?", a:"About €2.70 (2026), cash to the driver or at the KTEL kiosk." },
       ],
     },
