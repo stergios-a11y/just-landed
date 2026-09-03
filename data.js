@@ -1,45 +1,58 @@
 /* Just Landed — shared data + render logic. ATH verified; live express-bus feed via /api/airport (inbound arrivals at the airport stop, see worker.js). */
 
 const AIRPORTS = {
-  HER: { slug:"heraklion", name:"Heraklion (HER)", city:"Crete", verified:false, title:"Heraklion Airport to town", board:"City bus · centre & port",
+  HER: { slug:"heraklion", name:"Heraklion (HER)", city:"Crete", verified:true, title:"Heraklion Airport to town", board:"City bus · centre & port",
     options:[
-      { mode:"bus", to:"Heraklion centre & port (Bus Station A)", op:"City bus · look for ‘ΗΡΑΚΛΕΙΟ / IRAKLIO’ on the front", est:true, price:"€1.30", journey:"~20 min", freqLabel:"every ~10–15 min", hours:"06:00–00:00",
+      { mode:"bus", to:"Heraklion centre & port (Bus Station A)", op:"City bus (lines 6 · 12 · 10 · 11) · look for ‘ΗΡΑΚΛΕΙΟ / IRAKLIO’ on the front", checked:"Sep 2026", price:"€1.30", journey:"~20 min", freqLabel:"every ~10–15 min", hours:"05:50–00:40",
         walk:"~5 min walk", access:"Main doors → turn right, follow the road", ll:"35.335857,25.173770", startPin:true,
-        sched:{kind:"range",first:"06:00",last:"23:45",every:12},
-        note:"€1.30 from the kiosk, €2.30 from the driver — cash. No service after midnight; validate on board." },
+        // Astiko KTEL Irakleiou weekday timetable from 01-08-2026 (line 6 pattern; lines 12/10/11 add more buses)
+        sched:{kind:"windows",windows:[{start:"05:50",end:"08:20",every:20},{start:"08:20",end:"15:00",every:12},{start:"15:00",end:"21:00",every:15},{start:"21:00",end:"00:40",every:20}]},
+        note:"€1.30 from the kiosk or the Astiko KTEL app, €2.30 from the driver — cash on board. Several lines (6, 12, 10, 11) leave the airport for the centre; take any bus showing ΗΡΑΚΛΕΙΟ. Weekday times shown; Saturdays/Sundays are thinner. Last bus around 00:40, no night service." },
       { mode:"taxi", to:"Heraklion centre / port — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€15–22", fareDay:"~€15", fareNight:"~€22", nightStart:0, nightEnd:5, journey:"~15 min", walk:"~1 min walk", access:"Taxi rank outside arrivals" },
     ] },
   CHQ: { slug:"chania", name:"Chania (CHQ)", city:"Crete", verified:false, title:"Chania Airport to town", board:"KTEL bus · to town",
     options:[
-      { mode:"bus", to:"Chania town / KTEL station", op:"KTEL Chania bus · buy from the driver", est:true, price:"€2.50", journey:"~30 min", freqLabel:"sparse — ~8–10 buses/day", hours:"05:30–23:50",
-        walk:"~3 min walk", access:"Bus waiting area outside arrivals", ll:"35.539871,24.141803", startPin:true,
-        sched:{kind:"range",first:"05:30",last:"23:50",every:90},
-        note:"Irregular KTEL timetable (not flight-timed) — the next time shown is an estimate; check the posted schedule at the stop. €2.50 from the driver, cash." },
+      { mode:"bus", to:"Chania town / KTEL station", op:"KTEL Chania bus · buy from the driver or the kiosk", est:true, price:"€2.70", journey:"~30 min", freqLabel:"every ~30 min · sparse before 08:00", hours:"05:00–23:50",
+        walk:"~3 min walk", access:"Bus waiting area outside arrivals, next to the taxi rank", ll:"35.539871,24.141803", startPin:true,
+        // KTEL Chania airport timetable (summer 2026 pattern); KTEL publishes it month by month
+        sched:{kind:"times",times:["05:00","07:40","08:10","08:40","09:30","10:00","10:30","11:00","12:00","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30","23:50"]},
+        note:"Summer 2026 timetable; KTEL publishes a new sheet every month and winter runs thinner (last buses ~21:00–22:00), so check the posted schedule at the stop. About €2.70 from the driver or the kiosk, cash. Terminates at the KTEL station, ~10 min walk from the Old Town." },
       { mode:"taxi", to:"Chania town — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€28–38", fareDay:"~€28", fareNight:"~€38", nightStart:0, nightEnd:5, journey:"~25 min", walk:"~1 min walk", access:"Taxi rank outside arrivals" },
     ] },
-  JTR: { slug:"santorini", name:"Santorini (JTR)", city:"Cyclades", verified:false, title:"Santorini Airport to Fira", board:"KTEL bus · to Fira",
+  JTR: { slug:"santorini", name:"Santorini (JTR)", city:"Cyclades", verified:true, title:"Santorini Airport to Fira", board:"KTEL bus · to Fira",
     options:[
-      { mode:"bus", to:"Fira (main town bus station)", op:"KTEL bus · buy from the driver", est:true, price:"€2.20", journey:"~20 min", freqLabel:"hourly in summer · ~3h in winter", hours:"~07:25–21:10 (summer)",
-        walk:"~2 min walk", access:"Bus stop by the arrivals exit", ll:"36.402741,25.472833", startPin:true,
-        sched:{kind:"range",first:"07:25",last:"21:10",every:60},
-        note:"Summer: about hourly, roughly 07:25–21:10. Winter: about six buses a day, last around 19:10 — the time shown is an estimate from the summer pattern, check the posted schedule. No night service; arrange a taxi for early/late flights. All airport buses terminate at Fira bus station." },
+      { mode:"bus", to:"Fira (main town bus station)", op:"KTEL bus · buy from the driver", checked:"Sep 2026", price:"€2.20", journey:"~15 min", freqLabel:"hourly in summer · ~6/day in winter", hours:"06:10–22:10 (summer)",
+        walk:"~2 min walk", access:"Bus stop by the arrivals exit, opposite the taxi rank", ll:"36.402741,25.472833", startPin:true,
+        // KTEL Santorini summer programme (routes page, 18/05/2026): Airport → Fira
+        sched:{kind:"times",times:["06:10","07:25","08:40","09:25","10:10","11:10","12:10","13:10","14:10","15:10","16:10","17:10","18:10","19:10","20:10","21:10","22:10"]},
+        seasons:[{from:"11-01",to:"03-31",est:true,sched:{kind:"times",times:["07:25","09:25","12:10","15:10","17:10","19:10"]}}],
+        note:"Summer programme shown (last bus 22:10, sometimes a 23:10). Winter (Nov–Mar) drops to about six buses a day, last around 19:10 — winter times here are an estimate until KTEL publishes the sheet. €2.20 cash to the driver. All airport buses terminate at Fira bus station; no night service, so arrange a taxi for early/late flights." },
       { mode:"taxi", to:"Fira — door to door", op:"Metered taxi · scarce in summer", onDemand:true, est:true, price:"~€25–35", fareDay:"~€25", fareNight:"~€35", nightStart:0, nightEnd:5, journey:"~20 min", walk:"~1 min walk", access:"Taxi rank outside arrivals — queues in summer" },
     ] },
 
   RHO: { slug:"rhodes", name:"Rhodes (RHO)", city:"Dodecanese", verified:false, title:"Rhodes Airport to Rhodes Town", board:"RODA bus · to Rhodes Town",
     options:[
-      { mode:"bus", to:"Rhodes Town", op:"RODA bus · Airport → Rhodes", est:true, price:"€2.50", journey:"~35 min", freqLabel:"every ~30 min", hours:"06:40–23:15",
+      { mode:"bus", to:"Rhodes Town (Averof St · New Market)", op:"RODA bus · Airport → Rhodes", est:true, price:"€3", journey:"~40 min", freqLabel:"every ~30 min", hours:"06:50–00:45 (summer)",
         walk:"~2 min walk", access:"Bus stop between the old and new terminals", ll:"36.402210,28.091290", startPin:true,
-        sched:{kind:"range",first:"06:40",last:"23:15",every:30},
-        note:"€2.50 from the ticket desk, €2.60 from the driver. Direct RODA service to Rhodes Town; the last stop is ~5 min walk from the Old Town. The airport bus stop is between the old and new terminals. Timetables vary by season and day; check the current schedule before travelling." },
+        // RODA winter timetable 10/11/2025–15/04/2026 (default) + summer 2026 (06/07–10/09) by day of week
+        sched:{kind:"times",times:["06:50","08:05","08:15","08:45","09:15","09:40","10:15","10:45","11:15","11:45","12:30","12:45","13:15","13:45","14:20","14:45","15:15","16:15","16:30","16:45","17:15","17:45","17:55","18:15","18:45","19:15","19:45","20:20","20:45","21:15","21:45","22:45","23:15"]},
+        seasons:[{from:"05-01",to:"10-15",sched:{kind:"times",byDay:{
+          weekday:["06:50","08:05","08:15","08:45","09:15","09:45","10:15","10:45","11:15","11:45","12:30","12:45","13:15","13:45","14:20","14:45","15:15","16:15","16:30","16:45","17:15","17:45","17:55","18:15","18:45","19:15","19:45","20:15","20:45","21:15","21:30","21:45","22:15","22:45","23:00","23:15","23:45","00:15","00:45"],
+          sat:["05:45","07:20","07:45","08:15","09:00","09:15","09:45","10:15","10:30","10:45","11:15","11:30","11:45","12:30","12:45","13:00","13:15","13:45","14:15","14:45","15:15","16:00","16:15","16:25","16:45","17:15","17:45","18:15","18:45","19:00","19:15","19:45","20:15","20:45","21:15","21:45","22:45","23:15","23:45","00:15","00:45"],
+          sun:["05:45","07:10","08:15","08:45","09:15","09:25","09:45","10:15","10:30","10:45","11:15","11:30","11:45","12:15","12:45","13:15","13:45","14:15","14:30","15:15","16:15","16:30","16:45","17:15","17:45","18:15","18:30","18:45","19:15","19:45","20:15","20:45","21:45","22:15","22:45","22:55","23:15","23:45","00:15","00:45"]}}}],
+        note:"€3 from the driver (cash — buying on board is the norm at the airport). Summer 2026 timetable shown May–mid Oct, winter 2025/26 pattern otherwise; RODA changes times without notice, so check the display at the stop. Terminates at the RODA West Side terminal on Averof St by the New Market — ~5 min walk to the Old Town." },
       { mode:"taxi", to:"Rhodes Town — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€25–35", fareDay:"~€25", fareNight:"~€35", nightStart:0, nightEnd:5, journey:"~25 min", walk:"~1 min walk", access:"Taxi rank outside arrivals" },
     ] },
   SKG: { slug:"thessaloniki", name:"Thessaloniki (SKG)", city:"Macedonia", verified:false, title:"Thessaloniki Airport to the city centre", board:"Bus 01X · to the centre",
     options:[
-      { mode:"bus", to:"City centre (Aristotelous · White Tower)", op:"OASTH bus 01X · 01N overnight", est:true, price:"€2", journey:"~40 min", freqLabel:"every ~25 min · 30 min overnight", hours:"24 hours",
-        walk:"~2 min walk", access:"Bus stop outside arrivals", ll:"40.524062,22.976999", startPin:true,
-        sched:{kind:"windows",windows:[{start:"06:10",end:"22:40",every:25},{start:"23:10",end:"05:55",every:30}]},
-        note:"€2 airport fare (not the standard €0.90 ticket). Buy at the arrivals machines or onboard — no change given. 01X also stops at the railway station & KTEL Makedonia." },
+      { mode:"bus", to:"City centre (Aristotelous · White Tower)", op:"OASTH bus 01X · 01N overnight", est:true, price:"€2", journey:"~40 min", freqLabel:"every ~20–25 min · ~30 min overnight", hours:"24 hours",
+        walk:"~2 min walk", access:"Arrivals level, in front of Exit 4 (Terminal 1)", ll:"40.524062,22.976999", startPin:true,
+        sched:{kind:"windows",windows:[{start:"06:10",end:"22:40",every:22},{start:"23:10",end:"05:55",every:30}]},
+        note:"€2 airport fare, official (the €2.50 day pass is not valid on it). No paper tickets since Jan 2026: buy at the OSETH booth or machines at arrivals, in the OSETH app, or on board by card/contactless only — no cash on the bus. 01X also stops at the New Railway Station & KTEL Makedonia; 01N is the slower overnight stopping service." },
+      { mode:"bus", to:"City centre via Metro (Nea Elvetia)", op:"Bus 02X to Nea Elvetia Metro, then Metro to Venizelou", est:true, price:"€2.60", journey:"~30 min", freqLabel:"02X frequent · metro every 3–8 min", hours:"~05:55–00:00",
+        walk:"~2 min walk", access:"Arrivals level, in front of Exit 4 (Terminal 1)", ll:"40.524062,22.976999", startPin:true,
+        sched:{kind:"windows",windows:[{start:"05:55",end:"00:00",every:20}]},
+        note:"Bus 02X (€2, ~8 min) to Nea Elvetia metro station, then the Metro (€0.60, ~12 min, every 3–8 min) to Venizelou/Agia Sofia in the centre. Two separate tickets — no combined fare. Avoids road traffic; 02X frequency is an estimate. A new 03X to Mikra metro station started Aug 2026." },
       { mode:"taxi", to:"City centre — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€30–40", fareDay:"~€30", fareNight:"~€40", nightStart:0, nightEnd:5, journey:"~35 min", walk:"~1 min walk", access:"Taxi rank outside arrivals", apps:["freenow","uber","bolt"] },
     ] },
   ATH: { slug:"athens", name:"Athens (ATH)", city:"Attica", verified:true, title:"Athens Airport to the city centre", board:"Metro · X95 · Rail · Taxi",
@@ -182,7 +195,26 @@ const I18N = {
 };
 
 I18N.el.airportName="Αεροδρόμιο Αθηνών"; I18N.el.cityCentre="κέντρο πόλης"; I18N.el.whereHeaded="Πού κατευθύνεσαι;"; I18N.el["Athens Airport"]="Αεροδρόμιο Αθηνών"; I18N.el["Athens (ATH)"]="Αθήνα (ATH)"; I18N.el["Heraklion (HER)"]="Ηράκλειο (HER)"; I18N.el["Chania (CHQ)"]="Χανιά (CHQ)"; I18N.el["Santorini (JTR)"]="Σαντορίνη (JTR)"; I18N.el["Thessaloniki (SKG)"]="Θεσσαλονίκη (SKG)"; I18N.el["Attica"]="Αττική"; I18N.el["Crete"]="Κρήτη"; I18N.el["Cyclades"]="Κυκλάδες"; I18N.el["Macedonia"]="Μακεδονία"; I18N.el["Dodecanese"]="Δωδεκάνησα"; I18N.el["Heraklion Airport to town"]="Αεροδρόμιο Ηρακλείου προς πόλη"; I18N.el["Chania Airport to town"]="Αεροδρόμιο Χανίων προς πόλη"; I18N.el["Santorini Airport to Fira"]="Αεροδρόμιο Σαντορίνης προς Φηρά"; I18N.el["Rhodes Airport to Rhodes Town"]="Αεροδρόμιο Ρόδου προς πόλη Ρόδου"; I18N.el["Thessaloniki Airport to the city centre"]="Αεροδρόμιο Θεσσαλονίκης προς κέντρο"; I18N.el["Athens Airport to the city centre"]="Αεροδρόμιο Αθηνών προς κέντρο";I18N.el.kicker="Ελλάδα · αεροδρόμιο → πόλη"; I18N.el.hero1="Έφτασες."; I18N.el.hero2="Τώρα φύγαμε."; I18N.el.findAirport="Βρες το αεροδρόμιό σου."; I18N.el.heroCopy="Δες την επόμενη χρήσιμη επιλογή προς την πόλη — με τιμή, χρόνο και σημείο επιβίβασης."; I18N.el.whereLanded="Πού προσγειώθηκες;"; I18N.el.liveWhere="ΖΩΝΤΑΝΑ ΟΠΟΥ ΥΠΑΡΧΟΥΝ"; I18N.el.whatNext="Τι ακολουθεί"; I18N.el.pickAirport="Διάλεξε αεροδρόμιο."; I18N.el.nextDesktop="Η σελίδα του αεροδρομίου βάζει πρώτη τη γρηγορότερη επιλογή και μετά δείχνει εναλλακτικές, τιμές, χρόνους και ακριβή διαδρομή με τα πόδια από τις αφίξεις."; I18N.el.nextMobile="Πρώτα η γρηγορότερη επιλογή. Μετά εναλλακτικές, τιμές, χρόνοι και σημείο περπατήματος από τις αφίξεις."; I18N.el.dataStatus="Κατάσταση δεδομένων"; I18N.el.liveMeans="σημαίνει πραγματική ροή αναχωρήσεων. Τα προγραμματισμένα και τα εκτιμώμενα δρομολόγια επισημαίνονται ξεχωριστά."; I18N.el.footer="ΠΡΩΤΑ ΔΗΜΟΣΙΑ ΣΥΓΚΟΙΝΩΝΙΑ · ΚΑΙ ΠΛΗΡΟΦΟΡΙΕΣ ΤΑΞΙ · ΧΩΡΙΣ ΠΡΟΩΘΗΣΗ ΚΡΑΤΗΣΗΣ";
-I18N.el["Trains"]="Τρένα";I18N.el["Exit 5"]="Έξοδος 5";I18N.el["Exit 2–3"]="Έξοδοι 2–3";I18N.el["Exits 2–3"]="Έξοδοι 2–3";I18N.el["Exit 3"]="Έξοδος 3";I18N.el["Athens Central (Larissa)"]="Σταθμός Λαρίσης";I18N.el["Athens Central (Larissa Station)"]="Σταθμός Λαρίσης";I18N.el["Rhodes (RHO)"]="Ρόδος (RHO)";I18N.el["Rhodes Town"]="πόλη της Ρόδου";I18N.el["RODA bus · to Rhodes Town"]="Λεωφορείο RODA · προς πόλη Ρόδου";I18N.el["RODA bus · Airport → Rhodes"]="Λεωφορείο RODA · Αεροδρόμιο → Ρόδος";I18N.el["frequent · see timetable"]="συχνά · δες το πρόγραμμα";I18N.el["Bus stop between the old and new terminals"]="Στάση λεωφορείου ανάμεσα στο παλιό και το νέο τερματικό";I18N.el["€2.50 from the ticket desk, €2.60 from the driver. Direct RODA service to Rhodes Town; the last stop is ~5 min walk from the Old Town. The airport bus stop is between the old and new terminals. Timetables vary by season and day; check the current schedule before travelling."]="€2,50 από το εκδοτήριο, €2,60 από τον οδηγό. Απευθείας δρομολόγιο RODA προς την πόλη της Ρόδου· η τελευταία στάση είναι ~5 λεπτά με τα πόδια από την Παλιά Πόλη. Η στάση του αεροδρομίου βρίσκεται ανάμεσα στο παλιό και το νέο τερματικό. Τα δρομολόγια αλλάζουν ανά εποχή και ημέρα· έλεγξε το τρέχον πρόγραμμα πριν ταξιδέψεις."; I18N.el["~35 min"]="~35 λεπτά"; I18N.el["Aug 2026"]="Αύγ. 2026";
+I18N.el["Trains"]="Τρένα";I18N.el["Exit 5"]="Έξοδος 5";I18N.el["Exit 2–3"]="Έξοδοι 2–3";I18N.el["Exits 2–3"]="Έξοδοι 2–3";I18N.el["Exit 3"]="Έξοδος 3";I18N.el["Athens Central (Larissa)"]="Σταθμός Λαρίσης";I18N.el["Athens Central (Larissa Station)"]="Σταθμός Λαρίσης";I18N.el["Rhodes (RHO)"]="Ρόδος (RHO)";I18N.el["Rhodes Town"]="πόλη της Ρόδου";I18N.el["RODA bus · to Rhodes Town"]="Λεωφορείο RODA · προς πόλη Ρόδου";I18N.el["RODA bus · Airport → Rhodes"]="Λεωφορείο RODA · Αεροδρόμιο → Ρόδος";I18N.el["frequent · see timetable"]="συχνά · δες το πρόγραμμα";I18N.el["Bus stop between the old and new terminals"]="Στάση λεωφορείου ανάμεσα στο παλιό και το νέο τερματικό";I18N.el["€2.50 from the ticket desk, €2.60 from the driver. Direct RODA service to Rhodes Town; the last stop is ~5 min walk from the Old Town. The airport bus stop is between the old and new terminals. Timetables vary by season and day; check the current schedule before travelling."]="€2,50 από το εκδοτήριο, €2,60 από τον οδηγό. Απευθείας δρομολόγιο RODA προς την πόλη της Ρόδου· η τελευταία στάση είναι ~5 λεπτά με τα πόδια από την Παλιά Πόλη. Η στάση του αεροδρομίου βρίσκεται ανάμεσα στο παλιό και το νέο τερματικό. Τα δρομολόγια αλλάζουν ανά εποχή και ημέρα· έλεγξε το τρέχον πρόγραμμα πριν ταξιδέψεις."; I18N.el["~35 min"]="~35 λεπτά"; I18N.el["Aug 2026"]="Αύγ. 2026"; I18N.el["Sep 2026"]="Σεπ. 2026";
+I18N.el["City bus (lines 6 · 12 · 10 · 11) · look for ‘ΗΡΑΚΛΕΙΟ / IRAKLIO’ on the front"]="Αστικό λεωφορείο (γραμμές 6 · 12 · 10 · 11) · αναζήτησε «ΗΡΑΚΛΕΙΟ / IRAKLIO» στην μπροστινή πλευρά";
+I18N.el["€1.30 from the kiosk or the Astiko KTEL app, €2.30 from the driver — cash on board. Several lines (6, 12, 10, 11) leave the airport for the centre; take any bus showing ΗΡΑΚΛΕΙΟ. Weekday times shown; Saturdays/Sundays are thinner. Last bus around 00:40, no night service."]="€1,30 από το περίπτερο ή την εφαρμογή του Αστικού ΚΤΕΛ, €2,30 από τον οδηγό — μετρητά μέσα στο λεωφορείο. Αρκετές γραμμές (6, 12, 10, 11) φεύγουν από το αεροδρόμιο για το κέντρο· πάρε όποιο λεωφορείο γράφει ΗΡΑΚΛΕΙΟ. Εμφανίζονται οι ώρες καθημερινών· Σάββατο/Κυριακή είναι πιο αραιά. Τελευταίο γύρω στις 00:40, χωρίς νυχτερινό.";
+I18N.el["KTEL Chania bus · buy from the driver or the kiosk"]="ΚΤΕΛ Χανίων · εισιτήριο από τον οδηγό ή το εκδοτήριο";
+I18N.el["every ~30 min · sparse before 08:00"]="κάθε ~30 λεπτά · αραιά πριν τις 08:00";
+I18N.el["Bus waiting area outside arrivals, next to the taxi rank"]="Χώρος αναμονής λεωφορείων έξω από τις αφίξεις, δίπλα στην πιάτσα ταξί";
+I18N.el["Summer 2026 timetable; KTEL publishes a new sheet every month and winter runs thinner (last buses ~21:00–22:00), so check the posted schedule at the stop. About €2.70 from the driver or the kiosk, cash. Terminates at the KTEL station, ~10 min walk from the Old Town."]="Θερινό πρόγραμμα 2026· το ΚΤΕΛ βγάζει νέο φύλλο κάθε μήνα και τον χειμώνα τα δρομολόγια αραιώνουν (τελευταία ~21:00–22:00), οπότε έλεγξε το αναρτημένο πρόγραμμα στη στάση. Περίπου €2,70 από τον οδηγό ή το εκδοτήριο, μετρητά. Τερματίζει στον σταθμό ΚΤΕΛ, ~10 λεπτά με τα πόδια από την Παλιά Πόλη.";
+I18N.el["hourly in summer · ~6/day in winter"]="ανά ώρα το καλοκαίρι · ~6/ημέρα τον χειμώνα";
+I18N.el["Bus stop by the arrivals exit, opposite the taxi rank"]="Στάση λεωφορείου δίπλα στην έξοδο αφίξεων, απέναντι από την πιάτσα ταξί";
+I18N.el["Summer programme shown (last bus 22:10, sometimes a 23:10). Winter (Nov–Mar) drops to about six buses a day, last around 19:10 — winter times here are an estimate until KTEL publishes the sheet. €2.20 cash to the driver. All airport buses terminate at Fira bus station; no night service, so arrange a taxi for early/late flights."]="Εμφανίζεται το θερινό πρόγραμμα (τελευταίο 22:10, ενίοτε 23:10). Τον χειμώνα (Νοέ.–Μάρ.) πέφτει σε περίπου έξι δρομολόγια την ημέρα, τελευταίο γύρω στις 19:10 — οι χειμερινές ώρες εδώ είναι εκτίμηση μέχρι να δημοσιεύσει το ΚΤΕΛ το πρόγραμμα. €2,20 μετρητά στον οδηγό. Όλα τα λεωφορεία του αεροδρομίου τερματίζουν στον σταθμό Φηρών· δεν υπάρχει νυχτερινό, κανόνισε ταξί για πολύ πρωινές/βραδινές πτήσεις.";
+I18N.el["Rhodes Town (Averof St · New Market)"]="Πόλη της Ρόδου (οδός Αβέρωφ · Νέα Αγορά)";
+I18N.el["€3 from the driver (cash — buying on board is the norm at the airport). Summer 2026 timetable shown May–mid Oct, winter 2025/26 pattern otherwise; RODA changes times without notice, so check the display at the stop. Terminates at the RODA West Side terminal on Averof St by the New Market — ~5 min walk to the Old Town."]="€3 από τον οδηγό (μετρητά — στο αεροδρόμιο το εισιτήριο βγαίνει μέσα στο λεωφορείο). Εμφανίζεται το θερινό πρόγραμμα 2026 Μάιο–μέσα Οκτωβρίου, αλλιώς το χειμερινό μοτίβο 2025/26· η ΡΟΔΑ αλλάζει ώρες χωρίς προειδοποίηση, οπότε έλεγξε την οθόνη στη στάση. Τερματίζει στον σταθμό της ΡΟΔΑ (Δυτική πλευρά) στην οδό Αβέρωφ δίπλα στη Νέα Αγορά — ~5 λεπτά με τα πόδια ως την Παλιά Πόλη.";
+I18N.el["every ~20–25 min · ~30 min overnight"]="κάθε ~20–25 λεπτά · ~30 λεπτά τη νύχτα";
+I18N.el["Arrivals level, in front of Exit 4 (Terminal 1)"]="Επίπεδο αφίξεων, μπροστά από την Έξοδο 4 (Τερματικός 1)";
+I18N.el["€2 airport fare, official (the €2.50 day pass is not valid on it). No paper tickets since Jan 2026: buy at the OSETH booth or machines at arrivals, in the OSETH app, or on board by card/contactless only — no cash on the bus. 01X also stops at the New Railway Station & KTEL Makedonia; 01N is the slower overnight stopping service."]="€2 επίσημη τιμή αεροδρομίου (το ημερήσιο €2,50 δεν ισχύει). Χωρίς χάρτινα εισιτήρια από τον Ιαν. 2026: αγόρασε από το εκδοτήριο ή τα μηχανήματα του ΟΣΕΘ στις αφίξεις, από την εφαρμογή ΟΣΕΘ, ή μέσα στο λεωφορείο μόνο με κάρτα/ανέπαφα — όχι μετρητά. Το 01Χ σταματά και στον Νέο Σιδηροδρομικό Σταθμό & στο ΚΤΕΛ Μακεδονία· το 01Ν είναι το πιο αργό νυχτερινό με όλες τις στάσεις.";
+I18N.el["City centre via Metro (Nea Elvetia)"]="Κέντρο μέσω Μετρό (Νέα Ελβετία)";
+I18N.el["Bus 02X to Nea Elvetia Metro, then Metro to Venizelou"]="Λεωφορείο 02Χ ως το Μετρό Νέα Ελβετία, μετά Μετρό ως Βενιζέλου";
+I18N.el["02X frequent · metro every 3–8 min"]="02Χ συχνό · μετρό κάθε 3–8 λεπτά";
+I18N.el["Bus 02X (€2, ~8 min) to Nea Elvetia metro station, then the Metro (€0.60, ~12 min, every 3–8 min) to Venizelou/Agia Sofia in the centre. Two separate tickets — no combined fare. Avoids road traffic; 02X frequency is an estimate. A new 03X to Mikra metro station started Aug 2026."]="Λεωφορείο 02Χ (€2, ~8 λεπτά) ως τον σταθμό Μετρό Νέα Ελβετία, μετά Μετρό (€0,60, ~12 λεπτά, κάθε 3–8 λεπτά) ως Βενιζέλου/Αγία Σοφία στο κέντρο. Δύο ξεχωριστά εισιτήρια — δεν υπάρχει συνδυαστικό. Αποφεύγει την κίνηση· η συχνότητα του 02Χ είναι εκτίμηση. Από τον Αύγ. 2026 λειτουργεί και το 03Χ ως τον σταθμό Μίκρα.";
+I18N.el["~15 min"]="~15 λεπτά";
 // Language is determined by the indexable page URL, never by browser state.
 let JL_LANG = document.documentElement.lang === "el" ? "el" : "en";
 function tr(v){
@@ -201,8 +233,8 @@ function tr(v){
 }
 function trHtml(v){ return tr(v); }
 function selectedLangLabel(){ return JL_LANG==="el" ? "ΕΛ" : "EN"; }
-const DISC_I18N={ATH:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Μετρό/τρένο δείχνουν προγραμματισμένες ώρες, ενώ τα express λεωφορεία δείχνουν ζωντανά (ΟΑΣΑ) πότε φτάνει το επόμενο λεωφορείο στη στάση του αεροδρομίου — αναχωρεί λίγα λεπτά μετά. Χωρίς ζωντανά δεδομένα εμφανίζεται το πρόγραμμα. Έλεγξε πάντα στη στάση."};
-const DISC_EN={ATH:"Fares & service hours verified Aug 2026. Metro/rail show exact clock-face times; the express buses show live (OASA) when the next bus reaches the airport stop — it departs a few minutes later. Without live data you see the timetable. Always confirm at the stop."};
+const DISC_I18N={HER:"Τιμές από τον επίσημο τιμοκατάλογο του Αστικού ΚΤΕΛ και αναχωρήσεις από το πρόγραμμα που ισχύει από 1 Αυγ. 2026 (καθημερινές· τα Σαββατοκύριακα είναι πιο αραιά). Έλεγχος Σεπ. 2026. Έλεγξε πάντα στη στάση.",JTR:"Τιμή και θερινές αναχωρήσεις από το επίσημο πρόγραμμα του ΚΤΕΛ Σαντορίνης (έλεγχος Σεπ. 2026)· οι χειμερινές ώρες είναι εκτίμηση μέχρι να δημοσιευτεί το χειμερινό φύλλο. Έλεγξε πάντα στη στάση.",ATH:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Μετρό/τρένο δείχνουν προγραμματισμένες ώρες, ενώ τα express λεωφορεία δείχνουν ζωντανά (ΟΑΣΑ) πότε φτάνει το επόμενο λεωφορείο στη στάση του αεροδρομίου — αναχωρεί λίγα λεπτά μετά. Χωρίς ζωντανά δεδομένα εμφανίζεται το πρόγραμμα. Έλεγξε πάντα στη στάση."};
+const DISC_EN={HER:"Fares from the operator's official price list and departures from its timetable in force from 1 Aug 2026 (weekdays; weekends are thinner). Checked Sep 2026. Always confirm at the stop.",JTR:"Fare and summer departures from KTEL Santorini's official programme (checked Sep 2026); winter times are an estimate until the winter sheet is published. Always confirm at the stop.",ATH:"Fares & service hours verified Aug 2026. Metro/rail show exact clock-face times; the express buses show live (OASA) when the next bus reaches the airport stop — it departs a few minutes later. Without live data you see the timetable. Always confirm at the stop."};
 const DISC_UNVERIFIED={el:"Ενδεικτικά δεδομένα — τιμές και ώρες προέρχονται από δημοσιευμένα δρομολόγια και αναφορές ταξιδιωτών (έλεγχος Αύγ.–Σεπ. 2026), όχι από επιτόπια επαλήθευση. Οι αναχωρήσεις υπολογίζονται από τη δηλωμένη συχνότητα και αλλάζουν ανά εποχή. Έλεγξε πάντα στη στάση.",en:"Indicative data — fares and times come from published timetables and traveller reports (checked Aug–Sep 2026), not verified on site. Departure times are estimated from the listed frequency and change by season. Always confirm at the stop."};
 function discText(code){ const ap=AIRPORTS[code]; if(!ap) return ""; if(ap.verified){ return (JL_LANG==="el"?DISC_I18N[code]:DISC_EN[code])||""; } return DISC_UNVERIFIED[JL_LANG==="el"?"el":"en"]; }
 function applyLanguage(){
@@ -358,19 +390,40 @@ function serviceAvailable(o, date){
   if(!o || !o.serviceRule) return true;
   return o.serviceRule(date);
 }
+function inSeason(season, d){
+  const md=String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  return season.from<=season.to ? (md>=season.from && md<=season.to) : (md>=season.from || md<=season.to);
+}
+function schedFor(o, d){
+  if(Array.isArray(o.seasons)){ const sz=o.seasons.find(x=>inSeason(x,d)); if(sz && sz.sched) return sz.sched; }
+  return o.sched;
+}
+function isEstimateAt(o, d){
+  if(o.est) return true;
+  if(Array.isArray(o.seasons)){ const sz=o.seasons.find(x=>inSeason(x,d)); if(sz && sz.est) return true; }
+  return false;
+}
 function scheduleDates(o, baseDate){
-  const s=o.sched; if(!s) return [];
+  if(!o.sched) return [];
   const out=[];
   for(let day=-1;day<=2;day++){
     const base=dateOnly(baseDate,day);
+    const s=schedFor(o, base); if(!s) continue;
+    const push=t=>{ const d=new Date(base); d.setHours(0,0,0,0); d.setMinutes(t); out.push(d); };
     if(s.kind==="range"){
       let a=toMin(s.first), b=toMin(s.last); if(b<a)b+=1440;
-      for(let t=a;t<=b;t+=s.every){ const d=new Date(base); d.setHours(0,0,0,0); d.setMinutes(t); out.push(d); }
+      for(let t=a;t<=b;t+=s.every) push(t);
     } else if(s.kind==="windows"){
       for(const w of s.windows){
         let a=toMin(w.start), b=toMin(w.end); if(b<=a)b+=1440;
-        for(let t=a;t<b;t+=w.every){ const d=new Date(base); d.setHours(0,0,0,0); d.setMinutes(t); out.push(d); }
+        // end is inclusive unless another window starts exactly there (avoid double-counting the boundary)
+        const chained=s.windows.some(w2=>w2!==w && toMin(w2.start)===(b%1440));
+        for(let t=a;chained?t<b:t<=b;t+=w.every) push(t);
       }
+    } else if(s.kind==="times"){
+      let list=s.times;
+      if(s.byDay){ const dow=base.getDay(); list=dow===0?(s.byDay.sun||s.byDay.weekday):dow===6?(s.byDay.sat||s.byDay.weekday):s.byDay.weekday; }
+      for(const t of (list||[])) push(toMin(t));
     }
   }
   const filtered=out.filter(d=>serviceAvailable(o,d));
@@ -385,7 +438,7 @@ function nextTwo(o, atDate){
     const d=LIVE[o.route].deps;
     return {dep1:d[0],dep2:d.length>1?d[1]:d[0],until:Math.max(0,d[0]-nowMin),closed:false,isLive:true,selected:atDate};
   }
-  const list=scheduleDates(o,atDate), target=atDate.getTime();
+  const list=scheduleDates(o,atDate), target=new Date(atDate).setSeconds(0,0); // minute granularity: a bus due this minute still counts
   const next=list.find(d=>d.getTime()>=target);
   if(!next) return {dep1:null,dep2:null,until:99999,closed:true,isLive:false,selected:atDate};
   const following=list.find(d=>d.getTime()>next.getTime());
@@ -480,7 +533,8 @@ function upcomingDepartures(o, atDate, count=4){
     }).filter(d=>d>=atDate).slice(0,count);
     if(dates.length) return {dates,isLive:true};
   }
-  const dates=scheduleDates(o,atDate).filter(d=>d>=atDate).slice(0,count);
+  const t0=new Date(atDate).setSeconds(0,0);
+  const dates=scheduleDates(o,atDate).filter(d=>d>=t0).slice(0,count);
   return {dates,isLive:false};
 }
 function waitLabel(from, to){
@@ -614,7 +668,7 @@ function optionBody(o,e,r,opts={}){
     const avail=`<div class="avail">${T("Διαθέσιμο","Available")} <b>${T("τώρα","now")}</b> · ${T("κατόπιν ζήτησης","on demand")}</div>`;
     return `${avail}${taxiInfo}${apps}${note}${sourceLine(o)}`;
   }
-  const est=(o.est||r.isLive)?"~":"";
+  const est=(isEstimateAt(o,r.selected)||r.isLive)?"~":"";
   let inTxt,cls;
   if(r.closed){inTxt=T("δεν λειτουργεί τώρα","service closed");cls="closed";}
   else if(r.until<=0){inTxt=T("τώρα","now");cls="soon";}
@@ -647,7 +701,7 @@ function optionBody(o,e,r,opts={}){
 function sourceLine(o){
   const T=(el,en)=>JL_LANG==="el"?el:en;
   if(o.official && o.checked) return `<div class="src">${T("Επίσημη χρέωση · ελέγχθηκε","Official fare · checked")} ${tr(o.checked)}</div>`;
-  if(o.checked) return `<div class="src">${T("Τιμή & ωράριο ελέγχθηκαν","Fare & timetable checked")} ${tr(o.checked)}</div>`;
+  if(o.checked){ const seasonalEst=isEstimateAt(o,getViewTime()); return `<div class="src">${T("Τιμή & ωράριο ελέγχθηκαν","Fare & timetable checked")} ${tr(o.checked)}${seasonalEst?T(" · οι χειμερινές ώρες είναι εκτίμηση"," · winter times are an estimate"):""}</div>`; }
   if(o.est) return `<div class="src src-est">${T("Εκτίμηση από δημοσιευμένα δρομολόγια — μη επαληθευμένο επιτόπου","Estimate from published timetables — not verified on site")}</div>`;
   return "";
 }
@@ -683,7 +737,7 @@ function altRow(row){
   let summary;
   if(isTaxi){ summary=o.fareDay?`${T("κατόπιν ζήτησης","on demand")} · ${o.fareDay}/${o.fareNight}`:(o.price||""); }
   else if(r.closed){ summary=T("δεν λειτουργεί τώρα","not running now"); }
-  else { const arrD=arrivalClock(o,r,e.destinationId); const est=(o.est||r.isLive)?"~":""; const arr=arrD?` · ${T("άφιξη","arrive")} ~${fmt(arrD.getHours()*60+arrD.getMinutes())}`:""; const rel=r.until<=0?T("τώρα","now"):(r.until<60?T(`σε ${r.until} λεπτά`,`in ${r.until} min`):T(`σε ${Math.floor(r.until/60)}ω${String(r.until%60).padStart(2,"0")}`,`in ${Math.floor(r.until/60)}h${String(r.until%60).padStart(2,"0")}`)); summary=`${T("φεύγει","leaves")} ${est}${fmt(r.dep1)} · ${rel}${arr}`; }
+  else { const arrD=arrivalClock(o,r,e.destinationId); const est=(isEstimateAt(o,r.selected)||r.isLive)?"~":""; const arr=arrD?` · ${T("άφιξη","arrive")} ~${fmt(arrD.getHours()*60+arrD.getMinutes())}`:""; const rel=r.until<=0?T("τώρα","now"):(r.until<60?T(`σε ${r.until} λεπτά`,`in ${r.until} min`):T(`σε ${Math.floor(r.until/60)}ω${String(r.until%60).padStart(2,"0")}`,`in ${Math.floor(r.until/60)}h${String(r.until%60).padStart(2,"0")}`)); summary=`${T("φεύγει","leaves")} ${est}${fmt(r.dep1)} · ${rel}${arr}`; }
   const open=ALT_ROWS_OPEN.has(o.name);
   return `<div class="alt-item${open?' open':''}"><button class="alt-row" type="button" data-alt="${encodeURIComponent(o.name||"")}" aria-expanded="${open}"><div class="mi">${modeIcon(o.mode)}</div><div class="an"><b>${nameHtml}</b><span>${(!isTaxi&&!r.closed&&r.isLive)?'<span class="pulse"></span>':''}${summary}</span></div><div class="ap">${o.price||""}</div><span class="alt-chev">▾</span></button><div class="alt-detail"${open?"":" hidden"}>${optionBody(o,e,r)}</div></div>`;
 }

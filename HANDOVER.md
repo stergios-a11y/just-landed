@@ -115,6 +115,10 @@ timetables, which is fine for layout work.
   to the ride/total, e.g. "Monastiraki, then ~10 min walk").
 - `journeyBands` (time-of-day ride times) scale `journeyByDestination` values
   proportionally, so rush-hour/night differences apply on every ATH page.
+- Schedules: `sched` is `{kind:"range"}`, `{kind:"windows"}` (end inclusive
+  unless another window starts there) or `{kind:"times", times:[...]}` /
+  `{kind:"times", byDay:{weekday,sat,sun}}`. `seasons:[{from:"MM-DD",to:"MM-DD",
+  sched, est?}]` overrides `sched` by calendar date (`schedFor`, `isEstimateAt`).
 - Each option `o`: `mode` (`metro|bus|rail|taxi`), `name`, `to`, `price`,
   `journey`, `access`, etc. `checked:"Aug 2026"` renders a "Fare & timetable
   checked …" line on the card; `est:true` renders "Estimate — not verified on
@@ -183,8 +187,20 @@ raster jaggies) + live Inter text — razor-sharp at any size.
 
 ## Suggested next work (leftovers)
 
-1. **Verify island fares/times** and flip their `verified` flags — HER, CHQ, JTR,
-   RHO, SKG currently show the "sample data" disclaimer.
+1. Island verification status (Sep 2026 research, sources in the commit
+   message / per-option notes):
+   - HER **verified** — fares from Astiko KTEL price list, weekday times from the
+     official 01-08-2026 timetable (lines 6/12/10/11). Sat/Sun PDFs not encoded.
+   - JTR **verified** for summer (official KTEL Santorini routes page); winter
+     (Nov–Mar) is a 6-bus estimate flagged `seasons[].est` until KTEL publishes.
+   - RHO unverified — €3 + full summer (Mon–Fri/Sat/Sun) and winter lists are
+     from rhodesoldtown.gr / rodos-rhodes.com copies; rodospublictransport.gr
+     could not be fetched. Summer season set May 1–Oct 15 in `seasons`.
+   - CHQ unverified — official PDF (e-ktel.com, monthly) unreadable; times are
+     the June/Sep 2026 secondary copies, fare ~€2.70. Re-check monthly.
+   - SKG unverified — €2 fare is official (OSETH), no cash on board since Jan
+     2026; 01X/01N times are Moovit/secondary. 02X+Metro option added (frequency
+     estimated). 03X to Mikra started 27 Aug 2026 — not yet an option.
 2. Live feed now covers X95/X96/X93/X97 by line id (`route:"x96"` etc. in
    data.js). If OASA ever exposes departures at the origin stop, switch the
    worker to outbound codes (listed in worker.js) and drop the turnaround note.
