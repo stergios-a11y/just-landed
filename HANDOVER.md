@@ -11,8 +11,12 @@ Repo: `github.com/stergios-a11y/just-landed` · local: `~/Projects/justlanded`
 
 ## Stack & how it serves
 
-- **Vanilla HTML/CSS/JS. No framework, no build step.** Pages are hand-authored
-  `.html`; all rendering logic + data live in one file, `data.js`.
+- **Vanilla HTML/CSS/JS, no framework.** All 26 pages + `sitemap.xml` are
+  **generated** by `node scripts/build.mjs` from `site/content.mjs` (prose, SEO,
+  FAQ per page/language) and `site/partials/*` (logo, flags, theme script).
+  Generated HTML is committed, so deploy still needs no build; CI refuses to
+  deploy if the committed HTML is out of date (`npm run check`).
+  All rendering logic + timetable data live in one file, `data.js`.
 - **Cloudflare Worker** (`worker.js`) fronts static assets:
   - `/api/airport` and `/api/x95` proxy the **OASA telematics feed** for live
     Athens airport-express bus arrivals (route X95 = code `2051`). Any error
@@ -37,6 +41,13 @@ from the local machine — needs local wrangler auth (`wrangler-account.json`,
 gitignored). It deploys the *working dir*, so untracked junk would ship; prefer
 the push path.
 
+**Editing pages:** never hand-edit `*.html` / `en/*.html` — edit
+`site/content.mjs` (copy, SEO facts, FAQ; the FAQ JSON-LD is derived from it),
+`site/home.css` / `site/home.js` (homepage only), or `scripts/build.mjs`
+(template/head/header), then `npm run build` and commit the regenerated files.
+Adding a page = one entry in `PAGES` (both languages) + rebuild; the sitemap
+follows. `node scripts/build.mjs --touch` bumps every sitemap `lastmod`.
+
 **Cache-bust:** assets referenced with `?v=N` (e.g. landmark images `?v=2`).
 Bump N when you replace an image, or the CDN/browser serves the stale one.
 
@@ -53,23 +64,27 @@ timetables, which is fine for layout work.
 
 ## File map
 
-- `index.html` / `en/index.html` — homepage (airport grid). Has its OWN inline
-  `<style>` + i18n dict (does NOT use data.js for its grid text).
+- `scripts/build.mjs` — the generator (templates for home / airport / route
+  pages, meta + hreflang + JSON-LD, sitemap). `site/content.mjs` — all page copy.
+  `site/partials/` — `logo.svg`, `flag-en.svg`, `flag-el.svg`, `theme-init.html`.
+  `site/home.css`, `site/home.js` — homepage-only styles/script (inlined at build).
+- `index.html` / `en/index.html` — GENERATED homepage (airport grid); its grid
+  text comes from the `COPY` dict in `site/home.js`, not data.js.
 - **Route pages** `athens-airport-to-{acropolis,syntagma,monastiraki,piraeus,`
-  `rafina,kifisos-bus-station}.html` (+ `en/`) — one destination each; set
-  `CODE="ATH"` and `DESTSEL[CODE]="..."`, then `initAirport(CODE)`.
+  `rafina,kifisos-bus-station}.html` (+ `en/`) — GENERATED, one destination
+  each (`kind:"route"`, `dest:` in content.mjs → `DESTSEL[CODE]`).
 - **City/airport pages** `athens, thessaloniki, heraklion, chania, santorini,`
-  `rhodes .html` (+ `en/`) — per-airport, all destinations.
+  `rhodes .html` (+ `en/`) — GENERATED, per-airport (`kind:"airport"`).
 - `data.js` (~81KB) — **the brain**: `AIRPORTS` data + all render logic + i18n.
 - `tokens.css` — single colour-palette source (light default + dark).
 - `style.css` — main styles. `seo.css` — styles for the SEO prose sections.
 - `worker.js`, `wrangler.jsonc`, `.github/workflows/deploy.yml`, `deploy.sh`.
 - Assets: `*-landmark.{png,webp}` (perfect-circle city graphics), favicons,
   `og-image.png` (1200x630 share image), inline-SVG logo (see below).
-- `robots.txt`, `sitemap.xml`, hreflang alternates on every page.
+- `robots.txt`; `sitemap.xml` + hreflang alternates are generated.
+- `package.json` — only npm scripts (`build`, `check`, `serve`); no dependencies.
 
 ### Stale files (cleanup candidates)
-- `index-backup.html` — tracked, stale, still bulk-edited. Probably deletable.
 - `*.before-departure-ui` — old snapshots (gitignored).
 - `just-landed-header.svg` / `just-landed-*.svg` — earlier logo experiments; the
   header logo is now inline (below). `just-landed-header.svg` geometry is broken
@@ -83,8 +98,17 @@ timetables, which is fine for layout work.
 
 - `AIRPORTS[CODE]` = `{ verified, destinations, options, ... }`. **Only ATH is
   `verified:true`** (fares/times checked Aug 2026). Islands are `verified:false`
-  -> each renders a "sample data, confirm at stop" disclaimer; their fares/times
-  are **estimates** (web-researched, not official).
+  -> `discText(code)` renders the "indicative data, not verified on site"
+  disclaimer (`DISC_UNVERIFIED`); verified airports use `DISC_I18N`/`DISC_EN`.
+  Island fares/times are **estimates** from published timetables (Rhodes and
+  Santorini re-checked Sep 2026).
+- ATH `destinations[].routes[]` entries: `k` (route key), `to`, `best`, `how`
+  (transfer instructions, rendered under the ride step), `alt:true` (never
+  competes for Fastest/Cheapest — used for Suburban Rail on "City centre"),
+  `jd` (use another destination's journey time) + `walkAfter` (minutes added
+  to the ride/total, e.g. "Monastiraki, then ~10 min walk").
+- `journeyBands` (time-of-day ride times) scale `journeyByDestination` values
+  proportionally, so rush-hour/night differences apply on every ATH page.
 - Each option `o`: `mode` (`metro|bus|rail|taxi`), `name`, `to`, `price`,
   `journey`, `access`, etc.
 - **Taxi:** `fareDay`/`fareNight`, `nightStart:0, nightEnd:5` (Greek night tariff
@@ -152,6 +176,9 @@ raster jaggies) + live Inter text — razor-sharp at any size.
    RHO, SKG currently show the "sample data" disclaimer.
 2. Extend the **live feed** beyond Athens X95 (route codes for X96 Piraeus etc.
    are already in `worker.js` `ROUTES` but not surfaced per-destination).
-3. Delete stale `index-backup.html` and the `.before-departure-ui` snapshots.
-4. Consider **generating** route/city pages from `data.js` instead of hand-
-   maintaining 27 near-identical HTML files (biggest maintenance win, bigger lift).
+3. Delete the `.before-departure-ui` snapshots (gitignored, local only).
+4. Decide EN-as-root (`/` English, `/el/` Greek, `x-default` → EN). The
+   generator's `pathFor()/fileFor()` are the only places that know the layout.
+5. Data in `data.js` and prose in `site/content.mjs` can still disagree (fares,
+   hours in the "At a glance" facts). Next step: derive the facts rows from
+   `AIRPORTS` at build time.
