@@ -5,3 +5,6 @@ README.md
 .DS_Store
 .git
 .wrangler
+HANDOVER.md
+.logo_bak
+deploy.sh

@@ -1,7 +1,7 @@
 /* Just Landed — shared data + render logic (dark-only). ATH verified; live X95 via /api/x95. */
 
 const AIRPORTS = {
-  HER: { slug:"heraklion", name:"Heraklion (HER)", city:"Crete", verified:true, title:"Heraklion Airport to town", board:"City bus · centre & port",
+  HER: { slug:"heraklion", name:"Heraklion (HER)", city:"Crete", verified:false, title:"Heraklion Airport to town", board:"City bus · centre & port",
     options:[
       { mode:"bus", to:"Heraklion centre & port (Bus Station A)", op:"City bus · look for ‘ΗΡΑΚΛΕΙΟ / IRAKLIO’ on the front", price:"€1.30", journey:"~20 min", freqLabel:"every ~10–15 min", hours:"06:00–00:00",
         walk:"~5 min walk", access:"Main doors → turn right, follow the road", ll:"35.335857,25.173770", startPin:true,
@@ -9,7 +9,7 @@ const AIRPORTS = {
         note:"€1.30 from the kiosk, €2.30 from the driver — cash. No service after midnight; validate on board." },
       { mode:"taxi", to:"Heraklion centre / port — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€15–22", fareDay:"~€15", fareNight:"~€22", nightStart:0, nightEnd:5, journey:"~15 min", walk:"~1 min walk", access:"Taxi rank outside arrivals" },
     ] },
-  CHQ: { slug:"chania", name:"Chania (CHQ)", city:"Crete", verified:true, title:"Chania Airport to town", board:"KTEL bus · to town",
+  CHQ: { slug:"chania", name:"Chania (CHQ)", city:"Crete", verified:false, title:"Chania Airport to town", board:"KTEL bus · to town",
     options:[
       { mode:"bus", to:"Chania town / KTEL station", op:"KTEL Chania bus · buy from the driver", est:true, price:"€2.50", journey:"~30 min", freqLabel:"sparse — ~8–10 buses/day", hours:"05:30–23:50",
         walk:"~3 min walk", access:"Bus waiting area outside arrivals", ll:"35.539871,24.141803", startPin:true,
@@ -17,24 +17,24 @@ const AIRPORTS = {
         note:"Irregular KTEL timetable (not flight-timed) — the next time shown is an estimate; check the posted schedule at the stop. €2.50 from the driver, cash." },
       { mode:"taxi", to:"Chania town — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€28–38", fareDay:"~€28", fareNight:"~€38", nightStart:0, nightEnd:5, journey:"~25 min", walk:"~1 min walk", access:"Taxi rank outside arrivals" },
     ] },
-  JTR: { slug:"santorini", name:"Santorini (JTR)", city:"Cyclades", verified:true, title:"Santorini Airport to Fira", board:"KTEL bus · to Fira",
+  JTR: { slug:"santorini", name:"Santorini (JTR)", city:"Cyclades", verified:false, title:"Santorini Airport to Fira", board:"KTEL bus · to Fira",
     options:[
-      { mode:"bus", to:"Fira (main town bus station)", op:"KTEL bus · buy from the driver", est:true, price:"€2.20", journey:"~20 min", freqLabel:"hourly in summer · ~3h in winter", hours:"~06:40–21:40",
+      { mode:"bus", to:"Fira (main town bus station)", op:"KTEL bus · buy from the driver", est:true, price:"€2.20", journey:"~20 min", freqLabel:"hourly in summer · ~3h in winter", hours:"~07:25–21:10 (summer)",
         walk:"~2 min walk", access:"Bus stop by the arrivals exit", ll:"36.402741,25.472833", startPin:true,
-        sched:{kind:"range",first:"06:40",last:"21:40",every:60},
-        note:"Summer: about hourly. Winter: roughly every 3 hours — the time shown is an estimate, check the posted schedule. Overnight (00:00–05:00) barely runs; arrange backup for very early/late flights. All airport buses terminate at Fira bus station." },
+        sched:{kind:"range",first:"07:25",last:"21:10",every:60},
+        note:"Summer: about hourly, roughly 07:25–21:10. Winter: about six buses a day, last around 19:10 — the time shown is an estimate from the summer pattern, check the posted schedule. No night service; arrange a taxi for early/late flights. All airport buses terminate at Fira bus station." },
       { mode:"taxi", to:"Fira — door to door", op:"Metered taxi · scarce in summer", onDemand:true, est:true, price:"~€25–35", fareDay:"~€25", fareNight:"~€35", nightStart:0, nightEnd:5, journey:"~20 min", walk:"~1 min walk", access:"Taxi rank outside arrivals — queues in summer" },
     ] },
 
-  RHO: { slug:"rhodes", name:"Rhodes (RHO)", city:"Dodecanese", verified:true, title:"Rhodes Airport to Rhodes Town", board:"RODA bus · to Rhodes Town",
+  RHO: { slug:"rhodes", name:"Rhodes (RHO)", city:"Dodecanese", verified:false, title:"Rhodes Airport to Rhodes Town", board:"RODA bus · to Rhodes Town",
     options:[
-      { mode:"bus", to:"Rhodes Town", op:"RODA bus · Airport → Rhodes", est:true, price:"€3", journey:"~30 min", freqLabel:"every ~30 min", hours:"05:45–23:45",
+      { mode:"bus", to:"Rhodes Town", op:"RODA bus · Airport → Rhodes", est:true, price:"€2.50", journey:"~35 min", freqLabel:"every ~30 min", hours:"06:40–23:15",
         walk:"~2 min walk", access:"Bus stop between the old and new terminals", ll:"36.402210,28.091290", startPin:true,
-        sched:{kind:"range",first:"05:45",last:"23:45",every:30},
-        note:"Direct RODA service to Rhodes Town. The airport bus stop is between the old and new terminals. Published timetables vary by season and day; check the current schedule before travelling." },
+        sched:{kind:"range",first:"06:40",last:"23:15",every:30},
+        note:"€2.50 from the ticket desk, €2.60 from the driver. Direct RODA service to Rhodes Town; the last stop is ~5 min walk from the Old Town. The airport bus stop is between the old and new terminals. Timetables vary by season and day; check the current schedule before travelling." },
       { mode:"taxi", to:"Rhodes Town — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€25–35", fareDay:"~€25", fareNight:"~€35", nightStart:0, nightEnd:5, journey:"~25 min", walk:"~1 min walk", access:"Taxi rank outside arrivals" },
     ] },
-  SKG: { slug:"thessaloniki", name:"Thessaloniki (SKG)", city:"Macedonia", verified:true, title:"Thessaloniki Airport to the city centre", board:"Bus 01X · to the centre",
+  SKG: { slug:"thessaloniki", name:"Thessaloniki (SKG)", city:"Macedonia", verified:false, title:"Thessaloniki Airport to the city centre", board:"Bus 01X · to the centre",
     options:[
       { mode:"bus", to:"City centre (Aristotelous · White Tower)", op:"OASTH bus 01X · 01N overnight", price:"€2", journey:"~40 min", freqLabel:"every ~25 min · 30 min overnight", hours:"24 hours",
         walk:"~2 min walk", access:"Bus stop outside arrivals", ll:"40.524062,22.976999", startPin:true,
@@ -59,7 +59,7 @@ const AIRPORTS = {
         sched:{kind:"range",first:"06:10",last:"23:34",every:36}, payment:"💳 Card accepted · tap at gate"},
       x95:{mode:"bus",name:"Bus X95",price:"€5.50",journey:"~60 min",walk:"~3 min walk",accessShort:"Exit 5",route:"2051",est:true,
         journeyBands:[{from:0,to:6,mins:40},{from:6,to:9.5,mins:65},{from:9.5,to:16,mins:55},{from:16,to:19.5,mins:70},{from:19.5,to:23,mins:50},{from:23,to:24,mins:40}],
-        journeyByDestination:{centre:60,mon:68,acro:68},
+        journeyByDestination:{centre:60,acro:68},
         sched:{kind:"windows",windows:[{start:"06:00",end:"22:00",every:20},{start:"22:00",end:"06:00",every:60}]}, payment:"💳 Card accepted · tap onboard"},
       rail:{mode:"rail",name:"Suburban Rail",price:"€9",journey:"~50 min",walk:"~6 min walk",accessShort:"Trains",sched:{kind:"range",first:"06:09",last:"22:09",every:30}, payment:"💳 Ticket/card · tap at gate"},
       x96:{mode:"bus",name:"Bus X96",price:"€5.50",journey:"~90 min",walk:"~3 min walk",accessShort:"Exit 2–3",route:"3028",est:true,
@@ -77,12 +77,12 @@ const AIRPORTS = {
     },
     destinations:[
       {id:"centre",label:"City centre",title:"City centre",routes:[
-        {k:"metro",to:"Syntagma — direct",best:true},{k:"x95",to:"Syntagma — direct"},{k:"rail",to:"Athens Central (Larissa)"},{k:"taxi",to:"door to door"}]},
+        {k:"metro",to:"Syntagma — direct",best:true},{k:"x95",to:"Syntagma — direct"},{k:"rail",to:"Athens Central (Larissa)",alt:true,how:"Larissa station is on the <b>red line (M2)</b>, 2 stops from Syntagma — best if you're heading to the rail station itself"},{k:"taxi",to:"door to door"}]},
       {id:"mon",label:"Monastiráki",title:"Monastiráki / Pláka",routes:[
-        {k:"metro",to:"Monastiraki — direct (M3)",best:true},{k:"x95",to:"Syntagma, then ~8 min walk"},{k:"taxi",to:"door to door"}]},
+        {k:"metro",to:"Monastiraki — direct (M3)",best:true},{k:"x95",to:"Syntagma, then ~8 min walk",jd:"centre",walkAfter:8},{k:"taxi",to:"door to door"}]},
       {id:"acro",label:"Acropolis",title:"Acropolis",routes:[
         {k:"metro",to:"Acropoli station",how:"M3 to <b>Syntagma</b> → change to the <b>red line (M2)</b>, 1 stop",best:true},
-        {k:"metro",to:"Monastiraki, then ~10 min walk",how:"M3 <b>direct</b>, then walk up"},{k:"taxi",to:"door to door"}]},
+        {k:"metro",to:"Monastiraki, then ~10 min walk",how:"M3 <b>direct</b>, then walk up",jd:"mon",walkAfter:10},{k:"taxi",to:"door to door"}]},
       {id:"pir",label:"Piraeus port",title:"Piraeus port",routes:[
         {k:"x96",to:"Piraeus port — direct",best:true,note:"Ferries to Crete, Cyclades, Dodecanese"},
         {k:"metro",to:"Piraeus",how:"M3 to <b>Monastiraki</b> → change to the <b>green line (M1)</b>"},{k:"taxi",to:"door to door"}]},
@@ -94,7 +94,7 @@ const AIRPORTS = {
     options:[
       { mode:"metro", to:"Syntagma / city centre", op:"Metro Line 3 (blue) · direct from airport", price:"€9", journey:"~40 min", freqLabel:"every 36 min", hours:"06:10–23:34",
         walk:"~6 min walk", access:"Up to Departures level, across the walkway — follow ‘Trains’", ll:"37.936916659098664,23.94463092649655",
-        sched:{kind:"range",first:"06:32",last:"23:32",every:30}, payment:"💳 Card accepted · tap at gate", tags:["💳 Card accepted · tap at gate"], note:"€9 flat airport fare (not the standard €1.20 ticket). Airport trains run every 36 min, daily. Last airport departure is around 23:34." },
+        sched:{kind:"range",first:"06:10",last:"23:34",every:36}, payment:"💳 Card accepted · tap at gate", tags:["💳 Card accepted · tap at gate"], note:"€9 flat airport fare (not the standard €1.20 ticket). Airport trains run every 36 min, daily. Last airport departure is around 23:34." },
       { mode:"bus", to:"Syntagma", op:"Express bus X95 · runs 24 hours", route:"2051", price:"€5.50", journey:"~60 min", freqLabel:"every ~20 min · hourly overnight", hours:"24 hours",
         walk:"~3 min walk", access:"Arrivals level, outside Exit 5", ll:"37.93728569247656,23.947505303800178", tags:["💳 Tap contactless onboard"],
         sched:{kind:"windows",windows:[{start:"06:00",end:"22:00",every:20},{start:"22:00",end:"06:00",every:60}]},
@@ -167,18 +167,20 @@ const I18N = {
     "Flat fare €40 daytime (05:00–24:00) · €55 night (00:00–05:00) to the city centre.":"Σταθερή χρέωση €40 την ημέρα (05:00–24:00) · €55 τη νύχτα (00:00–05:00) προς το κέντρο.",
     "€9 flat airport fare (not the standard €1.20 ticket). Return €16, valid 48h.":"€9 σταθερή τιμή αεροδρομίου (όχι το κανονικό εισιτήριο €1,20). Επιστροφή €16, ισχύει 48 ώρες.",
     "Irregular KTEL timetable (not flight-timed) — the next time shown is an estimate; check the posted schedule at the stop. €2.50 from the driver, cash.":"Ακανόνιστο πρόγραμμα ΚΤΕΛ (δεν είναι συνδεδεμένο με τις πτήσεις) — η επόμενη ώρα είναι εκτίμηση· έλεγξε το αναρτημένο πρόγραμμα στη στάση. €2,50 από τον οδηγό, μετρητά.",
-    "Summer: about hourly. Winter: roughly every 3 hours — the time shown is an estimate, check the posted schedule. Overnight (00:00–05:00) barely runs; arrange backup for very early/late flights. All airport buses terminate at Fira bus station.":"Καλοκαίρι: περίπου ανά ώρα. Χειμώνας: περίπου κάθε 3 ώρες — η ώρα είναι εκτίμηση, έλεγξε το πρόγραμμα. Τη νύχτα (00:00–05:00) σχεδόν δεν εκτελείται· βρες εναλλακτική για πολύ πρωινές/βραδινές πτήσεις. Όλα τα λεωφορεία του αεροδρομίου τερματίζουν στον σταθμό Φηρών.",
+    "Summer: about hourly, roughly 07:25–21:10. Winter: about six buses a day, last around 19:10 — the time shown is an estimate from the summer pattern, check the posted schedule. No night service; arrange a taxi for early/late flights. All airport buses terminate at Fira bus station.":"Καλοκαίρι: περίπου ανά ώρα, ~07:25–21:10. Χειμώνας: περίπου έξι δρομολόγια την ημέρα, τελευταίο γύρω στις 19:10 — η ώρα που βλέπεις είναι εκτίμηση από το καλοκαιρινό μοτίβο, έλεγξε το αναρτημένο πρόγραμμα. Δεν υπάρχει νυχτερινό δρομολόγιο· κανόνισε ταξί για πολύ πρωινές/βραδινές πτήσεις. Όλα τα λεωφορεία του αεροδρομίου τερματίζουν στον σταθμό Φηρών.",
     "€2 airport fare (not the standard €0.90 ticket). Buy at the arrivals machines or onboard — no change given. 01X also stops at the railway station & KTEL Makedonia.":"€2 τιμή αεροδρομίου (όχι το κανονικό εισιτήριο €0,90). Αγόρασε από τα μηχανήματα στις αφίξεις ή μέσα στο λεωφορείο — δεν δίνονται ρέστα. Το 01Χ σταματά επίσης στον σιδηροδρομικό σταθμό και στο ΚΤΕΛ Μακεδονία.",
     "€1.30 from the kiosk, €2.30 from the driver — cash. No service after midnight; validate on board.":"€1,30 από το περίπτερο, €2,30 από τον οδηγό — μετρητά. Δεν υπάρχει υπηρεσία μετά τα μεσάνυχτα· επικύρωσε το εισιτήριο μέσα στο λεωφορείο.",
     "M3 to <b>Syntagma</b> → change to the <b>red line (M2)</b>, 1 stop":"Μ3 έως <b>Σύνταγμα</b> → αλλαγή στην <b>κόκκινη γραμμή (Μ2)</b>, 1 στάση",
     "M3 <b>direct</b>, then walk up":"Μ3 <b>απευθείας</b>, μετά περπάτημα προς τα πάνω", "Syntagma, then ~8 min walk":"Σύνταγμα, μετά ~8 λεπτά με τα πόδια", "Monastiraki, then ~10 min walk":"Μοναστηράκι, μετά ~10 λεπτά με τα πόδια",
     "M3 to <b>Monastiraki</b> → change to the <b>green line (M1)</b>":"Μ3 έως <b>Μοναστηράκι</b> → αλλαγή στην <b>πράσινη γραμμή (Μ1)</b>",
+    "Larissa station is on the <b>red line (M2)</b>, 2 stops from Syntagma — best if you're heading to the rail station itself":"Ο Σταθμός Λαρίσης είναι στην <b>κόκκινη γραμμή (Μ2)</b>, 2 στάσεις από το Σύνταγμα — ιδανικό αν πηγαίνεις στον ίδιο τον σιδηροδρομικό σταθμό",
+    "Piraeus":"Πειραιάς", "Arrivals level, between Exits 2–3, outer lane opposite Sofitel":"Επίπεδο αφίξεων, ανάμεσα στις Εξόδους 2–3, εξωτερική λωρίδα απέναντι από το Sofitel",
     "next":"επόμενο", "first":"πρώτο", "live · ":"ζωντανά · ", "in ":"σε ", "m":"λ", "h":"ώ",
   }
 };
 
 I18N.el.airportName="Αεροδρόμιο Αθηνών"; I18N.el.cityCentre="κέντρο πόλης"; I18N.el.whereHeaded="Πού κατευθύνεσαι;"; I18N.el["Athens Airport"]="Αεροδρόμιο Αθηνών"; I18N.el["Athens (ATH)"]="Αθήνα (ATH)"; I18N.el["Heraklion (HER)"]="Ηράκλειο (HER)"; I18N.el["Chania (CHQ)"]="Χανιά (CHQ)"; I18N.el["Santorini (JTR)"]="Σαντορίνη (JTR)"; I18N.el["Thessaloniki (SKG)"]="Θεσσαλονίκη (SKG)"; I18N.el["Attica"]="Αττική"; I18N.el["Crete"]="Κρήτη"; I18N.el["Cyclades"]="Κυκλάδες"; I18N.el["Macedonia"]="Μακεδονία"; I18N.el["Dodecanese"]="Δωδεκάνησα"; I18N.el["Heraklion Airport to town"]="Αεροδρόμιο Ηρακλείου προς πόλη"; I18N.el["Chania Airport to town"]="Αεροδρόμιο Χανίων προς πόλη"; I18N.el["Santorini Airport to Fira"]="Αεροδρόμιο Σαντορίνης προς Φηρά"; I18N.el["Rhodes Airport to Rhodes Town"]="Αεροδρόμιο Ρόδου προς πόλη Ρόδου"; I18N.el["Thessaloniki Airport to the city centre"]="Αεροδρόμιο Θεσσαλονίκης προς κέντρο"; I18N.el["Athens Airport to the city centre"]="Αεροδρόμιο Αθηνών προς κέντρο";I18N.el.kicker="Ελλάδα · αεροδρόμιο → πόλη"; I18N.el.hero1="Έφτασες."; I18N.el.hero2="Τώρα φύγαμε."; I18N.el.findAirport="Βρες το αεροδρόμιό σου."; I18N.el.heroCopy="Δες την επόμενη χρήσιμη επιλογή προς την πόλη — με τιμή, χρόνο και σημείο επιβίβασης."; I18N.el.whereLanded="Πού προσγειώθηκες;"; I18N.el.liveWhere="ΖΩΝΤΑΝΑ ΟΠΟΥ ΥΠΑΡΧΟΥΝ"; I18N.el.whatNext="Τι ακολουθεί"; I18N.el.pickAirport="Διάλεξε αεροδρόμιο."; I18N.el.nextDesktop="Η σελίδα του αεροδρομίου βάζει πρώτη τη γρηγορότερη επιλογή και μετά δείχνει εναλλακτικές, τιμές, χρόνους και ακριβή διαδρομή με τα πόδια από τις αφίξεις."; I18N.el.nextMobile="Πρώτα η γρηγορότερη επιλογή. Μετά εναλλακτικές, τιμές, χρόνοι και σημείο περπατήματος από τις αφίξεις."; I18N.el.dataStatus="Κατάσταση δεδομένων"; I18N.el.liveMeans="σημαίνει πραγματική ροή αναχωρήσεων. Τα προγραμματισμένα και τα εκτιμώμενα δρομολόγια επισημαίνονται ξεχωριστά."; I18N.el.footer="ΠΡΩΤΑ ΔΗΜΟΣΙΑ ΣΥΓΚΟΙΝΩΝΙΑ · ΚΑΙ ΠΛΗΡΟΦΟΡΙΕΣ ΤΑΞΙ · ΧΩΡΙΣ ΠΡΟΩΘΗΣΗ ΚΡΑΤΗΣΗΣ";
-I18N.el["Trains"]="Τρένα";I18N.el["Exit 5"]="Έξοδος 5";I18N.el["Exit 2–3"]="Έξοδοι 2–3";I18N.el["Exits 2–3"]="Έξοδοι 2–3";I18N.el["Exit 3"]="Έξοδος 3";I18N.el["Athens Central (Larissa)"]="Σταθμός Λαρίσης";I18N.el["Athens Central (Larissa Station)"]="Σταθμός Λαρίσης";I18N.el["Rhodes (RHO)"]="Ρόδος (RHO)";I18N.el["Rhodes Town"]="πόλη της Ρόδου";I18N.el["RODA bus · to Rhodes Town"]="Λεωφορείο RODA · προς πόλη Ρόδου";I18N.el["RODA bus · Airport → Rhodes"]="Λεωφορείο RODA · Αεροδρόμιο → Ρόδος";I18N.el["frequent · see timetable"]="συχνά · δες το πρόγραμμα";I18N.el["Bus stop between the old and new terminals"]="Στάση λεωφορείου ανάμεσα στο παλιό και το νέο τερματικό";I18N.el["Direct RODA service to Rhodes Town. The airport bus stop is between the old and new terminals. Published timetables vary by season and day; check the current schedule before travelling."]="Απευθείας δρομολόγιο RODA προς την πόλη της Ρόδου. Η στάση βρίσκεται ανάμεσα στο παλιό και το νέο τερματικό. Τα δημοσιευμένα δρομολόγια αλλάζουν ανά εποχή και ημέρα· έλεγξε το τρέχον πρόγραμμα πριν ταξιδέψεις.";
+I18N.el["Trains"]="Τρένα";I18N.el["Exit 5"]="Έξοδος 5";I18N.el["Exit 2–3"]="Έξοδοι 2–3";I18N.el["Exits 2–3"]="Έξοδοι 2–3";I18N.el["Exit 3"]="Έξοδος 3";I18N.el["Athens Central (Larissa)"]="Σταθμός Λαρίσης";I18N.el["Athens Central (Larissa Station)"]="Σταθμός Λαρίσης";I18N.el["Rhodes (RHO)"]="Ρόδος (RHO)";I18N.el["Rhodes Town"]="πόλη της Ρόδου";I18N.el["RODA bus · to Rhodes Town"]="Λεωφορείο RODA · προς πόλη Ρόδου";I18N.el["RODA bus · Airport → Rhodes"]="Λεωφορείο RODA · Αεροδρόμιο → Ρόδος";I18N.el["frequent · see timetable"]="συχνά · δες το πρόγραμμα";I18N.el["Bus stop between the old and new terminals"]="Στάση λεωφορείου ανάμεσα στο παλιό και το νέο τερματικό";I18N.el["€2.50 from the ticket desk, €2.60 from the driver. Direct RODA service to Rhodes Town; the last stop is ~5 min walk from the Old Town. The airport bus stop is between the old and new terminals. Timetables vary by season and day; check the current schedule before travelling."]="€2,50 από το εκδοτήριο, €2,60 από τον οδηγό. Απευθείας δρομολόγιο RODA προς την πόλη της Ρόδου· η τελευταία στάση είναι ~5 λεπτά με τα πόδια από την Παλιά Πόλη. Η στάση του αεροδρομίου βρίσκεται ανάμεσα στο παλιό και το νέο τερματικό. Τα δρομολόγια αλλάζουν ανά εποχή και ημέρα· έλεγξε το τρέχον πρόγραμμα πριν ταξιδέψεις."; I18N.el["~35 min"]="~35 λεπτά";
 // Language is determined by the indexable page URL, never by browser state.
 let JL_LANG = document.documentElement.lang === "el" ? "el" : "en";
 function tr(v){
@@ -197,8 +199,10 @@ function tr(v){
 }
 function trHtml(v){ return tr(v); }
 function selectedLangLabel(){ return JL_LANG==="el" ? "ΕΛ" : "EN"; }
-const DISC_I18N={ATH:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Μετρό/τρένο δείχνουν προγραμματισμένες ώρες, ενώ το X95 δείχνει ζωντανές αφίξεις από τον ΟΑΣΑ όταν τα λεωφορεία λειτουργούν, αλλιώς το πρόγραμμα. Έλεγξε πάντα στη στάση.",CHQ:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Τα δρομολόγια ΚΤΕΛ εμφανίζονται με βάση το διαθέσιμο πρόγραμμα. Έλεγξε πάντα στη στάση.",HER:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Οι ώρες βασίζονται στο διαθέσιμο πρόγραμμα και τη συχνότητα. Έλεγξε πάντα στη στάση.",JTR:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Τα δρομολόγια είναι εποχικά και ορισμένες ώρες είναι εκτιμήσεις. Έλεγξε πάντα στη στάση.",SKG:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Οι ώρες βασίζονται στο διαθέσιμο πρόγραμμα. Έλεγξε πάντα στη στάση.",RHO:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Το λεωφορείο RODA εκτελεί απευθείας δρομολόγια προς την πόλη της Ρόδου· τα δημοσιευμένα ωράρια αλλάζουν ανά εποχή. Έλεγξε πάντα στη στάση."};
-const DISC_EN={ATH:"Fares & service hours verified Aug 2026. Metro/rail show exact clock-face times; the X95 shows live arrivals from OASA when buses are running, otherwise the timetable. Always confirm at the stop.",CHQ:"Fares & service hours verified Aug 2026. KTEL bus times are shown from the published timetable. Always confirm at the stop.",HER:"Fares & service hours verified Aug 2026. Times are based on the published timetable and frequency. Always confirm at the stop.",JTR:"Fares & service hours verified Aug 2026. Services are seasonal and some times are estimates. Always confirm at the stop.",SKG:"Fares & service hours verified Aug 2026. Times are based on the published timetable. Always confirm at the stop.",RHO:"Fares & service hours verified Aug 2026. The RODA bus runs direct to Rhodes Town; published timetables vary by season, so always confirm at the stop."};
+const DISC_I18N={ATH:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Μετρό/τρένο δείχνουν προγραμματισμένες ώρες, ενώ το X95 δείχνει ζωντανές αφίξεις από τον ΟΑΣΑ όταν τα λεωφορεία λειτουργούν, αλλιώς το πρόγραμμα. Έλεγξε πάντα στη στάση."};
+const DISC_EN={ATH:"Fares & service hours verified Aug 2026. Metro/rail show exact clock-face times; the X95 shows live arrivals from OASA when buses are running, otherwise the timetable. Always confirm at the stop."};
+const DISC_UNVERIFIED={el:"Ενδεικτικά δεδομένα — τιμές και ώρες προέρχονται από δημοσιευμένα δρομολόγια και αναφορές ταξιδιωτών (έλεγχος Αύγ.–Σεπ. 2026), όχι από επιτόπια επαλήθευση. Οι αναχωρήσεις υπολογίζονται από τη δηλωμένη συχνότητα και αλλάζουν ανά εποχή. Έλεγξε πάντα στη στάση.",en:"Indicative data — fares and times come from published timetables and traveller reports (checked Aug–Sep 2026), not verified on site. Departure times are estimated from the listed frequency and change by season. Always confirm at the stop."};
+function discText(code){ const ap=AIRPORTS[code]; if(!ap) return ""; if(ap.verified){ return (JL_LANG==="el"?DISC_I18N[code]:DISC_EN[code])||""; } return DISC_UNVERIFIED[JL_LANG==="el"?"el":"en"]; }
 function applyLanguage(){
   document.documentElement.lang=JL_LANG;
   document.querySelectorAll(".lang-switch a").forEach(b=>b.classList.toggle("active",b.dataset.lang===JL_LANG));
@@ -208,7 +212,7 @@ function applyLanguage(){
   document.querySelectorAll("[data-page-title]").forEach(el=>{el.textContent=JL_LANG==="el"?el.dataset.pageTitleEl:el.dataset.pageTitleEn;});
   document.querySelectorAll("[data-page-intro]").forEach(el=>{el.textContent=JL_LANG==="el"?el.dataset.pageIntroEl:el.dataset.pageIntroEn;});
   if(typeof CODE!=="undefined" && CODE==="ATH"){ const h=document.querySelector("h1"); const i=document.querySelector(".intro"); const cur=(typeof DESTSEL!=="undefined"&&DESTSEL[CODE])?AIRPORTS[CODE].destinations.find(x=>x.id===DESTSEL[CODE]):AIRPORTS[CODE].destinations[0]; if(h) h.innerHTML=JL_LANG==="el"?"Αεροδρόμιο Αθηνών → <em id=\"desttitle\">"+tr(cur.title)+"</em>":"Athens Airport → <em id=\"desttitle\">"+cur.title+"</em>"; if(i) i.textContent=JL_LANG==="el"?"Δημόσιες συγκοινωνίες από το αεροδρόμιο Αθηνών (ATH) προς την πόλη — διάλεξε προορισμό. Ζωντανές ώρες όπου υπάρχουν.":"Public transport from Athens Airport (ATH) into town — pick where you’re headed. Live times where the buses are running."; }
-  const disc=document.getElementById("disc"); if(disc && typeof CODE!=="undefined"){ if(JL_LANG==="el" && DISC_I18N[CODE]) disc.textContent=DISC_I18N[CODE]; else if(JL_LANG!=="el" && DISC_EN[CODE]) disc.textContent=DISC_EN[CODE]; else if(disc.dataset.en) disc.textContent=disc.dataset.en; }
+  const disc=document.getElementById("disc"); if(disc && typeof CODE!=="undefined"){ const t=discText(CODE); if(t) disc.textContent=t; else if(disc.dataset.en) disc.textContent=disc.dataset.en; }
   updateTimePicker();
 }
 function bindLanguage(){
@@ -502,7 +506,7 @@ function connNext(c, atDate){
 
 function arrivalBreakdown(o,r,destinationId){
   const walk=walkMinutes(o.walk);
-  const ride=durationMinutes(effectiveJourney(o,r.selected,destinationId));
+  const ride=rideMinutes(o,r.selected,destinationId);
   const wait=Math.max(0,Number(r.until)||0);
   return {walk,wait,ride,total:walk+wait+ride};
 }
@@ -513,7 +517,7 @@ function arrivalClock(o,r,destinationId){
   dep.setHours(0,0,0,0);
   dep.setMinutes(Number(r.dep1));
   if(dep < d && Number(r.until)>0) dep.setDate(dep.getDate()+1);
-  const ride=durationMinutes(effectiveJourney(o,r.selected,destinationId));
+  const ride=rideMinutes(o,r.selected,destinationId);
   dep.setMinutes(dep.getMinutes()+ride);
   return dep;
 }
@@ -600,7 +604,7 @@ function optionBody(o,e,r,opts={}){
       const tn=taxiNow(o,arr);
       const arrHM=fmt(arr.getHours()*60+arr.getMinutes());
       const fareLbl=tn.night?T("νυχτερινή χρέωση","night fare"):T("ημερήσια χρέωση","day fare");
-      const approx=o.est?T("περίπου ","approx "):"";
+      const approx=(o.est&&!/^~/.test(String(o.fareDay)))?T("περίπου ","approx "):"";
       const metered=o.est?T(" · με μετρητή","· metered"):"";
       taxiInfo=`<div class="taxi-fare"><div class="tf-now">${T("Χρέωση","Fare")}: <b>${tn.fare}</b> <span>${fareLbl} · ${T("άφιξη","arrive")} ~${arrHM}</span></div><div class="tf-all">${approx}${o.fareDay} ${T("μέρα","day")} · ${o.fareNight} ${T("νύχτα","night")} 00:00–05:00 — ${T("με βάση την ώρα άφιξης","by arrival time")} ${metered}</div></div>`;
     }
@@ -624,13 +628,14 @@ function optionBody(o,e,r,opts={}){
   if(arrD){
     let cmp="";
     if(opts.laterThan>0){ const ln=opts.laterName?T(` από ${opts.laterName}`,` than ${opts.laterName}`):""; cmp=` · <span class="vs">${T(`${opts.laterThan} λεπτά αργότερα${ln}`,`${opts.laterThan} min later${ln}`)}</span>`; }
-    const destIn=o.name?destName+" ":"";
+    const destIn=o.name?((e.walkAfter&&e.destTitle)?tr(e.destTitle):destName)+" ":"";
     arriveLine=`<div class="arrive">${T("Άφιξη","Arrive")} <b>${destIn}${fmt(arrD.getHours()*60+arrD.getMinutes())}</b> · <b>${bd.total} ${minW}</b> ${T("συνολικά","total journey")}${cmp}</div>`;
   }
   const board=boardingNoun(o.mode);
   const walkStep=o.walk?`<div class="step"><span class="sic">${STEP_SVG.walk}</span><div class="stx"><b>${tr(o.walk)} ${board}</b>${o.access?` · ${tr(o.access)}`:""}</div>${stopLink(o)}</div>`:"";
   const payment=o.payment?tr(o.payment):"";
-  const rideStep=`<div class="step"><span class="sic">${modeIcon(o.mode)}</span><div class="stx"><b>${bd.ride} ${minW} ${T("διαδρομή","ride")}</b>${payment?` · ${payment}`:""}</div></div>`;
+  const howTxt=e.how?tr(e.how):"";
+  const rideStep=`<div class="step"><span class="sic">${modeIcon(o.mode)}</span><div class="stx"><b>${bd.ride} ${minW} ${T("διαδρομή","ride")}</b>${payment?` · ${payment}`:""}${howTxt?`<div class="how">${howTxt}</div>`:""}</div></div>`;
   const steps=`<div class="steps">${walkStep}${rideStep}</div>`;
   const next=futureDepartureStrip(o,r.selected);
   return `${hero}${arriveLine}${steps}${next}${note}`;
@@ -700,28 +705,28 @@ function renderDest(code){
   if(chips){ chips.innerHTML=ap.destinations.map(x=>`<button class="chip ${x.id===cur.id?'on':''}" data-id="${x.id}">${tr(x.label)}</button>`).join("");
     chips.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{DESTSEL[code]=b.dataset.id;renderDest(code);}); }
   const dt=document.getElementById("desttitle"); if(dt) dt.textContent=tr(cur.title);
-  const routeRows=cur.routes.map(e=>{const o=ap.routes[e.k]; if(!o) return null; e={...e,destinationId:cur.id}; const r=nextTwo(o,at); r.total=totalTripMinutes(o,r,cur.id); return {e,o,r};}).filter(Boolean);
+  const routeRows=cur.routes.map(e=>{let o=ap.routes[e.k]; if(!o) return null; if(e.walkAfter) o={...o,walkAfter:e.walkAfter}; e={...e,destinationId:e.jd||cur.id,destTitle:cur.title}; const r=nextTwo(o,at); r.total=totalTripMinutes(o,r,e.destinationId); return {e,o,r};}).filter(Boolean);
   const ranked=routeRows.sort((a,b)=>{
     const at=a.o.mode==="taxi", bt=b.o.mode==="taxi";
     if(at!==bt) return at?1:-1;
     return a.r.total-b.r.total;
   });
-  const fastest=ranked.find(row=>row.o.mode!=="taxi" && Number.isFinite(row.r.total));
+  const fastest=ranked.find(row=>row.o.mode!=="taxi" && !row.e.alt && Number.isFinite(row.r.total));
   const lead=fastest||ranked[0];
   if(!lead){ box.innerHTML=""; return; }
-  const payable=ranked.filter(row=>row.o.mode!=="taxi" && Number.isFinite(row.r.total) && priceNum(row.o.price)!=null);
+  const payable=ranked.filter(row=>row.o.mode!=="taxi" && !row.e.alt && Number.isFinite(row.r.total) && priceNum(row.o.price)!=null);
   const cheapest=payable.slice().sort((a,b)=>(priceNum(a.o.price)-priceNum(b.o.price))||(a.r.total-b.r.total))[0];
   const CHEAP_MAX_GAP=45;
   const showCheap=fastest && cheapest && cheapest!==fastest && (cheapest.r.total-fastest.r.total)<=CHEAP_MAX_GAP;
   const leads=showCheap?[fastest,cheapest]:[lead];
   const rest=ranked.filter(row=>!leads.includes(row));
-  const fArr=fastest?arrivalClock(fastest.o,fastest.r,cur.id):null;
+  const fArr=fastest?arrivalClock(fastest.o,fastest.r,fastest.e.destinationId):null;
   box.innerHTML=leads.map(row=>{
     const opts={fastest:row===fastest,cheapest:row===cheapest};
     if(row===cheapest && row!==fastest){
       const pf=priceNum(fastest.o.price), pc=priceNum(row.o.price);
-      if(pf!=null && pc!=null) opts.saves=(pf-pc).toFixed(2).replace(/\.00$/,"");
-      const cArr=arrivalClock(row.o,row.r,cur.id);
+      if(pf!=null && pc!=null){ opts.saves=(pf-pc).toFixed(2).replace(/\.00$/,""); if(JL_LANG==="el") opts.saves=opts.saves.replace(".",","); }
+      const cArr=arrivalClock(row.o,row.r,row.e.destinationId);
       opts.laterThan=(fArr&&cArr)?Math.max(0,Math.round((cArr-fArr)/60000)):0;
       opts.laterName=fastest.o.name?tr(fastest.o.name):(fastest.o.to?tr(fastest.o.to):"");
     }
@@ -733,17 +738,23 @@ function renderDest(code){
 function effectiveJourney(o, atDate, destinationId){
   if(!o) return "";
   const d=atDate instanceof Date ? atDate : new Date();
-  if(destinationId && o.journeyByDestination && o.journeyByDestination[destinationId]!=null){
-    return "~"+o.journeyByDestination[destinationId]+" min";
-  }
+  let base=null;
+  if(destinationId && o.journeyByDestination && o.journeyByDestination[destinationId]!=null) base=o.journeyByDestination[destinationId];
   if(Array.isArray(o.journeyBands)){
     const h=d.getHours()+d.getMinutes()/60;
     const band=o.journeyBands.find(b=>h>=b.from && h<b.to);
-    if(band) return "~"+band.mins+" min";
+    if(band){
+      // bands describe the default (centre) journey; scale destination-specific journeys by the same traffic factor
+      const ref=durationMinutes(o.journey)||band.mins;
+      const mins=base!=null ? Math.round(base*band.mins/ref) : band.mins;
+      return "~"+mins+" min";
+    }
   }
+  if(base!=null) return "~"+base+" min";
   return o.journey || "";
 }
 
+function rideMinutes(o, atDate, destinationId){ return durationMinutes(effectiveJourney(o, atDate, destinationId)) + (Number(o.walkAfter)||0); }
 function durationMinutes(text){
   if(!text) return 0;
   const nums=(String(text).match(/\d+(?:\.\d+)?/g)||[]).map(Number);
@@ -753,9 +764,9 @@ function durationMinutes(text){
 }
 function walkMinutes(text){ return durationMinutes(text); }
 function totalTripMinutes(o, r, destinationId){
-  if(r.onDemand) return walkMinutes(o.walk) + durationMinutes(effectiveJourney(o, r.selected, destinationId));
+  if(r.onDemand) return walkMinutes(o.walk) + rideMinutes(o, r.selected, destinationId);
   if(r.closed) return Infinity;
-  return walkMinutes(o.walk) + Math.max(0,r.until) + durationMinutes(effectiveJourney(o, r.selected, destinationId));
+  return walkMinutes(o.walk) + Math.max(0,r.until) + rideMinutes(o, r.selected, destinationId);
 }
 function renderAirport(code){
   const ap=AIRPORTS[code]; if(!ap) return;

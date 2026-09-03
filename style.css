@@ -300,7 +300,8 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .card.fast{border-color:var(--amber)}
 .card.cheap{border-color:var(--green)}
 .b-card.cheap{border-left-color:var(--green)}
-.dir{display:inline;white-space:nowrap}
+.dir{display:inline}
+.dir .arw{white-space:nowrap}
 .alt-row .an span .pulse{margin-right:5px}
 
 /* v33 — redesigned card body: hero price, journey steps */
