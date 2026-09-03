@@ -18,9 +18,15 @@ Repo: `github.com/stergios-a11y/just-landed` · local: `~/Projects/justlanded`
   deploy if the committed HTML is out of date (`npm run check`).
   All rendering logic + timetable data live in one file, `data.js`.
 - **Cloudflare Worker** (`worker.js`) fronts static assets:
-  - `/api/airport` and `/api/x95` proxy the **OASA telematics feed** for live
-    Athens airport-express bus arrivals (route X95 = code `2051`). Any error
-    falls through to static assets, so the site never breaks if OASA is down.
+  - `/api/airport` proxies the **OASA telematics feed** for the airport stop
+    (10705). OASA only reports **inbound** buses there (X95 `2051`, X96
+    `3028`/`3030` night, X93 `5675`, X97 `5374`/`5375`); the outbound codes
+    start at that stop so never appear. The feed returns
+    `{lines:{x95:[min,...],x96:[...],...}}` = minutes until the next inbound
+    bus reaches the stop; it departs a few minutes later. The UI labels live
+    times `~HH:MM · LIVE` with a note saying exactly that — keep it honest.
+    Any error falls through to static assets, so the site never breaks if
+    OASA is down.
   - Everything else -> `env.ASSETS.fetch` (the static files).
 - `wrangler.jsonc`: worker name `airporttocity`, `assets.directory: "./"`.
 - `.assetsignore` lists files NOT served publicly (worker.js, wrangler.jsonc,
@@ -110,7 +116,12 @@ timetables, which is fine for layout work.
 - `journeyBands` (time-of-day ride times) scale `journeyByDestination` values
   proportionally, so rush-hour/night differences apply on every ATH page.
 - Each option `o`: `mode` (`metro|bus|rail|taxi`), `name`, `to`, `price`,
-  `journey`, `access`, etc.
+  `journey`, `access`, etc. `checked:"Aug 2026"` renders a "Fare & timetable
+  checked …" line on the card; `est:true` renders "Estimate — not verified on
+  site" instead (`sourceLine(o)`). `official:true` (ATH taxi) says "Official fare".
+- "Fastest" tag reads **"Fastest now"** in now-mode because the ranking
+  includes waiting time and changes minute to minute; static prose should only
+  ever call the Metro fastest *ride*.
 - **Taxi:** `fareDay`/`fareNight`, `nightStart:0, nightEnd:5` (Greek night tariff
   00:00-05:00). Night fare is computed from **arrival time** (departure +
   journey), shown as "arrive ~HH:MM · night fare", with a note it's by arrival
@@ -174,8 +185,9 @@ raster jaggies) + live Inter text — razor-sharp at any size.
 
 1. **Verify island fares/times** and flip their `verified` flags — HER, CHQ, JTR,
    RHO, SKG currently show the "sample data" disclaimer.
-2. Extend the **live feed** beyond Athens X95 (route codes for X96 Piraeus etc.
-   are already in `worker.js` `ROUTES` but not surfaced per-destination).
+2. Live feed now covers X95/X96/X93/X97 by line id (`route:"x96"` etc. in
+   data.js). If OASA ever exposes departures at the origin stop, switch the
+   worker to outbound codes (listed in worker.js) and drop the turnaround note.
 3. Delete the `.before-departure-ui` snapshots (gitignored, local only).
 4. Decide EN-as-root (`/` English, `/el/` Greek, `x-default` → EN). The
    generator's `pathFor()/fileFor()` are the only places that know the layout.

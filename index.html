@@ -187,11 +187,11 @@ function render(){document.getElementById("airports").innerHTML=ORDER.map(airpor
 async function boardLive(){
   try{
     const r=await fetch("/api/airport",{cache:"no-store"}); if(!r.ok)return;
-    const j=await r.json(), d=new Date(), base=d.getHours()*60+d.getMinutes(), routes=j.routes||{};
-    for(const rc of ["2051","3028","5373","5675"]){
-      const mins=routes[rc];
-      if(Array.isArray(mins)&&mins.length)LIVE[rc]={deps:mins.map(m=>base+m),ts:Date.now()};
-      else delete LIVE[rc];
+    const j=await r.json(), d=new Date(), base=d.getHours()*60+d.getMinutes(), lines=j.lines||{};
+    for(const k of LIVE_LINES){
+      const mins=lines[k];
+      if(Array.isArray(mins)&&mins.length)LIVE[k]={deps:mins.map(m=>base+m),ts:Date.now()};
+      else delete LIVE[k];
     }
     render();
   }catch(e){}

@@ -9,7 +9,6 @@ export const HOME = {
 };
 
 export const FOOTER = { el:"Πρώτα δημόσιες συγκοινωνίες — και πληροφορίες για ταξί, χωρίς προώθηση κρατήσεων.", en:"Public transport first — taxi facts too, no booking upsell." };
-export const PROTOTYPE = { el:"Πρωτότυπο", en:"Prototype" };
 export const BACK = { el:"← όλα τα αεροδρόμια", en:"← all airports" };
 export const LANG_LABEL = { el:"Επιλογή γλώσσας", en:"Language" };
 
@@ -23,7 +22,7 @@ export const PAGES = [
       seoLabel:"Οδηγός διαδρομής",
       prose:[
         { h2:"Γρηγορότερα ή φθηνότερα;", cls:"v-advice", p:"Βιάζεσαι ή έχεις βαλίτσες; Το Μετρό (Γραμμή 3) φτάνει κατευθείαν στο Σύνταγμα σε ~40 λεπτά. Θέλεις να γλιτώσεις ή ταξιδεύεις αργά; Το Χ95 κάνει την ίδια διαδρομή για €3,50 λιγότερα και δουλεύει όλο το 24ωρο. Διάλεξε προορισμό πιο πάνω για ακριβείς ώρες." },
-        { h2:"Ζωντανές ώρες, όχι εκτιμήσεις", p:"Οι ώρες του Χ95 εδώ έρχονται ζωντανά από την τηλεματική του ΟΑΣΑ όταν κυκλοφορούν λεωφορεία — το «σε X λεπτά» είναι η πραγματική επόμενη άφιξη, όχι το πρόγραμμα. Το Μετρό ακολουθεί σταθερό ωράριο, οπότε δείχνουμε τις ακριβείς ώρες." },
+        { h2:"Ζωντανές ώρες, όχι εκτιμήσεις", p:"Οι ώρες του Χ95 εδώ έρχονται ζωντανά από την τηλεματική του ΟΑΣΑ όταν κυκλοφορούν λεωφορεία (η ώρα που το επόμενο λεωφορείο φτάνει στη στάση του αεροδρομίου· αναχωρεί λίγα λεπτά μετά) — το «σε X λεπτά» είναι η πραγματική ώρα που το επόμενο λεωφορείο φτάνει στη στάση του αεροδρομίου (αναχωρεί λίγα λεπτά μετά), όχι το πρόγραμμα. Το Μετρό ακολουθεί σταθερό ωράριο, οπότε δείχνουμε τις ακριβείς ώρες." },
       ],
       factsHeading:"Με μια ματιά",
       facts:[
@@ -47,7 +46,7 @@ export const PAGES = [
       seoLabel:"Route guide",
       prose:[
         { h2:"Faster or cheaper?", cls:"v-advice", p:"In a hurry or with luggage? The Metro (Line 3) runs straight to Syntagma in about 40 minutes. Want to save or travelling late? The X95 covers the same trip for €3.50 less and runs 24/7. Pick a destination above for exact times." },
-        { h2:"Live times, not estimates", p:"The X95 times here come live from OASA telematics whenever buses are running — the “in X min” is the real next arrival, not the timetable. The Metro follows a fixed schedule, so we show its exact times." },
+        { h2:"Live times, not estimates", p:"The X95 times here come live from OASA telematics whenever buses are running (the time the next bus reaches the airport stop; it departs a few minutes later) — the “in X min” is the real time the next bus reaches the airport stop (it departs a few minutes later), not the timetable. The Metro follows a fixed schedule, so we show its exact times." },
       ],
       factsHeading:"At a glance",
       facts:[
@@ -293,7 +292,7 @@ export const PAGES = [
       seoLabel:"Οδηγός διαδρομής",
       prose:[
         { h2:"Γρηγορότερα ή φθηνότερα;", cls:"v-advice", p:"Βιάζεσαι ή κουβαλάς βαλίτσες; Το Μετρό (Γραμμή 3) φτάνει κατευθείαν στο Σύνταγμα σε ~40 λεπτά. Θέλεις να γλιτώσεις ή ταξιδεύεις αργά τη νύχτα; Το Χ95 κάνει την ίδια διαδρομή για €3,50 λιγότερα και δουλεύει όλο το 24ωρο." },
-        { h2:"Ζωντανές ώρες, όχι εκτιμήσεις", p:"Οι ώρες του Χ95 εδώ έρχονται ζωντανά από την τηλεματική του ΟΑΣΑ όταν κυκλοφορούν λεωφορεία — το «σε X λεπτά» είναι η πραγματική επόμενη άφιξη, όχι το πρόγραμμα. Το Μετρό ακολουθεί σταθερό ωράριο, οπότε δείχνουμε τις ακριβείς ώρες αναχώρησης. Άλλαξε την ώρα αναχώρησης πιο πάνω για να δεις πώς αλλάζει η γρηγορότερη επιλογή." },
+        { h2:"Ζωντανές ώρες, όχι εκτιμήσεις", p:"Οι ώρες του Χ95 εδώ έρχονται ζωντανά από την τηλεματική του ΟΑΣΑ όταν κυκλοφορούν λεωφορεία (η ώρα που το επόμενο λεωφορείο φτάνει στη στάση του αεροδρομίου· αναχωρεί λίγα λεπτά μετά) — το «σε X λεπτά» είναι η πραγματική ώρα που το επόμενο λεωφορείο φτάνει στη στάση του αεροδρομίου (αναχωρεί λίγα λεπτά μετά), όχι το πρόγραμμα. Το Μετρό ακολουθεί σταθερό ωράριο, οπότε δείχνουμε τις ακριβείς ώρες αναχώρησης. Άλλαξε την ώρα αναχώρησης πιο πάνω για να δεις πώς αλλάζει η γρηγορότερη επιλογή." },
       ],
       factsHeading:"Με μια ματιά",
       facts:[
@@ -317,7 +316,7 @@ export const PAGES = [
       seoLabel:"Route guide",
       prose:[
         { h2:"Faster or cheaper?", cls:"v-advice", p:"In a hurry or hauling luggage? The Metro (Line 3) runs straight to Syntagma in about 40 minutes. Watching your budget or travelling late at night? The X95 covers the same trip for €3.50 less and runs around the clock." },
-        { h2:"Live times, not estimates", p:"The X95 times on this page come live from OASA telematics whenever buses are running — the “in X min” is the real next arrival, not the timetable. The Metro follows a fixed schedule, so we show its exact departure times. Change the departure time above to see how the fastest option shifts." },
+        { h2:"Live times, not estimates", p:"The X95 times on this page come live from OASA telematics whenever buses are running (the time the next bus reaches the airport stop; it departs a few minutes later) — the “in X min” is the real time the next bus reaches the airport stop (it departs a few minutes later), not the timetable. The Metro follows a fixed schedule, so we show its exact departure times. Change the departure time above to see how the fastest option shifts." },
       ],
       factsHeading:"At a glance",
       facts:[
@@ -343,7 +342,7 @@ export const PAGES = [
       seoLabel:"Οδηγός διαδρομής",
       prose:[
         { h2:"Γρηγορότερα ή φθηνότερα;", cls:"v-advice", p:"Το Μετρό Γραμμή 3 σε αφήνει κατευθείαν στο Μοναστηράκι — χωρίς αλλαγή, ~42 λεπτά. Το Χ95 είναι φθηνότερο κατά €3,50 αλλά σε αφήνει στο Σύνταγμα, με ~8 λεπτά περπάτημα ως την Πλάκα." },
-        { h2:"Ζωντανές ώρες, όχι εκτιμήσεις", p:"Οι ώρες του Χ95 εδώ έρχονται ζωντανά από την τηλεματική του ΟΑΣΑ όταν κυκλοφορούν λεωφορεία — το «σε X λεπτά» είναι η πραγματική επόμενη άφιξη. Το Μετρό ακολουθεί σταθερό ωράριο, οπότε δείχνουμε τις ακριβείς ώρες. Άλλαξε την ώρα πιο πάνω για να δεις πώς αλλάζει η γρηγορότερη επιλογή." },
+        { h2:"Ζωντανές ώρες, όχι εκτιμήσεις", p:"Οι ώρες του Χ95 εδώ έρχονται ζωντανά από την τηλεματική του ΟΑΣΑ όταν κυκλοφορούν λεωφορεία (η ώρα που το επόμενο λεωφορείο φτάνει στη στάση του αεροδρομίου· αναχωρεί λίγα λεπτά μετά) — το «σε X λεπτά» είναι η πραγματική επόμενη άφιξη. Το Μετρό ακολουθεί σταθερό ωράριο, οπότε δείχνουμε τις ακριβείς ώρες. Άλλαξε την ώρα πιο πάνω για να δεις πώς αλλάζει η γρηγορότερη επιλογή." },
       ],
       factsHeading:"Με μια ματιά",
       facts:[
@@ -367,7 +366,7 @@ export const PAGES = [
       seoLabel:"Route guide",
       prose:[
         { h2:"Faster or cheaper?", cls:"v-advice", p:"Metro Line 3 drops you right at Monastiráki — no change, about 42 minutes. The X95 is €3.50 cheaper but leaves you at Syntagma, an ~8-minute walk from Pláka." },
-        { h2:"Live times, not estimates", p:"The X95 times here come live from OASA telematics whenever buses are running — the “in X min” is the real next arrival. The Metro runs on a fixed schedule, so we show its exact times. Change the departure time above to see how the fastest option shifts." },
+        { h2:"Live times, not estimates", p:"The X95 times here come live from OASA telematics whenever buses are running (the time the next bus reaches the airport stop; it departs a few minutes later) — the “in X min” is the real next arrival. The Metro runs on a fixed schedule, so we show its exact times. Change the departure time above to see how the fastest option shifts." },
       ],
       factsHeading:"At a glance",
       facts:[
@@ -393,7 +392,7 @@ export const PAGES = [
       seoLabel:"Οδηγός διαδρομής",
       prose:[
         { h2:"Γρηγορότερα ή φθηνότερα;", cls:"v-advice", p:"Βιάζεσαι ή κουβαλάς βαλίτσες; Πάρε το Μετρό — είναι το πιο γρήγορο και σταθερό. Θέλεις να γλιτώσεις ή ταξιδεύεις αργά τη νύχτα; Το Χ95 δουλεύει όλο το 24ωρο και σε αφήνει κοντά στην Ακρόπολη για €3,50 λιγότερα, με λίγα μόνο λεπτά παραπάνω." },
-        { h2:"Ζωντανές ώρες, όχι εκτιμήσεις", p:"Οι ώρες του Χ95 εδώ έρχονται ζωντανά από την τηλεματική του ΟΑΣΑ όταν κυκλοφορούν λεωφορεία — το «σε X λεπτά» είναι η πραγματική επόμενη άφιξη, όχι το πρόγραμμα. Το Μετρό ακολουθεί σταθερό ωράριο, οπότε δείχνουμε τις ακριβείς ώρες. Άλλαξε την ώρα αναχώρησης πιο πάνω για να δεις πώς αλλάζει η γρηγορότερη επιλογή." },
+        { h2:"Ζωντανές ώρες, όχι εκτιμήσεις", p:"Οι ώρες του Χ95 εδώ έρχονται ζωντανά από την τηλεματική του ΟΑΣΑ όταν κυκλοφορούν λεωφορεία (η ώρα που το επόμενο λεωφορείο φτάνει στη στάση του αεροδρομίου· αναχωρεί λίγα λεπτά μετά) — το «σε X λεπτά» είναι η πραγματική ώρα που το επόμενο λεωφορείο φτάνει στη στάση του αεροδρομίου (αναχωρεί λίγα λεπτά μετά), όχι το πρόγραμμα. Το Μετρό ακολουθεί σταθερό ωράριο, οπότε δείχνουμε τις ακριβείς ώρες. Άλλαξε την ώρα αναχώρησης πιο πάνω για να δεις πώς αλλάζει η γρηγορότερη επιλογή." },
       ],
       factsHeading:"Με μια ματιά",
       facts:[
@@ -417,7 +416,7 @@ export const PAGES = [
       seoLabel:"Route guide",
       prose:[
         { h2:"Faster or cheaper?", cls:"v-advice", p:"In a hurry or hauling luggage? Take the Metro — it's the fastest and most reliable. Watching your budget or travelling late? The X95 runs 24/7 and drops you near the Acropolis for €3.50 less, only a few minutes slower." },
-        { h2:"Live times, not estimates", p:"The X95 times on this page come live from OASA telematics whenever buses are running — the “in X min” is the real next arrival, not the timetable. The Metro runs on a fixed schedule, so we show its exact times. Change the departure time above to see how the fastest option shifts." },
+        { h2:"Live times, not estimates", p:"The X95 times on this page come live from OASA telematics whenever buses are running (the time the next bus reaches the airport stop; it departs a few minutes later) — the “in X min” is the real time the next bus reaches the airport stop (it departs a few minutes later), not the timetable. The Metro runs on a fixed schedule, so we show its exact times. Change the departure time above to see how the fastest option shifts." },
       ],
       factsHeading:"At a glance",
       facts:[
@@ -443,7 +442,7 @@ export const PAGES = [
       seoLabel:"Οδηγός διαδρομής",
       prose:[
         { h2:"Γρηγορότερα ή φθηνότερα;", cls:"v-advice", p:"Προλαβαίνεις πλοίο με βαλίτσες; Το Χ96 σε αφήνει κατευθείαν στις πύλες του λιμανιού, χωρίς αλλαγή, για €5,50. Το Μετρό είναι λίγο πιο γρήγορο αλλά θέλει αλλαγή γραμμής στο Μοναστηράκι (Γρ. 3 → Γρ. 1)." },
-        { h2:"Ζωντανές ώρες, όχι εκτιμήσεις", p:"Οι ώρες του Χ96 εδώ έρχονται ζωντανά από την τηλεματική του ΟΑΣΑ όταν κυκλοφορούν λεωφορεία — χρήσιμο όταν τρέχεις για πλοίο. Το Μετρό ακολουθεί σταθερό ωράριο, οπότε δείχνουμε τις ακριβείς ώρες. Άλλαξε την ώρα πιο πάνω για να δεις πώς αλλάζει η γρηγορότερη επιλογή." },
+        { h2:"Ζωντανές ώρες, όχι εκτιμήσεις", p:"Οι ώρες του Χ96 εδώ έρχονται ζωντανά από την τηλεματική του ΟΑΣΑ όταν κυκλοφορούν λεωφορεία (η ώρα που το επόμενο λεωφορείο φτάνει στη στάση του αεροδρομίου· αναχωρεί λίγα λεπτά μετά) — χρήσιμο όταν τρέχεις για πλοίο. Το Μετρό ακολουθεί σταθερό ωράριο, οπότε δείχνουμε τις ακριβείς ώρες. Άλλαξε την ώρα πιο πάνω για να δεις πώς αλλάζει η γρηγορότερη επιλογή." },
       ],
       factsHeading:"Με μια ματιά",
       facts:[
@@ -467,7 +466,7 @@ export const PAGES = [
       seoLabel:"Route guide",
       prose:[
         { h2:"Faster or cheaper?", cls:"v-advice", p:"Catching a ferry with luggage? The X96 drops you right at the port gates, no change, for €5.50. The Metro is a touch faster but needs a line change at Monastiráki (Line 3 → Line 1)." },
-        { h2:"Live times, not estimates", p:"The X96 times here come live from OASA telematics whenever buses are running — handy when you're racing for a ferry. The Metro runs on a fixed schedule, so we show its exact times. Change the departure time above to see how the fastest option shifts." },
+        { h2:"Live times, not estimates", p:"The X96 times here come live from OASA telematics whenever buses are running (the time the next bus reaches the airport stop; it departs a few minutes later) — handy when you're racing for a ferry. The Metro runs on a fixed schedule, so we show its exact times. Change the departure time above to see how the fastest option shifts." },
       ],
       factsHeading:"At a glance",
       facts:[
@@ -538,7 +537,7 @@ export const PAGES = [
       intro:"Δημόσιες συγκοινωνίες από το αεροδρόμιο Αθηνών (ATH) προς τους σταθμούς Κηφισού / Λιοσίων — σύγκρινε X93 και ταξί.",
       seoLabel:"Οδηγός διαδρομής",
       prose:[
-        { h2:"Ζωντανές ώρες, όχι εκτιμήσεις", p:"Οι ώρες του Χ93 εδώ έρχονται ζωντανά από την τηλεματική του ΟΑΣΑ όταν κυκλοφορούν λεωφορεία — το «σε X λεπτά» είναι η πραγματική επόμενη άφιξη. Το Χ93 συνδέει το αεροδρόμιο απευθείας με τους σταθμούς υπεραστικών ΚΤΕΛ Κηφισού και Λιοσίων." },
+        { h2:"Ζωντανές ώρες, όχι εκτιμήσεις", p:"Οι ώρες του Χ93 εδώ έρχονται ζωντανά από την τηλεματική του ΟΑΣΑ όταν κυκλοφορούν λεωφορεία (η ώρα που το επόμενο λεωφορείο φτάνει στη στάση του αεροδρομίου· αναχωρεί λίγα λεπτά μετά) — το «σε X λεπτά» είναι η πραγματική επόμενη άφιξη. Το Χ93 συνδέει το αεροδρόμιο απευθείας με τους σταθμούς υπεραστικών ΚΤΕΛ Κηφισού και Λιοσίων." },
       ],
       factsHeading:"Με μια ματιά",
       facts:[
@@ -560,7 +559,7 @@ export const PAGES = [
       intro:"Public transport from Athens Airport (ATH) to Kifisos / Liosion bus stations — compare X93 and taxi options.",
       seoLabel:"Route guide",
       prose:[
-        { h2:"Live times, not estimates", p:"The X93 times here come live from OASA telematics whenever buses are running — the “in X min” is the real next arrival. The X93 links the airport directly with the Kifisós and Liossíon intercity KTEL coach terminals." },
+        { h2:"Live times, not estimates", p:"The X93 times here come live from OASA telematics whenever buses are running (the time the next bus reaches the airport stop; it departs a few minutes later) — the “in X min” is the real next arrival. The X93 links the airport directly with the Kifisós and Liossíon intercity KTEL coach terminals." },
       ],
       factsHeading:"At a glance",
       facts:[

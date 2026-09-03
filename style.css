@@ -348,3 +348,8 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .lang-switch a.active{opacity:1}
 .flag{display:block;width:22px;height:auto;border-radius:3px;box-shadow:0 0 0 1px rgba(128,128,128,.4)}
 .lang-switch a.active .flag{box-shadow:0 0 0 2px var(--amber)}
+
+/* live-feed honesty + per-option source line */
+.live-note{margin:6px 0 2px;font:500 12px/1.4 "Inter",system-ui,sans-serif;color:var(--muted)}
+.src{margin-top:10px;font:500 11.5px/1.35 "Inter",system-ui,sans-serif;color:var(--muted);letter-spacing:.01em}
+.src-est{color:var(--amber-ink)}

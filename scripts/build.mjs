@@ -12,7 +12,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { SITE, HOME, FOOTER, PROTOTYPE, BACK, LANG_LABEL, PAGES } from "../site/content.mjs";
+import { SITE, HOME, FOOTER, BACK, LANG_LABEL, PAGES } from "../site/content.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const CHECK = process.argv.includes("--check");
@@ -139,7 +139,7 @@ ${page.kind === "route" ? `<script type="application/ld+json">${ldWebPage(page.s
 ${body}
 ${seoSection(c)}
   <div class="disclaimer" id="disc"></div>
-  <footer><span data-i18n="footer">${FOOTER[lang]}</span><br><span data-i18n="prototype">${PROTOTYPE[lang]}</span> &#183; <span id="tz"></span></footer>
+  <footer><span data-i18n="footer">${FOOTER[lang]}</span><br><span id="tz"></span></footer>
 </div>
 <script src="/data.js"></script>
 <script>
