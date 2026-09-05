@@ -353,3 +353,30 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .live-note{margin:6px 0 2px;font:500 12px/1.4 "Inter",system-ui,sans-serif;color:var(--muted)}
 .src{margin-top:10px;font:500 11.5px/1.35 "Inter",system-ui,sans-serif;color:var(--muted);letter-spacing:.01em}
 .src-est{color:var(--amber-ink)}
+
+/* ===== city → airport page ===== */
+.dir-switch{display:flex;margin:0 0 16px;border:1px solid var(--line);border-radius:10px;overflow:hidden;font:700 12px/1 "Inter",system-ui,sans-serif}
+.dir-switch a,.dir-switch span{flex:1;text-align:center;padding:11px 8px;color:var(--muted);text-decoration:none}
+.dir-switch a:hover,.dir-switch a:focus-visible{color:var(--ink);outline:none}
+.dir-switch span{background:var(--tile);color:var(--ink)}
+.arrive-panel{margin:0 0 18px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 2px}
+.arrive-panel .ap-lead{font:400 14px/1.5 "Inter",system-ui,sans-serif;color:var(--muted)}
+.arrive-panel .ap-lead b{color:var(--ink);font:800 26px/1 "JetBrains Mono",monospace;margin-left:6px;vertical-align:-2px}
+.arrive-panel .ap-day{display:inline-flex;gap:6px;margin-left:10px;vertical-align:middle}
+.arrive-panel .day-btn{flex:0 0 auto;padding:0 12px}
+.rv-card .leave .lbl{font:600 11px/1 "Inter",system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);flex-basis:100%}
+.rv-card .rv-fare{font:800 19px/1 "JetBrains Mono",monospace;color:var(--amber)}
+.rv-card .daytag{font:600 11px/1 "JetBrains Mono",monospace;color:var(--muted);align-self:center}
+.rv-card .margin{display:inline-flex;align-items:center;font:700 11px/1 "JetBrains Mono",monospace;padding:5px 8px;border-radius:7px;background:var(--tile);color:var(--muted)}
+.rv-card .margin.ok{color:var(--green-ink)}
+.rv-card .margin.tight{color:var(--amber-ink)}
+.rv-card .margin.late{color:var(--red)}
+.rv-card.late{opacity:.85}
+.rv-card.late .leave .clock{color:var(--muted);text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--red)}
+.rv-card .prev{margin-top:8px;font:500 12px/1.4 "JetBrains Mono",monospace;color:var(--muted)}
+.rv-card .prev b{color:var(--ink)}
+.stepline{display:flex;flex-direction:column;gap:9px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.stepline .st{display:flex;gap:10px;align-items:flex-start;font:400 13px/1.4 "Inter",system-ui,sans-serif;color:var(--muted)}
+.stepline .st b{color:var(--ink);font-weight:700}
+.stepline .st .t{flex:0 0 52px;font:700 12px/1.5 "JetBrains Mono",monospace;color:var(--ink)}
+.stepline .st.gate .t{color:var(--amber-ink)}

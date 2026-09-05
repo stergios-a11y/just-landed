@@ -214,7 +214,13 @@ raster jaggies) + live Inter text — razor-sharp at any size.
 4. Language layout stays EL-root by decision (Greek traffic expected to win);
    `x-default` points to EN. `pathFor()/fileFor()` in the generator are the only
    places that know the layout if that ever changes.
-5. Idea for a reverse-direction page ("I must be at ATH by HH:MM - when do I
-   leave Syntagma/Piraeus?"): fixed anchor at the airport, a few boarding
-   points, same slider run backwards. Needs reverse timetables in data.js.
-   Only if Search Console shows "προς αεροδρόμιο" demand.
+5. City → airport page is LIVE: `athens-to-airport.html` (+ `/en/`),
+   `kind:"reverse"` in content.mjs, data in `AIRPORTS.ATH.reverse`
+   (`origins[].routes[]` with `walkIn`, `gateWalk`, `stop`, `gate`, same
+   `sched`/`journeyBands` formats). Logic: `rvPlan()` = latest departure whose
+   dep+ride+gateWalk <= arrive-by (within a 4h window), "Leave by" = dep-walkIn;
+   modes that can't make it stay as a greyed "too late" card. Sources: STASY L3
+   first/last table (airport trains every 36'), Hellenic Train PDF (May 2026),
+   OASA express page (24h, journeys, stops); bus headways are 2021 secondary →
+   est. Next: link from the homepage; a Piraeus/Larissa live check is not
+   possible (OASA doesn't report departures at origin stops).

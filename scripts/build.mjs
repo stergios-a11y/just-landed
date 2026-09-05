@@ -112,11 +112,22 @@ function seoSection(c) {
 
 function airportPage(page, lang) {
   const c = page[lang];
-  const isDest = page.kind === "route" || page.code === "ATH";
+  const isDest = page.kind === "route" || (page.code === "ATH" && page.kind !== "reverse");
   const h1 = c.h1 != null ? c.h1 : `${c.h1Prefix} <em id="desttitle">${c.dest}</em>`;
-  const body = isDest
+  const body = page.kind === "reverse"
+    ? `  <div class="qh">${lang === "el" ? "Από πού ξεκινάς;" : "Where are you starting from?"}</div>\n  <div class="chips" id="chips"></div>\n  <div id="rvcards"></div>`
+    : isDest
     ? `  <div class="qh" data-i18n="whereHeaded">${lang === "el" ? "Πού κατευθύνεσαι;" : "Where are you headed?"}</div>\n  <div class="chips" id="chips"></div>\n  <div id="destcards"></div>`
     : `  <p class="tagline" id="sub"></p>\n  <div id="options"></div>\n  <div class="conns" id="conns"></div>`;
+  // direction switch between the Athens arrival page and the city→airport page
+  const rvPage = PAGES.find((p) => p.kind === "reverse" && p.code === page.code);
+  const fwdPage = PAGES.find((p) => p.kind === "airport" && p.code === page.code);
+  const toCity = lang === "el" ? "Αεροδρόμιο → πόλη" : "Airport → city", toAir = lang === "el" ? "Πόλη → αεροδρόμιο" : "City → airport";
+  const dirSwitch = (rvPage && (page.kind === "reverse" || page.kind === "airport") && page.code === "ATH")
+    ? (page.kind === "reverse"
+        ? `  <div class="dir-switch"><a href="${pathFor(fwdPage.slug, lang)}">${toCity}</a><span>${toAir}</span></div>\n`
+        : `  <div class="dir-switch"><span>${toCity}</span><a href="${pathFor(rvPage.slug, lang)}">${toAir}</a></div>\n`)
+    : "";
   return `<!DOCTYPE html>
 <html lang="${lang}">
 <head>
@@ -135,7 +146,7 @@ ${page.kind === "route" ? `<script type="application/ld+json">${ldWebPage(page.s
     <div class="header-tools">${langSwitch(page.slug, lang)}<div class="clock" id="clock">${lang === "el" ? "τώρα" : "now"} –:–</div></div>
   </header>
   <a class="backlink" id="backlink" href="${pathFor("index", lang)}">${BACK[lang]}</a>
-  <h1>${h1}</h1>
+${dirSwitch}  <h1>${h1}</h1>
   <p class="intro">${c.intro}</p>
 ${body}
 ${seoSection(c)}
@@ -146,7 +157,7 @@ ${seoSection(c)}
 <script>
   const CODE="${page.code}";
   const tzEl=document.getElementById("tz"); if(tzEl) tzEl.textContent=Intl.DateTimeFormat().resolvedOptions().timeZone;
-${page.dest ? `  DESTSEL[CODE]="${page.dest}";\n` : ""}  initAirport(CODE);
+${page.dest ? `  DESTSEL[CODE]="${page.dest}";\n` : ""}  ${page.kind === "reverse" ? "initReverse(CODE);" : "initAirport(CODE);"}
   if(typeof applyLanguage === "function") applyLanguage();
 </script>
 </body>
@@ -218,7 +229,7 @@ function loadAirports() {
 }
 function lintPage(page, lang, c, AIRPORTS) {
   const ap = AIRPORTS[page.code]; if (!ap) return [];
-  const blob = JSON.stringify([ap.options, ap.routes, ap.connections]);
+  const blob = JSON.stringify([ap.options, ap.routes, ap.connections, page.kind === "reverse" ? ap.reverse : null]);
   const norm = (v) => v.replace(",", ".").replace(/\.0+$/, "").replace(/(\.\d)0$/, "$1");
   const dataPrices = new Set((blob.match(/€\s?\d+(?:[.,]\d+)?/g) || []).map((m) => norm(m.replace(/€\s?/, ""))));
   // differences between two fares are legitimate prose ("€3.50 less")
