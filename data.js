@@ -1029,7 +1029,7 @@ function renderReverse(code){
   const latestIdx=pub.length?0:-1;
   let cheapIdx=-1; if(pub.length){ let best=null; pub.forEach((x,i)=>{ const v=priceNum(x.o.price); if(v!=null && (best==null || v<best.v)) best={v,i}; }); if(best) cheapIdx=best.i; }
   if(!RV_OPEN){ RV_OPEN=new Set([latestIdx,cheapIdx].filter(i=>i>=0)); }
-  box.innerHTML=ordered.map((x,i)=>{ const tags=[]; if(i===latestIdx) tags.push({cls:"rtag-fast",txt:T("Πιο αργά","Latest")}); if(i===cheapIdx) tags.push({cls:"rtag-cheap",txt:T("Φθηνότερο","Cheapest")}); return rvCard(x.o,x.p,i===latestIdx,i,tags,i===cheapIdx); }).join("");
+  box.innerHTML=ordered.map((x,i)=>{ const tags=[]; if(i===latestIdx) tags.push({cls:"rtag-fast",txt:T("Γρηγορότερο","Fastest")}); if(i===cheapIdx) tags.push({cls:"rtag-cheap",txt:T("Φθηνότερο","Cheapest")}); return rvCard(x.o,x.p,i===latestIdx,i,tags,i===cheapIdx); }).join("");
   box.querySelectorAll(".rv:not(.late) .row").forEach(b=>b.onclick=()=>{ const i=Number(b.parentElement.dataset.i); if(RV_OPEN.has(i)) RV_OPEN.delete(i); else RV_OPEN.add(i); renderReverse(code); });
   updateArrivePicker();
 }
