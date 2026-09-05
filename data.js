@@ -96,62 +96,62 @@ const AIRPORTS = {
     reverse:{
       origins:[
         {id:"syn",label:"Syntagma",routes:[
-          {k:"metro",name:"Metro M3",to:"Syntagma → Airport",price:"€9",journey:"~42 min",checked:"Sep 2026",walkIn:5,gateWalk:6,
-            stop:"M3 platform towards Airport (direction Doukissis Plakentias)",gate:"From the airport station up the walkway to Departures, ~6 min",
+          {k:"metro",name:"Metro M3",short:"M3",to:"Syntagma → Airport",price:"€9",journey:"~42 min",checked:"Sep 2026",walkIn:5,gateWalk:6,
+            ll:"37.975553,23.735253",startPin:true,stop:"M3 platform towards Airport (direction Doukissis Plakentias)",gate:"From the airport station up the walkway to Departures, ~6 min",
             sched:{kind:"range",first:"05:53",last:"23:18",every:36},
             note:"Only every other train continues to the airport — check the destination board says ΑΕΡΟΔΡΟΜΙΟ / AIRPORT. First airport train 05:53 (arrives 06:35), last 23:18 (arrives 23:58). €9 airport ticket, tap at the gate."},
-          {k:"bus",name:"Bus X95",to:"Syntagma → Airport",price:"€5.50",journey:"~60 min",est:true,walkIn:3,gateWalk:2,
+          {k:"bus",name:"Bus X95",short:"X95",to:"Syntagma → Airport",price:"€5.50",journey:"~60 min",est:true,walkIn:3,gateWalk:2,
             journeyBands:[{from:0,to:6,mins:40},{from:6,to:9.5,mins:65},{from:9.5,to:16,mins:55},{from:16,to:19.5,mins:70},{from:19.5,to:23,mins:50},{from:23,to:24,mins:40}],
-            stop:"X95 terminus on Othonos St, south side of Syntagma Square (moves to Amalias Ave on event days)",gate:"Drops you at the Departures level, ~2 min",
+            ll:"37.974590,23.734840",startPin:true,stop:"X95 terminus on Othonos St, south side of Syntagma Square (moves to Amalias Ave on event days)",gate:"Drops you at the Departures level, ~2 min",
             sched:{kind:"windows",windows:[{start:"05:00",end:"22:00",every:20},{start:"22:00",end:"01:20",every:20},{start:"01:20",end:"05:00",every:30}]},
             note:"Runs 24 hours. Day headway ~15–20 min, ~25–30 min after 01:00 (headways from published timetables, not live). Tap a contactless card on the blue validator once on boarding; no tickets sold by the driver."},
           {k:"taxi",name:"Taxi",to:"door to door",price:"€40–55",fareDay:"€40",fareNight:"€55",nightStart:0,nightEnd:5,journey:"~40 min",checked:"Aug 2026",official:true,walkIn:0,gateWalk:1,apps:["freenow","uber","bolt"],
             note:"Official flat fare from the centre: €40 by day, €55 between 00:00 and 05:00 — counted from when you get in."}
         ]},
         {id:"mon",label:"Monastiráki",routes:[
-          {k:"metro",name:"Metro M3",to:"Monastiraki → Airport",price:"€9",journey:"~44 min",checked:"Sep 2026",walkIn:5,gateWalk:6,
-            stop:"M3 platform towards Airport",gate:"From the airport station up the walkway to Departures, ~6 min",
+          {k:"metro",name:"Metro M3",short:"M3",to:"Monastiraki → Airport",price:"€9",journey:"~44 min",checked:"Sep 2026",walkIn:5,gateWalk:6,
+            ll:"37.976150,23.725670",startPin:true,stop:"M3 platform towards Airport",gate:"From the airport station up the walkway to Departures, ~6 min",
             sched:{kind:"range",first:"05:51",last:"23:15",every:36},
             note:"Only every other train continues to the airport — check the board says ΑΕΡΟΔΡΟΜΙΟ / AIRPORT. First airport train 05:51, last 23:15. €9 airport ticket."},
-          {k:"bus",name:"Bus X95",to:"Syntagma → Airport",price:"€5.50",journey:"~60 min",est:true,walkIn:10,gateWalk:2,
+          {k:"bus",name:"Bus X95",short:"X95",to:"Syntagma → Airport",price:"€5.50",journey:"~60 min",est:true,walkIn:10,gateWalk:2,
             journeyBands:[{from:0,to:6,mins:40},{from:6,to:9.5,mins:65},{from:9.5,to:16,mins:55},{from:16,to:19.5,mins:70},{from:19.5,to:23,mins:50},{from:23,to:24,mins:40}],
-            stop:"~10 min walk to the X95 terminus on Othonos St at Syntagma",gate:"Drops you at the Departures level, ~2 min",
+            ll:"37.974590,23.734840",startPin:true,stop:"~10 min walk to the X95 terminus on Othonos St at Syntagma",gate:"Drops you at the Departures level, ~2 min",
             sched:{kind:"windows",windows:[{start:"05:00",end:"22:00",every:20},{start:"22:00",end:"01:20",every:20},{start:"01:20",end:"05:00",every:30}]},
             note:"Runs 24 hours from Syntagma (~10 min walk). Contactless card on board, €5.50."},
           {k:"taxi",name:"Taxi",to:"door to door",price:"€40–55",fareDay:"€40",fareNight:"€55",nightStart:0,nightEnd:5,journey:"~42 min",checked:"Aug 2026",official:true,walkIn:0,gateWalk:1,apps:["freenow","uber","bolt"],
             note:"Official flat fare from the centre: €40 by day, €55 between 00:00 and 05:00."}
         ]},
         {id:"pir",label:"Piraeus",routes:[
-          {k:"bus",name:"Bus X96",to:"Piraeus → Airport",price:"€5.50",journey:"~90 min",est:true,walkIn:3,gateWalk:2,
+          {k:"bus",name:"Bus X96",short:"X96",to:"Piraeus → Airport",price:"€5.50",journey:"~90 min",est:true,walkIn:3,gateWalk:2,
             journeyBands:[{from:0,to:6,mins:60},{from:6,to:9.5,mins:100},{from:9.5,to:16,mins:90},{from:16,to:19.5,mins:105},{from:19.5,to:23,mins:80},{from:23,to:24,mins:60}],
-            stop:"By day from Akti Vasileiadi (Ministry of Shipping, Drapetsona end of the port); ~20:30–04:30 from Karaiskaki Square",gate:"Drops you at the Departures level, ~2 min",
+            ll:"37.942660,23.623490",startPin:true,stop:"By day from Akti Vasileiadi (Ministry of Shipping, Drapetsona end of the port); ~20:30–04:30 from Karaiskaki Square",gate:"Drops you at the Departures level, ~2 min",
             sched:{kind:"windows",windows:[{start:"05:00",end:"20:00",every:25},{start:"20:00",end:"05:00",every:35}]},
             note:"Runs 24 hours. Day headway ~20–30 min, night ~30–40 (published timetables, not live). Contactless card on board, €5.50."},
-          {k:"metro",name:"Metro M1 → M3",to:"Piraeus → Monastiraki → Airport",price:"€9",journey:"~68 min",est:true,walkIn:5,gateWalk:6,
-            stop:"M1 (green) to Monastiraki, change to M3 for the airport train — allow ~25 min to Monastiraki",gate:"From the airport station up the walkway to Departures, ~6 min",
+          {k:"metro",name:"Metro M1 → M3",short:"M1 → M3",to:"Piraeus → Monastiraki → Airport",price:"€9",journey:"~68 min",est:true,walkIn:5,gateWalk:6,
+            ll:"37.948000,23.643000",startPin:true,stop:"M1 (green) to Monastiraki, change to M3 for the airport train — allow ~25 min to Monastiraki",gate:"From the airport station up the walkway to Departures, ~6 min",
             sched:{kind:"range",first:"05:26",last:"22:50",every:36},
             note:"Times shown are the airport train leaving Monastiraki minus ~25 min for the M1 leg; check the M3 board says AIRPORT. One €9 airport ticket covers both."},
           {k:"taxi",name:"Taxi",to:"door to door",price:"~€55–70",fareDay:"~€55",fareNight:"~€70",nightStart:0,nightEnd:5,journey:"~55 min",est:true,walkIn:0,gateWalk:1,apps:["freenow","uber","bolt"],
             note:"Metered from Piraeus — the €40/€55 flat fare applies only to the centre. Estimate."}
         ]},
         {id:"lar",label:"Larissa station",routes:[
-          {k:"rail",name:"Suburban Rail",to:"Athens (Larissa) → Airport",price:"€9",journey:"~45 min",checked:"Sep 2026",walkIn:5,gateWalk:6,
-            stop:"Proastiakos platform towards Airport (Hellenic Train)",gate:"From the airport station up the walkway to Departures, ~6 min",
+          {k:"rail",name:"Suburban Rail",short:"Proastiakos",to:"Athens (Larissa) → Airport",price:"€9",journey:"~45 min",checked:"Sep 2026",walkIn:5,gateWalk:6,
+            ll:"37.992200,23.721100",startPin:true,stop:"Proastiakos platform towards Airport (Hellenic Train)",gate:"From the airport station up the walkway to Departures, ~6 min",
             sched:{kind:"times",byDay:{weekday:["04:13","04:36","04:54","05:19","06:04","07:04","08:04","09:04","10:04","11:04","12:04","13:04","14:04","15:04","16:04","17:04","18:04","19:04","20:04","21:04","22:04"],
               sat:["04:13","04:36","04:54","06:04","07:04","08:04","09:04","10:04","11:04","12:04","13:04","14:04","15:04","16:04","17:04","18:04","19:04","20:04","21:04","22:04"],
               sun:["04:13","04:36","04:54","06:04","07:04","08:04","09:04","10:04","11:04","12:04","13:04","14:04","15:04","16:04","17:04","18:04","19:04","20:04","21:04","22:04"]}},
             note:"Hourly at :04 from 06:04 to 22:04, plus early trains 04:13, 04:36, 04:54 (and 05:19 on weekdays) — the only rail option before the first metro. 45 min to the airport. Same €9 airport ticket as the metro."},
-          {k:"metro",name:"Metro M2 → M3",to:"Larissa → Syntagma → Airport",price:"€9",journey:"~50 min",est:true,walkIn:4,gateWalk:6,
-            stop:"M2 (red) two stops to Syntagma, change to M3 — allow ~8 min",gate:"From the airport station up the walkway to Departures, ~6 min",
+          {k:"metro",name:"Metro M2 → M3",short:"M2 → M3",to:"Larissa → Syntagma → Airport",price:"€9",journey:"~50 min",est:true,walkIn:4,gateWalk:6,
+            ll:"37.992000,23.720800",startPin:true,stop:"M2 (red) two stops to Syntagma, change to M3 — allow ~8 min",gate:"From the airport station up the walkway to Departures, ~6 min",
             sched:{kind:"range",first:"05:45",last:"23:10",every:36},
             note:"Times shown are the airport train leaving Syntagma minus ~8 min for the M2 leg."},
           {k:"taxi",name:"Taxi",to:"door to door",price:"€40–55",fareDay:"€40",fareNight:"€55",nightStart:0,nightEnd:5,journey:"~40 min",checked:"Aug 2026",official:true,walkIn:0,gateWalk:1,apps:["freenow","uber","bolt"],
             note:"Official flat fare from the centre: €40 by day, €55 between 00:00 and 05:00."}
         ]},
         {id:"kif",label:"Kifisos coaches",routes:[
-          {k:"bus",name:"Bus X93",to:"Kifisos coach station → Airport",price:"€5.50",journey:"~65 min",est:true,walkIn:2,gateWalk:2,
+          {k:"bus",name:"Bus X93",short:"X93",to:"Kifisos coach station → Airport",price:"€5.50",journey:"~65 min",est:true,walkIn:2,gateWalk:2,
             journeyBands:[{from:0,to:6,mins:45},{from:6,to:9.5,mins:75},{from:9.5,to:16,mins:65},{from:16,to:19.5,mins:80},{from:19.5,to:23,mins:60},{from:23,to:24,mins:45}],
-            stop:"Terminus inside the KTEL Kifisou station (line 052 departure point); also calls at Liossion station",gate:"Drops you at the Departures level, ~2 min",
+            ll:"37.995800,23.696100",startPin:true,stop:"Terminus inside the KTEL Kifisou station (line 052 departure point); also calls at Liossion station",gate:"Drops you at the Departures level, ~2 min",
             sched:{kind:"windows",windows:[{start:"05:00",end:"20:00",every:30},{start:"20:00",end:"05:00",every:50}]},
             note:"Runs 24 hours. Day headway ~25–35 min, night ~45–60 (published timetables, not live). Contactless card on board, €5.50."},
           {k:"taxi",name:"Taxi",to:"door to door",price:"~€45–60",fareDay:"~€45",fareNight:"~€60",nightStart:0,nightEnd:5,journey:"~45 min",est:true,walkIn:0,gateWalk:1,apps:["freenow","uber","bolt"],
@@ -285,7 +285,7 @@ I18N.el["City centre via Metro (Nea Elvetia)"]="Κέντρο μέσω Μετρό
 I18N.el["Bus 02X to Nea Elvetia Metro, then Metro to Venizelou"]="Λεωφορείο 02Χ ως το Μετρό Νέα Ελβετία, μετά Μετρό ως Βενιζέλου";
 I18N.el["02X frequent · metro every 3–8 min"]="02Χ συχνό · μετρό κάθε 3–8 λεπτά";
 I18N.el["Bus 02X (€2, ~8 min) to Nea Elvetia metro station, then the Metro (€0.60, ~12 min, every 3–8 min) to Venizelou/Agia Sofia in the centre. Two separate tickets — no combined fare. Avoids road traffic; 02X frequency is an estimate. A new 03X to Mikra metro station started Aug 2026."]="Λεωφορείο 02Χ (€2, ~8 λεπτά) ως τον σταθμό Μετρό Νέα Ελβετία, μετά Μετρό (€0,60, ~12 λεπτά, κάθε 3–8 λεπτά) ως Βενιζέλου/Αγία Σοφία στο κέντρο. Δύο ξεχωριστά εισιτήρια — δεν υπάρχει συνδυαστικό. Αποφεύγει την κίνηση· η συχνότητα του 02Χ είναι εκτίμηση. Από τον Αύγ. 2026 λειτουργεί και το 03Χ ως τον σταθμό Μίκρα.";
-I18N.el["~15 min"]="~15 λεπτά";
+I18N.el["~15 min"]="~15 λεπτά"; I18N.el["Proastiakos"]="Προαστιακό"; I18N.el["M3"]="Μ3"; I18N.el["M1 → M3"]="Μ1 → Μ3"; I18N.el["M2 → M3"]="Μ2 → Μ3";
 Object.assign(I18N.el,{
  "Syntagma → Airport":"Σύνταγμα → Αεροδρόμιο","Monastiraki → Airport":"Μοναστηράκι → Αεροδρόμιο","Piraeus → Airport":"Πειραιάς → Αεροδρόμιο","Piraeus → Monastiraki → Airport":"Πειραιάς → Μοναστηράκι → Αεροδρόμιο","Athens (Larissa) → Airport":"Σταθμός Λαρίσης → Αεροδρόμιο","Larissa → Syntagma → Airport":"Λαρίσης → Σύνταγμα → Αεροδρόμιο","Kifisos coach station → Airport":"ΚΤΕΛ Κηφισού → Αεροδρόμιο",
  "Larissa station":"Σταθμός Λαρίσης","Kifisos coaches":"ΚΤΕΛ Κηφισού","Piraeus":"Πειραιάς","Metro M1 → M3":"Μετρό Μ1 → Μ3","Metro M2 → M3":"Μετρό Μ2 → Μ3",
@@ -335,7 +335,8 @@ function selectedLangLabel(){ return JL_LANG==="el" ? "ΕΛ" : "EN"; }
 const DISC_I18N={HER:"Τιμές από τον επίσημο τιμοκατάλογο του Αστικού ΚΤΕΛ και αναχωρήσεις από τα επίσημα προγράμματα της γραμμής 6 (καθημερινές από 1 Αυγ. 2026, Σαββατοκύριακα από 1 Σεπ. 2026). Έλεγχος Σεπ. 2026. Έλεγξε πάντα στη στάση.",JTR:"Τιμή και θερινές αναχωρήσεις από το επίσημο πρόγραμμα του ΚΤΕΛ Σαντορίνης (έλεγχος Σεπ. 2026)· οι χειμερινές ώρες είναι εκτίμηση μέχρι να δημοσιευτεί το χειμερινό φύλλο. Έλεγξε πάντα στη στάση.",ATH:"Οι τιμές και τα ωράρια υπηρεσίας έχουν επαληθευτεί τον Αύγ. 2026. Μετρό/τρένο δείχνουν προγραμματισμένες ώρες, ενώ τα express λεωφορεία δείχνουν ζωντανά (ΟΑΣΑ) πότε φτάνει το επόμενο λεωφορείο στη στάση του αεροδρομίου — αναχωρεί λίγα λεπτά μετά. Χωρίς ζωντανά δεδομένα εμφανίζεται το πρόγραμμα. Έλεγξε πάντα στη στάση."};
 const DISC_EN={HER:"Fares from the operator's official price list and departures from its official line 6 timetables (weekday from 1 Aug 2026, weekend from 1 Sep 2026). Checked Sep 2026. Always confirm at the stop.",JTR:"Fare and summer departures from KTEL Santorini's official programme (checked Sep 2026); winter times are an estimate until the winter sheet is published. Always confirm at the stop.",ATH:"Fares & service hours verified Aug 2026. Metro/rail show exact clock-face times; the express buses show live (OASA) when the next bus reaches the airport stop — it departs a few minutes later. Without live data you see the timetable. Always confirm at the stop."};
 const DISC_UNVERIFIED={el:"Ενδεικτικά δεδομένα — τιμές και ώρες προέρχονται από δημοσιευμένα δρομολόγια και αναφορές ταξιδιωτών (έλεγχος Αύγ.–Σεπ. 2026), όχι από επιτόπια επαλήθευση. Οι αναχωρήσεις υπολογίζονται από τη δηλωμένη συχνότητα και αλλάζουν ανά εποχή. Έλεγξε πάντα στη στάση.",en:"Indicative data — fares and times come from published timetables and traveller reports (checked Aug–Sep 2026), not verified on site. Departure times are estimated from the listed frequency and change by season. Always confirm at the stop."};
-function discText(code){ const ap=AIRPORTS[code]; if(!ap) return ""; if(ap.verified){ return (JL_LANG==="el"?DISC_I18N[code]:DISC_EN[code])||""; } return DISC_UNVERIFIED[JL_LANG==="el"?"el":"en"]; }
+const DISC_REVERSE={el:"Μετρό και Προαστιακός: επίσημα ωράρια (έλεγχος Σεπ. 2026). Χ95/Χ96/Χ93: 24ωρα, με συχνότητες από δημοσιευμένα δρομολόγια — όχι ζωντανά, γι’ αυτό οι ώρες τους έχουν ~. Ταξί: επίσημη σταθερή χρέωση από το κέντρο. Έλεγξε πάντα το τελευταίο δρομολόγιο στη στάση.",en:"Metro and suburban rail: official timetables (checked Sep 2026). X95/X96/X93: 24-hour, headways from published timetables — not live, hence the ~ on their times. Taxi: official flat fare from the centre. Always confirm the last departure at the stop."};
+function discText(code){ const ap=AIRPORTS[code]; if(!ap) return ""; if(typeof document!=="undefined" && document.getElementById("rvcards")) return DISC_REVERSE[JL_LANG==="el"?"el":"en"]; if(ap.verified){ return (JL_LANG==="el"?DISC_I18N[code]:DISC_EN[code])||""; } return DISC_UNVERIFIED[JL_LANG==="el"?"el":"en"]; }
 function applyLanguage(){
   document.documentElement.lang=JL_LANG;
   document.querySelectorAll(".lang-switch a").forEach(b=>b.classList.toggle("active",b.dataset.lang===JL_LANG));
@@ -983,34 +984,32 @@ function rvPlan(o, arriveBy){
 }
 const hm=d=>fmt(d.getHours()*60+d.getMinutes());
 function rvDayTag(d, ref){ const a=new Date(d); a.setHours(0,0,0,0); const b=new Date(ref); b.setHours(0,0,0,0); if(a.getTime()===b.getTime()) return ""; const T=(el,en)=>JL_LANG==="el"?el:en; return `<small class="daytag">${a<b?T("προηγ. μέρα","day before"):T("επόμ. μέρα","next day")}</small>`; }
-function rvCard(o,p,isLead){
+function rvCard(o,p,isLead,idx){
   const T=(el,en)=>JL_LANG==="el"?el:en;
   const isTaxi=o.k==="taxi";
-  const head=`<div class="headline"><div class="mi">${modeIcon(o.k)}</div><div class="hmain"><h2>${tr(o.name)}</h2><div class="op">${tr(o.to)}</div></div></div>`;
+  const open=RV_OPEN===idx;
+  const min=T("΄","′");
   if(!p.ok){
     if(!p.firstDep) return "";
-    return `<div class="card b-card rv-card late">${head}
-      <div class="leave"><span class="lbl">${T("Δεν προλαβαίνει","Can't make it")}</span><span class="clock">${hm(p.firstDep)}</span><span class="margin late">${T("ΑΡΓΑ","TOO LATE")}</span></div>
-      <div class="arrive">${T("Το πρώτο","The first")} ${tr(o.name)} ${T("φεύγει","leaves at")} <b>${hm(p.firstDep)}</b> ${T("και είναι στις Αναχωρήσεις","and is at Departures at")} <b>${hm(p.firstArr)}</b> — <b>${p.lateBy} ${T("λεπτά","min")}</b> ${T("μετά την ώρα που ζήτησες.","after the time you asked for.")}</div>${sourceLine(o)}</div>`;
+    return `<div class="rv late"><div class="row"><div class="mi">${modeIcon(o.k)}</div><div class="main"><div class="leaveb"><span class="lv">${T("Δεν προλαβαίνει","Can't make it")}</span><span class="clk">${hm(p.firstDep)}</span></div><div class="sub">${tr(o.name)} · ${T("πρώτο δρομολόγιο, στις Αναχωρήσεις","first departure, at Departures")} <b>${hm(p.firstArr)}</b></div></div><div class="right"><span class="mg late">+${p.lateBy}${min} ${T("ΑΡΓΑ","LATE")}</span></div></div></div>`;
   }
   const est=isEstimateAt(o,p.dep)?"~":"";
-  const mcls=p.margin>=15?"ok":"tight";
-  const marginTxt=isTaxi?"":(p.margin<=0?T("ακριβώς στην ώρα","right on time"):`${p.margin} ${T("λεπτά περιθώριο","min to spare")}`);
   const fare=isTaxi?p.fare:o.price;
-  const fareNote=isTaxi?(o.est?T(" · με μετρητή, εκτίμηση"," · metered, estimate"):(p.night?T(" · νυχτερινή σταθερή χρέωση"," · night flat fare"):T(" · σταθερή χρέωση"," · flat fare"))):"";
-  const steps=isTaxi
-    ?`<div class="st"><span class="t">${hm(p.leave)}</span><span><b>${T("Φεύγεις","Leave")}</b> — ${T("πιάτσα ή εφαρμογή","rank or app")}${o.apps?` (${o.apps.map(k=>APP[k].cls==="bolt"?"Bolt":APP[k].label).join(", ")})`:""}</span></div>
-      <div class="st gate"><span class="t">${hm(p.arrive)}</span><span><b>${T("Αναχωρήσεις","Departures")}</b> · ~${p.ride} ${T("λεπτά διαδρομή","min ride")}</span></div>`
-    :`<div class="st"><span class="t">${hm(p.leave)}</span><span><b>${T("Ξεκίνα για τη στάση","Head to the stop")}</b> · ${tr(o.stop)} (~${o.walkIn} ${T("λεπτά","min")})</span></div>
-      <div class="st"><span class="t">${est}${hm(p.dep)}</span><span><b>${tr(o.name)} ${T("φεύγει","departs")}</b> · ${est}${p.ride} ${T("λεπτά διαδρομή","min ride")}</span></div>
-      <div class="st gate"><span class="t">${est}${hm(p.arrive)}</span><span><b>${T("Αναχωρήσεις","Departures")}</b> · ${tr(o.gate)}</span></div>`;
-  const prev=(!isTaxi&&p.prev)?`<div class="prev">${T("Πιο ασφαλές: το προηγούμενο στις","Safer: the one before at")} <b>${est}${hm(p.prev)}</b> ${T("φτάνει","arrives")} ${est}${hm(p.prevArr)}</div>`:"";
-  const note=o.note?`<div class="note-plain">${tr(o.note)}</div>`:"";
-  return `<div class="card b-card rv-card${isLead?" fast":""}${isTaxi?" taxi":""}">${head}
-    <div class="leave"><span class="lbl">${T("Φύγε το αργότερο","Leave by")}</span><span class="clock">${est}${hm(p.leave)}</span>${rvDayTag(p.leave,RV_ARRIVE)}<span class="hfare rv-fare">${fare}</span>${marginTxt?`<span class="margin ${mcls}">${marginTxt}</span>`:""}</div>
-    <div class="arrive">${T("Στο αεροδρόμιο","At the airport")} <b>${est}${hm(p.arrive)}</b>${fareNote}</div>
-    <div class="stepline">${steps}</div>${prev}${note}${sourceLine(o)}</div>`;
+  const mg=isTaxi?"":`<span class="mg ${p.margin<15?'tight':''}">${p.margin<=0?T("ακριβώς","no slack"):`${p.margin}${min} ${T("περιθώριο","spare")}`}</span>`;
+  const take=isTaxi?`<span class="lv">${T("Ταξί","Taxi")}</span><span class="clk"><small>${T("στις","at")}</small>${hm(p.dep)}</span>`:`<span class="lv">${T("Πάρε το","Take the")} ${tr(o.short||o.name)}</span><span class="clk"><small>${T("των","at")}</small>${est}${hm(p.dep)}</span>`;
+  const sub=isTaxi?`${T("Φτάνει","At the airport")} <b>${hm(p.arrive)}</b> · ~${p.ride}${min}${o.est?T(" · μετρητής, εκτίμηση"," · metered, estimate"):(p.night?T(" · νυχτερινή χρέωση"," · night fare"):"")}`:`${T("Ξεκίνα","Set off")} <b>${hm(p.leave)}</b> · ${T("φτάνει","arrives")} <b>${est}${hm(p.arrive)}</b>${rvDayTag(p.leave,RV_ARRIVE)}`;
+  const chev=`<span class="chev" aria-hidden="true">▾</span>`;
+  const det=isTaxi
+    ?`<div class="st"><span class="t">${hm(p.leave)}</span><span>${T("Πιάτσα ή εφαρμογή","Rank or app")}${o.apps?` · ${o.apps.map(k=>k==="bolt"?"Bolt":APP[k].label).join(", ")}`:""}</span></div>
+      <div class="st"><span class="t">${hm(p.arrive)}</span><span><b>${T("Αναχωρήσεις","Departures")}</b> · ~${p.ride}${min}</span></div>${o.note?`<div class="note-plain">${tr(o.note)}</div>`:""}`
+    :`<div class="st"><span class="t">${hm(p.leave)}</span><span><b>${T("Ξεκίνα","Set off")}</b> · ${tr(o.stop)} (~${o.walkIn}${min}) ${stopLink(o)}</span></div>
+      <div class="st"><span class="t">${est}${hm(p.dep)}</span><span><b>${tr(o.name)} ${T("φεύγει","departs")}</b> · ${est}${p.ride}${min}</span></div>
+      <div class="st"><span class="t">${est}${hm(p.arrive)}</span><span><b>${T("Αναχωρήσεις","Departures")}</b> · ${tr(o.gate)}</span></div>
+      ${p.prev?`<div class="st prevst"><span class="t">${est}${hm(p.prev)}</span><span>${T("το προηγούμενο — φτάνει","the one before — arrives")} ${est}${hm(p.prevArr)}</span></div>`:""}
+      ${o.note?`<div class="note-plain">${tr(o.note)}</div>`:""}`;
+  return `<div class="rv${isLead?" lead":""}${open?" open":""}" data-i="${idx}"><button class="row" type="button" aria-expanded="${open}"><div class="mi">${modeIcon(o.k)}</div><div class="main"><div class="leaveb">${take}${chev}</div><div class="sub">${sub}</div></div><div class="right"><span class="fare">${fare}</span>${mg}</div></button><div class="det"${open?"":" hidden"}>${det}${sourceLine(o)}</div></div>`;
 }
+let RV_OPEN=null;
 function renderReverse(code){
   const ap=AIRPORTS[code]; const rv=ap&&ap.reverse; if(!rv) return;
   const box=document.getElementById("rvcards"); if(!box) return;
@@ -1019,28 +1018,27 @@ function renderReverse(code){
   const cur=rv.origins.find(x=>x.id===RV_ORIGIN)||rv.origins[0];
   const chips=document.getElementById("chips");
   if(chips){ chips.innerHTML=rv.origins.map(x=>`<button class="chip ${x.id===cur.id?'on':''}" data-id="${x.id}">${tr(x.label)}</button>`).join("");
-    chips.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{RV_ORIGIN=b.dataset.id;renderReverse(code);}); }
+    chips.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{RV_ORIGIN=b.dataset.id;RV_OPEN=null;renderReverse(code);}); }
   const rows=cur.routes.map(o=>({o,p:rvPlan(o,RV_ARRIVE)}));
   const pub=rows.filter(x=>x.o.k!=="taxi"&&x.p.ok).sort((a,b)=>b.p.leave-a.p.leave);
   const late=rows.filter(x=>x.o.k!=="taxi"&&!x.p.ok);
   const taxi=rows.filter(x=>x.o.k==="taxi");
-  box.innerHTML=[...pub,...late,...taxi].map((x,i)=>rvCard(x.o,x.p,i===0&&pub.length>0)).join("");
+  box.innerHTML=[...pub,...late,...taxi].map((x,i)=>rvCard(x.o,x.p,i===0&&pub.length>0,i)).join("");
+  box.querySelectorAll(".rv:not(.late) .row").forEach(b=>b.onclick=()=>{ const i=Number(b.parentElement.dataset.i); RV_OPEN=RV_OPEN===i?null:i; renderReverse(code); });
   updateArrivePicker();
 }
 function ensureArrivePicker(){
   if(document.getElementById("arr-slider")) return;
-  const anchor=document.getElementById("rvcards"); if(!anchor) return;
+  const anchor=document.getElementById("chips"); if(!anchor) return;
   const T=(el,en)=>JL_LANG==="el"?el:en;
-  anchor.insertAdjacentHTML("beforebegin",`
-    <section class="arrive-panel" aria-label="${T("Ώρα άφιξης στο αεροδρόμιο","Time to be at the airport")}">
-      <div class="ap-lead">${T("Θέλω να είμαι στο αεροδρόμιο στις","I want to be at the airport by")} <b id="arr-label">--:--</b>
-        <span class="ap-day"><button type="button" class="day-btn" id="arr-d0">${T("ΣΗΜΕΡΑ","TODAY")}</button><button type="button" class="day-btn" id="arr-d1">${T("ΑΥΡΙΟ","TOMORROW")}</button></span></div>
-      <div class="time-slider-wrap">
-        <div class="time-slider-top"><span>${T("ΑΦΙΞΗ ΣΤΟ ΑΕΡΟΔΡΟΜΙΟ","AT THE AIRPORT BY")}</span><b id="arr-val">--:--</b></div>
-        <input id="arr-slider" class="time-slider" type="range" min="0" max="95" step="1" value="24" aria-label="${T("Ώρα άφιξης στο αεροδρόμιο","Time to be at the airport")}">
-        <div class="time-slider-labels"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:45</span></div>
-      </div>
-      <div class="time-help">${T("Βάλε την ώρα που θέλεις να περνάς την πόρτα των Αναχωρήσεων — το «πόσο νωρίτερα» είναι δική σου απόφαση, εμείς κάνουμε μόνο τον υπολογισμό.","Set the time you want to be walking into Departures — how early is your call, we only do the arithmetic.")}</div>
+  anchor.previousElementSibling && anchor.previousElementSibling.classList.contains("qh") && (anchor.previousElementSibling.textContent=T("Από","From"));
+  const qh=anchor.previousElementSibling && anchor.previousElementSibling.classList.contains("qh") ? anchor.previousElementSibling : anchor;
+  qh.insertAdjacentHTML("beforebegin",`
+    <section class="ask" aria-label="${T("Ώρα άφιξης στο αεροδρόμιο","Time to be at the airport")}">
+      <div class="q">${T("Στο αεροδρόμιο στις","At the airport by")}</div>
+      <div class="big"><b id="arr-label">--:--</b><button type="button" class="day-btn" id="arr-d0">${T("ΣΗΜΕΡΑ","TODAY")}</button><button type="button" class="day-btn" id="arr-d1">${T("ΑΥΡΙΟ","TOMORROW")}</button></div>
+      <input id="arr-slider" class="time-slider" type="range" min="0" max="95" step="1" value="24" aria-label="${T("Ώρα άφιξης στο αεροδρόμιο","Time to be at the airport")}">
+      <div class="time-slider-labels"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:45</span></div>
     </section>`);
   const setDay=off=>{ const d=new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate()+off); d.setMinutes(RV_ARRIVE.getHours()*60+RV_ARRIVE.getMinutes()); RV_ARRIVE=d; renderReverse(CODE); };
   document.getElementById("arr-d0").onclick=()=>setDay(0);
@@ -1051,11 +1049,11 @@ function updateArrivePicker(){
   const sl=document.getElementById("arr-slider"); if(!sl||!RV_ARRIVE) return;
   const mins=RV_ARRIVE.getHours()*60+RV_ARRIVE.getMinutes();
   sl.value=String(Math.round(mins/15));
-  document.getElementById("arr-label").textContent=fmt(mins); document.getElementById("arr-val").textContent=fmt(mins);
+  document.getElementById("arr-label").textContent=fmt(mins);
   const today=new Date(); today.setHours(0,0,0,0); const d=new Date(RV_ARRIVE); d.setHours(0,0,0,0); const off=Math.round((d-today)/86400000);
   document.getElementById("arr-d0").classList.toggle("on",off===0); document.getElementById("arr-d1").classList.toggle("on",off===1);
 }
-function initReverse(code){ ensureArrivePicker(); renderReverse(code); setInterval(()=>renderReverse(code),60000); }
+function initReverse(code){ if(!RV_ARRIVE) RV_ARRIVE=rvDefaultArrive(); ensureArrivePicker(); renderReverse(code); setInterval(()=>renderReverse(code),60000); }
 function initAirport(code){ ensureWalkModal(); ensureTimePicker(); const ap=AIRPORTS[code]; const rf=(ap&&ap.destinations)?renderDest:renderAirport; rf(code); loadLive(code); setInterval(()=>rf(code),15000); setInterval(()=>loadLive(code),30000); }
 function tickClock(){ const el=document.getElementById("clock"); if(!el) return; const d=new Date(); el.textContent=(JL_LANG==="el"?"τώρα ":"now ")+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")+":"+String(d.getSeconds()).padStart(2,"0"); }
 if (typeof document !== "undefined" && document.getElementById("clock")) { tickClock(); setInterval(tickClock,1000); }

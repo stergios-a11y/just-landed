@@ -115,7 +115,7 @@ function airportPage(page, lang) {
   const isDest = page.kind === "route" || (page.code === "ATH" && page.kind !== "reverse");
   const h1 = c.h1 != null ? c.h1 : `${c.h1Prefix} <em id="desttitle">${c.dest}</em>`;
   const body = page.kind === "reverse"
-    ? `  <div class="qh">${lang === "el" ? "Από πού ξεκινάς;" : "Where are you starting from?"}</div>\n  <div class="chips" id="chips"></div>\n  <div id="rvcards"></div>`
+    ? `  <div class="qh">${lang === "el" ? "Από" : "From"}</div>\n  <div class="chips" id="chips"></div>\n  <div id="rvcards"></div>`
     : isDest
     ? `  <div class="qh" data-i18n="whereHeaded">${lang === "el" ? "Πού κατευθύνεσαι;" : "Where are you headed?"}</div>\n  <div class="chips" id="chips"></div>\n  <div id="destcards"></div>`
     : `  <p class="tagline" id="sub"></p>\n  <div id="options"></div>\n  <div class="conns" id="conns"></div>`;
@@ -140,16 +140,15 @@ ${metaBlock({ slug: page.slug, lang, title: c.title, description: c.description 
 ${page.kind === "route" ? `<script type="application/ld+json">${ldWebPage(page.slug, lang, c)}</script>\n` : ""}<script type="application/ld+json">${ldFaq(c.faq)}</script>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap${page.kind === "reverse" ? " rvpage" : ""}">
   <header>
     <div class="logo"><a href="${pathFor("index", lang)}" class="lk" aria-label="${HOME[lang].homeLabel}">${LOGO}</a></div>
     <div class="header-tools">${langSwitch(page.slug, lang)}<div class="clock" id="clock">${lang === "el" ? "τώρα" : "now"} –:–</div></div>
   </header>
   <a class="backlink" id="backlink" href="${pathFor("index", lang)}">${BACK[lang]}</a>
 ${dirSwitch}  <h1>${h1}</h1>
-  <p class="intro">${c.intro}</p>
-${body}
-${seoSection(c)}
+${page.kind === "reverse" ? "" : `  <p class="intro">${c.intro}</p>\n`}${body}
+${page.kind === "reverse" ? `  <details class="seo-wrap"><summary>${lang === "el" ? "Καλό να ξέρεις" : "Good to know"}</summary>\n${seoSection(c)}\n  </details>` : seoSection(c)}
   <div class="disclaimer" id="disc"></div>
   <footer><span data-i18n="footer">${FOOTER[lang]}</span><br><span id="tz"></span></footer>
 </div>
