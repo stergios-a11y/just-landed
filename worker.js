@@ -38,6 +38,27 @@ async function airport(){
   return { lines: byLine, kind: "inbound-arrivals", stop: AIRPORT_STOP, ts: Date.now() };
 }
 
+// Live arrivals at any stop along the airport-bound routes (city → airport page).
+// At intermediate stops OASA reports buses en route, so these ARE real upcoming departures.
+const OUTBOUND = { x95: ["2051"], x96: ["3028", "3030"], x93: ["5675"], x97: ["5374", "5375"] }; // codes that END at the airport
+const OUT_CODE_TO_LINE = {};
+for (const [line, codes] of Object.entries(OUTBOUND)) for (const c of codes) OUT_CODE_TO_LINE[c] = line;
+async function stopArrivals(stop){
+  const byLine = {}, seen = new Set();
+  const r = await fetch(OASA + "?act=getStopArrivals&p1=" + stop, { cf: { cacheTtl: 15 } });
+  if (r.ok) {
+    const data = await r.json().catch(() => null);
+    if (Array.isArray(data)) for (const a of data) {
+      const line = OUT_CODE_TO_LINE[a.route_code]; if (!line) continue;
+      const key = line + "|" + (a.veh_code || ""); if (seen.has(key)) continue; seen.add(key);
+      const m = parseInt(a.btime2, 10);
+      if (!isNaN(m)) (byLine[line] = byLine[line] || []).push(m);
+    }
+  }
+  for (const k in byLine) byLine[k].sort((x, y) => x - y);
+  return { lines: byLine, stop, kind: "stop-arrivals", ts: Date.now() };
+}
+
 function json(o){
   return new Response(JSON.stringify(o), {
     headers: { "content-type":"application/json", "cache-control":"public, max-age=15", "access-control-allow-origin":"*" }
@@ -49,6 +70,7 @@ export default {
     try {
       const url = new URL(request.url);
       if (url.pathname === "/api/airport") return json(await airport());
+      if (url.pathname === "/api/stop") { const st = url.searchParams.get("s") || ""; if (/^\d{1,7}$/.test(st)) return json(await stopArrivals(st)); }
     } catch (e) {}
     return env.ASSETS.fetch(request);
   }

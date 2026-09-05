@@ -222,5 +222,9 @@ raster jaggies) + live Inter text — razor-sharp at any size.
    modes that can't make it stay as a greyed "too late" card. Sources: STASY L3
    first/last table (airport trains every 36'), Hellenic Train PDF (May 2026),
    OASA express page (24h, journeys, stops); bus headways are 2021 secondary →
-   est. Next: link from the homepage; a Piraeus/Larissa live check is not
-   possible (OASA doesn't report departures at origin stops).
+   est. Boarding-stop picker: `RV_STOPS` (OASA stop lists for 2051/3028/5675 with
+   route fraction → minutes; M3/Proastiakos station offsets, approx). Picking
+   a stop shifts the departure by the offset and, for buses, shows LIVE OASA
+   arrivals at that stop via `/api/stop?s=<code>` — real, because at
+   intermediate stops OASA reports buses en route (unlike origin stops).
+   Next: link from the homepage.

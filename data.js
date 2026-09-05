@@ -96,11 +96,11 @@ const AIRPORTS = {
     reverse:{
       origins:[
         {id:"syn",label:"Syntagma",routes:[
-          {k:"metro",name:"Metro M3",short:"M3",to:"Syntagma → Airport",price:"€9",journey:"~42 min",checked:"Sep 2026",walkIn:5,gateWalk:6,
+          {k:"metro",name:"Metro M3",short:"M3",stops:"m3_syn",to:"Syntagma → Airport",price:"€9",journey:"~42 min",checked:"Sep 2026",walkIn:5,gateWalk:6,
             ll:"37.975553,23.735253",startPin:true,stop:"M3 platform towards Airport (direction Doukissis Plakentias)",gate:"From the airport station up the walkway to Departures, ~6 min",
             sched:{kind:"range",first:"05:53",last:"23:18",every:36},
             note:"Only every other train continues to the airport — check the destination board says ΑΕΡΟΔΡΟΜΙΟ / AIRPORT. First airport train 05:53 (arrives 06:35), last 23:18 (arrives 23:58). €9 airport ticket, tap at the gate."},
-          {k:"bus",name:"Bus X95",short:"X95",to:"Syntagma → Airport",price:"€5.50",journey:"~60 min",est:true,walkIn:3,gateWalk:2,
+          {k:"bus",name:"Bus X95",short:"X95",stops:"x95",live:"x95",to:"Syntagma → Airport",price:"€5.50",journey:"~60 min",est:true,walkIn:3,gateWalk:2,
             journeyBands:[{from:0,to:6,mins:40},{from:6,to:9.5,mins:65},{from:9.5,to:16,mins:55},{from:16,to:19.5,mins:70},{from:19.5,to:23,mins:50},{from:23,to:24,mins:40}],
             ll:"37.974590,23.734840",startPin:true,stop:"X95 terminus on Othonos St, south side of Syntagma Square (moves to Amalias Ave on event days)",gate:"Drops you at the Departures level, ~2 min",
             sched:{kind:"windows",windows:[{start:"05:00",end:"22:00",every:20},{start:"22:00",end:"01:20",every:20},{start:"01:20",end:"05:00",every:30}]},
@@ -109,11 +109,11 @@ const AIRPORTS = {
             note:"Official flat fare from the centre: €40 by day, €55 between 00:00 and 05:00 — counted from when you get in."}
         ]},
         {id:"mon",label:"Monastiráki",routes:[
-          {k:"metro",name:"Metro M3",short:"M3",to:"Monastiraki → Airport",price:"€9",journey:"~44 min",checked:"Sep 2026",walkIn:5,gateWalk:6,
+          {k:"metro",name:"Metro M3",short:"M3",stops:"m3_mon",to:"Monastiraki → Airport",price:"€9",journey:"~44 min",checked:"Sep 2026",walkIn:5,gateWalk:6,
             ll:"37.976150,23.725670",startPin:true,stop:"M3 platform towards Airport",gate:"From the airport station up the walkway to Departures, ~6 min",
             sched:{kind:"range",first:"05:51",last:"23:15",every:36},
             note:"Only every other train continues to the airport — check the board says ΑΕΡΟΔΡΟΜΙΟ / AIRPORT. First airport train 05:51, last 23:15. €9 airport ticket."},
-          {k:"bus",name:"Bus X95",short:"X95",to:"Syntagma → Airport",price:"€5.50",journey:"~60 min",est:true,walkIn:10,gateWalk:2,
+          {k:"bus",name:"Bus X95",short:"X95",stops:"x95",live:"x95",to:"Syntagma → Airport",price:"€5.50",journey:"~60 min",est:true,walkIn:10,gateWalk:2,
             journeyBands:[{from:0,to:6,mins:40},{from:6,to:9.5,mins:65},{from:9.5,to:16,mins:55},{from:16,to:19.5,mins:70},{from:19.5,to:23,mins:50},{from:23,to:24,mins:40}],
             ll:"37.974590,23.734840",startPin:true,stop:"~10 min walk to the X95 terminus on Othonos St at Syntagma",gate:"Drops you at the Departures level, ~2 min",
             sched:{kind:"windows",windows:[{start:"05:00",end:"22:00",every:20},{start:"22:00",end:"01:20",every:20},{start:"01:20",end:"05:00",every:30}]},
@@ -122,7 +122,7 @@ const AIRPORTS = {
             note:"Official flat fare from the centre: €40 by day, €55 between 00:00 and 05:00."}
         ]},
         {id:"pir",label:"Piraeus",routes:[
-          {k:"bus",name:"Bus X96",short:"X96",to:"Piraeus → Airport",price:"€5.50",journey:"~90 min",est:true,walkIn:3,gateWalk:2,
+          {k:"bus",name:"Bus X96",short:"X96",stops:"x96",live:"x96",to:"Piraeus → Airport",price:"€5.50",journey:"~90 min",est:true,walkIn:3,gateWalk:2,
             journeyBands:[{from:0,to:6,mins:60},{from:6,to:9.5,mins:100},{from:9.5,to:16,mins:90},{from:16,to:19.5,mins:105},{from:19.5,to:23,mins:80},{from:23,to:24,mins:60}],
             ll:"37.942660,23.623490",startPin:true,stop:"By day from Akti Vasileiadi (Ministry of Shipping, Drapetsona end of the port); ~20:30–04:30 from Karaiskaki Square",gate:"Drops you at the Departures level, ~2 min",
             sched:{kind:"windows",windows:[{start:"05:00",end:"20:00",every:25},{start:"20:00",end:"05:00",every:35}]},
@@ -135,7 +135,7 @@ const AIRPORTS = {
             note:"Metered from Piraeus — the €40/€55 flat fare applies only to the centre. Estimate."}
         ]},
         {id:"lar",label:"Larissa station",routes:[
-          {k:"rail",name:"Suburban Rail",short:"Proastiakos",to:"Athens (Larissa) → Airport",price:"€9",journey:"~45 min",checked:"Sep 2026",walkIn:5,gateWalk:6,
+          {k:"rail",name:"Suburban Rail",short:"Proastiakos",stops:"rail_lar",to:"Athens (Larissa) → Airport",price:"€9",journey:"~45 min",checked:"Sep 2026",walkIn:5,gateWalk:6,
             ll:"37.992200,23.721100",startPin:true,stop:"Proastiakos platform towards Airport (Hellenic Train)",gate:"From the airport station up the walkway to Departures, ~6 min",
             sched:{kind:"times",byDay:{weekday:["04:13","04:36","04:54","05:19","06:04","07:04","08:04","09:04","10:04","11:04","12:04","13:04","14:04","15:04","16:04","17:04","18:04","19:04","20:04","21:04","22:04"],
               sat:["04:13","04:36","04:54","06:04","07:04","08:04","09:04","10:04","11:04","12:04","13:04","14:04","15:04","16:04","17:04","18:04","19:04","20:04","21:04","22:04"],
@@ -149,7 +149,7 @@ const AIRPORTS = {
             note:"Official flat fare from the centre: €40 by day, €55 between 00:00 and 05:00."}
         ]},
         {id:"kif",label:"Kifisos coaches",routes:[
-          {k:"bus",name:"Bus X93",short:"X93",to:"Kifisos coach station → Airport",price:"€5.50",journey:"~65 min",est:true,walkIn:2,gateWalk:2,
+          {k:"bus",name:"Bus X93",short:"X93",stops:"x93",live:"x93",to:"Kifisos coach station → Airport",price:"€5.50",journey:"~65 min",est:true,walkIn:2,gateWalk:2,
             journeyBands:[{from:0,to:6,mins:45},{from:6,to:9.5,mins:75},{from:9.5,to:16,mins:65},{from:16,to:19.5,mins:80},{from:19.5,to:23,mins:60},{from:23,to:24,mins:45}],
             ll:"37.995800,23.696100",startPin:true,stop:"Terminus inside the KTEL Kifisou station (line 052 departure point); also calls at Liossion station",gate:"Drops you at the Departures level, ~2 min",
             sched:{kind:"windows",windows:[{start:"05:00",end:"20:00",every:30},{start:"20:00",end:"05:00",every:50}]},
@@ -737,11 +737,11 @@ function walkDir(o){
   const href=`https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&travelmode=walking`;
   return `<a class="stepdir" href="${href}" target="_blank" rel="noopener">${T("Οδηγίες","Directions")} ↗</a>`;
 }
-function stopLink(o){
+function stopLink(o,label){
   if(o.startPin && o.ll){
     const T=(el,en)=>JL_LANG==="el"?el:en;
     const href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.ll)}`;
-    return `<a class="stepdir" href="${href}" target="_blank" rel="noopener">${T("Αφετηρία","Start point")} ↗</a>`;
+    return `<a class="stepdir" href="${href}" target="_blank" rel="noopener">${label||T("Αφετηρία","Start point")} ↗</a>`;
   }
   return walkDir(o);
 }
@@ -967,23 +967,61 @@ async function loadLive(code){
     for(const k of LIVE_LINES){ const mins=lines[k]; if(Array.isArray(mins)&&mins.length) LIVE[k]={deps:mins.map(m=>base+m),ts:Date.now()}; else delete LIVE[k]; } }catch(e){}
   (ap.destinations?renderDest:renderAirport)(code);
 }
+/* Boarding stops per line for the city → airport page. Bus rows: [OASA stop code, name EL, name EN, lat,lng, fraction of route]
+   (OASA telematics routes 2051/3028/5675, Sep 2026; fraction → ~minutes via ride time). Rail rows: [id, EL, EN, lat,lng, minutes after origin] (approx). */
+const RV_STOPS={
+  x95:[["10361","ΣΥΝΤΑΓΜΑ","SYNTAGMA","37.97491,23.73488",0],["60589","ΒΥΖΑΝΤΙΝΟ ΜΟΥΣΕΙΟ - ΡΗΓΙΛΛΗΣ","BYZANTINO MOYSEIO - RHGILLHS","37.97554,23.74439",0.029],["61558","ΔΡΟΜΕΑΣ","DROMEAS","37.97703,23.75073",0.046],["60591","ΙΛΙΣΙΑ","ILISIA","37.97849,23.75273",0.054],["61025","ΠΛ. ΜΑΒΙΛΗ","PL. MABILH","37.98224,23.75660",0.074],["60677","ΓΑΛΑΞΙΑΣ","GALAXIAS","37.98512,23.76134",0.091],["60771","ΖΑΓΟΡΑ","ZAGORA","37.98774,23.76739",0.112],["60680","ΣΧΟΛΗ ΑΣΤΥΝΟΜΙΑΣ","SXOLH ASTYNOMIAS","37.99085,23.77152",0.128],["710002","ΣΤ. ΕΘΝ. ΑΜΥΝΑ","ST. ETHN. AMYNA","37.99923,23.78491",0.177],["490006","7η ΧΟΛΑΡΓΟΥ","7th XOLARGOY","38.00756,23.80241",0.236],["30413","ΣΤ. ΝΟΜΙΣΜΑΤΟΚΟΠΕΙΟ","ST. NOMISMATOKOPEIO","38.00966,23.80731",0.243],["30005","ΠΛ. ΑΓ. ΠΑΡΑΣΚΕΥΗΣ","PL. AG. PARASKEYHS","38.01342,23.82075",0.291],["560003","ΠΑΝΑΓΙΤΣΑ","PANAGITSA","38.00897,23.85241",0.385],["800011","ΠΥΡΓΟΣ","PYRGOS","38.00623,23.86518",0.425],["390011","ΣΕΑ","SEA","37.97161,23.87800",0.571],["390004","ΑΤΤΙΚΕΣ ΔΙΑΔΡΟΜΕΣ","ATTIKES DIADROMES","37.95570,23.88570",0.636]],
+  x96:[["10277","ΠΕΙΡΑΙΑΣ ΔΡΑΠΕΤΣΩΝΑ","PEIRAIAS (GATE E 1)","37.94266,23.62349",0.012],["400158","ΑΓ. ΔΙΟΝΥΣΙΟΣ","AG. DIONYSIOS","37.94910,23.63715",0.05],["400040","ΣΤ.ΜΕΤΡΟ ΠΕΙΡΑΙΑΣ","ST.METRO PEIRAIAS","37.94799,23.64207",0.064],["400298","ΠΛ. ΚΑΡΑΙΣΚΑΚΗ","PL. KARAISKAKH","37.94566,23.64208",0.069],["400299","ΑΓ. ΣΠΥΡΙΔΩΝΑΣ","AG. SPYRIDONAS","37.94402,23.64358",0.074],["400504","ΠΛ. ΤΕΡΨΙΘΕΑΣ","PL. TERPSITHEAS","37.94000,23.64497",0.084],["400028","ΥΠΟΥΡΓΕΙΟ","YPOYRGEIO","37.94093,23.64999",0.096],["400058","ΒΕΝΙΖΕΛΟΥ","BENIZELOY","37.94266,23.65149",0.111],["400073","ΤΖΑΒΕΛΛΑ","TZABELLA","37.94339,23.65694",0.123],["400075","ΗΣΑΠ Ν. ΦΑΛΗΡΟΥ","HSAP N. FALHROY","37.94459,23.66714",0.142],["320021","ΓΥΜΝΑΣΙΟ","GYMNASIO","37.94440,23.67648",0.165],["240011","ΤΖΙΤΖΙΦΙΕΣ","TZITZIFIES","37.94184,23.68622",0.179],["380106","ΑΓ. ΣΚΕΠΗ","AG. SKEPH","37.93397,23.69386",0.209],["380050","ΦΛΟΙΣΒΟΣ","FLOISBOS","37.92402,23.69220",0.248],["380051","ΠΑΛΜΥΡΑ","PALMYRA","37.92286,23.69348",0.252],["380054","ΕΔΕΜ","EDEM","37.91849,23.70080",0.272],["80002","1η ΚΑΛΑΜΑΚΙΟΥ","1st KALAMAKIOY","37.91496,23.70691",0.289],["80004","3η ΚΑΛΑΜΑΚΙΟΥ","3rd KALAMAKIOY","37.90979,23.71275",0.3],["80006","5η ΚΑΛΑΜΑΚΙΟΥ","5th KALAMAKIOY","37.90538,23.71794",0.323],["590002","1η ΑΓ. ΚΟΣΜΑ","1st AG. KOSMA","37.89548,23.72086",0.348],["590009","2η ΕΛΛΗΝΙΚΟΥ","2nd ELLHNIKOY","37.88485,23.72708",0.384],["590011","4η ΕΛΛΗΝΙΚΟΥ","4th ELLHNIKOY","37.88070,23.72976",0.384],["590057","ΚΟΛΛΕΓΙΟ","KOLLEGIO","37.87758,23.73106",0.396],["160159","ΔΙΚΗΓΟΡΙΚΑ","DIKHGORIKA","37.87483,23.73342",0.398],["160160","2η ΓΛΥΦΑΔΑΣ","2nd GLYFADAS","37.87259,23.73590",0.398],["160161","3η ΓΛΥΦΑΔΑΣ","3rd GLYFADAS","37.87089,23.73788",0.398],["160163","5η ΓΛΥΦΑΔΑΣ","5th GLYFADAS","37.86691,23.74227",0.444],["160346","6η ΓΛΥΦΑΔΑΣ","6th GLYFADAS","37.86610,23.74314",0.444],["160165","ΠΛ.ΓΛΥΦΑΔΑΣ","PL. GLYFADAS","37.86329,23.74629",0.444],["160166","ΑΝΤΩΝΟΠΟΥΛΟΥ","ANTONOPOYLOY","37.86001,23.75074",0.451],["160168","ΑΣΤΕΡΙΑ","ASTERIA","37.85661,23.75167",0.455],["530001","ΠΙΚΠΑ","PIKPA","37.85337,23.75161",0.468],["530002","Α ΠΛΑΖ ΒΟΥΛΑΣ","A PLAZ BOYLAS","37.85017,23.75246",0.483],["530003","ΝΟΣΟΚΟΜΕΙΟ","NOSOKOMEIO","37.84705,23.75337",0.485],["530006","ΓΑΛΗΝΗ","GALHNH","37.83748,23.76408",0.516],["530042","ΠΗΓΑΔΑΚΙΑ","PHGADAKIA","37.83340,23.77349",0.537],["520018","ΔΙΛΟΦΟ","DILOFO","37.83497,23.79064",0.573],["520037","ΕΚΚΛΗΣΙΑ","EKKLHSIA","37.83361,23.80092",0.597],["520045","ΣΧ. ΕΥΕΛΠΙΔΩΝ","SX. EYELPIDON","37.84039,23.81457",0.647],["290028","ΨΗΛΟΚΟΡΥΦΗ","PSHLOKORYFH","37.85835,23.84124",0.699],["290030","ΖΗΝΩΝΟΣ","ZHNONOS","37.88187,23.87419",0.788],["290151","ΔΙΑΣΤΑΥΡΩΣΗ ΚΟΡΩΠΙΟΥ","DIASTAYROSH KOROPIOY","37.89119,23.88230",0.816]],
+  x93:[["10162","ΣΤ. ΥΠΕΡΑΣΤΙΚΩΝ ΛΕΩΦΟΡΕΙΩΝ ΚΗΦΙΣΟΥ","ST. YPERASTIKON LEOFOREION KHFISOY","37.99766,23.69920",0.001],["60930","ΚΟΛΟΚΥΝΘΟΥΣ","KOLOKYNTHOYS","38.00168,23.70591",0.025],["60889","ΡΟΣΙΝΙΟΛ","ROSINIOL","38.00772,23.71453",0.053],["60131","ΣΤ. ΥΠΕΡ/ΚΩΝ ΛΙΟΣΙΩΝ","ST. YPERASTIKON LIOSION","38.01026,23.72111",0.101],["350020","ΚΟΜΒΟΣ ΝΕΑΣ ΦΙΛΑΔΕΛΦΕΙΑΣ","KOMBOS NEAS FILADELFEIAS","38.04883,23.74180",0.228],["90051","ΚΗΦΙΣΙΑΣ","KHFISIAS","38.04151,23.80301",0.386],["390011","ΣΕΑ","SEA","37.97161,23.87800",0.674],["390004","ΑΤΤΙΚΕΣ ΔΙΑΔΡΟΜΕΣ","ATTIKES DIADROMES","37.95570,23.88570",0.715]],
+  m3_syn:[["M3-SYN","ΣΥΝΤΑΓΜΑ","SYNTAGMA","37.97555,23.73525",0],["M3-EVA","ΕΥΑΓΓΕΛΙΣΜΟΣ","EVANGELISMOS","37.97633,23.74710",2],["M3-MEG","ΜΕΓΑΡΟ ΜΟΥΣΙΚΗΣ","MEGARO MOUSIKIS","37.97964,23.75282",4],["M3-AMB","ΑΜΠΕΛΟΚΗΠΟΙ","AMBELOKIPI","37.98736,23.75722",6],["M3-PAN","ΠΑΝΟΡΜΟΥ","PANORMOU","37.99312,23.76335",8],["M3-KAT","ΚΑΤΕΧΑΚΗ","KATEHAKI","37.99374,23.77619",10],["M3-ETH","ΕΘΝΙΚΗ ΑΜΥΝΑ","ETHNIKI AMYNA","37.99937,23.78576",12],["M3-HOL","ΧΟΛΑΡΓΟΣ","HOLARGOS","38.00405,23.79470",14],["M3-NOM","ΝΟΜΙΣΜΑΤΟΚΟΠΕΙΟ","NOMISMATOKOPIO","38.00975,23.80593",16],["M3-AGP","ΑΓ. ΠΑΡΑΣΚΕΥΗ","AGIA PARASKEVI","38.01720,23.81620",18],["M3-HAL","ΧΑΛΑΝΔΡΙ","HALANDRI","38.02150,23.82520",20],["M3-DPL","ΔΟΥΚ. ΠΛΑΚΕΝΤΙΑΣ","DOUKISSIS PLAKENTIAS","38.02380,23.83590",22],["M3-PAL","ΠΑΛΛΗΝΗ","PALLINI","38.00620,23.87010",28],["M3-KAN","ΠΑΙΑΝΙΑ-ΚΑΝΤΖΑ","PAIANIA-KANTZA","37.98380,23.86950",32],["M3-KOR","ΚΟΡΩΠΙ","KOROPI","37.91300,23.89480",37]],
+  m3_mon:[["M3-MON","ΜΟΝΑΣΤΗΡΑΚΙ","MONASTIRAKI","37.97614,23.72567",0],["M3-SYN","ΣΥΝΤΑΓΜΑ","SYNTAGMA","37.97555,23.73525",2],["M3-EVA","ΕΥΑΓΓΕΛΙΣΜΟΣ","EVANGELISMOS","37.97633,23.74710",4],["M3-MEG","ΜΕΓΑΡΟ ΜΟΥΣΙΚΗΣ","MEGARO MOUSIKIS","37.97964,23.75282",6],["M3-AMB","ΑΜΠΕΛΟΚΗΠΟΙ","AMBELOKIPI","37.98736,23.75722",8],["M3-PAN","ΠΑΝΟΡΜΟΥ","PANORMOU","37.99312,23.76335",10],["M3-KAT","ΚΑΤΕΧΑΚΗ","KATEHAKI","37.99374,23.77619",12],["M3-ETH","ΕΘΝΙΚΗ ΑΜΥΝΑ","ETHNIKI AMYNA","37.99937,23.78576",14],["M3-HOL","ΧΟΛΑΡΓΟΣ","HOLARGOS","38.00405,23.79470",16],["M3-NOM","ΝΟΜΙΣΜΑΤΟΚΟΠΕΙΟ","NOMISMATOKOPIO","38.00975,23.80593",18],["M3-AGP","ΑΓ. ΠΑΡΑΣΚΕΥΗ","AGIA PARASKEVI","38.01720,23.81620",20],["M3-HAL","ΧΑΛΑΝΔΡΙ","HALANDRI","38.02150,23.82520",22],["M3-DPL","ΔΟΥΚ. ΠΛΑΚΕΝΤΙΑΣ","DOUKISSIS PLAKENTIAS","38.02380,23.83590",24],["M3-PAL","ΠΑΛΛΗΝΗ","PALLINI","38.00620,23.87010",30],["M3-KAN","ΠΑΙΑΝΙΑ-ΚΑΝΤΖΑ","PAIANIA-KANTZA","37.98380,23.86950",34],["M3-KOR","ΚΟΡΩΠΙ","KOROPI","37.91300,23.89480",39]],
+  rail_lar:[["PR-ATH","ΣΤΑΘΜΟΣ ΛΑΡΙΣΗΣ","ATHENS (LARISSA)","37.99220,23.72110",0],["PR-NER","ΝΕΡΑΝΤΖΙΩΤΙΣΣΑ","NERANTZIOTISSA","38.04500,23.79290",12],["PR-KIF","ΚΗΦΙΣΙΑΣ","KIFISIAS","38.04070,23.80620",15],["PR-PEN","ΠΕΝΤΕΛΗΣ","PENTELIS","38.03210,23.82530",18],["PR-DPL","ΔΟΥΚ. ΠΛΑΚΕΝΤΙΑΣ","DOUKISSIS PLAKENTIAS","38.02380,23.83590",21],["PR-PAL","ΠΑΛΛΗΝΗ","PALLINI","38.00620,23.87010",27],["PR-KAN","ΚΑΝΤΖΑ","KANTZA","37.98380,23.86950",31],["PR-KOR","ΚΟΡΩΠΙ","KOROPI","37.91300,23.89480",36]]
+};
 /* ===== City → airport: latest departure to be at the airport by a chosen time ===== */
 let RV_ORIGIN=null, RV_ARRIVE=null;
+const RV_STOP={};          // route key (origin|name) → selected stop index
+const LIVE_STOP={};        // stop code → {lines:{x95:[min..]}, ts}
+function rvKey(o){ return RV_ORIGIN+"|"+o.name; }
+function rvStopList(o){ return o.stops ? (RV_STOPS[o.stops]||[]) : []; }
+function rvStop(o){ const l=rvStopList(o); if(!l.length) return null; const i=RV_STOP[rvKey(o)]||0; return {i, row:l[Math.min(i,l.length-1)]}; }
+function rvOffset(o, dep){ const st=rvStop(o); if(!st||st.i===0) return 0; const v=st.row[4]; return (o.k==="bus") ? Math.round(v*rvRide(o,dep)) : Math.round(v); }
+async function fetchStopLive(code){
+  try{ const r=await fetch("/api/stop?s="+encodeURIComponent(code),{cache:"no-store"}); if(!r.ok) return; const j=await r.json(); LIVE_STOP[code]={lines:j.lines||{},ts:Date.now()}; }catch(e){}
+}
 function rvDefaultArrive(){ const d=new Date(); d.setSeconds(0,0); d.setMinutes(Math.ceil((d.getMinutes()+120)/15)*15); return d; }
 function rvRide(o,dep){ return durationMinutes(effectiveJourney(o,dep)); }
 function rvPlan(o, arriveBy){
   const T=(el,en)=>JL_LANG==="el"?el:en;
   if(o.k==="taxi"){ const dep=new Date(arriveBy.getTime()-(rvRide(o,arriveBy)+o.gateWalk)*60000); const tn=taxiNow(o,dep); return {ok:true,dep,leave:dep,arrive:arriveBy,ride:rvRide(o,dep),fare:tn.fare,night:tn.night,margin:0}; }
   const win=new Date(arriveBy.getTime()-4*3600000);
-  const all=scheduleDates(o,arriveBy).filter(d=>d>=win);
-  const fits=all.filter(d=>new Date(d.getTime()+(rvRide(o,d)+o.gateWalk)*60000)<=arriveBy);
-  if(!fits.length){ const first=all[0]||null; if(!first) return {ok:false}; const arr=new Date(first.getTime()+(rvRide(o,first)+o.gateWalk)*60000); return {ok:false,firstDep:first,firstArr:arr,lateBy:Math.round((arr-arriveBy)/60000)}; }
-  const dep=fits[fits.length-1], prev=fits.length>1?fits[fits.length-2]:null;
-  const arrive=new Date(dep.getTime()+(rvRide(o,dep)+o.gateWalk)*60000);
-  return {ok:true,dep,leave:new Date(dep.getTime()-o.walkIn*60000),arrive,ride:rvRide(o,dep),margin:Math.round((arriveBy-arrive)/60000),prev,prevArr:prev?new Date(prev.getTime()+(rvRide(o,prev)+o.gateWalk)*60000):null};
+  const all=scheduleDates(o,arriveBy).filter(d=>d>=win);           // departures from the ORIGIN
+  const st=rvStop(o), atOrigin=!st||st.i===0;
+  const stopDep=d=>new Date(d.getTime()+rvOffset(o,d)*60000);       // when it passes the chosen stop
+  const arrAt=d=>new Date(d.getTime()+(rvRide(o,d)+o.gateWalk)*60000);
+  const fits=all.filter(d=>arrAt(d)<=arriveBy);
+  if(!fits.length){ const first=all[0]||null; if(!first) return {ok:false}; return {ok:false,firstDep:stopDep(first),firstArr:arrAt(first),lateBy:Math.round((arrAt(first)-arriveBy)/60000)}; }
+  const d0=fits[fits.length-1], d1=fits.length>1?fits[fits.length-2]:null;
+  const dep=stopDep(d0), arrive=arrAt(d0), walkIn=atOrigin?o.walkIn:0;
+  return {ok:true,dep,leave:new Date(dep.getTime()-walkIn*60000),arrive,ride:Math.round((arrive-dep)/60000)-o.gateWalk,margin:Math.round((arriveBy-arrive)/60000),prev:d1?stopDep(d1):null,prevArr:d1?arrAt(d1):null,atOrigin,walkIn,stop:st?st.row:null};
 }
 const hm=d=>fmt(d.getHours()*60+d.getMinutes());
 function rvDayTag(d, ref){ const a=new Date(d); a.setHours(0,0,0,0); const b=new Date(ref); b.setHours(0,0,0,0); if(a.getTime()===b.getTime()) return ""; const T=(el,en)=>JL_LANG==="el"?el:en; return `<small class="daytag">${a<b?T("προηγ. μέρα","day before"):T("επόμ. μέρα","next day")}</small>`; }
+function rvStopPicker(o){
+  const l=rvStopList(o); if(l.length<2) return "";
+  const T=(el,en)=>JL_LANG==="el"?el:en;
+  const cur=(rvStop(o)||{i:0}).i;
+  const opts=l.map((r,i)=>`<option value="${i}"${i===cur?" selected":""}>${JL_LANG==="el"?r[1]:r[2]}</option>`).join("");
+  return `<div class="stoppick"><label>${T("Επιβίβαση από","Board at")} <select class="stopsel" data-key="${rvKey(o)}" data-live="${o.live||""}">${opts}</select></label></div>`;
+}
+function rvLiveLine(o){
+  const st=rvStop(o); if(!o.live||!st||st.i===0) return "";
+  const T=(el,en)=>JL_LANG==="el"?el:en;
+  const code=st.row[0], L=LIVE_STOP[code];
+  if(!L) return `<div class="live-note">${T("Ζωντανά από ΟΑΣΑ: φόρτωση…","Live from OASA: loading…")}</div>`;
+  const mins=(L.lines[o.live]||[]).slice(0,3);
+  if(!mins.length) return `<div class="live-note">${T("Ζωντανά (ΟΑΣΑ): κανένα","Live (OASA): no")} ${tr(o.short||o.name)} ${T("σε πορεία προς τη στάση αυτή τη στιγμή.","on its way to this stop right now.")}</div>`;
+  return `<div class="live-note live-now"><span class="pulse"></span>${T("Ζωντανά τώρα (ΟΑΣΑ):","Live now (OASA):")} ${tr(o.short||o.name)} ${T("στη στάση σε","at this stop in")} <b>${mins.map(m=>m+"′").join(" · ")}</b></div>`;
+}
 function rvCard(o,p,isLead,idx,tags=[],isCheap=false){
   const T=(el,en)=>JL_LANG==="el"?el:en;
   const isTaxi=o.k==="taxi";
@@ -996,14 +1034,17 @@ function rvCard(o,p,isLead,idx,tags=[],isCheap=false){
   const est=isEstimateAt(o,p.dep)?"~":"";
   const fare=isTaxi?p.fare:o.price;
   const mg=isTaxi?"":`<span class="mg ${p.margin<15?'tight':''}">${p.margin<=0?T("ακριβώς","no slack"):`${p.margin}${min} ${T("περιθώριο","spare")}`}</span>`;
-  const take=isTaxi?`<span class="lv">${T("Ταξί","Taxi")}</span><span class="clk"><small>${T("στις","at")}</small>${hm(p.dep)}</span>`:`<span class="lv">${T("Πάρε το","Take the")} ${tr(o.short||o.name)}</span><span class="clk"><small>${T("των","at")}</small>${est}${hm(p.dep)}</span>`;
-  const sub=isTaxi?`${T("Φτάνει","At the airport")} <b>${hm(p.arrive)}</b> · ~${p.ride}${min}${o.est?T(" · μετρητής, εκτίμηση"," · metered, estimate"):(p.night?T(" · νυχτερινή χρέωση"," · night fare"):"")}`:`${T("Ξεκίνα","Set off")} <b>${hm(p.leave)}</b> · ${T("φτάνει","arrives")} <b>${est}${hm(p.arrive)}</b>${rvDayTag(p.leave,RV_ARRIVE)}`;
+  const stopName=p.stop?(JL_LANG==="el"?p.stop[1]:p.stop[2]):"";
+  const fromStop=(!isTaxi&&p.atOrigin===false)?` <span class="fromstop">${T("από","from")} ${stopName}</span>`:"";
+  const take=isTaxi?`<span class="lv">${T("Ταξί","Taxi")}</span><span class="clk"><small>${T("στις","at")}</small>${hm(p.dep)}</span>`:`<span class="lv">${T("Πάρε το","Take the")} ${tr(o.short||o.name)}${fromStop}</span><span class="clk"><small>${T("των","at")}</small>${est}${hm(p.dep)}</span>`;
+  const sub=isTaxi?`${T("Φτάνει","At the airport")} <b>${hm(p.arrive)}</b> · ~${p.ride}${min}${o.est?T(" · μετρητής, εκτίμηση"," · metered, estimate"):(p.night?T(" · νυχτερινή χρέωση"," · night fare"):"")}`:`${p.atOrigin===false?T("Στη στάση","At the stop"):T("Ξεκίνα","Set off")} <b>${hm(p.leave)}</b> · ${T("φτάνει","arrives")} <b>${est}${hm(p.arrive)}</b>${rvDayTag(p.leave,RV_ARRIVE)}`;
   const chev=`<span class="chev" aria-hidden="true">▾</span>`;
   const det=isTaxi
     ?`<div class="st"><span class="t">${hm(p.leave)}</span><span>${T("Πιάτσα ή εφαρμογή","Rank or app")}${o.apps?` · ${o.apps.map(k=>k==="bolt"?"Bolt":APP[k].label).join(", ")}`:""}</span></div>
       <div class="st"><span class="t">${hm(p.arrive)}</span><span><b>${T("Αναχωρήσεις","Departures")}</b> · ~${p.ride}${min}</span></div>${o.note?`<div class="note-plain">${tr(o.note)}</div>`:""}`
-    :`<div class="st"><span class="t">${hm(p.leave)}</span><span><b>${T("Ξεκίνα","Set off")}</b> · ${tr(o.stop)} (~${o.walkIn}${min}) ${stopLink(o)}</span></div>
-      <div class="st"><span class="t">${est}${hm(p.dep)}</span><span><b>${tr(o.name)} ${T("φεύγει","departs")}</b> · ${est}${p.ride}${min}</span></div>
+    :`${rvStopPicker(o)}${rvLiveLine(o)}
+      ${p.atOrigin?`<div class="st"><span class="t">${hm(p.leave)}</span><span><b>${T("Ξεκίνα","Set off")}</b> · ${tr(o.stop)} (~${o.walkIn}${min}) ${stopLink(o)}</span></div>`:`<div class="st"><span class="t">${est}${hm(p.dep)}</span><span><b>${T("Στη στάση","At the stop")}</b> · ${stopName} ${stopLink({startPin:true,ll:p.stop[3]},T("Χάρτης","Map"))}</span></div>`}
+      <div class="st"><span class="t">${est}${hm(p.dep)}</span><span><b>${tr(o.name)} ${p.atOrigin?T("φεύγει","departs"):T("περνάει","passes")}</b> · ${est}${p.ride}${min}</span></div>
       <div class="st"><span class="t">${est}${hm(p.arrive)}</span><span><b>${T("Αναχωρήσεις","Departures")}</b> · ${tr(o.gate)}</span></div>
       ${p.prev?`<div class="st prevst"><span class="t">${est}${hm(p.prev)}</span><span>${T("το προηγούμενο — φτάνει","the one before — arrives")} ${est}${hm(p.prevArr)}</span></div>`:""}
       ${o.note?`<div class="note-plain">${tr(o.note)}</div>`:""}`;
@@ -1031,6 +1072,7 @@ function renderReverse(code){
   if(!RV_OPEN){ RV_OPEN=new Set([latestIdx,cheapIdx].filter(i=>i>=0)); }
   box.innerHTML=ordered.map((x,i)=>{ const tags=[]; if(i===latestIdx) tags.push({cls:"rtag-fast",txt:T("Γρηγορότερο","Fastest")}); if(i===cheapIdx) tags.push({cls:"rtag-cheap",txt:T("Φθηνότερο","Cheapest")}); return rvCard(x.o,x.p,i===latestIdx,i,tags,i===cheapIdx); }).join("");
   box.querySelectorAll(".rv:not(.late) .row").forEach(b=>b.onclick=()=>{ const i=Number(b.parentElement.dataset.i); if(RV_OPEN.has(i)) RV_OPEN.delete(i); else RV_OPEN.add(i); renderReverse(code); });
+  box.querySelectorAll(".stopsel").forEach(sel=>sel.onchange=()=>{ RV_STOP[sel.dataset.key]=Number(sel.value); renderReverse(code); rvRefreshLive(code); });
   updateArrivePicker();
 }
 function ensureArrivePicker(){
@@ -1059,7 +1101,15 @@ function updateArrivePicker(){
   const today=new Date(); today.setHours(0,0,0,0); const d=new Date(RV_ARRIVE); d.setHours(0,0,0,0); const off=Math.round((d-today)/86400000);
   document.getElementById("arr-d0").classList.toggle("on",off===0); document.getElementById("arr-d1").classList.toggle("on",off===1);
 }
-function initReverse(code){ if(!RV_ARRIVE) RV_ARRIVE=rvDefaultArrive(); ensureArrivePicker(); renderReverse(code); setInterval(()=>renderReverse(code),60000); }
+function rvRefreshLive(code){
+  const ap=AIRPORTS[code]; const rv=ap&&ap.reverse; if(!rv) return;
+  const cur=rv.origins.find(x=>x.id===RV_ORIGIN); if(!cur) return;
+  const codes=new Set();
+  cur.routes.forEach(o=>{ const st=rvStop(o); if(o.live&&st&&st.i>0) codes.add(st.row[0]); });
+  if(!codes.size) return;
+  Promise.all([...codes].map(fetchStopLive)).then(()=>renderReverse(code));
+}
+function initReverse(code){ if(!RV_ARRIVE) RV_ARRIVE=rvDefaultArrive(); ensureArrivePicker(); renderReverse(code); setInterval(()=>renderReverse(code),60000); setInterval(()=>rvRefreshLive(code),30000); }
 function initAirport(code){ ensureWalkModal(); ensureTimePicker(); const ap=AIRPORTS[code]; const rf=(ap&&ap.destinations)?renderDest:renderAirport; rf(code); loadLive(code); setInterval(()=>rf(code),15000); setInterval(()=>loadLive(code),30000); }
 function tickClock(){ const el=document.getElementById("clock"); if(!el) return; const d=new Date(); el.textContent=(JL_LANG==="el"?"τώρα ":"now ")+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")+":"+String(d.getSeconds()).padStart(2,"0"); }
 if (typeof document !== "undefined" && document.getElementById("clock")) { tickClock(); setInterval(tickClock,1000); }
