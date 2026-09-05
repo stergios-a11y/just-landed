@@ -408,3 +408,7 @@ html[lang="el"] .taxi-card::after{content:"ΤΑΞΙ · ΠΟΡΤΑ-ΠΟΡΤΑ"}
 .rvpage .seo-wrap summary::-webkit-details-marker{display:none}
 .rvpage .seo-wrap summary::after{content:" ▾";color:var(--amber)}
 .rvpage .seo-wrap[open] summary::after{content:" ▴"}
+.rv .tagrow{display:flex;gap:6px;margin-bottom:7px}
+.rv .tagrow .rtag{font-size:10px;padding:4px 7px}
+.rv.cheap{border-color:var(--green);border-width:2px}
+.rv.lead,.rv.cheap{box-shadow:0 2px 10px rgba(0,0,0,.06)}

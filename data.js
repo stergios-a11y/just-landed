@@ -984,10 +984,10 @@ function rvPlan(o, arriveBy){
 }
 const hm=d=>fmt(d.getHours()*60+d.getMinutes());
 function rvDayTag(d, ref){ const a=new Date(d); a.setHours(0,0,0,0); const b=new Date(ref); b.setHours(0,0,0,0); if(a.getTime()===b.getTime()) return ""; const T=(el,en)=>JL_LANG==="el"?el:en; return `<small class="daytag">${a<b?T("προηγ. μέρα","day before"):T("επόμ. μέρα","next day")}</small>`; }
-function rvCard(o,p,isLead,idx){
+function rvCard(o,p,isLead,idx,tags=[],isCheap=false){
   const T=(el,en)=>JL_LANG==="el"?el:en;
   const isTaxi=o.k==="taxi";
-  const open=RV_OPEN===idx;
+  const open=RV_OPEN&&RV_OPEN.has(idx);
   const min=T("΄","′");
   if(!p.ok){
     if(!p.firstDep) return "";
@@ -1007,9 +1007,10 @@ function rvCard(o,p,isLead,idx){
       <div class="st"><span class="t">${est}${hm(p.arrive)}</span><span><b>${T("Αναχωρήσεις","Departures")}</b> · ${tr(o.gate)}</span></div>
       ${p.prev?`<div class="st prevst"><span class="t">${est}${hm(p.prev)}</span><span>${T("το προηγούμενο — φτάνει","the one before — arrives")} ${est}${hm(p.prevArr)}</span></div>`:""}
       ${o.note?`<div class="note-plain">${tr(o.note)}</div>`:""}`;
-  return `<div class="rv${isLead?" lead":""}${open?" open":""}" data-i="${idx}"><button class="row" type="button" aria-expanded="${open}"><div class="mi">${modeIcon(o.k)}</div><div class="main"><div class="leaveb">${take}${chev}</div><div class="sub">${sub}</div></div><div class="right"><span class="fare">${fare}</span>${mg}</div></button><div class="det"${open?"":" hidden"}>${det}${sourceLine(o)}</div></div>`;
+  const tagrow=tags.length?`<div class="tagrow">${tags.map(t=>`<span class="rtag ${t.cls}">${t.txt}</span>`).join("")}</div>`:"";
+  return `<div class="rv${isLead?" lead":""}${isCheap&&!isLead?" cheap":""}${open?" open":""}" data-i="${idx}"><button class="row" type="button" aria-expanded="${open}"><div class="mi">${modeIcon(o.k)}</div><div class="main">${tagrow}<div class="leaveb">${take}${chev}</div><div class="sub">${sub}</div></div><div class="right"><span class="fare">${fare}</span>${mg}</div></button><div class="det"${open?"":" hidden"}>${det}${sourceLine(o)}</div></div>`;
 }
-let RV_OPEN=null;
+let RV_OPEN=null; // Set of open row indexes; null = use defaults (latest + cheapest)
 function renderReverse(code){
   const ap=AIRPORTS[code]; const rv=ap&&ap.reverse; if(!rv) return;
   const box=document.getElementById("rvcards"); if(!box) return;
@@ -1023,8 +1024,13 @@ function renderReverse(code){
   const pub=rows.filter(x=>x.o.k!=="taxi"&&x.p.ok).sort((a,b)=>b.p.leave-a.p.leave);
   const late=rows.filter(x=>x.o.k!=="taxi"&&!x.p.ok);
   const taxi=rows.filter(x=>x.o.k==="taxi");
-  box.innerHTML=[...pub,...late,...taxi].map((x,i)=>rvCard(x.o,x.p,i===0&&pub.length>0,i)).join("");
-  box.querySelectorAll(".rv:not(.late) .row").forEach(b=>b.onclick=()=>{ const i=Number(b.parentElement.dataset.i); RV_OPEN=RV_OPEN===i?null:i; renderReverse(code); });
+  const T=(el,en)=>JL_LANG==="el"?el:en;
+  const ordered=[...pub,...late,...taxi];
+  const latestIdx=pub.length?0:-1;
+  let cheapIdx=-1; if(pub.length){ let best=null; pub.forEach((x,i)=>{ const v=priceNum(x.o.price); if(v!=null && (best==null || v<best.v)) best={v,i}; }); if(best) cheapIdx=best.i; }
+  if(!RV_OPEN){ RV_OPEN=new Set([latestIdx,cheapIdx].filter(i=>i>=0)); }
+  box.innerHTML=ordered.map((x,i)=>{ const tags=[]; if(i===latestIdx) tags.push({cls:"rtag-fast",txt:T("Πιο αργά","Latest")}); if(i===cheapIdx) tags.push({cls:"rtag-cheap",txt:T("Φθηνότερο","Cheapest")}); return rvCard(x.o,x.p,i===latestIdx,i,tags,i===cheapIdx); }).join("");
+  box.querySelectorAll(".rv:not(.late) .row").forEach(b=>b.onclick=()=>{ const i=Number(b.parentElement.dataset.i); if(RV_OPEN.has(i)) RV_OPEN.delete(i); else RV_OPEN.add(i); renderReverse(code); });
   updateArrivePicker();
 }
 function ensureArrivePicker(){
@@ -1040,10 +1046,10 @@ function ensureArrivePicker(){
       <input id="arr-slider" class="time-slider" type="range" min="0" max="95" step="1" value="24" aria-label="${T("Ώρα άφιξης στο αεροδρόμιο","Time to be at the airport")}">
       <div class="time-slider-labels"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:45</span></div>
     </section>`);
-  const setDay=off=>{ const d=new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate()+off); d.setMinutes(RV_ARRIVE.getHours()*60+RV_ARRIVE.getMinutes()); RV_ARRIVE=d; renderReverse(CODE); };
+  const setDay=off=>{ const d=new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate()+off); d.setMinutes(RV_ARRIVE.getHours()*60+RV_ARRIVE.getMinutes()); RV_ARRIVE=d; RV_OPEN=null; renderReverse(CODE); };
   document.getElementById("arr-d0").onclick=()=>setDay(0);
   document.getElementById("arr-d1").onclick=()=>setDay(1);
-  document.getElementById("arr-slider").addEventListener("input",e=>{ const d=new Date(RV_ARRIVE); d.setHours(0,0,0,0); d.setMinutes(Number(e.target.value)*15); RV_ARRIVE=d; renderReverse(CODE); });
+  document.getElementById("arr-slider").addEventListener("input",e=>{ const d=new Date(RV_ARRIVE); d.setHours(0,0,0,0); d.setMinutes(Number(e.target.value)*15); RV_ARRIVE=d; RV_OPEN=null; renderReverse(CODE); });
 }
 function updateArrivePicker(){
   const sl=document.getElementById("arr-slider"); if(!sl||!RV_ARRIVE) return;
