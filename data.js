@@ -800,8 +800,8 @@ function optionBody(o,e,r,opts={}){
 
 function sourceLine(o){
   const T=(el,en)=>JL_LANG==="el"?el:en;
-  if(o.official && o.checked) return `<div class="src">${T("Επίσημη χρέωση · ελέγχθηκε","Official fare · checked")} ${tr(o.checked)}</div>`;
-  if(o.checked){ const seasonalEst=isEstimateAt(o,getViewTime()); return `<div class="src">${T("Τιμή & ωράριο ελέγχθηκαν","Fare & timetable checked")} ${tr(o.checked)}${seasonalEst?T(" · οι χειμερινές ώρες είναι εκτίμηση"," · winter times are an estimate"):""}</div>`; }
+  // verified options carry no footer line (the disclaimer covers it); only estimates are flagged
+  if(o.checked){ const seasonalEst=isEstimateAt(o,getViewTime()); return seasonalEst?`<div class="src src-est">${T("Οι χειμερινές ώρες είναι εκτίμηση","Winter times are an estimate")}</div>`:""; }
   if(o.est) return `<div class="src src-est">${T("Εκτίμηση από δημοσιευμένα δρομολόγια — μη επαληθευμένο επιτόπου","Estimate from published timetables — not verified on site")}</div>`;
   return "";
 }
@@ -825,7 +825,7 @@ function destCard(o,e,r,opts={}){
 }
 const DESTSEL={};
 function priceNum(p){ if(p==null) return null; const m=String(p).replace(",",".").match(/\d+(?:\.\d+)?/); return m?parseFloat(m[0]):null; }
-let ALT_OPEN=false;
+let ALT_OPEN=true;
 const ALT_ROWS_OPEN=new Set();
 function altRow(row){
   const o=row.o, e=row.e, r=row.r;
@@ -837,9 +837,10 @@ function altRow(row){
   let summary;
   if(isTaxi){ summary=o.fareDay?`${T("κατόπιν ζήτησης","on demand")} · ${o.fareDay}/${o.fareNight}`:(o.price||""); }
   else if(r.closed){ summary=T("δεν λειτουργεί τώρα","not running now"); }
-  else { const arrD=arrivalClock(o,r,e.destinationId); const est=(isEstimateAt(o,r.selected)||r.isLive)?"~":""; const arr=arrD?` · ${T("άφιξη","arrive")} ~${fmt(arrD.getHours()*60+arrD.getMinutes())}`:""; const rel=r.until<=0?T("τώρα","now"):(r.until<60?T(`σε ${r.until} λεπτά`,`in ${r.until} min`):T(`σε ${Math.floor(r.until/60)}ω${String(r.until%60).padStart(2,"0")}`,`in ${Math.floor(r.until/60)}h${String(r.until%60).padStart(2,"0")}`)); summary=`${T("φεύγει","leaves")} ${est}${fmt(r.dep1)} · ${rel}${arr}`; }
+  else { const arrD=arrivalClock(o,r,e.destinationId); const est=(isEstimateAt(o,r.selected)||r.isLive)?"~":""; const arr=arrD?` · ${T("άφιξη","arrive")} ~${fmt(arrD.getHours()*60+arrD.getMinutes())}`:""; const rel=r.until<=0?T("τώρα","now"):(r.until<60?T(`σε ${r.until} λεπτά`,`in ${r.until} min`):T(`σε ${Math.floor(r.until/60)}ω${String(r.until%60).padStart(2,"0")}`,`in ${Math.floor(r.until/60)}h${String(r.until%60).padStart(2,"0")}`)); summary=`<b class="tm">${est}${fmt(r.dep1)}</b> ${rel}${arr}`; }
   const open=ALT_ROWS_OPEN.has(o.name);
-  return `<div class="alt-item${open?' open':''}"><button class="alt-row" type="button" data-alt="${encodeURIComponent(o.name||"")}" aria-expanded="${open}"><div class="mi">${modeIcon(o.mode)}</div><div class="an"><b>${nameHtml}</b><span>${(!isTaxi&&!r.closed&&r.isLive)?'<span class="pulse"></span>':''}${summary}</span></div><div class="ap">${o.price||""}</div><span class="alt-chev">▾</span></button><div class="alt-detail"${open?"":" hidden"}>${optionBody(o,e,r)}</div></div>`;
+  const more=`<span class="alt-more">${open?T("Λιγότερα","Less"):T("Λεπτομέρειες","Details")} <span class="alt-chev">▾</span></span>`;
+  return `<div class="alt-item${open?' open':''}"><button class="alt-row" type="button" data-alt="${encodeURIComponent(o.name||"")}" aria-expanded="${open}"><div class="mi">${modeIcon(o.mode)}</div><div class="an"><b>${nameHtml}</b><span>${(!isTaxi&&!r.closed&&r.isLive)?'<span class="pulse"></span>':''}${summary}</span></div><div class="ap">${o.price||""}${more}</div></button><div class="alt-detail"${open?"":" hidden"}>${optionBody(o,e,r)}</div></div>`;
 }
 function altSection(rest){
   if(!rest||!rest.length) return "";
@@ -1079,10 +1080,11 @@ function rvAltRow(o,p){
   const nameHtml=isTaxi?tr(o.name):`${tr(o.name)} <span class="dir"><span class="arw">→</span> ${T("Αεροδρόμιο","Airport")}</span>`;
   let summary;
   if(!p.ok) summary=p.firstDep?`${T("δεν προλαβαίνει","can't make it")} · ${T("πρώτο","first")} ${hm(p.firstDep)} → ${hm(p.firstArr)}`:T("δεν λειτουργεί","not running");
-  else if(isTaxi) summary=`${T("στις","at")} ${hm(p.dep)} · ${p.fare}`;
-  else { const est=isEstimateAt(o,p.dep)?"~":""; summary=`${T("φεύγει","leaves")} ${est}${hm(p.dep)} · ${T("Αναχωρήσεις","Departures")} ${est}${hm(p.arrive)}`; }
+  else if(isTaxi) summary=`<b class="tm">${hm(p.dep)}</b> ${T("κατόπιν ζήτησης","on demand")} · ${T("Αναχωρήσεις","Departures")} ${hm(p.arrive)}`;
+  else { const est=isEstimateAt(o,p.dep)?"~":""; summary=`<b class="tm">${est}${hm(p.dep)}</b> ${T("φεύγει","leaves")} · ${T("Αναχωρήσεις","Departures")} ${est}${hm(p.arrive)} · ${p.margin} ${T("λεπτά περιθώριο","min to spare")}`; }
   const open=ALT_ROWS_OPEN.has(o.name);
-  return `<div class="alt-item${open?' open':''}"><button class="alt-row" type="button" data-alt="${encodeURIComponent(o.name||"")}" aria-expanded="${open}"><div class="mi">${modeIcon(o.k)}</div><div class="an"><b>${nameHtml}</b><span>${summary}</span></div><div class="ap">${o.price||""}</div><span class="alt-chev">▾</span></button><div class="alt-detail"${open?"":" hidden"}>${rvBody(o,p)}</div></div>`;
+  const more=`<span class="alt-more">${open?T("Λιγότερα","Less"):T("Λεπτομέρειες","Details")} <span class="alt-chev">▾</span></span>`;
+  return `<div class="alt-item${open?' open':''}"><button class="alt-row" type="button" data-alt="${encodeURIComponent(o.name||"")}" aria-expanded="${open}"><div class="mi">${modeIcon(o.k)}</div><div class="an"><b>${nameHtml}</b><span>${summary}</span></div><div class="ap">${isTaxi?p.fare:(o.price||"")}${more}</div></button><div class="alt-detail"${open?"":" hidden"}>${rvBody(o,p)}</div></div>`;
 }
 function renderReverse(code){
   const ap=AIRPORTS[code]; const rv=ap&&ap.reverse; if(!rv) return;
