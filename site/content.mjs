@@ -28,7 +28,7 @@ export const PAGES = [
       facts:[
         { dt:"Μετρό Γρ. 3", dd:"€9 · ~40 λεπτά · κάθε ~36 λεπτά · 06:10–23:34 · κάρτα στην μπάρα" },
         { dt:"Λεωφορείο Χ95", dd:"€5,50 · ~60 λεπτά · κάθε ~20 λεπτά (νύχτα ~60) · όλο το 24ωρο · κάρτα στο λεωφορείο" },
-        { dt:"Ταξί", dd:"€40 μέρα / €55 νύχτα σταθερά · ~35–45 λεπτά · πόρτα-πόρτα" },
+        { dt:"Ταξί", dd:"€50 μέρα / €65 νύχτα σταθερά · ~35–45 λεπτά · πόρτα-πόρτα" },
       ],
       faqHeading:"Συχνές ερωτήσεις",
       faq:[
@@ -52,7 +52,7 @@ export const PAGES = [
       facts:[
         { dt:"Metro Line 3", dd:"€9 · ~40 min · every ~36 min · 06:10–23:34 · tap card at the gate" },
         { dt:"Bus X95", dd:"€5.50 · ~60 min · every ~20 min (hourly overnight) · runs 24/7 · tap card onboard" },
-        { dt:"Taxi", dd:"€40 day / €55 night flat · ~35–45 min · door to door" },
+        { dt:"Taxi", dd:"€50 day / €65 night flat · ~35–45 min · door to door" },
       ],
       faqHeading:"FAQ",
       faq:[
@@ -300,7 +300,7 @@ export const PAGES = [
       facts:[
         { dt:"Μετρό Γρ. 3", dd:"€9 · ~40 λεπτά · κάθε ~36 λεπτά · 06:10–23:34 · κάρτα στην μπάρα" },
         { dt:"Λεωφορείο Χ95", dd:"€5,50 · ~60 λεπτά · κάθε ~20 λεπτά (νύχτα ~60) · όλο το 24ωρο · κάρτα στο λεωφορείο · Έξοδος 5" },
-        { dt:"Ταξί", dd:"€40 μέρα / €55 νύχτα σταθερά · ~35–45 λεπτά · πόρτα-πόρτα" },
+        { dt:"Ταξί", dd:"€50 μέρα / €65 νύχτα σταθερά · ~35–45 λεπτά · πόρτα-πόρτα" },
       ],
       faqHeading:"Συχνές ερωτήσεις",
       faq:[
@@ -324,7 +324,7 @@ export const PAGES = [
       facts:[
         { dt:"Metro Line 3", dd:"€9 · ~40 min · every ~36 min · 06:10–23:34 · tap card at the gate" },
         { dt:"Bus X95", dd:"€5.50 · ~60 min · every ~20 min (hourly overnight) · runs 24/7 · tap card onboard · Exit 5" },
-        { dt:"Taxi", dd:"€40 day / €55 night flat fare · ~35–45 min · door to door" },
+        { dt:"Taxi", dd:"€50 day / €65 night flat fare · ~35–45 min · door to door" },
       ],
       faqHeading:"FAQ",
       faq:[
@@ -350,7 +350,7 @@ export const PAGES = [
       facts:[
         { dt:"Μετρό Γρ. 3", dd:"€9 · ~42 λεπτά · απευθείας στο Μοναστηράκι · κάθε ~36 λεπτά · 06:10–23:34 · κάρτα στην μπάρα" },
         { dt:"Λεωφορείο Χ95", dd:"€5,50 · ~68 λεπτά ως Πλάκα · κάθε ~20 λεπτά · όλο το 24ωρο · κάρτα στο λεωφορείο" },
-        { dt:"Ταξί", dd:"€40 μέρα / €55 νύχτα σταθερά · ~40 λεπτά · πόρτα-πόρτα" },
+        { dt:"Ταξί", dd:"€50 μέρα / €65 νύχτα σταθερά · ~40 λεπτά · πόρτα-πόρτα" },
       ],
       faqHeading:"Συχνές ερωτήσεις",
       faq:[
@@ -374,7 +374,7 @@ export const PAGES = [
       facts:[
         { dt:"Metro Line 3", dd:"€9 · ~42 min · direct to Monastiráki · every ~36 min · 06:10–23:34 · tap card at the gate" },
         { dt:"Bus X95", dd:"€5.50 · ~68 min to Pláka · every ~20 min · runs 24/7 · tap card onboard" },
-        { dt:"Taxi", dd:"€40 day / €55 night flat · ~40 min · door to door" },
+        { dt:"Taxi", dd:"€50 day / €65 night flat · ~40 min · door to door" },
       ],
       faqHeading:"FAQ",
       faq:[
@@ -400,7 +400,7 @@ export const PAGES = [
       facts:[
         { dt:"Μετρό", dd:"€9 · ~52 λεπτά · κάθε ~36 λεπτά · 06:10–23:34 · κάρτα στην μπάρα" },
         { dt:"Λεωφορείο Χ95", dd:"€5,50 · ~68 λεπτά · κάθε ~20 λεπτά (νύχτα ~60) · όλο το 24ωρο · κάρτα στο λεωφορείο" },
-        { dt:"Ταξί", dd:"€40 μέρα / €55 νύχτα σταθερά · ~35–45 λεπτά · πόρτα-πόρτα" },
+        { dt:"Ταξί", dd:"€50 μέρα / €65 νύχτα σταθερά · ~35–45 λεπτά · πόρτα-πόρτα" },
       ],
       faqHeading:"Συχνές ερωτήσεις",
       faq:[
@@ -424,7 +424,7 @@ export const PAGES = [
       facts:[
         { dt:"Metro", dd:"€9 · ~52 min · every ~36 min · 06:10–23:34 · tap card at the gate" },
         { dt:"Bus X95", dd:"€5.50 · ~68 min · every ~20 min (hourly overnight) · runs 24/7 · tap card onboard" },
-        { dt:"Taxi", dd:"€40 day / €55 night flat · ~35–45 min · door to door" },
+        { dt:"Taxi", dd:"€50 day / €65 night flat · ~35–45 min · door to door" },
       ],
       faqHeading:"FAQ",
       faq:[
@@ -450,7 +450,7 @@ export const PAGES = [
       facts:[
         { dt:"Λεωφορείο Χ96", dd:"€5,50 · ~90 λεπτά · απευθείας στο λιμάνι · κάθε ~35 λεπτά · όλο το 24ωρο · κάρτα στο λεωφορείο" },
         { dt:"Μετρό", dd:"€9 · ~61 λεπτά · αλλαγή Γρ. 3 → Γρ. 1 στο Μοναστηράκι · 06:10–23:34 · κάρτα στην μπάρα" },
-        { dt:"Ταξί", dd:"€40 μέρα / €55 νύχτα σταθερά · ~50 λεπτά · πόρτα-πόρτα" },
+        { dt:"Ταξί", dd:"€50 μέρα / €65 νύχτα σταθερά · ~50 λεπτά · πόρτα-πόρτα" },
       ],
       faqHeading:"Συχνές ερωτήσεις",
       faq:[
@@ -474,7 +474,7 @@ export const PAGES = [
       facts:[
         { dt:"Bus X96", dd:"€5.50 · ~90 min · direct to the port · every ~35 min · runs 24/7 · tap card onboard" },
         { dt:"Metro", dd:"€9 · ~61 min · change Line 3 → Line 1 at Monastiráki · 06:10–23:34 · tap card at the gate" },
-        { dt:"Taxi", dd:"€40 day / €55 night flat · ~50 min · door to door" },
+        { dt:"Taxi", dd:"€50 day / €65 night flat · ~50 min · door to door" },
       ],
       faqHeading:"FAQ",
       faq:[
@@ -498,7 +498,7 @@ export const PAGES = [
       factsHeading:"Με μια ματιά",
       facts:[
         { dt:"ΚΤΕΛ Ραφήνας", dd:"€3 · ~40 λεπτά · απευθείας στο λιμάνι · κάθε ~45 λεπτά · 05:00–22:00 · κάρτα στο λεωφορείο · Έξοδοι 2–3" },
-        { dt:"Ταξί", dd:"€40 μέρα / €55 νύχτα σταθερά · ~30 λεπτά · πόρτα-πόρτα" },
+        { dt:"Ταξί", dd:"€50 μέρα / €65 νύχτα σταθερά · ~30 λεπτά · πόρτα-πόρτα" },
       ],
       faqHeading:"Συχνές ερωτήσεις",
       faq:[
@@ -520,7 +520,7 @@ export const PAGES = [
       factsHeading:"At a glance",
       facts:[
         { dt:"KTEL Rafina", dd:"€3 · ~40 min · direct to the port · every ~45 min · 05:00–22:00 · tap card onboard · Exits 2–3" },
-        { dt:"Taxi", dd:"€40 day / €55 night flat · ~30 min · door to door" },
+        { dt:"Taxi", dd:"€50 day / €65 night flat · ~30 min · door to door" },
       ],
       faqHeading:"FAQ",
       faq:[
@@ -544,7 +544,7 @@ export const PAGES = [
       factsHeading:"Με μια ματιά",
       facts:[
         { dt:"Λεωφορείο Χ93", dd:"€5,50 · ~65 λεπτά · απευθείας σε Κηφισό/Λιόσια · κάθε ~35 λεπτά · όλο το 24ωρο · κάρτα στο λεωφορείο · Έξοδοι 2–3" },
-        { dt:"Ταξί", dd:"€40 μέρα / €55 νύχτα σταθερά · ~40 λεπτά · πόρτα-πόρτα" },
+        { dt:"Ταξί", dd:"€50 μέρα / €65 νύχτα σταθερά · ~40 λεπτά · πόρτα-πόρτα" },
       ],
       faqHeading:"Συχνές ερωτήσεις",
       faq:[
@@ -566,7 +566,7 @@ export const PAGES = [
       factsHeading:"At a glance",
       facts:[
         { dt:"Bus X93", dd:"€5.50 · ~65 min · direct to Kifisós/Liossíon · every ~35 min · runs 24/7 · tap card onboard · Exits 2–3" },
-        { dt:"Taxi", dd:"€40 day / €55 night flat · ~40 min · door to door" },
+        { dt:"Taxi", dd:"€50 day / €65 night flat · ~40 min · door to door" },
       ],
       faqHeading:"FAQ",
       faq:[
@@ -587,7 +587,7 @@ export const PAGES = [
       prose:[
         { h2:"Τι πρέπει να ξέρεις", p:"<b>Το Μετρό δεν ξεκινά νωρίς.</b> Το πρώτο τρένο προς αεροδρόμιο από Σύνταγμα φεύγει 05:53 και φτάνει 06:35 — και μόνο ένα στα δύο τρένα της Γραμμής 3 συνεχίζει ως το αεροδρόμιο (κάθε 36 λεπτά), οπότε κοίτα την πινακίδα. Τελευταίο 23:18. Για πολύ πρωινή πτήση, ο Προαστιακός από τον Σταθμό Λαρίσης (04:13, 04:36, 04:54), το Χ95 ή ταξί." },
         { h2:"Το Χ95 είναι 24ωρο", p:"Από την οδό Όθωνος στο Σύνταγμα, όλο το 24ωρο, €5,50 με ανέπαφη κάρτα στο μπλε μηχάνημα. Τη νύχτα κάνει ~40 λεπτά αντί για 60, αλλά περνάει κάθε ~25–30 λεπτά μετά τη 01:00 — γι' αυτό το «προηγούμενο δρομολόγιο» που δείχνουμε έχει σημασία. Οι συχνότητες είναι από δημοσιευμένα δρομολόγια, όχι ζωντανά." },
-        { h2:"Ταξί", p:"Από το κέντρο η χρέωση είναι σταθερή: €40 τη μέρα, €55 από 00:00 ως 05:00, με βάση την ώρα που μπαίνεις στο ταξί. Από Πειραιά ή Κηφισό ισχύει μετρητής — οι τιμές που δείχνουμε εκεί είναι εκτιμήσεις." },
+        { h2:"Ταξί", p:"Από το κέντρο η χρέωση είναι σταθερή: €50 τη μέρα, €65 από 00:00 ως 05:00 (νέες τιμές από Σεπτέμβριο 2026), με βάση την ώρα που μπαίνεις στο ταξί. Από Πειραιά ή Κηφισό ισχύει μετρητής — οι τιμές που δείχνουμε εκεί είναι εκτιμήσεις." },
       ],
       factsHeading:"Με μια ματιά",
       facts:[
@@ -595,14 +595,14 @@ export const PAGES = [
         { dt:"Λεωφορείο Χ95", dd:"€5,50 · ~60 λεπτά (νύχτα ~40) · 24ωρο από Όθωνος/Σύνταγμα · κάθε ~15–20 λεπτά, νύχτα ~25–30" },
         { dt:"Προαστιακός", dd:"€9 · 45 λεπτά από Σταθμό Λαρίσης · κάθε ώρα και :04 (06:04–22:04) · πρωινά 04:13, 04:36, 04:54" },
         { dt:"Χ96 · Χ93", dd:"€5,50 · Πειραιάς ~90 λεπτά, ΚΤΕΛ Κηφισού ~65 λεπτά · 24ωρο" },
-        { dt:"Ταξί", dd:"€40 μέρα / €55 νύχτα σταθερά από το κέντρο · ~40 λεπτά" },
+        { dt:"Ταξί", dd:"€50 μέρα / €65 νύχτα σταθερά από το κέντρο · ~40 λεπτά" },
       ],
       faqHeading:"Συχνές ερωτήσεις",
       faq:[
         { q:"Πόσο νωρίς πρέπει να είμαι στο αεροδρόμιο;", a:"Δική σου απόφαση — η αεροπορική σου λέει συνήθως 2 ώρες για Ευρώπη, 3 για εκτός. Εσύ βάζεις την ώρα που θέλεις να είσαι στις Αναχωρήσεις κι εμείς υπολογίζουμε πότε πρέπει να φύγεις." },
-        { q:"Πώς πάω στο αεροδρόμιο νωρίς το πρωί, πριν το πρώτο μετρό;", a:"Με το Χ95 από το Σύνταγμα (24ωρο, ~40 λεπτά τη νύχτα), με τον Προαστιακό από τον Σταθμό Λαρίσης (04:13, 04:36, 04:54) ή με ταξί (€55 σταθερά 00:00–05:00)." },
+        { q:"Πώς πάω στο αεροδρόμιο νωρίς το πρωί, πριν το πρώτο μετρό;", a:"Με το Χ95 από το Σύνταγμα (24ωρο, ~40 λεπτά τη νύχτα), με τον Προαστιακό από τον Σταθμό Λαρίσης (04:13, 04:36, 04:54) ή με ταξί (€65 σταθερά 00:00–05:00)." },
         { q:"Πότε φεύγει το τελευταίο μετρό για το αεροδρόμιο;", a:"Από Σύνταγμα 23:18 (φτάνει 23:58), από Μοναστηράκι 23:15. Μετά, Χ95 όλη νύχτα." },
-        { q:"Πόσο κάνει το ταξί για το αεροδρόμιο;", a:"Από το κέντρο σταθερά €40 τη μέρα, €55 τη νύχτα (00:00–05:00). Από Πειραιά ή Κηφισό με μετρητή." },
+        { q:"Πόσο κάνει το ταξί για το αεροδρόμιο;", a:"Από το κέντρο σταθερά €50 τη μέρα, €65 τη νύχτα (00:00–05:00). Από Πειραιά ή Κηφισό με μετρητή." },
       ],
     },
     en:{
@@ -614,7 +614,7 @@ export const PAGES = [
       prose:[
         { h2:"What you need to know", p:"<b>The Metro starts late.</b> The first airport train from Syntagma leaves at 05:53 and arrives 06:35 — and only every other Line 3 train continues to the airport (every 36 min), so check the destination board. Last one 23:18. For a very early flight it's the suburban rail from Larissa station (04:13, 04:36, 04:54), the X95, or a taxi." },
         { h2:"The X95 runs all night", p:"From Othonos St at Syntagma, 24 hours, €5.50 by contactless card on the blue validator. At night the ride is ~40 minutes instead of 60, but buses come every ~25–30 minutes after 01:00 — which is why the 'one before' we show matters. Headways are from published timetables, not live." },
-        { h2:"Taxi", p:"From the centre the fare is flat: €40 by day, €55 between 00:00 and 05:00, based on when you get in. From Piraeus or Kifisos the meter applies — the figures we show there are estimates." },
+        { h2:"Taxi", p:"From the centre the fare is flat: €50 by day, €65 between 00:00 and 05:00 (new fares since September 2026), based on when you get in. From Piraeus or Kifisos the meter applies — the figures we show there are estimates." },
       ],
       factsHeading:"At a glance",
       facts:[
@@ -622,14 +622,14 @@ export const PAGES = [
         { dt:"Bus X95", dd:"€5.50 · ~60 min (night ~40) · 24h from Othonos St, Syntagma · every ~15–20 min, night ~25–30" },
         { dt:"Suburban rail", dd:"€9 · 45 min from Larissa station · hourly at :04 (06:04–22:04) · early trains 04:13, 04:36, 04:54" },
         { dt:"X96 · X93", dd:"€5.50 · Piraeus ~90 min, Kifisos coaches ~65 min · 24h" },
-        { dt:"Taxi", dd:"€40 day / €55 night flat from the centre · ~40 min" },
+        { dt:"Taxi", dd:"€50 day / €65 night flat from the centre · ~40 min" },
       ],
       faqHeading:"FAQ",
       faq:[
         { q:"How early should I be at the airport?", a:"Your call — airlines usually say 2 hours for Europe, 3 for long-haul. You set the time you want to be at Departures and we work out when to leave." },
-        { q:"How do I get to the airport early in the morning, before the first metro?", a:"The X95 from Syntagma (24h, ~40 min at night), the suburban rail from Larissa station (04:13, 04:36, 04:54), or a taxi (€55 flat 00:00–05:00)." },
+        { q:"How do I get to the airport early in the morning, before the first metro?", a:"The X95 from Syntagma (24h, ~40 min at night), the suburban rail from Larissa station (04:13, 04:36, 04:54), or a taxi (€65 flat 00:00–05:00)." },
         { q:"When is the last metro to the airport?", a:"From Syntagma 23:18 (arrives 23:58), from Monastiraki 23:15. After that, the X95 all night." },
-        { q:"How much is a taxi to the airport?", a:"From the centre a flat €40 by day, €55 at night (00:00–05:00). From Piraeus or Kifisos it's metered." },
+        { q:"How much is a taxi to the airport?", a:"From the centre a flat €50 by day, €65 at night (00:00–05:00). From Piraeus or Kifisos it's metered." },
       ],
     },
   },

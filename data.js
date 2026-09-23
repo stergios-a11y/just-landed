@@ -55,7 +55,8 @@ const AIRPORTS = {
         walk:"~2 min walk", access:"Arrivals level, in front of Exit 4 (Terminal 1)", ll:"40.524062,22.976999", startPin:true,
         sched:{kind:"windows",windows:[{start:"05:55",end:"00:00",every:20}]},
         note:"Bus 02X (€2, ~8 min) to Nea Elvetia metro station, then the Metro (€0.60, ~12 min, every 3–8 min) to Venizelou/Agia Sofia in the centre. Two separate tickets — no combined fare. Avoids road traffic; 02X frequency is an estimate. A new 03X to Mikra metro station started Aug 2026." },
-      { mode:"taxi", to:"City centre — door to door", op:"Metered taxi", onDemand:true, est:true, price:"~€30–40", fareDay:"~€30", fareNight:"~€40", nightStart:0, nightEnd:5, journey:"~35 min", walk:"~1 min walk", access:"Taxi rank outside arrivals", apps:["freenow","uber","bolt"] },
+      { mode:"taxi", to:"City centre (door to door)", op:"Official flat fare", onDemand:true, checked:"Sep 2026", official:true, price:"€28–38", fareDay:"€28", fareNight:"€38", nightStart:0, nightEnd:5, journey:"~35 min", walk:"~1 min walk", access:"Taxi rank outside arrivals", apps:["freenow","uber","bolt"],
+        note:"Flat fare €28 daytime · €38 night (00:00–05:00) to the city centre (raised Sep 2026)." },
     ] },
   ATH: { slug:"athens", name:"Athens (ATH)", city:"Attica", verified:true, title:"Athens Airport to the city centre", board:"Metro · X95 · Rail · Taxi",
     connections:[
@@ -88,7 +89,7 @@ const AIRPORTS = {
         journeyBands:[{from:0,to:6,mins:45},{from:6,to:9.5,mins:75},{from:9.5,to:16,mins:65},{from:16,to:19.5,mins:80},{from:19.5,to:23,mins:60},{from:23,to:24,mins:45}],
         journeyByDestination:{ktel:65},
         sched:{kind:"windows",windows:[{start:"05:30",end:"23:00",every:35},{start:"23:00",end:"05:30",every:70}]}, payment:"💳 Card accepted · tap onboard"},
-      taxi:{mode:"taxi",name:"Taxi",checked:"Aug 2026",official:true,price:"€40–55",fareDay:"€40",fareNight:"€55",nightStart:0,nightEnd:5,journey:"~40 min",walk:"~2 min walk",accessShort:"Exit 3",onDemand:true, payment:"💳 Card accepted", apps:["freenow","uber","bolt"]},
+      taxi:{mode:"taxi",name:"Taxi",checked:"Aug 2026",official:true,price:"€50–65",fareDay:"€50",fareNight:"€65",nightStart:0,nightEnd:5,journey:"~40 min",walk:"~2 min walk",accessShort:"Exit 3",onDemand:true, payment:"💳 Card accepted", apps:["freenow","uber","bolt"]},
     },
     /* City → airport ("when must I leave"). Sources: STASY L3 first/last table + 36' airport frequency;
        Hellenic Train Piraeus–Athens–Airport PDF (May 2026); OASA airport-express page (24h, journey estimates,
@@ -105,8 +106,8 @@ const AIRPORTS = {
             ll:"37.974590,23.734840",startPin:true,stop:"X95 terminus on Othonos St, south side of Syntagma Square (moves to Amalias Ave on event days)",gate:"Drops you at the Departures level, ~2 min",
             sched:{kind:"windows",windows:[{start:"05:00",end:"22:00",every:20},{start:"22:00",end:"01:20",every:20},{start:"01:20",end:"05:00",every:30}]},
             note:"Runs 24 hours. Day headway ~15–20 min, ~25–30 min after 01:00 (headways from published timetables, not live). Tap a contactless card on the blue validator once on boarding; no tickets sold by the driver."},
-          {k:"taxi",name:"Taxi",to:"door to door",price:"€40–55",fareDay:"€40",fareNight:"€55",nightStart:0,nightEnd:5,journey:"~40 min",checked:"Aug 2026",official:true,walkIn:0,gateWalk:1,apps:["freenow","uber","bolt"],
-            note:"Official flat fare from the centre: €40 by day, €55 between 00:00 and 05:00 — counted from when you get in."}
+          {k:"taxi",name:"Taxi",to:"door to door",price:"€50–65",fareDay:"€50",fareNight:"€65",nightStart:0,nightEnd:5,journey:"~40 min",checked:"Aug 2026",official:true,walkIn:0,gateWalk:1,apps:["freenow","uber","bolt"],
+            note:"Official flat fare from the centre: €50 by day, €65 between 00:00 and 05:00 — counted from when you get in."}
         ]},
         {id:"mon",label:"Monastiráki",routes:[
           {k:"metro",name:"Metro M3",short:"M3",stops:"m3_mon",to:"Monastiraki → Airport",price:"€9",journey:"~44 min",checked:"Sep 2026",payment:"💳 Card accepted · tap at gate",walkIn:5,gateWalk:6,
@@ -118,8 +119,8 @@ const AIRPORTS = {
             ll:"37.974590,23.734840",startPin:true,stop:"~10 min walk to the X95 terminus on Othonos St at Syntagma",gate:"Drops you at the Departures level, ~2 min",
             sched:{kind:"windows",windows:[{start:"05:00",end:"22:00",every:20},{start:"22:00",end:"01:20",every:20},{start:"01:20",end:"05:00",every:30}]},
             note:"Runs 24 hours from Syntagma (~10 min walk). Contactless card on board, €5.50."},
-          {k:"taxi",name:"Taxi",to:"door to door",price:"€40–55",fareDay:"€40",fareNight:"€55",nightStart:0,nightEnd:5,journey:"~42 min",checked:"Aug 2026",official:true,walkIn:0,gateWalk:1,apps:["freenow","uber","bolt"],
-            note:"Official flat fare from the centre: €40 by day, €55 between 00:00 and 05:00."}
+          {k:"taxi",name:"Taxi",to:"door to door",price:"€50–65",fareDay:"€50",fareNight:"€65",nightStart:0,nightEnd:5,journey:"~42 min",checked:"Aug 2026",official:true,walkIn:0,gateWalk:1,apps:["freenow","uber","bolt"],
+            note:"Official flat fare from the centre: €50 by day, €65 between 00:00 and 05:00."}
         ]},
         {id:"pir",label:"Piraeus",routes:[
           {k:"bus",name:"Bus X96",short:"X96",stops:"x96",live:"x96",to:"Piraeus → Airport",price:"€5.50",journey:"~90 min",est:true,payment:"💳 Card accepted · tap onboard",walkIn:3,gateWalk:2,
@@ -131,8 +132,8 @@ const AIRPORTS = {
             ll:"37.948000,23.643000",startPin:true,stop:"M1 (green) to Monastiraki, change to M3 for the airport train — allow ~25 min to Monastiraki",gate:"From the airport station up the walkway to Departures, ~6 min",
             sched:{kind:"range",first:"05:26",last:"22:50",every:36},
             note:"Times shown are the airport train leaving Monastiraki minus ~25 min for the M1 leg; check the M3 board says AIRPORT. One €9 airport ticket covers both."},
-          {k:"taxi",name:"Taxi",to:"door to door",price:"~€55–70",fareDay:"~€55",fareNight:"~€70",nightStart:0,nightEnd:5,journey:"~55 min",est:true,walkIn:0,gateWalk:1,apps:["freenow","uber","bolt"],
-            note:"Metered from Piraeus — the €40/€55 flat fare applies only to the centre. Estimate."}
+          {k:"taxi",name:"Taxi",to:"door to door",price:"~€60–75",fareDay:"~€60",fareNight:"~€75",nightStart:0,nightEnd:5,journey:"~55 min",est:true,walkIn:0,gateWalk:1,apps:["freenow","uber","bolt"],
+            note:"Metered from Piraeus — the €50/€65 flat fare applies only to the centre. Estimate."}
         ]},
         {id:"lar",label:"Larissa station",routes:[
           {k:"rail",name:"Suburban Rail",short:"Proastiakos",stops:"rail_lar",to:"Athens (Larissa) → Airport",price:"€9",journey:"~45 min",checked:"Sep 2026",payment:"💳 Ticket/card · tap at gate",walkIn:5,gateWalk:6,
@@ -145,8 +146,8 @@ const AIRPORTS = {
             ll:"37.992000,23.720800",startPin:true,stop:"M2 (red) two stops to Syntagma, change to M3 — allow ~8 min",gate:"From the airport station up the walkway to Departures, ~6 min",
             sched:{kind:"range",first:"05:45",last:"23:10",every:36},
             note:"Times shown are the airport train leaving Syntagma minus ~8 min for the M2 leg."},
-          {k:"taxi",name:"Taxi",to:"door to door",price:"€40–55",fareDay:"€40",fareNight:"€55",nightStart:0,nightEnd:5,journey:"~40 min",checked:"Aug 2026",official:true,walkIn:0,gateWalk:1,apps:["freenow","uber","bolt"],
-            note:"Official flat fare from the centre: €40 by day, €55 between 00:00 and 05:00."}
+          {k:"taxi",name:"Taxi",to:"door to door",price:"€50–65",fareDay:"€50",fareNight:"€65",nightStart:0,nightEnd:5,journey:"~40 min",checked:"Aug 2026",official:true,walkIn:0,gateWalk:1,apps:["freenow","uber","bolt"],
+            note:"Official flat fare from the centre: €50 by day, €65 between 00:00 and 05:00."}
         ]},
         {id:"kif",label:"Kifisos coaches",routes:[
           {k:"bus",name:"Bus X93",short:"X93",stops:"x93",live:"x93",to:"Kifisos coach station → Airport",price:"€5.50",journey:"~65 min",est:true,payment:"💳 Card accepted · tap onboard",walkIn:2,gateWalk:2,
@@ -186,10 +187,10 @@ const AIRPORTS = {
       { mode:"rail", to:"Athens Central (Larissa Station)", op:"Suburban Railway (Proastiakós)", price:"€9", journey:"~50 min", freqLabel:"roughly every 30 min", hours:"06:09–22:09",
         walk:"~6 min walk", access:"Up to Departures level, across the walkway — follow ‘Trains’", ll:"37.936916659098664,23.94463092649655",
         sched:{kind:"range",first:"06:09",last:"22:09",every:30}, tags:["💳 Tap contactless at the gate"], note:"Fewer trains than the metro — best if you're heading to the central rail station." },
-      { mode:"taxi", to:"City centre (door to door)", op:"Official flat fare", onDemand:true, price:"€40–55", journey:"~40 min", freqLabel:"on demand", hours:"24 hours",
+      { mode:"taxi", to:"City centre (door to door)", op:"Official flat fare", onDemand:true, price:"€50–65", journey:"~40 min", freqLabel:"on demand", hours:"24 hours",
         walk:"~2 min walk", access:"Arrivals level, outside Exit 3 (taxi rank)", tags:["💳 Card accepted"],
         noapp:"No app needed — walk to the rank and take one.", apps:["freenow","uber","bolt"],
-        note:"Flat fare €40 daytime (05:00–24:00) · €55 night (00:00–05:00) to the city centre." },
+        note:"Flat fare €50 daytime (05:00–24:00) · €65 night (00:00–05:00) to the city centre (raised Sep 2026)." },
     ] },
 };
 const ORDER = ["ATH","SKG","HER","CHQ","JTR","RHO"];
@@ -250,7 +251,8 @@ const I18N = {
     "Sample data — fares and times are illustrative and not yet verified. Departure times are estimated from the listed frequency. Confirm at the stop.":"Ενδεικτικά δεδομένα — τιμές και ώρες δεν έχουν ακόμη επαληθευτεί. Οι αναχωρήσεις υπολογίζονται από τη δηλωμένη συχνότητα. Έλεγξε στη στάση.",
     "Cheapest and never closes, but slow in traffic. Buy at the booth or just tap your card on the bus. Live times when buses are running, otherwise the timetable.":"Η φθηνότερη επιλογή και λειτουργεί όλο το 24ωρο, αλλά καθυστερεί στην κίνηση. Αγόρασε εισιτήριο στο εκδοτήριο ή πλήρωσε ανέπαφα στο λεωφορείο. Ζωντανές ώρες όταν λειτουργούν τα λεωφορεία, αλλιώς το πρόγραμμα.",
     "Fewer trains than the metro — best if you're heading to the central rail station.":"Λιγότερα τρένα από το μετρό — καλύτερο αν κατευθύνεσαι στον κεντρικό σιδηροδρομικό σταθμό.",
-    "Flat fare €40 daytime (05:00–24:00) · €55 night (00:00–05:00) to the city centre.":"Σταθερή χρέωση €40 την ημέρα (05:00–24:00) · €55 τη νύχτα (00:00–05:00) προς το κέντρο.",
+    "Flat fare €28 daytime · €38 night (00:00–05:00) to the city centre (raised Sep 2026).":"Σταθερή χρέωση €28 την ημέρα · €38 τη νύχτα (00:00–05:00) προς το κέντρο (αύξηση Σεπ. 2026).",
+    "Flat fare €50 daytime (05:00–24:00) · €65 night (00:00–05:00) to the city centre (raised Sep 2026).":"Σταθερή χρέωση €50 την ημέρα (05:00–24:00) · €65 τη νύχτα (00:00–05:00) προς το κέντρο (αύξηση Σεπ. 2026).",
     "€9 flat airport fare (not the standard €1.20 ticket). Return €16, valid 48h.":"€9 σταθερή τιμή αεροδρομίου (όχι το κανονικό εισιτήριο €1,20). Επιστροφή €16, ισχύει 48 ώρες.",
     "Irregular KTEL timetable (not flight-timed) — the next time shown is an estimate; check the posted schedule at the stop. €2.50 from the driver, cash.":"Ακανόνιστο πρόγραμμα ΚΤΕΛ (δεν είναι συνδεδεμένο με τις πτήσεις) — η επόμενη ώρα είναι εκτίμηση· έλεγξε το αναρτημένο πρόγραμμα στη στάση. €2,50 από τον οδηγό, μετρητά.",
     "Summer: about hourly, roughly 07:25–21:10. Winter: about six buses a day, last around 19:10 — the time shown is an estimate from the summer pattern, check the posted schedule. No night service; arrange a taxi for early/late flights. All airport buses terminate at Fira bus station.":"Καλοκαίρι: περίπου ανά ώρα, ~07:25–21:10. Χειμώνας: περίπου έξι δρομολόγια την ημέρα, τελευταίο γύρω στις 19:10 — η ώρα που βλέπεις είναι εκτίμηση από το καλοκαιρινό μοτίβο, έλεγξε το αναρτημένο πρόγραμμα. Δεν υπάρχει νυχτερινό δρομολόγιο· κανόνισε ταξί για πολύ πρωινές/βραδινές πτήσεις. Όλα τα λεωφορεία του αεροδρομίου τερματίζουν στον σταθμό Φηρών.",
@@ -304,11 +306,11 @@ Object.assign(I18N.el,{
  "Only every other train continues to the airport — check the board says ΑΕΡΟΔΡΟΜΙΟ / AIRPORT. First airport train 05:51, last 23:15. €9 airport ticket.":"Μόνο ένα στα δύο τρένα συνεχίζει ως το αεροδρόμιο — κοίτα να γράφει ΑΕΡΟΔΡΟΜΙΟ / AIRPORT. Πρώτο τρένο αεροδρομίου 05:51, τελευταίο 23:15. Εισιτήριο αεροδρομίου €9.",
  "Runs 24 hours. Day headway ~15–20 min, ~25–30 min after 01:00 (headways from published timetables, not live). Tap a contactless card on the blue validator once on boarding; no tickets sold by the driver.":"24ωρο. Τη μέρα κάθε ~15–20 λεπτά, μετά τη 01:00 κάθε ~25–30 (συχνότητες από δημοσιευμένα δρομολόγια, όχι ζωντανά). Ανέπαφη κάρτα στο μπλε μηχάνημα μία φορά στην επιβίβαση· ο οδηγός δεν πουλά εισιτήρια.",
  "Runs 24 hours from Syntagma (~10 min walk). Contactless card on board, €5.50.":"24ωρο από το Σύνταγμα (~10 λεπτά με τα πόδια). Ανέπαφη κάρτα στο λεωφορείο, €5,50.",
- "Official flat fare from the centre: €40 by day, €55 between 00:00 and 05:00 — counted from when you get in.":"Επίσημη σταθερή χρέωση από το κέντρο: €40 τη μέρα, €55 από 00:00 ως 05:00 — με βάση την ώρα επιβίβασης.",
- "Official flat fare from the centre: €40 by day, €55 between 00:00 and 05:00.":"Επίσημη σταθερή χρέωση από το κέντρο: €40 τη μέρα, €55 από 00:00 ως 05:00.",
+ "Official flat fare from the centre: €50 by day, €65 between 00:00 and 05:00 — counted from when you get in.":"Επίσημη σταθερή χρέωση από το κέντρο: €50 τη μέρα, €65 από 00:00 ως 05:00 — με βάση την ώρα επιβίβασης.",
+ "Official flat fare from the centre: €50 by day, €65 between 00:00 and 05:00.":"Επίσημη σταθερή χρέωση από το κέντρο: €50 τη μέρα, €65 από 00:00 ως 05:00.",
  "Runs 24 hours. Day headway ~20–30 min, night ~30–40 (published timetables, not live). Contactless card on board, €5.50.":"24ωρο. Τη μέρα κάθε ~20–30 λεπτά, τη νύχτα ~30–40 (δημοσιευμένα δρομολόγια, όχι ζωντανά). Ανέπαφη κάρτα στο λεωφορείο, €5,50.",
  "Times shown are the airport train leaving Monastiraki minus ~25 min for the M1 leg; check the M3 board says AIRPORT. One €9 airport ticket covers both.":"Οι ώρες είναι το τρένο αεροδρομίου από Μοναστηράκι μείον ~25 λεπτά για το σκέλος της Μ1· κοίτα να γράφει AIRPORT. Ένα εισιτήριο αεροδρομίου €9 καλύπτει και τα δύο.",
- "Metered from Piraeus — the €40/€55 flat fare applies only to the centre. Estimate.":"Με μετρητή από τον Πειραιά — η σταθερή χρέωση €40/€55 ισχύει μόνο από το κέντρο. Εκτίμηση.",
+ "Metered from Piraeus — the €50/€65 flat fare applies only to the centre. Estimate.":"Με μετρητή από τον Πειραιά — η σταθερή χρέωση €50/€65 ισχύει μόνο από το κέντρο. Εκτίμηση.",
  "Hourly at :04 from 06:04 to 22:04, plus early trains 04:13, 04:36, 04:54 (and 05:19 on weekdays) — the only rail option before the first metro. 45 min to the airport. Same €9 airport ticket as the metro.":"Κάθε ώρα και :04 από 06:04 ως 22:04, συν πρωινά 04:13, 04:36, 04:54 (και 05:19 τις καθημερινές) — η μόνη σιδηροδρομική επιλογή πριν το πρώτο μετρό. 45 λεπτά ως το αεροδρόμιο. Ίδιο εισιτήριο αεροδρομίου €9 με το μετρό.",
  "Times shown are the airport train leaving Syntagma minus ~8 min for the M2 leg.":"Οι ώρες είναι το τρένο αεροδρομίου από Σύνταγμα μείον ~8 λεπτά για το σκέλος της Μ2.",
  "Runs 24 hours. Day headway ~25–35 min, night ~45–60 (published timetables, not live). Contactless card on board, €5.50.":"24ωρο. Τη μέρα κάθε ~25–35 λεπτά, τη νύχτα ~45–60 (δημοσιευμένα δρομολόγια, όχι ζωντανά). Ανέπαφη κάρτα στο λεωφορείο, €5,50.",
